@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Utility", "02. Utility"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "Engine\Utility\Default\Utility.vcxproj", "{5C8551DE-3A76-480E-9263-5B36BEA0B240}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCTool", "MFCTool\MFCTool.vcxproj", "{A1F06453-3909-403F-951F-927E8F2047A8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCTool", "MFCTool\Default\MFCTool.vcxproj", "{A1F06453-3909-403F-951F-927E8F2047A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
