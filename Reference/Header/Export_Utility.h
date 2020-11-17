@@ -1,0 +1,40 @@
+#ifndef Export_Utility_h__
+#define Export_Utility_h__
+
+#include "Management.h"
+#include "ProtoMgr.h"
+#include "Transform.h"
+#include "Renderer.h"
+#include "Camera.h"
+#include "Pipeline.h"
+#include "Calculator.h"
+#include "LightMgr.h"
+#include "Collider.h"
+
+BEGIN(Engine)
+
+// management
+// Get
+inline CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
+
+inline HRESULT Create_Management(CManagement** ppManagement);
+inline HRESULT	SetUp_Scene(CScene* pScene);
+inline _int	Update_Scene(const _float& fTimeDelta);
+inline void	Render_Scene(void);
+
+// protomgr
+inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance);
+inline CComponent*		Clone(const _tchar* pProtoTag);
+
+// LightMgr
+inline HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
+
+// Renderer
+inline CRenderer*		Get_Renderer(void);
+
+inline void Release_Utility(void);
+
+#include "Export_Utility.inl"
+END
+
+#endif // Export_Utility_h__
