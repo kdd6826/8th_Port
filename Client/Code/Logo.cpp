@@ -4,7 +4,7 @@
 
 #include "Stage.h"
 
-
+//
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
