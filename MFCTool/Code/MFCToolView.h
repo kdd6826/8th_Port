@@ -4,6 +4,8 @@
 
 #pragma once
 
+
+
 class CMFCToolDoc;
 class CSingleTex; 
 class CTerrain; 

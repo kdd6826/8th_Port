@@ -107,9 +107,9 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	m_MainSplitter.CreateStatic(this, 1, 2);
 	m_MainSplitter.CreateView(0, 1, RUNTIME_CLASS(CMFCToolView), CSize(800, 600), pContext);
 
-	m_SecondSplitter.CreateStatic(&m_MainSplitter, 2, 1, WS_CHILD | WS_VISIBLE, m_MainSplitter.IdFromRowCol(0, 0));
-	m_SecondSplitter.CreateView(0, 0, RUNTIME_CLASS(CMiniView), CSize(300, 300), pContext); 
-	m_SecondSplitter.CreateView(1, 0, RUNTIME_CLASS(CForm), CSize(300, 300), pContext);
+	/*m_SecondSplitter.CreateStatic(&m_MainSplitter, 2, 1, WS_CHILD | WS_VISIBLE, m_MainSplitter.IdFromRowCol(0, 0));
+	m_SecondSplitter.CreateView(0, 0, RUNTIME_CLASS(CMiniView), CSize(300, 300), pContext); */
+	m_MainSplitter.CreateView(0, 0, RUNTIME_CLASS(CForm), CSize(300, 300), pContext);
 	m_MainSplitter.SetColumnInfo(0, 300, 100);
 
 	// 내가 지정한 행 , 열 번째에 있는 윈도우를 얻어올수 있는 함수. 
