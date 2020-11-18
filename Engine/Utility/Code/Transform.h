@@ -28,6 +28,7 @@ public:
 	void			Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 	const _matrix*	Compute_LookAtTarget(const _vec3* pTargetPos);
 	void			Get_WorldMatrix(_matrix* pWorldMatrix)const;
+	const _matrix*	Get_NRotWorldMatrix(_matrix* pWorld) const;
 public:
 	HRESULT			Ready_Transform(void);
 	virtual _int	Update_Component(const _float& fTimeDelta);
@@ -37,6 +38,7 @@ public:
 	_vec3			m_vScale;
 	_vec3			m_vAngle;
 	_matrix			m_matWorld;
+	_matrix			m_matNRotWorld;
 
 public:
 	static		CTransform*		Create(void);

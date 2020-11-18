@@ -38,6 +38,7 @@ HRESULT CTransform::Ready_Transform(void)
 _int CTransform::Update_Component(const _float & fTimeDelta)
 {
 	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&m_matNRotWorld);
 
 	// 위치 벡터를 제외하고 나머지 벡터의 초기화 값을 세팅한 상황
 	for (_uint i = 0; i < INFO_POS; ++i)
@@ -50,6 +51,9 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 		D3DXVec3Normalize(&m_vInfo[i], &m_vInfo[i]);
 		m_vInfo[i] *= *(((_float*)&m_vScale + i));
 	}
+	for (_uint i = 0; i < INFO_END; ++i)
+		memcpy(&m_matNRotWorld.m[i][0], m_vInfo[i], sizeof(_vec3));
+
 
 	// 회전 적용
 	_matrix		matRot[ROT_END];
@@ -80,8 +84,6 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	for (_uint i = 0; i < INFO_END; ++i)
 		memcpy(&m_matWorld.m[i][0], &m_vInfo[i], sizeof(_vec3));
 	
-
-
 	return _int();
 }
 
@@ -195,6 +197,14 @@ const _matrix * CTransform::Compute_LookAtTarget(const _vec3 * pTargetPos)
 void Engine::CTransform::Get_WorldMatrix(_matrix* pWorldMatrix) const
 {
 	*pWorldMatrix = m_matWorld;	
+}
+
+const _matrix * CTransform::Get_NRotWorldMatrix(_matrix * pWorld) const
+{
+	if (nullptr != pWorld)
+		*pWorld = m_matNRotWorld;
+
+	return &m_matNRotWorld;
 }
 
 //void Engine::CTransform::Set_Transform(LPDIRECT3DDEVICE9& pGraphicDev, _matrix* pMatrix, D3DTRANSFORMSTATETYPE iFlag) const

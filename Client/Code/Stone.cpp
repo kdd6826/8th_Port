@@ -89,8 +89,10 @@ void Client::CStone::Render_Object(void)
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 
 	m_pMeshCom->Render_Meshes();
+
 	_matrix matWorld;
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
+		// m_pTransformCom->Get_WorldMatrix(&matWorld);
+		m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
 
 	m_pColliderCom->Render_Collider(Engine::COLLTYPE(m_bColl), &matWorld);
 
@@ -114,10 +116,17 @@ _bool CStone::Collision_ToObject(const _tchar * pLayerTag, const _tchar * pObjTa
 	Engine::CCollider*	pPlayerColliderCom = dynamic_cast<Engine::CCollider*>(Engine::Get_Component(pLayerTag, pObjTag, L"Com_Collider", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pPlayerColliderCom, false);
 	
-	return m_pCalculatorCom->Collision_AABB(pPlayerColliderCom->Get_Min(),
+	/*return m_pCalculatorCom->Collision_AABB(pPlayerColliderCom->Get_Min(),
 											pPlayerColliderCom->Get_Max(),
 											pPlayerColliderCom->Get_CollMatrix(),
 											m_pColliderCom->Get_Min(), 
 											m_pColliderCom->Get_Max(),
-											m_pColliderCom->Get_CollMatrix());
+											m_pColliderCom->Get_CollMatrix());*/
+
+	return m_pCalculatorCom->Collision_OBB(pPlayerColliderCom->Get_Min(),
+		pPlayerColliderCom->Get_Max(),
+		pPlayerColliderCom->Get_CollMatrix(),
+		m_pColliderCom->Get_Min(),
+		m_pColliderCom->Get_Max(),
+		m_pColliderCom->Get_CollMatrix());
 }
