@@ -11,6 +11,8 @@
 #include "MFCToolDoc.h"
 #include "MFCToolView.h"
 
+USING(Client)
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif

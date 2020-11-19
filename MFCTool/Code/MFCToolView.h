@@ -4,11 +4,16 @@
 
 #pragma once
 
-
+#include "Define.h"
+#include "Base.h"
+#include "Engine_Define.h"
+#include "Export_Function.h"
 
 class CMFCToolDoc;
 class CSingleTex; 
 class CTerrain; 
+
+
 class CMFCToolView : public CScrollView
 {
 protected: // serialization에서만 만들어집니다.
@@ -55,4 +60,3 @@ public:
 inline CMFCToolDoc* CMFCToolView::GetDocument() const
    { return reinterpret_cast<CMFCToolDoc*>(m_pDocument); }
 #endif
-

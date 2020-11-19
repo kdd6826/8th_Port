@@ -18,6 +18,8 @@
 
 #include "Form.h"
 
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -36,7 +38,7 @@ BEGIN_MESSAGE_MAP(CMFCToolView, CScrollView)
 END_MESSAGE_MAP()
 
 // CMFCToolView 생성/소멸
-
+USING(Client)
 CMFCToolView::CMFCToolView()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.

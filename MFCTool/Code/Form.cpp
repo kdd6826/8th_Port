@@ -5,7 +5,7 @@
 #include "MFCTool.h"
 #include "Form.h"
 
-
+USING(Client)
 // CForm
 
 IMPLEMENT_DYNCREATE(CForm, CFormView)

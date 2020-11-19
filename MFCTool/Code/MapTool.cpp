@@ -11,6 +11,8 @@
 #include "MFCToolView.h"
 #include "Terrain.h"
 
+USING(Client)
+
 // CMapTool 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CMapTool, CDialog)
