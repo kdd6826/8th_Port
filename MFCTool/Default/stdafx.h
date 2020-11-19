@@ -45,6 +45,7 @@ using namespace std;
 #include "Typedef.h"
 #include "Define.h"
 #include "Struct.h"
+#include "Macro.h"
 #include "Function.h"
 #include "Graphic_Device.h"
 

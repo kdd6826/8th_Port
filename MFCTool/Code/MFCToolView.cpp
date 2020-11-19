@@ -45,8 +45,8 @@ CMFCToolView::CMFCToolView()
 
 CMFCToolView::~CMFCToolView()
 {
-	CGraphic_Device::Destroy_Instance(); 
-	CTexture_Manager::Destroy_Instance(); 
+	CGraphic_Device::DestroyInstance(); 
+	CTexture_Manager::DestroyInstance(); 
 	Safe_Delete(m_pTerrain);
 }
 
@@ -66,9 +66,9 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	CGraphic_Device::Get_Instance()->Render_Begin(); 
+	CGraphic_Device::GetInstance()->Render_Begin(); 
 	m_pTerrain->Render_Terrain();
-	CGraphic_Device::Get_Instance()->Render_End(); 
+	CGraphic_Device::GetInstance()->Render_End(); 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 // 	pDC->Rectangle(100, 100, 200, 200);
 // 	pDC->Ellipse(100, 100, 200, 200);
@@ -145,15 +145,15 @@ void CMFCToolView::OnInitialUpdate()
 
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	g_hWND = m_hWnd; 
-	if (FAILED(CGraphic_Device::Get_Instance()->Ready_Graphic_Device()))
+	if (FAILED(CGraphic_Device::GetInstance()->Ready_Graphic_Device()))
 	{
 		ERR_MSG(L"그래픽 디바이스 생성 실패..."); 
 		return; 
 	}
-	//if (FAILED(CTexture_Manager::Get_Instance()->Insert_Texture(CTexture_Manager::TEX_SINGLE, L"../Bin/Texture/Cube.png", L"Cube")))
+	//if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_SINGLE, L"../Bin/Texture/Cube.png", L"Cube")))
 	//	return; 
 
-	//if (FAILED(CTexture_Manager::Get_Instance()->Insert_Texture(CTexture_Manager::TEX_MULTI, L"../Bin/Texture/Stage/Terrain/Tile/Tile%d.png", L"Terrain", L"Tile", 38)))
+	//if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_MULTI, L"../Bin/Texture/Stage/Terrain/Tile/Tile%d.png", L"Terrain", L"Tile", 38)))
 	//	return;
 
 	if (nullptr == m_pTerrain)

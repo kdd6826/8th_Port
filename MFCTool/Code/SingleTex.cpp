@@ -24,7 +24,7 @@ HRESULT CSingleTex::Insert_Texture(const wstring & wstrFilePath, const wstring &
 	}
 
 	if (FAILED(D3DXCreateTextureFromFileEx(
-		CGraphic_Device::Get_Instance()->Get_Device(),
+		CGraphic_Device::GetInstance()->Get_Device(),
 		wstrFilePath.c_str(),
 		m_pTexInfo->tImageInfo.Width,
 		m_pTexInfo->tImageInfo.Height,

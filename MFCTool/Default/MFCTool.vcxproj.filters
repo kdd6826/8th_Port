@@ -114,6 +114,9 @@
     <ClInclude Include="MFCTool.h">
       <Filter>99.Default</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Macro.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
