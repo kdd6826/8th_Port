@@ -68,9 +68,11 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	CGraphic_Device::GetInstance()->Render_Begin(); 
+	Engine::Render_Begin((0.7f, 0.7f, 0.7f, 1.f));
+	
 	m_pTerrain->Render_Terrain();
-	CGraphic_Device::GetInstance()->Render_End(); 
+	
+	Engine::Render_End();
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 // 	pDC->Rectangle(100, 100, 200, 200);
 // 	pDC->Ellipse(100, 100, 200, 200);
