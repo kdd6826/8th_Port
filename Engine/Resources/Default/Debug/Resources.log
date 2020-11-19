@@ -1,16 +1,5 @@
-﻿  VIBuffer.cpp
-  TriCol.cpp
-  Texture.cpp
-  TerrainTex.cpp
-  StaticMesh.cpp
-  ResourcesMgr.cpp
-  Resources.cpp
-  RcTex.cpp
-  Mesh.cpp
-  DynamicMesh.cpp
-  CubeTex.cpp
-  코드를 생성하고 있습니다...
-     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
+﻿     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
+DynamicMesh.obj : warning LNK4099: 'vc140.pdb' PDB를 'DynamicMesh.obj' 또는 'C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   Resources.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\CubeTex.h

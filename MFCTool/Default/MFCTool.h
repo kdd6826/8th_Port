@@ -8,11 +8,20 @@
 #endif
 
 #include "resource.h"       // 주 기호입니다.
-
+#include "Define.h"
+#include "Base.h"
+#include "Engine_Define.h"
+#include "Export_Function.h"
 
 // CMFCToolApp:
 // 이 클래스의 구현에 대해서는 MFCTool.cpp을 참조하십시오.
 //
+//BEGIN(Engine)
+//
+//class CGraphicDev;
+//class CManagement;
+//
+//END
 
 class CMFCToolApp : public CWinAppEx
 {
@@ -24,6 +33,11 @@ public:
 public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
+
+//private:
+//	Engine::CGraphicDev*		m_pDeviceClass = nullptr;
+//	Engine::CManagement*		m_pManagementClass = nullptr;
+//	LPDIRECT3DDEVICE9			m_pGraphicDev = nullptr;
 
 // 구현입니다.
 	afx_msg void OnAppAbout();
