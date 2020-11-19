@@ -120,26 +120,6 @@ HRESULT CTerrain::Ready_Terrain()
 	return S_OK;
 }
 
-void CTerrain::MiniRender_Terrain()
-{
-	for (auto& pTile : m_vecTile)
-	{
-		const TEXINFO* pTexInfo = CTexture_Manager::GetInstance()->Get_TexInfo(L"Terrain", L"Tile", pTile->iDrawID);
-		if (nullptr == pTexInfo)
-			return;
-		float fCenterX = float(pTexInfo->tImageInfo.Width >> 1);
-		float fCenterY = float(pTexInfo->tImageInfo.Height >> 1);
-
-		_matrix matScale, matTrans, matWorld;
-		D3DXMatrixScaling(&matScale, pTile->vSize.x, pTile->vSize.y, 0.f);
-		D3DXMatrixTranslation(&matTrans, pTile->vPos.x - m_pView->GetScrollPos(0), pTile->vPos.y - m_pView->GetScrollPos(1), 0.f);
-		matWorld = matScale * matTrans;
-		Set_Ratio(matWorld, 0.3f, 0.5f); 
-		CGraphic_Device::GetInstance()->Get_Sprite()->SetTransform(&matWorld);
-		CGraphic_Device::GetInstance()->Get_Sprite()->Draw(pTexInfo->pTexture, nullptr, &_vec3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
-	}
-}
-
 void CTerrain::Render_Terrain()
 {
 	TCHAR szBuf[MAX_PATH] = L""; 

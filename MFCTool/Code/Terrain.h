@@ -14,8 +14,7 @@ public:
 	bool IsPicking(const _vec3& vPos, const _int& i);
 	void Set_Ratio(_matrix& matWorld, const float& fRatioX, const float& fRatioY );
 public:
-	HRESULT Ready_Terrain(); 
-	void	MiniRender_Terrain(); 
+	HRESULT Ready_Terrain();
 	void	Render_Terrain(); 
 	void	Release_Terrain(); 
 
