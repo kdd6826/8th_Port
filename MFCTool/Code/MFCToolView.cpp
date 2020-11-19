@@ -15,7 +15,7 @@
 #include "SingleTex.h"
 #include "Terrain.h"
 #include "MainFrm.h"
-#include "MiniView.h"
+
 #include "Form.h"
 
 #ifdef _DEBUG
@@ -150,11 +150,11 @@ void CMFCToolView::OnInitialUpdate()
 		ERR_MSG(L"그래픽 디바이스 생성 실패..."); 
 		return; 
 	}
-	if (FAILED(CTexture_Manager::Get_Instance()->Insert_Texture(CTexture_Manager::TEX_SINGLE, L"../Bin/Texture/Cube.png", L"Cube")))
-		return; 
+	//if (FAILED(CTexture_Manager::Get_Instance()->Insert_Texture(CTexture_Manager::TEX_SINGLE, L"../Bin/Texture/Cube.png", L"Cube")))
+	//	return; 
 
-	if (FAILED(CTexture_Manager::Get_Instance()->Insert_Texture(CTexture_Manager::TEX_MULTI, L"../Bin/Texture/Stage/Terrain/Tile/Tile%d.png", L"Terrain", L"Tile", 38)))
-		return;
+	//if (FAILED(CTexture_Manager::Get_Instance()->Insert_Texture(CTexture_Manager::TEX_MULTI, L"../Bin/Texture/Stage/Terrain/Tile/Tile%d.png", L"Terrain", L"Tile", 38)))
+	//	return;
 
 	if (nullptr == m_pTerrain)
 	{
@@ -178,9 +178,7 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	_vec3 vMouse = { float(point.x) + GetScrollPos(0), float(point.y) + GetScrollPos(1), 0.f }; 
 
 	m_pTerrain->TileChange(vMouse, iDrawID,1);
-	
-	CMiniView* pMiniView = dynamic_cast<CMiniView*>(pMain->m_SecondSplitter.GetPane(0, 0)); 
-	pMiniView->InvalidateRect(nullptr, 0);
+
 	InvalidateRect(nullptr, 0);
 	CScrollView::OnLButtonDown(nFlags, point);
 }

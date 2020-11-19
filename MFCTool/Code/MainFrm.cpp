@@ -7,7 +7,7 @@
 
 #include "MainFrm.h"
 #include "MFCToolView.h"
-#include "MiniView.h"
+
 #include "Form.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
