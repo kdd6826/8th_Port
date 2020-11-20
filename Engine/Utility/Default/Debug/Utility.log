@@ -1,20 +1,4 @@
-﻿  Transform.cpp
-  Scene.cpp
-  Renderer.cpp
-  Management.cpp
-  Layer.cpp
-  GameObject.cpp
-  ProtoMgr.cpp
-  Pipeline.cpp
-  LightMgr.cpp
-  Light.cpp
-  Component.cpp
-  Collider.cpp
-  Camera.cpp
-  Calculator.cpp
-  코드를 생성하고 있습니다...
-     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> D:\nalvan\110c\Frame110\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Utility.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -31,8 +15,8 @@
   .\Engine\Utility\Code\Scene.h
   .\Engine\Utility\Code\Transform.h
          14개 파일이 복사되었습니다.
-  .\Engine\Utility\Code\*.hpp 
   지정된 파일을 찾을 수 없습니다.
+  .\Engine\Utility\Code\*.hpp 
           0개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
