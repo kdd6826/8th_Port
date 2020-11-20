@@ -23,7 +23,7 @@ const TEXINFO * CTexture_Manager::Get_TexInfo(const wstring & wstrObjectKey, con
 	return iter_find->second->Get_Texture(wstrStateKey, dwImgIndex);
 }
 
-HRESULT CTexture_Manager::Insert_Texture(const TEX_ID & eTexID, const wstring& wstrFilePath,  const wstring & wstrObjectKey, const wstring & wstrStateKey, const DWORD & dwImgIndex)
+HRESULT CTexture_Manager::Insert_Texture(const TEX_ID & eTexID, const wstring& wstrFilePath, LPDIRECT3DDEVICE9 * ppGraphicDev, const wstring & wstrObjectKey, const wstring & wstrStateKey, const DWORD & dwImgIndex)
 {
 	map<wstring, CTexture*>::iterator iter_find = m_mapTexture.find(wstrObjectKey);
 
@@ -43,7 +43,7 @@ HRESULT CTexture_Manager::Insert_Texture(const TEX_ID & eTexID, const wstring& w
 		default:
 			break;
 		}
-		if (FAILED(pTexture->Insert_Texture(wstrFilePath, wstrStateKey, dwImgIndex)))
+		if (FAILED(pTexture->Insert_Texture(wstrFilePath, ppGraphicDev,wstrStateKey, dwImgIndex)))
 		{
 			ERR_MSG(L"Texture Creating Failed"); 
 			return E_FAIL; 
@@ -52,7 +52,7 @@ HRESULT CTexture_Manager::Insert_Texture(const TEX_ID & eTexID, const wstring& w
 	}
 	else if (TEX_MULTI == eTexID)
 	{
-		if (FAILED(m_mapTexture[wstrObjectKey]->Insert_Texture(wstrFilePath, wstrStateKey, dwImgIndex)))
+		if (FAILED(m_mapTexture[wstrObjectKey]->Insert_Texture(wstrFilePath, ppGraphicDev, wstrStateKey, dwImgIndex)))
 		{
 			ERR_MSG(L"MultiTexture Creating Failed");
 			return E_FAIL;

@@ -97,11 +97,18 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	CGraphic_Device::GetInstance()->Render_Begin();
-	
-	m_pTerrain->Render_Terrain();
-	
-	CGraphic_Device::GetInstance()->Render_End();
+	//CGraphic_Device::GetInstance()->Render_Begin();
+	//
+	//m_pTerrain->Render_Terrain();
+	//
+	//CGraphic_Device::GetInstance()->Render_End();
+
+	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.0f, 0.7f, 1.f));
+
+
+
+	Engine::Render_End();
+
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 // 	pDC->Rectangle(100, 100, 200, 200);
 // 	pDC->Ellipse(100, 100, 200, 200);
@@ -178,7 +185,7 @@ void CMFCToolView::OnInitialUpdate()
 
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), );
-	//FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), );
+	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), );
 
 	Client::Safe_Release(m_pDeviceClass);
 
@@ -186,23 +193,17 @@ void CMFCToolView::OnInitialUpdate()
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), );
 
 	g_hWnd = m_hWnd; 
-	if (FAILED(CGraphic_Device::GetInstance()->Ready_Graphic_Device()))
-	{
-		ERR_MSG(L"그래픽 디바이스 생성 실패..."); 
-		return; 
-	}
-	if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_SINGLE, L"../Bin/Texture/Cube.png", L"Cube")))
-		return; 
+	
+	Engine::CLayer*			pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, );
 
-	if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_MULTI, L"../Bin/Texture/Stage/Terrain/Tile/Tile%d.png", L"Terrain", L"Tile", 38)))
-		return;
-
-	if (nullptr == m_pTerrain)
-	{
-		m_pTerrain = new CTerrain; 
-		m_pTerrain->Ready_Terrain(); 
-		m_pTerrain->Set_View(this);
-	}
+	//if (nullptr == m_pTerrain)
+	//{
+	//	Engine::CGameObject*		pGameObject = nullptr;
+	//	pGameObject = CTerrain::Create(m_pGraphicDev);
+	//	NULL_CHECK_RETURN(pGameObject, );
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), );
+	//}
 }
 
 
@@ -213,13 +214,13 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 // 	TCHAR szMouseBuf[54]= L""; 
 // 	swprintf_s(szMouseBuf, L"Point.x : %d, Point.y : %d", point.x, point.y);
 // 	ERR_MSG(szMouseBuf);
-	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CForm* pForm = dynamic_cast<CForm*>(pMain->m_SecondSplitter.GetPane(1, 0));
-	_int iDrawID = pForm->m_tMapTool.m_iDrawID;
-	_vec3 vMouse = { float(point.x) + GetScrollPos(0), float(point.y) + GetScrollPos(1), 0.f }; 
+	//CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	//CForm* pForm = dynamic_cast<CForm*>(pMain->m_SecondSplitter.GetPane(1, 0));
+	//_int iDrawID = pForm->m_tMapTool.m_iDrawID;
+	//_vec3 vMouse = { float(point.x) + GetScrollPos(0), float(point.y) + GetScrollPos(1), 0.f }; 
 
-	m_pTerrain->TileChange(vMouse, iDrawID,1);
+	//m_pTerrain->TileChange(vMouse, iDrawID,1);
 
-	InvalidateRect(nullptr, 0);
-	CScrollView::OnLButtonDown(nFlags, point);
+	//InvalidateRect(nullptr, 0);
+	//CScrollView::OnLButtonDown(nFlags, point);
 }

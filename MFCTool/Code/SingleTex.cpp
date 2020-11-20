@@ -12,7 +12,7 @@ CSingleTex::~CSingleTex()
 	Release_Texture(); 
 }
 
-HRESULT CSingleTex::Insert_Texture(const wstring & wstrFilePath, const wstring & wstrStateKey /*= L""*/, const DWORD & rCount /*= 0*/)
+HRESULT CSingleTex::Insert_Texture(const wstring & wstrFilePath, LPDIRECT3DDEVICE9 * ppGraphicDev, const wstring & wstrStateKey /*= L""*/, const DWORD & rCount /*= 0*/)
 {
 	m_pTexInfo = new TEXINFO; 
 	ZeroMemory(m_pTexInfo, sizeof(TEXINFO)); 
@@ -24,7 +24,7 @@ HRESULT CSingleTex::Insert_Texture(const wstring & wstrFilePath, const wstring &
 	}
 
 	if (FAILED(D3DXCreateTextureFromFileEx(
-		CGraphic_Device::GetInstance()->Get_Device(),
+		*ppGraphicDev,
 		wstrFilePath.c_str(),
 		m_pTexInfo->tImageInfo.Width,
 		m_pTexInfo->tImageInfo.Height,

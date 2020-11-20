@@ -12,7 +12,7 @@ CMultiTex::~CMultiTex()
 	Release_Texture();
 }
 //D:\박병건\110C\4개월차\DefaultWinodows\Texture\Stage\Terrain\Tile\Tile%d.png
-HRESULT CMultiTex::Insert_Texture(const wstring & wstrFilePath, const wstring & wstrStateKey /*= L""*/, const DWORD & rCount /*= 0*/)
+HRESULT CMultiTex::Insert_Texture(const wstring & wstrFilePath, LPDIRECT3DDEVICE9 * ppGraphicDev, const wstring & wstrStateKey /*= L""*/, const DWORD & rCount /*= 0*/)
 {
 	auto& iter_find = m_mapMultiTex.find(wstrStateKey); 
 	TCHAR szFilePath[MAX_PATH] = L"";
@@ -32,7 +32,7 @@ HRESULT CMultiTex::Insert_Texture(const wstring & wstrFilePath, const wstring & 
 			}
 
 			if (FAILED(D3DXCreateTextureFromFileEx(
-				CGraphic_Device::GetInstance()->Get_Device(),
+				*ppGraphicDev,
 				szFilePath,
 				pTexInfo->tImageInfo.Width,
 				pTexInfo->tImageInfo.Height,

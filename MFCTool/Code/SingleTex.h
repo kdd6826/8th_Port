@@ -9,7 +9,8 @@ public:
 
 public:
 	// CTexture을(를) 통해 상속됨
-	virtual HRESULT Insert_Texture(const wstring & wstrFilePath, const wstring & wstrStateKey = L"", const DWORD & rCount = 0) override;
+	virtual HRESULT Insert_Texture(const wstring & wstrFilePath,
+		LPDIRECT3DDEVICE9 * ppGraphicDev, const wstring & wstrStateKey = L"", const DWORD & rCount = 0) override;
 	// CTexture을(를) 통해 상속됨
 	virtual const TEXINFO * Get_Texture(const wstring & wstrStateKey = L"", const DWORD & rIndex = 0) override;
 
