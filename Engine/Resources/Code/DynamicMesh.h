@@ -2,6 +2,7 @@
 #define DynamicMesh_h__
 
 #include "Mesh.h"
+#include "HierarchyLoader.h"
 
 BEGIN(Engine)
 
@@ -17,10 +18,13 @@ public:
 	void		Render_Meshes(void);
 
 private:
-	void		Update_FrameMatrices(D3DXFRAME* pFrame, const _matrix* pParentMatrix);
+	void		Update_FrameMatrices(D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix);
+	void		SetUp_FrameMatricesPointer(D3DXFRAME_DERIVED* pFrame);
 
 private:
 	D3DXFRAME*			m_pRootFrame;
+	CHierarchyLoader*	m_pLoader;
+	list<D3DXMESHCONTAINER_DERIVED*>		m_MeshContainerList;
 
 public:
 	static CDynamicMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath, const _tchar* pFileName);

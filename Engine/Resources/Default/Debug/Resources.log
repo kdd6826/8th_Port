@@ -1,9 +1,22 @@
-﻿     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
-DynamicMesh.obj : warning LNK4099: 'vc140.pdb' PDB를 'DynamicMesh.obj' 또는 'C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-  Resources.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
+﻿  VIBuffer.cpp
+  TriCol.cpp
+  Texture.cpp
+  TerrainTex.cpp
+  StaticMesh.cpp
+  ResourcesMgr.cpp
+  Resources.cpp
+  RcTex.cpp
+  Mesh.cpp
+  HierarchyLoader.cpp
+  DynamicMesh.cpp
+  CubeTex.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
+  Resources.vcxproj -> D:\nalvan\110c\Frame110\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\CubeTex.h
   .\Engine\Resources\Code\DynamicMesh.h
+  .\Engine\Resources\Code\HierarchyLoader.h
   .\Engine\Resources\Code\Mesh.h
   .\Engine\Resources\Code\RcTex.h
   .\Engine\Resources\Code\Resources.h
@@ -13,7 +26,7 @@ DynamicMesh.obj : warning LNK4099: 'vc140.pdb' PDB를 'DynamicMesh.obj' 또는 '
   .\Engine\Resources\Code\Texture.h
   .\Engine\Resources\Code\TriCol.h
   .\Engine\Resources\Code\VIBuffer.h
-         11개 파일이 복사되었습니다.
+         12개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

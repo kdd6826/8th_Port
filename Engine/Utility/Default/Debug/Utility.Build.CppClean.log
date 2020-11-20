@@ -2,6 +2,7 @@ d:\nalvan\110c\frame110\engine\utility\default\debug\vc140.pdb
 d:\nalvan\110c\frame110\engine\utility\default\debug\vc140.idb
 d:\nalvan\110c\frame110\engine\utility\default\debug\calculator.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\camera.obj
+d:\nalvan\110c\frame110\engine\utility\default\debug\collider.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\component.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\light.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\lightmgr.obj
@@ -13,7 +14,6 @@ d:\nalvan\110c\frame110\engine\utility\default\debug\management.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\renderer.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\scene.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\transform.obj
-d:\nalvan\110c\frame110\engine\utility\default\debug\collider.obj
 d:\nalvan\110c\frame110\engine\utility\bin\utility.ilk
 d:\nalvan\110c\frame110\engine\utility\bin\utility.dll
 d:\nalvan\110c\frame110\engine\utility\bin\utility.pdb

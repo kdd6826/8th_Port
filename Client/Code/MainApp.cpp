@@ -57,7 +57,7 @@ void CMainApp::Render_MainApp(void)
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	
 	
-	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.0f, 0.7f, 1.f));
+	Engine::Render_Begin(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.f));
 	
 	m_pManagementClass->Render_Scene();
 
