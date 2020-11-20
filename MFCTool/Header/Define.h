@@ -14,7 +14,7 @@
 #else
 #define ERR_MSG(Message) MessageBox(nullptr,Message,L"System_Error",MB_OK)
 #endif
-extern HWND g_hWND;
+extern HWND g_hWnd;
 
 #define OBJ_DEAD 1
 #define OBJ_NOEVENT 0 
@@ -28,3 +28,4 @@ extern HWND g_hWND;
 #define 강철검	0x01	//0000 0001
 #define 지팡이	0x02	//0000 0010 
 #define 나이프	0x04	//0000 0100
+

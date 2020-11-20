@@ -5,7 +5,6 @@
 // CForm Æû ºäÀÔ´Ï´Ù.
 #include "UnitTool.h"
 #include "MapTool.h"
-BEGIN(Client)
 class CForm : public CFormView
 {
 	DECLARE_DYNCREATE(CForm)
@@ -36,5 +35,4 @@ public:
 	afx_msg void OnBnClickedUnitTool();
 	afx_msg void OnBnClickedMapTool();
 };
-END
 

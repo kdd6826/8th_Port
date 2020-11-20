@@ -31,7 +31,9 @@ public:
 	CMFCToolDoc* GetDocument() const;
 
 // 작업입니다.
-public:
+private:
+	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
+	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
 
 private:
 	Engine::CGraphicDev*		m_pDeviceClass = nullptr;

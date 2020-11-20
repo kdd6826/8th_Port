@@ -7,9 +7,6 @@
     <Filter Include="00.View">
       <UniqueIdentifier>{e340c1ff-3c6b-4b18-a874-ee12f0837cc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Frame">
-      <UniqueIdentifier>{965b707c-5342-4500-976a-0303ab721daa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Doc">
       <UniqueIdentifier>{e50570cf-e702-4348-b4ec-431195797803}</UniqueIdentifier>
     </Filter>
@@ -46,6 +43,9 @@
     <Filter Include="06.FileInfo">
       <UniqueIdentifier>{c2a3525b-75a6-4f0f-ba37-f316905ade4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Frame">
+      <UniqueIdentifier>{965b707c-5342-4500-976a-0303ab721daa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -62,9 +62,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\Form.h">
       <Filter>00.View\MyFormView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\MFCToolView.h">
-      <Filter>00.View</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\UnitTool.h">
       <Filter>00.View\UnitTool</Filter>
@@ -116,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\Macro.h">
       <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MFCToolView.h">
+      <Filter>00.View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

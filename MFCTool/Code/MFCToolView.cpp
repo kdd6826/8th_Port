@@ -24,9 +24,9 @@
 #define new DEBUG_NEW
 #endif
 
-
 // CMFCToolView
-HWND g_hWND; 
+HWND g_hWnd; 
+HINSTANCE g_hInst;
 IMPLEMENT_DYNCREATE(CMFCToolView, CScrollView)
 
 BEGIN_MESSAGE_MAP(CMFCToolView, CScrollView)
@@ -38,18 +38,17 @@ BEGIN_MESSAGE_MAP(CMFCToolView, CScrollView)
 END_MESSAGE_MAP()
 
 // CMFCToolView 생성/소멸
-USING(Client)
 CMFCToolView::CMFCToolView()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-	
+
 }
 
 CMFCToolView::~CMFCToolView()
 {
 	CGraphic_Device::DestroyInstance(); 
 	CTexture_Manager::DestroyInstance(); 
-	Safe_Delete(m_pTerrain);
+
 }
 
 BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
@@ -62,17 +61,47 @@ BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CMFCToolView 그리기
 
+HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
+{
+	
+	FAILED_CHECK_RETURN(Engine::Ready_GraphicDev(g_hWnd, Engine::MODE_WIN, WINCX, WINCY, &m_pDeviceClass), E_FAIL);
+	Engine::Safe_AddRef(m_pDeviceClass);
+
+	*ppGraphicDev = m_pDeviceClass->Get_GraphicDev();
+	Engine::Safe_AddRef(*ppGraphicDev);
+
+	// InputDev 설치
+	/*FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);*/
+
+	return S_OK;
+}
+
+HRESULT CMFCToolView::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement ** ppManagement)
+{
+	//Engine::CScene*		pScene = nullptr;
+
+	//FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
+	//Safe_AddRef(*ppManagement);
+
+	//pScene = CLogo::Create(pGraphicDev);
+	//NULL_CHECK_RETURN(pScene, E_FAIL);
+
+	//FAILED_CHECK_RETURN((*ppManagement)->SetUp_Scene(pScene), E_FAIL);
+
+	return S_OK;
+}
+
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
 {
 	CMFCToolDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	Engine::Render_Begin((0.7f, 0.7f, 0.7f, 1.f));
+	CGraphic_Device::GetInstance()->Render_Begin();
 	
 	m_pTerrain->Render_Terrain();
 	
-	Engine::Render_End();
+	CGraphic_Device::GetInstance()->Render_End();
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 // 	pDC->Rectangle(100, 100, 200, 200);
 // 	pDC->Ellipse(100, 100, 200, 200);
@@ -148,17 +177,25 @@ void CMFCToolView::OnInitialUpdate()
 
 
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-	g_hWND = m_hWnd; 
+	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), );
+	//FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), );
+
+	Client::Safe_Release(m_pDeviceClass);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), );
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), );
+
+	g_hWnd = m_hWnd; 
 	if (FAILED(CGraphic_Device::GetInstance()->Ready_Graphic_Device()))
 	{
 		ERR_MSG(L"그래픽 디바이스 생성 실패..."); 
 		return; 
 	}
-	//if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_SINGLE, L"../Bin/Texture/Cube.png", L"Cube")))
-	//	return; 
+	if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_SINGLE, L"../Bin/Texture/Cube.png", L"Cube")))
+		return; 
 
-	//if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_MULTI, L"../Bin/Texture/Stage/Terrain/Tile/Tile%d.png", L"Terrain", L"Tile", 38)))
-	//	return;
+	if (FAILED(CTexture_Manager::GetInstance()->Insert_Texture(CTexture_Manager::TEX_MULTI, L"../Bin/Texture/Stage/Terrain/Tile/Tile%d.png", L"Terrain", L"Tile", 38)))
+		return;
 
 	if (nullptr == m_pTerrain)
 	{

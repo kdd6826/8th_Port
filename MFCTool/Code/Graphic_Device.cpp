@@ -52,7 +52,7 @@ HRESULT CGraphic_Device::Ready_Graphic_Device()
 
 	
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.hDeviceWindow = g_hWND;
+	d3dpp.hDeviceWindow = g_hWnd;
 	// 거짓이면 전체화면, 참이면  창모드을 사용하겠다. 
 	d3dpp.Windowed = TRUE;
 	d3dpp.EnableAutoDepthStencil = TRUE;
@@ -61,7 +61,7 @@ HRESULT CGraphic_Device::Ready_Graphic_Device()
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
 
 	//3. 조사하고 세팅한 데이터를 가지고 이제 장치를 제어할 컴객체를 생성하자!
-	if (FAILED(m_pSDK->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hWND, vp, &d3dpp, &m_pDevice)))
+	if (FAILED(m_pSDK->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hWnd, vp, &d3dpp, &m_pDevice)))
 	{
 		ERR_MSG(L"Failed Creating Device");
 		return E_FAIL; 

@@ -4,7 +4,6 @@
 
 // CMapTool 대화 상자입니다.
 
-BEGIN(Client)
 class CMapTool : public CDialog
 {
 	DECLARE_DYNAMIC(CMapTool)
@@ -31,4 +30,3 @@ public:
 	afx_msg void OnLbnSelchangePicture();
 	afx_msg void OnBnClickedSave();
 };
-END
