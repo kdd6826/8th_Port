@@ -36,10 +36,6 @@ public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 
-private:
-	Engine::CGraphicDev*		m_pDeviceClass = nullptr;
-	Engine::CManagement*		m_pManagementClass = nullptr;
-	LPDIRECT3DDEVICE9			m_pGraphicDev = nullptr;
 
 // 구현입니다.
 	afx_msg void OnAppAbout();
