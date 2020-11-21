@@ -103,7 +103,7 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	//
 	//CGraphic_Device::GetInstance()->Render_End();
 
-	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.0f, 0.7f, 1.f));
+	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
 
 
 
