@@ -18,7 +18,7 @@
 
 #include "Form.h"
 
-
+#include "Stage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -78,15 +78,15 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 HRESULT CMFCToolView::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement ** ppManagement)
 {
-	//Engine::CScene*		pScene = nullptr;
+	Engine::CScene*		pScene = nullptr;
 
-	//FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
-	//Safe_AddRef(*ppManagement);
+	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
+	Safe_AddRef(*ppManagement);
 
-	//pScene = CLogo::Create(pGraphicDev);
-	//NULL_CHECK_RETURN(pScene, E_FAIL);
+	pScene = CStage::Create(pGraphicDev);
+	NULL_CHECK_RETURN(pScene, E_FAIL);
 
-	//FAILED_CHECK_RETURN((*ppManagement)->SetUp_Scene(pScene), E_FAIL);
+	FAILED_CHECK_RETURN((*ppManagement)->SetUp_Scene(pScene), E_FAIL);
 
 	return S_OK;
 }
@@ -183,17 +183,18 @@ void CMFCToolView::OnInitialUpdate()
 	
 
 
+
+
+	g_hWnd = m_hWnd; 
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), );
-	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), );
+	/*FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), );*/
 
 	Client::Safe_Release(m_pDeviceClass);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), );
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), );
 
-	g_hWnd = m_hWnd; 
-	
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, );
 
