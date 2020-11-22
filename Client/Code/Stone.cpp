@@ -78,7 +78,7 @@ Client::_int Client::CStone::Update_Object(const _float& fTimeDelta)
 
 	SetUp_OnTerrain();
 
-	m_bColl = Collision_ToObject(L"GameLogic", L"Player");
+	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -90,11 +90,11 @@ void Client::CStone::Render_Object(void)
 
 	m_pMeshCom->Render_Meshes();
 
-	_matrix matWorld;
+	//_matrix matWorld;
 		// m_pTransformCom->Get_WorldMatrix(&matWorld);
-		m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
+	//	m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
 
-	m_pColliderCom->Render_Collider(Engine::COLLTYPE(m_bColl), &matWorld);
+	//m_pColliderCom->Render_Collider(Engine::COLLTYPE(m_bColl), &matWorld);
 
 
 }

@@ -78,11 +78,11 @@
     <ClCompile Include="..\Code\DynamicMesh.cpp">
       <Filter>00. Resources\02. Mesh\01. DynamicMesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\HierarchyLoader.cpp">
-      <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\AniCtrl.cpp">
       <Filter>00. Resources\02. Mesh\01. DynamicMesh\01. AniCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HierarchyLoader.cpp">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,11 +122,11 @@
     <ClInclude Include="..\Code\DynamicMesh.h">
       <Filter>00. Resources\02. Mesh\01. DynamicMesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\HierarchyLoader.h">
-      <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\AniCtrl.h">
       <Filter>00. Resources\02. Mesh\01. DynamicMesh\01. AniCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\HierarchyLoader.h">
+      <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

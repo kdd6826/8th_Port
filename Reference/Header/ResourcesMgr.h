@@ -12,6 +12,7 @@
 #include "Texture.h"
 
 #include "StaticMesh.h"
+#include "DynamicMesh.h"
 
 BEGIN(Engine)
 

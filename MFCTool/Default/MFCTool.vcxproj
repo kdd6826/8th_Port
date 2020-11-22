@@ -205,6 +205,7 @@
     <ClInclude Include="..\Code\MFCToolDoc.h" />
     <ClInclude Include="..\Code\MFCToolView.h" />
     <ClInclude Include="..\Code\MultiTex.h" />
+    <ClInclude Include="..\Code\Object_Manager.h" />
     <ClInclude Include="..\Code\SingleTex.h" />
     <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\Terrain.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />
     <ClCompile Include="..\Code\MFCToolView.cpp" />
     <ClCompile Include="..\Code\MultiTex.cpp" />
+    <ClCompile Include="..\Code\Object_Manager.cpp" />
     <ClCompile Include="..\Code\SingleTex.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />

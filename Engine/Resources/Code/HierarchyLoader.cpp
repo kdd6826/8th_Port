@@ -1,11 +1,12 @@
 #include "HierarchyLoader.h"
 
 USING(Engine)
+
 Engine::CHierarchyLoader::CHierarchyLoader(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pPath)
-	: m_pGraphicDev(pGraphicDev)
-	, m_pPath(pPath)
+	: m_pGraphicDev(pGraphicDev),
+	m_pPath(pPath)
 {
-	Safe_AddRef(m_pGraphicDev);
+	m_pGraphicDev->AddRef();
 }
 
 Engine::CHierarchyLoader::~CHierarchyLoader(void)
@@ -26,31 +27,15 @@ STDMETHODIMP Engine::CHierarchyLoader::CreateFrame(THIS_ LPCSTR Name, LPD3DXFRAM
 
 	return S_OK;
 }
-STDMETHODIMP Engine::CHierarchyLoader::DestroyFrame(THIS_ LPD3DXFRAME pFrameToFree)
-{
-	Safe_Delete_Array(pFrameToFree->Name);
 
-	if (nullptr != pFrameToFree->pMeshContainer)
-		DestroyMeshContainer(pFrameToFree->pMeshContainer);
-
-	if (nullptr != pFrameToFree->pFrameSibling)
-		DestroyFrame(pFrameToFree->pFrameSibling);
-
-	if (nullptr != pFrameToFree->pFrameFirstChild)
-		DestroyFrame(pFrameToFree->pFrameFirstChild);
-
-	Safe_Delete(pFrameToFree);
-
-	return S_OK;
-}
 STDMETHODIMP Engine::CHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name, 
-	CONST D3DXMESHDATA *pMeshData,
-	CONST D3DXMATERIAL *pMaterials, 
-	CONST D3DXEFFECTINSTANCE *pEffectInstances,
-	DWORD NumMaterials, 
-	CONST DWORD *pAdjacency, 
-	LPD3DXSKININFO pSkinInfo,
-	LPD3DXMESHCONTAINER *ppNewMeshContainer)
+															CONST D3DXMESHDATA *pMeshData, 
+															CONST D3DXMATERIAL *pMaterials, 
+															CONST D3DXEFFECTINSTANCE *pEffectInstances, 
+															DWORD NumMaterials, 
+															CONST DWORD *pAdjacency, 
+															LPD3DXSKININFO pSkinInfo, 
+															LPD3DXMESHCONTAINER *ppNewMeshContainer)
 {
 	D3DXMESHCONTAINER_DERIVED*		pDerivedMeshContainer = new D3DXMESHCONTAINER_DERIVED;
 	ZeroMemory(pDerivedMeshContainer, sizeof(D3DXMESHCONTAINER_DERIVED));
@@ -59,18 +44,21 @@ STDMETHODIMP Engine::CHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 
 	pDerivedMeshContainer->MeshData.Type = D3DXMESHTYPE_MESH;
 
-	LPD3DXMESH pMesh = pMeshData->pMesh;
+	LPD3DXMESH		pMesh = pMeshData->pMesh;
 
-	_ulong	dwNumFaces = pMesh->GetNumFaces();	// 현재 메쉬가 지닌 폴리곤의 개수를 반환
+	_ulong	dwNumFaces = pMesh->GetNumFaces();	// 메쉬가 지닌 폴리곤 개수를 반환
 
 	pDerivedMeshContainer->pAdjacency = new _ulong[dwNumFaces * 3];
 	memcpy(pDerivedMeshContainer->pAdjacency, pAdjacency, sizeof(_ulong) * dwNumFaces * 3);
 
-	_ulong	dwFVF = pMesh->GetFVF();	// 메쉬가 지닌 정점 FVF정보를 얻어오는 함수
-											// 노말 값이 없는 경우
+	_ulong	dwFVF = pMesh->GetFVF();
+
 	if (!(dwFVF & D3DFVF_NORMAL))
 	{
+		// fvf 정보만 채워준 채 메쉬 객체를 생성
 		pMesh->CloneMeshFVF(pMesh->GetOptions(), dwFVF | D3DFVF_NORMAL, m_pGraphicDev, &pDerivedMeshContainer->MeshData.pMesh);
+
+		// 각 폴리곤 또는 정점 기준의 법선을 계산하여 삽입해주는 함수
 		D3DXComputeNormals(pDerivedMeshContainer->MeshData.pMesh, pDerivedMeshContainer->pAdjacency);
 	}
 	else
@@ -92,25 +80,20 @@ STDMETHODIMP Engine::CHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 
 		for (_ulong i = 0; i < pDerivedMeshContainer->NumMaterials; ++i)
 		{
-			_tchar	szFullPath[256] = L"";
-			_tchar	szFileName[256] = L"";
+			TCHAR		szFullPath[256] = L"";
+			TCHAR		szFileName[256] = L"";
+
+			MultiByteToWideChar(CP_ACP, 
+								0, 
+								pDerivedMeshContainer->pMaterials[i].pTextureFilename, 
+								strlen(pDerivedMeshContainer->pMaterials[i].pTextureFilename),
+								szFileName, 
+								256);
 
 			lstrcpy(szFullPath, m_pPath);
-
-			MultiByteToWideChar(CP_ACP,
-				0,
-				pDerivedMeshContainer->pMaterials[i].pTextureFilename,
-				strlen(pDerivedMeshContainer->pMaterials[i].pTextureFilename),
-				szFileName,
-				256);
-
 			lstrcat(szFullPath, szFileName);
 
-			if (FAILED(D3DXCreateTextureFromFile(m_pGraphicDev, szFullPath, &pDerivedMeshContainer->ppTexture[i])))
-			{
-				MSG_BOX("DynamicMesh`s Texture Create Failed");
-				return E_FAIL;
-			}
+			FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, szFullPath, &pDerivedMeshContainer->ppTexture[i]), E_FAIL);
 		}
 	}
 	else
@@ -128,15 +111,11 @@ STDMETHODIMP Engine::CHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 		return S_OK;
 
 	pDerivedMeshContainer->pSkinInfo = pSkinInfo;
-	Safe_AddRef(pDerivedMeshContainer->pSkinInfo);
+	pDerivedMeshContainer->pSkinInfo->AddRef();
 
-	// 밑에 코드 있음
+	pMesh->CloneMeshFVF(pDerivedMeshContainer->MeshData.pMesh->GetOptions(), pDerivedMeshContainer->MeshData.pMesh->GetFVF(), m_pGraphicDev, &pDerivedMeshContainer->pOriMesh);
 
-	pDerivedMeshContainer->MeshData.pMesh->CloneMeshFVF(pDerivedMeshContainer->MeshData.pMesh->GetOptions(), 
-														pDerivedMeshContainer->MeshData.pMesh->GetFVF(), 
-														m_pGraphicDev, 
-														&pDerivedMeshContainer->pOriMesh);
-	// 뼈의 개수를 얻어오는 함수
+	// 메쉬 컨테이너가 영향을 받는 뼈의 개수를 반환하는 함수
 	pDerivedMeshContainer->dwNumBones = pDerivedMeshContainer->pSkinInfo->GetNumBones();
 
 	pDerivedMeshContainer->pFrameOffsetMatrix = new _matrix[pDerivedMeshContainer->dwNumBones];
@@ -149,47 +128,61 @@ STDMETHODIMP Engine::CHierarchyLoader::CreateMeshContainer(THIS_ LPCSTR Name,
 	ZeroMemory(pDerivedMeshContainer->pRenderingMatrix, sizeof(_matrix) * pDerivedMeshContainer->dwNumBones);
 
 	for (_ulong i = 0; i < pDerivedMeshContainer->dwNumBones; ++i)
-	{
-		pDerivedMeshContainer->pFrameOffsetMatrix[i] = *pDerivedMeshContainer->pSkinInfo->GetBoneOffsetMatrix(i);	// 메쉬를 그리기 위해서 뼈대들에는 인덱스 값이 매겨져 있다.
-	}
+		pDerivedMeshContainer->pFrameOffsetMatrix[i] = *pDerivedMeshContainer->pSkinInfo->GetBoneOffsetMatrix(i);	// 메쉬를 그리기 위한 뼈대들은 고유의 인덱스 값을 가지고 있음. 그래서 순회하면서 행렬 정보를 차례대로 얻어올 수 있다.
 	
 	*ppNewMeshContainer = pDerivedMeshContainer;
 
 	return S_OK;
 }
 
-
-
-STDMETHODIMP Engine::CHierarchyLoader::DestroyMeshContainer(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree)
+STDMETHODIMP Engine::CHierarchyLoader::DestroyFrame(THIS_ LPD3DXFRAME pFrameToFree)
 {
-	D3DXMESHCONTAINER_DERIVED*		pDerivedMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerToFree;
+	Safe_Delete_Array(pFrameToFree->Name);
 
-	for (_ulong i = 0; i < pDerivedMeshContainer->NumMaterials; ++i)
-		Safe_Release(pDerivedMeshContainer->ppTexture[i]);
+	if (nullptr != pFrameToFree->pMeshContainer)
+		DestroyMeshContainer(pFrameToFree->pMeshContainer);
 
-	Safe_Release(pDerivedMeshContainer->pOriMesh);
-	Safe_Release(pDerivedMeshContainer->pSkinInfo);
-	Safe_Release(pDerivedMeshContainer->MeshData.pMesh);
+	if (nullptr != pFrameToFree->pFrameSibling)
+		DestroyFrame(pFrameToFree->pFrameSibling);
 
-	Safe_Delete_Array(pDerivedMeshContainer->Name);
-	Safe_Delete_Array(pDerivedMeshContainer->ppTexture);
-	Safe_Delete_Array(pDerivedMeshContainer->pFrameOffsetMatrix);
-	Safe_Delete_Array(pDerivedMeshContainer->ppFrameCombinedMatrix);
-	Safe_Delete_Array(pDerivedMeshContainer->pRenderingMatrix);
-	Safe_Delete_Array(pDerivedMeshContainer->pAdjacency);
-	Safe_Delete_Array(pDerivedMeshContainer->pMaterials);
-	
-	Safe_Delete(pDerivedMeshContainer);
+	if (nullptr != pFrameToFree->pFrameFirstChild)
+		DestroyFrame(pFrameToFree->pFrameFirstChild);
+
+	Safe_Delete(pFrameToFree);
 
 	return S_OK;
 }
 
-void Engine::CHierarchyLoader::Allocate_Name(char** ppName, const char* pFrameName)
+STDMETHODIMP Engine::CHierarchyLoader::DestroyMeshContainer(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree)
+{
+	D3DXMESHCONTAINER_DERIVED*		pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerToFree;
+	
+	for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
+		Safe_Release(pMeshContainer->ppTexture[i]);
+
+	Safe_Delete_Array(pMeshContainer->ppTexture);
+	Safe_Delete_Array(pMeshContainer->Name);
+	Safe_Delete_Array(pMeshContainer->pAdjacency);
+	Safe_Delete_Array(pMeshContainer->pFrameOffsetMatrix);
+	Safe_Delete_Array(pMeshContainer->pMaterials);
+	Safe_Delete_Array(pMeshContainer->ppFrameCombinedMatrix);
+	Safe_Delete_Array(pMeshContainer->pRenderingMatrix);
+	
+	Safe_Release(pMeshContainer->MeshData.pMesh);
+	Safe_Release(pMeshContainer->pOriMesh);
+	Safe_Release(pMeshContainer->pSkinInfo);
+
+	Safe_Delete(pMeshContainer);
+
+	return S_OK;
+}
+
+void CHierarchyLoader::Allocate_Name(char ** ppName, const char * pFrameName)
 {
 	if (nullptr == pFrameName)
 		return;
 
-	_uint	iLength = strlen(pFrameName);
+	_uint		iLength = strlen(pFrameName);
 
 	*ppName = new char[iLength + 1];
 
@@ -197,12 +190,12 @@ void Engine::CHierarchyLoader::Allocate_Name(char** ppName, const char* pFrameNa
 
 }
 
-Engine::CHierarchyLoader* Engine::CHierarchyLoader::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pPath)
+CHierarchyLoader * CHierarchyLoader::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar * pPath)
 {
 	return new CHierarchyLoader(pGraphicDev, pPath);
 }
 
-Engine::_ulong Engine::CHierarchyLoader::Release(void)
+_ulong CHierarchyLoader::Release(void)
 {
 	Safe_Release(m_pGraphicDev);
 

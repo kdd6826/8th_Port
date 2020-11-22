@@ -109,6 +109,7 @@ HRESULT Engine::CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev,
 		break;
 
 	case TYPE_DYNAMIC:
+		pResources = CDynamicMesh::Create(pGraphicDev, pFilePath, pFileName);
 		break;
 
 	case TYPE_NAVI:

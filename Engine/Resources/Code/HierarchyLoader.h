@@ -12,8 +12,8 @@ private:
 	virtual ~CHierarchyLoader(void);
 
 public:
-	STDMETHOD(CreateFrame)(THIS_ LPCSTR Name, LPD3DXFRAME *ppNewFrame);
-
+	STDMETHOD(CreateFrame)(THIS_ LPCSTR Name, LPD3DXFRAME *ppNewFrame) ;
+	
 	STDMETHOD(CreateMeshContainer)(THIS_ LPCSTR Name,
 									CONST D3DXMESHDATA *pMeshData,
 									CONST D3DXMATERIAL *pMaterials,
@@ -21,21 +21,24 @@ public:
 									DWORD NumMaterials,
 									CONST DWORD *pAdjacency,
 									LPD3DXSKININFO pSkinInfo,
-									LPD3DXMESHCONTAINER *ppNewMeshContainer);
-		
-	STDMETHOD(DestroyFrame)(THIS_ LPD3DXFRAME pFrameToFree);
-	STDMETHOD(DestroyMeshContainer)(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree);
+									LPD3DXMESHCONTAINER *ppNewMeshContainer) ;
+
+	
+	STDMETHOD(DestroyFrame)(THIS_ LPD3DXFRAME pFrameToFree) ;
+	
+	STDMETHOD(DestroyMeshContainer)(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree) ;
 
 private:
 	void		Allocate_Name(char** ppName, const char* pFrameName);
 
 private:
-	LPDIRECT3DDEVICE9		m_pGraphicDev;
-	const _tchar*			m_pPath;
+	LPDIRECT3DDEVICE9				m_pGraphicDev;
+	const _tchar*					m_pPath;
 
 public:
 	static CHierarchyLoader*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pPath);
-	_ulong							Release(void);
+public:
+	_ulong	Release(void);
 
 };
 

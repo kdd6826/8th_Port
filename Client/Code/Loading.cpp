@@ -119,12 +119,29 @@ _uint CLoading::Loading_ForStage(void)
 												E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	RESOURCE_STAGE,
+	//	Engine::RESOURCE_STAGE,
 	//	L"Mesh_Player",
 	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Mesh/DynamicMesh/PlayerXfile/",
-	//	L"Player.X"),
+	//	L"../Bin/Resource/Arisha/",
+	//	L"Arisha.X"),
 	//	E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Player",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/ArishaX/",
+		L"NewArisha.X"),
+		E_FAIL);
+
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//											Engine::RESOURCE_STAGE,
+	//											L"Mesh_Player",
+	//											Engine::TYPE_DYNAMIC,
+	//											L"../Bin/Resource/Lyn/Mesh/Lyn/",
+	//											L"Lyn.X"),
+	//											E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,

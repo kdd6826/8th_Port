@@ -97,6 +97,7 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+
 	//CGraphic_Device::GetInstance()->Render_Begin();
 	//
 	//m_pTerrain->Render_Terrain();
@@ -104,7 +105,6 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	//CGraphic_Device::GetInstance()->Render_End();
 
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
-
 
 
 	Engine::Render_End();
