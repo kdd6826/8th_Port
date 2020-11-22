@@ -69,7 +69,7 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	Engine::Safe_AddRef(*ppGraphicDev);
 
 	// InputDev 설치
-	/*FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);*/
+	//FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
 
 	return S_OK;
 }
@@ -79,10 +79,10 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
 {
 	CMFCToolDoc* pDoc = GetDocument();
+
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-
 	//CGraphic_Device::GetInstance()->Render_Begin();
 	//
 	//m_pTerrain->Render_Terrain();
@@ -217,6 +217,8 @@ void CMFCToolView::OnInitialUpdate()
 		0.1f,	// 절두체의 near 평면의 z값
 		1000.f); // 절두체의 far 평면의 z값
 
+	Engine::CGameObject* pGameObject = nullptr;
+
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
@@ -224,7 +226,6 @@ void CMFCToolView::OnInitialUpdate()
 	m_pTerrain->Ready();
 
 	m_pCamera = new CDynamicCamera(m_pGraphicDev);
-	
 }
 
 
@@ -244,7 +245,7 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//InvalidateRect(nullptr, 0);
 	//CScrollView::OnLButtonDown(nFlags, point);
-
+	
 }
 
 HRESULT CMFCToolView::Loading()

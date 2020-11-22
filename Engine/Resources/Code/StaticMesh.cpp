@@ -55,7 +55,7 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	// 노말 값이 없는 경우
 	if (!(dwFVF & D3DFVF_NORMAL))
 	{
-		m_pOriMesh->CloneMeshFVF(m_pOriMesh->GetOptions(), dwFVF | D3DFVF_NORMAL, m_pGraphicDev, &m_pMesh);
+		m_pOriMesh->CloneMeshFVF(m_pOriMesh->GetOptions(), dwFVF |= D3DFVF_NORMAL, m_pGraphicDev, &m_pMesh);
 		D3DXComputeNormals(m_pMesh, (_ulong*)m_pAdjacency->GetBufferPointer());
 	}
 	else

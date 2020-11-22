@@ -55,6 +55,7 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 
 		m_vEye += vLength;
 		m_vAt += vLength;
+		InvalidateRect(g_hWnd,nullptr, 0);
 	}
 
 	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
