@@ -61,6 +61,18 @@ BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CMFCToolView ±◊∏Æ±‚
 
+_uint CMFCToolView::Loading_ForStage(void)
+{
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_Terrain",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
+		E_FAIL);
+
+	return _uint();
+}
+
 HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 {
 	
@@ -87,6 +99,25 @@ HRESULT CMFCToolView::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManage
 	NULL_CHECK_RETURN(pScene, E_FAIL);
 
 	FAILED_CHECK_RETURN((*ppManagement)->SetUp_Scene(pScene), E_FAIL);
+
+	return S_OK;
+}
+
+HRESULT CMFCToolView::Ready_Resource(Engine::RESOURCETYPE eType)
+{
+	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(eType), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Player", Engine::TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
+
+	Engine::CComponent* pComponent = nullptr;
+
+	pComponent = Engine::CTransform::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_Transform", pComponent);
+
 
 	return S_OK;
 }
@@ -194,6 +225,15 @@ void CMFCToolView::OnInitialUpdate()
 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"πŸ≈¡", 15, 20, FW_HEAVY), );
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±√º≠", 30, 30, FW_HEAVY), );
+	
+	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), );
+
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_Terrain",
+		Engine::TEX_NORMAL,
+		L"../../Client/Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
+		);
 
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, );

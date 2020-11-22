@@ -29,11 +29,12 @@ public:
 // 특성입니다.
 public:
 	CMFCToolDoc* GetDocument() const;
-
+	_uint		Loading_ForStage(void);
 // 작업입니다.
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
+	HRESULT		Ready_Resource(Engine::RESOURCETYPE eType);
 
 private:
 	Engine::CGraphicDev*		m_pDeviceClass = nullptr;

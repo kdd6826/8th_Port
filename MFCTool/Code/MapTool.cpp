@@ -35,6 +35,7 @@ void CMapTool::DoDataExchange(CDataExchange* pDX)
 }
 
 
+
 BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_WM_DROPFILES()
 	ON_LBN_SELCHANGE(IDC_LIST1, &CMapTool::OnLbnSelchangePicture)
