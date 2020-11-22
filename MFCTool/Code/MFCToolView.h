@@ -8,6 +8,10 @@
 #include "Base.h"
 #include "Engine_Define.h"
 #include "Export_Function.h"
+
+#include "DynamicCamera.h"
+
+
 BEGIN(Engine)
 class CGraphicDev;
 class CManagement;
@@ -15,8 +19,8 @@ END
 
 class CMFCToolDoc;
 class CSingleTex; 
-class CTerrain; 
-
+class CTerrain;
+class CDynamicCamera;
 
 class CMFCToolView : public CScrollView
 {
@@ -25,16 +29,15 @@ protected: // serialization에서만 만들어집니다.
 	DECLARE_DYNCREATE(CMFCToolView)
 public:
 	CTerrain* m_pTerrain = nullptr; 
+	CDynamicCamera* m_pCamera = nullptr;
 	float m_fAngle = 0.f; 
 // 특성입니다.
 public:
 	CMFCToolDoc* GetDocument() const;
-	_uint		Loading_ForStage(void);
+
 // 작업입니다.
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
-	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
-	HRESULT		Ready_Resource(Engine::RESOURCETYPE eType);
 
 private:
 	Engine::CGraphicDev*		m_pDeviceClass = nullptr;
@@ -65,6 +68,7 @@ protected:
 public:
 	virtual void OnInitialUpdate();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	HRESULT Loading();
 };
 
 #ifndef _DEBUG  // MFCToolView.cpp의 디버그 버전

@@ -3,92 +3,46 @@
 #include "Export_Function.h"
 
 CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
+	:Engine::CGameObject(pGraphicDev)
 {
-
 }
 
-CTerrain::~CTerrain(void)
+CTerrain::~CTerrain()
 {
-
 }
 
-HRESULT CTerrain::Add_Component(void)
+HRESULT CTerrain::Ready()
 {
-	Engine::CComponent*		pComponent = nullptr;
-
-	// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_TerrainTex"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+	m_pBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_TerrainTex"));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 
 	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-
-	// Renderer
-	pComponent = m_pRendererCom = Engine::Get_Renderer();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Safe_AddRef(pComponent);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
+	m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 
 	// Transform
-	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
-
+	m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 
 	return S_OK;
 }
 
-CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CTerrain*	pInstance = new CTerrain(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_Object()))
-		Client::Safe_Release(pInstance);
-
-	return pInstance;
-}
-
-void CTerrain::Free(void)
-{
-	Engine::CGameObject::Free();
-}
-
-
-HRESULT CTerrain::Ready_Object(void)
-{
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	return S_OK;
-}
-_int CTerrain::Update_Object(const _float& fTimeDelta)
-{
-	Engine::CGameObject::Update_Object(fTimeDelta);
-
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
-
-	return 0;
-}
-void CTerrain::Render_Object(void)
+void CTerrain::Render()
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	m_pTextureCom->Render_Texture(0);
 
-	FAILED_CHECK_RETURN(SetUp_Material(), );
+	FAILED_CHECK_RETURN(SetUpMaterial(), );
 
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-
 }
 
-HRESULT CTerrain::SetUp_Material(void)
+HRESULT CTerrain::SetUpMaterial()
 {
 
 	D3DMATERIAL9			tMtrlInfo;

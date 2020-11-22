@@ -197,6 +197,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\FileInfo.h" />
     <ClInclude Include="..\Code\Form.h" />
     <ClInclude Include="..\Code\Graphic_Device.h" />
@@ -205,9 +206,7 @@
     <ClInclude Include="..\Code\MFCToolDoc.h" />
     <ClInclude Include="..\Code\MFCToolView.h" />
     <ClInclude Include="..\Code\MultiTex.h" />
-    <ClInclude Include="..\Code\Object_Manager.h" />
     <ClInclude Include="..\Code\SingleTex.h" />
-    <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Texture.h" />
     <ClInclude Include="..\Code\Texture_Manager.h" />
@@ -224,6 +223,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\FileInfo.cpp" />
     <ClCompile Include="..\Code\Form.cpp" />
     <ClCompile Include="..\Code\Graphic_Device.cpp" />
@@ -232,9 +232,7 @@
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />
     <ClCompile Include="..\Code\MFCToolView.cpp" />
     <ClCompile Include="..\Code\MultiTex.cpp" />
-    <ClCompile Include="..\Code\Object_Manager.cpp" />
     <ClCompile Include="..\Code\SingleTex.cpp" />
-    <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\Texture_Manager.cpp" />

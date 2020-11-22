@@ -1,47 +1,5 @@
-﻿  Loading.cpp
-c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\client\header\macro.h(37): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Client.cpp
-c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\client\header\macro.h(37): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  TestPlayer.cpp
+﻿  Terrain.cpp
 c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
   c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  TestMonster.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  Terrain.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  Stone.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  Stage.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  SkyBox.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  Player.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  Monster.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  MainApp.cpp
-c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\client\header\macro.h(37): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  Logo.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  DynamicCamera.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  BackGround.cpp
-c:\users\gmh\desktop\8th\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\8th\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  코드를 생성하고 있습니다...
   Client.vcxproj -> C:\Users\GMH\Desktop\8th\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

@@ -13,19 +13,17 @@
 #include "MFCToolView.h"
 #include "Texture_Manager.h"
 #include "SingleTex.h"
-#include "Terrain.h"
 #include "MainFrm.h"
 
 #include "Form.h"
-
-#include "Stage.h"
+#include "Terrain.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 // CMFCToolView
-HWND g_hWnd; 
+HWND g_hWnd;
 HINSTANCE g_hInst;
 IMPLEMENT_DYNCREATE(CMFCToolView, CScrollView)
 
@@ -46,8 +44,8 @@ CMFCToolView::CMFCToolView()
 
 CMFCToolView::~CMFCToolView()
 {
-	CGraphic_Device::DestroyInstance(); 
-	CTexture_Manager::DestroyInstance(); 
+	CGraphic_Device::DestroyInstance();
+	CTexture_Manager::DestroyInstance();
 
 }
 
@@ -61,21 +59,9 @@ BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CMFCToolView 그리기
 
-_uint CMFCToolView::Loading_ForStage(void)
+HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 {
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Texture_Terrain",
-		Engine::TEX_NORMAL,
-		L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
-		E_FAIL);
 
-	return _uint();
-}
-
-HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
-{
-	
 	FAILED_CHECK_RETURN(Engine::Ready_GraphicDev(g_hWnd, Engine::MODE_WIN, WINCX, WINCY, &m_pDeviceClass), E_FAIL);
 	Engine::Safe_AddRef(m_pDeviceClass);
 
@@ -88,39 +74,7 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	return S_OK;
 }
 
-HRESULT CMFCToolView::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement ** ppManagement)
-{
-	Engine::CScene*		pScene = nullptr;
 
-	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
-	Safe_AddRef(*ppManagement);
-
-	pScene = CStage::Create(pGraphicDev);
-	NULL_CHECK_RETURN(pScene, E_FAIL);
-
-	FAILED_CHECK_RETURN((*ppManagement)->SetUp_Scene(pScene), E_FAIL);
-
-	return S_OK;
-}
-
-HRESULT CMFCToolView::Ready_Resource(Engine::RESOURCETYPE eType)
-{
-	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(eType), E_FAIL);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Logo", Engine::TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Player", Engine::TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
-
-	Engine::CComponent* pComponent = nullptr;
-
-	pComponent = Engine::CTransform::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(L"Proto_Transform", pComponent);
-
-
-	return S_OK;
-}
 
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
 {
@@ -134,12 +88,17 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	//m_pTerrain->Render_Terrain();
 	//
 	//CGraphic_Device::GetInstance()->Render_End();
+	
 
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
 
+	m_pTerrain->Render();
 
 	Engine::Render_End();
+	m_pCamera->Key_Input(5.f);
 
+	
+	UpdateWindow();
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 // 	pDC->Rectangle(100, 100, 200, 200);
 // 	pDC->Ellipse(100, 100, 200, 200);
@@ -192,31 +151,31 @@ CMFCToolDoc* CMFCToolView::GetDocument() const // 디버그되지 않은 버전은 인라인�
 void CMFCToolView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
-	
-	SetScrollSizes(MM_TEXT,CSize(TILECX * TILEX, (TILECY >> 1) * TILEY));
+
+	SetScrollSizes(MM_TEXT, CSize(TILECX * TILEX, (TILECY >> 1) * TILEY));
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
-	RECT rcMain = {}; 
+	RECT rcMain = {};
 
 	pMain->GetWindowRect(&rcMain);
 
 	SetRect(&rcMain, 0, 0, rcMain.right - rcMain.left, rcMain.bottom - rcMain.top);
 
 	//View 
-	RECT rcView = {}; 
-	GetClientRect(&rcView); ; 
+	RECT rcView = {};
+	GetClientRect(&rcView); ;
 	//1440, 760
 	//1420, 698
-	float fXGap = rcMain.right - float(rcView.right); 
-	float fYGap =  WINCY+ (float(rcMain.bottom) - rcView.bottom); 
-	
-	pMain->SetWindowPos(nullptr, 0, 0, LONG(WINCX + fXGap),LONG(fYGap), SWP_NOZORDER);
+	float fXGap = rcMain.right - float(rcView.right);
+	float fYGap = WINCY + (float(rcMain.bottom) - rcView.bottom);
 
-	
+	pMain->SetWindowPos(nullptr, 0, 0, LONG(WINCX + fXGap), LONG(fYGap), SWP_NOZORDER);
 
 
 
 
-	g_hWnd = m_hWnd; 
+
+
+	g_hWnd = m_hWnd;
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), );
 	/*FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), );*/
@@ -225,17 +184,8 @@ void CMFCToolView::OnInitialUpdate()
 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), );
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), );
-	
-	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), );
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Texture_Terrain",
-		Engine::TEX_NORMAL,
-		L"../../Client/Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
-		);
-
-	Engine::CLayer*			pLayer = Engine::CLayer::Create();
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, );
 
 	//if (nullptr == m_pTerrain)
@@ -245,16 +195,46 @@ void CMFCToolView::OnInitialUpdate()
 	//	NULL_CHECK_RETURN(pGameObject, );
 	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), );
 	//}
+
+	if (FAILED(Loading()))
+	{
+		MessageBox(L"Loading Failed in View");
+		return;
+	}
+	
+	_matrix		matView, matProj;
+
+	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
+	D3DXMatrixLookAtLH(&matView, // 행렬 결과
+		&_vec3(0.f, 0.f, -10.f), // eye(카메라 위치)
+		&_vec3(0.f, 0.f, 0.f),	// at(카메라가 바라보는 위치)
+		&_vec3(0.f, 1.f, 0.f)); // up(카메라와 수직을 이루는 방향)
+
+								// 원근 투영 행렬 생성 함수
+	D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
+		D3DXToRadian(60.f),		// fovY
+		(_float)WINCX / WINCY,	// 종횡비
+		0.1f,	// 절두체의 near 평면의 z값
+		1000.f); // 절두체의 far 평면의 z값
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
+	m_pTerrain = new CTerrain(m_pGraphicDev);
+	m_pTerrain->Ready();
+
+	m_pCamera = new CDynamicCamera(m_pGraphicDev);
+	
 }
 
 
 void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	int i = 0; 
-// 	TCHAR szMouseBuf[54]= L""; 
-// 	swprintf_s(szMouseBuf, L"Point.x : %d, Point.y : %d", point.x, point.y);
-// 	ERR_MSG(szMouseBuf);
+	//int i = 0; 
+ //	TCHAR szMouseBuf[54]= L""; 
+ //	swprintf_s(szMouseBuf, L"Point.x : %d, Point.y : %d", point.x, point.y);
+ //	ERR_MSG(szMouseBuf);
 	//CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	//CForm* pForm = dynamic_cast<CForm*>(pMain->m_SecondSplitter.GetPane(1, 0));
 	//_int iDrawID = pForm->m_tMapTool.m_iDrawID;
@@ -264,4 +244,37 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//InvalidateRect(nullptr, 0);
 	//CScrollView::OnLButtonDown(nFlags, point);
+
+}
+
+HRESULT CMFCToolView::Loading()
+{
+	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
+
+	//Buffer
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_TerrainTex",
+		Engine::BUFFER_TERRAINTEX,
+		VTXCNTX,
+		VTXCNTZ,
+		VTXITV),
+		E_FAIL);
+
+	//Texture
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_Terrain",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
+		E_FAIL);
+
+	//Component
+	Engine::CComponent* pComponent = nullptr;
+
+	pComponent = Engine::CTransform::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_Transform", pComponent);
+
+	return S_OK;
 }
