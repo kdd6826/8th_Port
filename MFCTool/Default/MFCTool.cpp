@@ -197,6 +197,40 @@ int CMFCToolApp::Run()
 	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 60.f), E_FAIL);
 
 
+	//// 기본 메시지 루프입니다.
+	//while (true)
+	//{
+	//	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	//	{
+	//		if (WM_QUIT == msg.message)
+	//			break;
+
+	//		if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
+	//		{
+	//			TranslateMessage(&msg);
+	//			DispatchMessage(&msg);
+	//		}
+	//	}
+	//	else
+	//	{
+	//		Engine::Set_TimeDelta(L"Timer_Immediate");
+
+	//		_float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+
+	//		if (Engine::IsPermit_Call(L"Frame_FPS60", fTimeDelta))
+	//		{
+	//			Engine::Set_TimeDelta(L"Timer_FPS60");
+	//			_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
+
+	//			int i = 0;
+	//			CMFCToolView::GetInstance()->Update(60.f);
+	//			//pMainApp->Update_MainApp(fTime60);
+	//			//pMainApp->Render_MainApp();
+	//		}
+	//	}
+	//}
+
+
 	// 기본 메시지 루프입니다.
 	while (true)
 	{
@@ -205,7 +239,7 @@ int CMFCToolApp::Run()
 			if (WM_QUIT == msg.message)
 				break;
 
-			if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
+			if (!TranslateAccelerator(msg.hwnd, NULL, &msg))
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
@@ -221,15 +255,13 @@ int CMFCToolApp::Run()
 			{
 				Engine::Set_TimeDelta(L"Timer_FPS60");
 				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
-
-				int i = 0;
 				CMFCToolView::GetInstance()->Update(60.f);
+				//CMFCToolView::GetInstance()->OnDraw();
 				//pMainApp->Update_MainApp(fTime60);
 				//pMainApp->Render_MainApp();
 			}
 		}
 	}
-
 	_ulong dwRefCnt = 0;
 
 

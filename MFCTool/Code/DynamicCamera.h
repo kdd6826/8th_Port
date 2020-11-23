@@ -4,9 +4,13 @@
 #include "Camera.h"
 #include "Define.h"
 
+BEGIN(Engine)
+CCamera;
+END
 
 class CDynamicCamera : public Engine::CCamera
 {
+	DECLARE_SINGLETON(CDynamicCamera)
 public:
 	explicit CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CDynamicCamera(void);

@@ -16,6 +16,7 @@
 BEGIN(Engine)
 class CGraphicDev;
 class CManagement;
+
 END
 
 class CMFCToolDoc;
@@ -38,7 +39,7 @@ public:
 // 특성입니다.
 public:
 	CMFCToolDoc* GetDocument() const;
-	static int Update(const _float& fTimeDelta);
+
 // 작업입니다.
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
@@ -50,6 +51,7 @@ private:
 // 재정의입니다.
 public:
 	virtual void OnDraw(CDC* pDC);  // 이 뷰를 그리기 위해 재정의되었습니다.
+	int Update(const _float& fTimeDelta);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);

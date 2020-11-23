@@ -61,8 +61,14 @@ BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
 
 int CMFCToolView::Update(const _float& fTimeDelta)
 {
-	//CDynamicCamera::Key_Input();
+
 	
+	if (nullptr != m_pCamera)
+		m_pCamera->Key_Input(fTimeDelta);
+	else
+		int i = 0;
+	//else
+	//m_pCamera = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 0.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	return 0;
 }
 
@@ -76,7 +82,8 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	Engine::Safe_AddRef(*ppGraphicDev);
 
 	// InputDev 설치
-	//FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
+	g_hInst = AfxGetInstanceHandle();
+	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
 
 	return S_OK;
 }
@@ -102,27 +109,9 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	m_pTerrain->Render();
 
 	Engine::Render_End();
-	m_pCamera->Key_Input(5.f);
+	//m_pCamera->Key_Input(5.f);
 
-	_matrix		matView, matProj;
-
-	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
-	D3DXMatrixLookAtLH(&matView, // 행렬 결과
-		&_vec3(0.f, 0.f, -10.f), // eye(카메라 위치)
-		&_vec3(0.f, 0.f, 0.f),	// at(카메라가 바라보는 위치)
-		&_vec3(0.f, 1.f, 0.f)); // up(카메라와 수직을 이루는 방향)
-
-								// 원근 투영 행렬 생성 함수
-	D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
-		D3DXToRadian(60.f),		// fovY
-		(_float)WINCX / WINCY,	// 종횡비
-		0.1f,	// 절두체의 near 평면의 z값
-		1000.f); // 절두체의 far 평면의 z값
-
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-
+	
 	UpdateWindow();
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 // 	pDC->Rectangle(100, 100, 200, 200);
@@ -235,7 +224,32 @@ void CMFCToolView::OnInitialUpdate()
 	m_pTerrain = new CTerrain(m_pGraphicDev);
 	m_pTerrain->Ready();
 
-	m_pCamera = new CDynamicCamera(m_pGraphicDev);
+
+	m_pCamera = CDynamicCamera::Create(m_pGraphicDev,
+										 &_vec3(0.f, 0.f, -10.f),
+										 &_vec3(0.f, 0.f, 0.f),
+										 &_vec3(0.f, 1.f, 0.f));
+
+
+
+
+	/*_matrix		matView, matProj;*/
+	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
+	//D3DXMatrixLookAtLH(&matView, // 행렬 결과
+	//	&_vec3(0.f, 0.f, -10.f), // eye(카메라 위치)
+	//	&_vec3(0.f, 0.f, 0.f),	// at(카메라가 바라보는 위치)
+	//	&_vec3(0.f, 1.f, 0.f)); // up(카메라와 수직을 이루는 방향)
+
+	//							// 원근 투영 행렬 생성 함수
+	//D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
+	//	D3DXToRadian(60.f),		// fovY
+	//	(_float)WINCX / WINCY,	// 종횡비
+	//	0.1f,	// 절두체의 near 평면의 z값
+	//	1000.f); // 절두체의 far 평면의 z값
+
+
+	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f),
 	//	&_vec3(0.f, 0.f, 10.f),
 	//	&_vec3(0.f, 1.f, 0.f));
