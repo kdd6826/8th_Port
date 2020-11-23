@@ -40,8 +40,8 @@
 #include <algorithm>
 #include <functional>
 using namespace std;
-#include "d3d9.h"
-#include "d3dx9.h"
+#include <d3d9.h>
+#include <d3dx9.h>
 #include "Typedef.h"
 #include "Define.h"
 #include "Struct.h"
@@ -49,8 +49,7 @@ using namespace std;
 #include "Function.h"
 #include "Graphic_Device.h"
 
-extern HWND g_hWnd;
-extern HINSTANCE g_hInst;
+
 
 #ifdef _UNICODE
 #if defined _M_IX86

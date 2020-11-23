@@ -49,8 +49,11 @@
     <Filter Include="07. Logo">
       <UniqueIdentifier>{c5d7dd54-2c57-4eb4-ac51-da77b0f3f7d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="08.DynamicCamera">
-      <UniqueIdentifier>{6a1ec72e-9e49-4444-8ebb-af534fe96b72}</UniqueIdentifier>
+    <Filter Include="97.Terrain">
+      <UniqueIdentifier>{febc0a90-b1c1-4fc9-9ecd-bdd0a34b2c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.DynamicCamera">
+      <UniqueIdentifier>{ceca1fc5-682c-4767-8378-fab204991c05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,8 +126,14 @@
     <ClInclude Include="..\Code\MFCToolView.h">
       <Filter>00.View</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\DynamicCamera.h">
-      <Filter>08.DynamicCamera</Filter>
+    <ClInclude Include="..\Code\Stage.h">
+      <Filter>07. Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MFC_Terrain.h">
+      <Filter>97.Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicCamera.h">
+      <Filter>96.DynamicCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,8 +182,14 @@
     <ClCompile Include="MFCTool.cpp">
       <Filter>99.Default</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DynamicCamera.cpp">
-      <Filter>08.DynamicCamera</Filter>
+    <ClCompile Include="..\Code\Stage.cpp">
+      <Filter>07. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MFC_Terrain.cpp">
+      <Filter>97.Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicCamera.cpp">
+      <Filter>96.DynamicCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

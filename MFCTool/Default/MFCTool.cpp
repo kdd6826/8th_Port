@@ -11,6 +11,7 @@
 #include "MFCToolDoc.h"
 #include "MFCToolView.h"
 
+USING(Client)
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -185,6 +186,7 @@ void CMFCToolApp::OnAppAbout()
 
 int CMFCToolApp::Run()
 {
+	//HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
 	MSG msg;
 	msg.message = WM_NULL;
@@ -195,40 +197,11 @@ int CMFCToolApp::Run()
 
 	// 프레임 설치
 	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 60.f), E_FAIL);
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 
-
-	//// 기본 메시지 루프입니다.
-	//while (true)
-	//{
-	//	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-	//	{
-	//		if (WM_QUIT == msg.message)
-	//			break;
-
-	//		if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
-	//		{
-	//			TranslateMessage(&msg);
-	//			DispatchMessage(&msg);
-	//		}
-	//	}
-	//	else
-	//	{
-	//		Engine::Set_TimeDelta(L"Timer_Immediate");
-
-	//		_float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-
-	//		if (Engine::IsPermit_Call(L"Frame_FPS60", fTimeDelta))
-	//		{
-	//			Engine::Set_TimeDelta(L"Timer_FPS60");
-	//			_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
-
-	//			int i = 0;
-	//			CMFCToolView::GetInstance()->Update(60.f);
-	//			//pMainApp->Update_MainApp(fTime60);
-	//			//pMainApp->Render_MainApp();
-	//		}
-	//	}
-	//}
+	//CMainApp*	pMainApp = CMainApp::Create();
+	//if (nullptr == pMainApp)
+	//	return FALSE;
 
 
 	// 기본 메시지 루프입니다.
@@ -255,8 +228,8 @@ int CMFCToolApp::Run()
 			{
 				Engine::Set_TimeDelta(L"Timer_FPS60");
 				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
-				CMFCToolView::GetInstance()->Update(60.f);
-				//CMFCToolView::GetInstance()->OnDraw();
+
+				CMFCToolView::GetInstance()->Update(fTime60);
 				//pMainApp->Update_MainApp(fTime60);
 				//pMainApp->Render_MainApp();
 			}
@@ -264,7 +237,11 @@ int CMFCToolApp::Run()
 	}
 	_ulong dwRefCnt = 0;
 
+	//if (dwRefCnt = Safe_Release(pMainApp))
+	//{
+	//	MSG_BOX("MainApp Release Failed");
+	//	return FALSE;
+	//}
 
-	return (int)msg.wParam;
-
+	return CWinAppEx::Run();
 }

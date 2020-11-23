@@ -22,7 +22,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-
 	CListBox m_ListBox;
 	CStatic m_Picture;
 	_uint m_iDrawID; 

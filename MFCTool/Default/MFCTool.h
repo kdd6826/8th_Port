@@ -19,6 +19,7 @@
 // 이 클래스의 구현에 대해서는 MFCTool.cpp을 참조하십시오.
 //
 
+BEGIN(Client)
 class CMFCToolApp : public CWinAppEx
 {
 public:
@@ -30,7 +31,6 @@ public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 
-	
 
 // 구현입니다.
 	afx_msg void OnAppAbout();
@@ -39,5 +39,6 @@ public:
 };
 
 extern CMFCToolApp theApp;
+END
 
 #endif // MFCTool_h__

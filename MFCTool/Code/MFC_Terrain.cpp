@@ -11,7 +11,7 @@ CMFC_Terrain::~CMFC_Terrain()
 {
 }
 
-HRESULT CMFC_Terrain::Ready()
+HRESULT CMFC_Terrain::Ready_Object(void)
 {
 	m_pBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_TerrainTex"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
@@ -20,6 +20,12 @@ HRESULT CMFC_Terrain::Ready()
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 
+	// Renderer
+	m_pRendererCom = Engine::Get_Renderer();
+	NULL_CHECK_RETURN(m_pRendererCom, E_FAIL);
+	Engine::Safe_AddRef(m_pRendererCom);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", m_pRendererCom);
+
 	// Transform
 	m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
@@ -27,8 +33,18 @@ HRESULT CMFC_Terrain::Ready()
 	return S_OK;
 }
 
-void CMFC_Terrain::Render()
+_int CMFC_Terrain::Update_Object(const _float& fTimeDelta)
 {
+	Engine::CGameObject::Update_Object(fTimeDelta);
+
+	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+
+	return 0;
+}
+
+void CMFC_Terrain::Render_Object()
+{
+
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -58,4 +74,19 @@ HRESULT CMFC_Terrain::SetUpMaterial()
 	m_pGraphicDev->SetMaterial(&tMtrlInfo);
 
 	return S_OK;
+}
+
+CMFC_Terrain* CMFC_Terrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CMFC_Terrain* pInstance = new CMFC_Terrain(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_Object()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
+void CMFC_Terrain::Free(void)
+{
+	Engine::CGameObject::Free();
 }

@@ -16,8 +16,16 @@
 #include "MainFrm.h"
 
 #include "Form.h"
-#include "Terrain.h"
 
+#include "Stage.h"
+#include "Terrain.h"
+#include "MFC_Terrain.h"
+
+#include "GameObject.h"
+#include "DynamicMesh.h"
+#include "DynamicCamera.h"
+#include "TimerMgr.h"
+#include "Renderer.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -26,27 +34,50 @@
 HWND g_hWnd;
 HINSTANCE g_hInst;
 IMPLEMENT_DYNCREATE(CMFCToolView, CScrollView)
-IMPLEMENT_SINGLETON(CMFCToolView)
+
 BEGIN_MESSAGE_MAP(CMFCToolView, CScrollView)
 	// 표준 인쇄 명령입니다.
 	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CScrollView::OnFilePrintPreview)
 	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
+CMFCToolView* CMFCToolView::m_pInstance = nullptr;
 // CMFCToolView 생성/소멸
 CMFCToolView::CMFCToolView()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-
+	if (nullptr == m_pInstance) {
+		m_pInstance = this;
+	}
+	
 }
 
 CMFCToolView::~CMFCToolView()
 {
 	CGraphic_Device::DestroyInstance();
 	CTexture_Manager::DestroyInstance();
+	Engine::CRenderer::GetInstance()->Clear_RenderGroup();
+	Engine::Release_Utility();
+	Engine::Release_Resoures();
+	Safe_Release(m_pGraphicDev);
+	
+	for (auto& obj : list_Object) {
+		obj->Release();
+	}
+	list_Object.clear();
 
+	//Engine::Release_System(); //이게 안되서 안에꺼에서 일부분만 처리해줌
+	{
+		//Engine::CInputDev::GetInstance()->DestroyInstance();
+		Engine::CFontMgr::GetInstance()->DestroyInstance();
+		Engine::CFrameMgr::GetInstance()->DestroyInstance();
+		Engine::CTimerMgr::GetInstance()->DestroyInstance();
+		//Engine::CGraphicDev::GetInstance()->DestroyInstance();
+	}
+	
 }
 
 BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
@@ -59,19 +90,6 @@ BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CMFCToolView 그리기
 
-int CMFCToolView::Update(const _float& fTimeDelta)
-{
-
-	
-	if (nullptr != m_pCamera)
-		m_pCamera->Key_Input(fTimeDelta);
-	else
-		int i = 0;
-	//else
-	//m_pCamera = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 0.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
-	return 0;
-}
-
 HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 {
 
@@ -82,37 +100,39 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	Engine::Safe_AddRef(*ppGraphicDev);
 
 	// InputDev 설치
-	g_hInst = AfxGetInstanceHandle();
-	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);*/
 
 	return S_OK;
 }
 
+HRESULT CMFCToolView::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement)
+{
+	Engine::CScene* pScene = nullptr;
 
+	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
+	Safe_AddRef(*ppManagement);
+
+	pScene = CStage::Create(pGraphicDev);
+	NULL_CHECK_RETURN(pScene, E_FAIL);
+
+	FAILED_CHECK_RETURN((*ppManagement)->SetUp_Scene(pScene), E_FAIL);
+
+	return S_OK;
+}
 
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
 {
 	CMFCToolDoc* pDoc = GetDocument();
-
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	//CGraphic_Device::GetInstance()->Render_Begin();
-	//
-	//m_pTerrain->Render_Terrain();
-	//
-	//CGraphic_Device::GetInstance()->Render_End();
-	
 
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
 
-	m_pTerrain->Render();
+	//m_pTerrain->Render_Object();
 
 	Engine::Render_End();
-	//m_pCamera->Key_Input(5.f);
 
-	
-	UpdateWindow();
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 // 	pDC->Rectangle(100, 100, 200, 200);
 // 	pDC->Ellipse(100, 100, 200, 200);
@@ -215,47 +235,25 @@ void CMFCToolView::OnInitialUpdate()
 		MessageBox(L"Loading Failed in View");
 		return;
 	}
-	
+
+	////
+	Engine::CGameObject* obj = new CMFC_Terrain(m_pGraphicDev);
+	m_pTerrain = dynamic_cast<CMFC_Terrain*>(obj);
+	m_pTerrain->Ready_Object();
+	list_Object.emplace_back(obj);
+
+	m_Camera = CDynamicCamera::Create(m_pGraphicDev, &_vec3(1.f, 5.f, -1.f),
+		&_vec3(10.f, 0.f, 10.f),
+		&_vec3(0.f, 1.f, 0.f));
+	Engine::CGameObject* pGameObject = m_Camera;
+	NULL_CHECK_RETURN(pGameObject);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject));
+	list_Object.emplace_back(pGameObject);
 
 
-
-	Engine::CGameObject* pGameObject = nullptr;
-
-	m_pTerrain = new CTerrain(m_pGraphicDev);
-	m_pTerrain->Ready();
-
-
-	m_pCamera = CDynamicCamera::Create(m_pGraphicDev,
-										 &_vec3(0.f, 0.f, -10.f),
-										 &_vec3(0.f, 0.f, 0.f),
-										 &_vec3(0.f, 1.f, 0.f));
-
-
-
-
-	/*_matrix		matView, matProj;*/
-	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
-	//D3DXMatrixLookAtLH(&matView, // 행렬 결과
-	//	&_vec3(0.f, 0.f, -10.f), // eye(카메라 위치)
-	//	&_vec3(0.f, 0.f, 0.f),	// at(카메라가 바라보는 위치)
-	//	&_vec3(0.f, 1.f, 0.f)); // up(카메라와 수직을 이루는 방향)
-
-	//							// 원근 투영 행렬 생성 함수
-	//D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
-	//	D3DXToRadian(60.f),		// fovY
-	//	(_float)WINCX / WINCY,	// 종횡비
-	//	0.1f,	// 절두체의 near 평면의 z값
-	//	1000.f); // 절두체의 far 평면의 z값
-
-
-	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f),
-	//	&_vec3(0.f, 0.f, 10.f),
-	//	&_vec3(0.f, 1.f, 0.f));
-	//NULL_CHECK_RETURN(pGameObject, );
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), );
-
+	m_Camera->m_vEye = { 0.f, 5.f, -10.f };
+	m_Camera->m_vAt = {0.f, 5.f, -10.f};
+	RenderLine();
 }
 
 
@@ -273,9 +271,75 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//m_pTerrain->TileChange(vMouse, iDrawID,1);
 
-	//InvalidateRect(nullptr, 0);
 	//CScrollView::OnLButtonDown(nFlags, point);
-	
+
+
+
+}
+
+void CMFCToolView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	float iTemp = 0.2f;
+	if (!m_bCameraAddX) {
+		if (m_CameraAtDir.x >= 1.f) {
+			m_CameraAtDir.x -= iTemp;
+			m_bCameraAddX = true;
+		}
+		else
+			m_CameraAtDir.x += iTemp;
+	}
+	else {
+		if (m_CameraAtDir.x <= -1.f) {
+			m_CameraAtDir.x += iTemp;
+			m_bCameraAddX = false;
+		}
+		else
+			m_CameraAtDir.x -= iTemp;
+	}
+
+	if (!m_bCameraAddZ) {
+		if (m_CameraAtDir.z >= 1.f) {
+			m_CameraAtDir.z -= iTemp;
+			m_bCameraAddZ = true;
+		}
+		else
+			m_CameraAtDir.z += iTemp;
+	}
+	else {
+		if (m_CameraAtDir.z <= -1.f) {
+			m_CameraAtDir.z += iTemp;
+			m_bCameraAddZ = false;
+		}
+		else
+			m_CameraAtDir.z -= iTemp;
+	}
+	D3DXVec3Normalize(&m_Camera->m_vAt, &m_CameraAtDir);
+	m_Camera->m_vAt *= 5.f;
+	m_Camera->m_vAt += m_Camera->m_vEye;
+
+
+}
+
+void CMFCToolView::Update(float deltaTime)
+{
+	CameraMove(deltaTime);
+
+	/// Update
+	for (auto& obj : list_Object) {
+		obj->Update_Object(deltaTime);
+	}
+
+
+
+	/// Render
+	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
+
+	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
+	r->Render_GameObject();
+	Engine::Render_End();
+
+	RenderLine();
 }
 
 HRESULT CMFCToolView::Loading()
@@ -308,4 +372,47 @@ HRESULT CMFCToolView::Loading()
 	Engine::Ready_Proto(L"Proto_Transform", pComponent);
 
 	return S_OK;
+}
+
+void CMFCToolView::RenderLine() {
+	_matrix		matView, matProj;
+
+	// 뷰 스페이스 변환 행렬 생성 함수(즉, 카메라 월드 행렬의 역 행렬을 만들어주는 함수)
+	D3DXMatrixLookAtLH(&matView, // 행렬 결과
+		&m_Camera->m_vEye, // eye(카메라 위치)
+		&m_Camera->m_vAt,	// at(카메라가 바라보는 위치)
+		&_vec3(0.f, 1.f, 0.f)); // up(카메라와 수직을 이루는 방향)
+
+								// 원근 투영 행렬 생성 함수
+	D3DXMatrixPerspectiveFovLH(&matProj, // 행렬 결과
+		D3DXToRadian(60.f),		// fovY
+		(_float)WINCX / WINCY,	// 종횡비
+		0.1f,	// 절두체의 near 평면의 z값
+		1000.f); // 절두체의 far 평면의 z값
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+}
+
+void CMFCToolView::CameraMove(float deltaTime) {
+	if (GetAsyncKeyState('W') & 0x8000) {
+		m_Camera->m_vEye.x += m_CameraAtDir.x * moveSpeed * deltaTime;
+		m_Camera->m_vEye.z += m_CameraAtDir.z * moveSpeed * deltaTime;
+	}
+	else if (GetAsyncKeyState('S') & 0x8000) {
+		m_Camera->m_vEye.x -= m_CameraAtDir.x * moveSpeed * deltaTime;
+		m_Camera->m_vEye.z -= m_CameraAtDir.z * moveSpeed * deltaTime;
+	}
+	if (GetAsyncKeyState('A') & 0x8000) {
+		m_Camera->m_vEye.x -= m_CameraAtDir.z * moveSpeed * deltaTime;
+		m_Camera->m_vEye.z += m_CameraAtDir.x * moveSpeed * deltaTime;
+	}
+	else if (GetAsyncKeyState('D') & 0x8000) {
+		m_Camera->m_vEye.x += m_CameraAtDir.z * moveSpeed * deltaTime;
+		m_Camera->m_vEye.z -= m_CameraAtDir.x * moveSpeed * deltaTime;
+	}
+
+
+	m_Camera->m_vAt.x = m_Camera->m_vEye.x + m_CameraAtDir.x * moveSpeed * deltaTime;
+	m_Camera->m_vAt.z = m_Camera->m_vEye.z + m_CameraAtDir.z * moveSpeed * deltaTime;
 }

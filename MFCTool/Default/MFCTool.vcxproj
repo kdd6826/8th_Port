@@ -84,8 +84,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -197,7 +197,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\FileInfo.h" />
     <ClInclude Include="..\Code\Form.h" />
     <ClInclude Include="..\Code\Graphic_Device.h" />
@@ -205,8 +204,10 @@
     <ClInclude Include="..\Code\MapTool.h" />
     <ClInclude Include="..\Code\MFCToolDoc.h" />
     <ClInclude Include="..\Code\MFCToolView.h" />
+    <ClInclude Include="..\Code\MFC_Terrain.h" />
     <ClInclude Include="..\Code\MultiTex.h" />
     <ClInclude Include="..\Code\SingleTex.h" />
+    <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Texture.h" />
     <ClInclude Include="..\Code\Texture_Manager.h" />
@@ -217,13 +218,13 @@
     <ClInclude Include="..\Header\Macro.h" />
     <ClInclude Include="..\Header\Struct.h" />
     <ClInclude Include="..\Header\Typedef.h" />
+    <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="MFCTool.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\FileInfo.cpp" />
     <ClCompile Include="..\Code\Form.cpp" />
     <ClCompile Include="..\Code\Graphic_Device.cpp" />
@@ -231,12 +232,15 @@
     <ClCompile Include="..\Code\MapTool.cpp" />
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />
     <ClCompile Include="..\Code\MFCToolView.cpp" />
+    <ClCompile Include="..\Code\MFC_Terrain.cpp" />
     <ClCompile Include="..\Code\MultiTex.cpp" />
     <ClCompile Include="..\Code\SingleTex.cpp" />
+    <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\Texture_Manager.cpp" />
     <ClCompile Include="..\Code\UnitTool.cpp" />
+    <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MFCTool.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
