@@ -11,7 +11,6 @@
 #include "MFCToolDoc.h"
 #include "MFCToolView.h"
 
-USING(Client)
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -182,3 +181,58 @@ void CMFCToolApp::OnAppAbout()
 
 
 
+
+
+int CMFCToolApp::Run()
+{
+
+	MSG msg;
+	msg.message = WM_NULL;
+
+	// 타이머 설치
+	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), E_FAIL);
+
+	// 프레임 설치
+	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame_FPS60", 60.f), E_FAIL);
+
+
+	// 기본 메시지 루프입니다.
+	while (true)
+	{
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			if (WM_QUIT == msg.message)
+				break;
+
+			if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else
+		{
+			Engine::Set_TimeDelta(L"Timer_Immediate");
+
+			_float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+
+			if (Engine::IsPermit_Call(L"Frame_FPS60", fTimeDelta))
+			{
+				Engine::Set_TimeDelta(L"Timer_FPS60");
+				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
+
+				int i = 0;
+				CMFCToolView::GetInstance()->Update(60.f);
+				//pMainApp->Update_MainApp(fTime60);
+				//pMainApp->Render_MainApp();
+			}
+		}
+	}
+
+	_ulong dwRefCnt = 0;
+
+
+	return (int)msg.wParam;
+
+}

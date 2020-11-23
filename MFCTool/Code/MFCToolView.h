@@ -6,6 +6,7 @@
 
 #include "Define.h"
 #include "Base.h"
+#include "GameObject.h"
 #include "Engine_Define.h"
 #include "Export_Function.h"
 
@@ -22,11 +23,14 @@ class CSingleTex;
 class CTerrain;
 class CDynamicCamera;
 
+
+
 class CMFCToolView : public CScrollView
 {
 protected: // serialization에서만 만들어집니다.
 	CMFCToolView();
 	DECLARE_DYNCREATE(CMFCToolView)
+	DECLARE_SINGLETON(CMFCToolView)
 public:
 	CTerrain* m_pTerrain = nullptr; 
 	CDynamicCamera* m_pCamera = nullptr;
@@ -34,7 +38,7 @@ public:
 // 특성입니다.
 public:
 	CMFCToolDoc* GetDocument() const;
-
+	static int Update(const _float& fTimeDelta);
 // 작업입니다.
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
@@ -69,6 +73,7 @@ public:
 	virtual void OnInitialUpdate();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	HRESULT Loading();
+
 };
 
 #ifndef _DEBUG  // MFCToolView.cpp의 디버그 버전

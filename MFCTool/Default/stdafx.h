@@ -49,7 +49,8 @@ using namespace std;
 #include "Function.h"
 #include "Graphic_Device.h"
 
-
+extern HWND g_hWnd;
+extern HINSTANCE g_hInst;
 
 #ifdef _UNICODE
 #if defined _M_IX86

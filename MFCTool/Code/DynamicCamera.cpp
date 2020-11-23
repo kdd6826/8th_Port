@@ -2,7 +2,6 @@
 #include "DynamicCamera.h"
 #include "Export_Function.h"
 
-
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CCamera(pGraphicDev)	
 {
