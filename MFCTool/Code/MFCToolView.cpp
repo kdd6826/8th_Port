@@ -100,7 +100,8 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	Engine::Safe_AddRef(*ppGraphicDev);
 
 	// InputDev ¼³Ä¡
-	/*FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);*/
+	g_hInst = AfxGetInstanceHandle();
+	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
 
 	return S_OK;
 }
@@ -250,10 +251,11 @@ void CMFCToolView::OnInitialUpdate()
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject));
 	list_Object.emplace_back(pGameObject);
 
-
-	m_Camera->m_vEye = { 0.f, 5.f, -10.f };
-	m_Camera->m_vAt = {0.f, 5.f, -10.f};
+	
+	/*m_Camera->m_vEye = { 0.f, 5.f, -10.f };
+	m_Camera->m_vAt = {0.f, 5.f, -10.f};*/
 	RenderLine();
+	//Update(1.f);
 }
 
 
@@ -323,15 +325,16 @@ void CMFCToolView::OnRButtonDown(UINT nFlags, CPoint point)
 
 void CMFCToolView::Update(float deltaTime)
 {
-	CameraMove(deltaTime);
-
+	
+	//CameraMove(deltaTime);
+	m_Camera->Update_Object(deltaTime);
 	/// Update
 	for (auto& obj : list_Object) {
 		obj->Update_Object(deltaTime);
 	}
 
 
-
+	
 	/// Render
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
 
@@ -395,24 +398,24 @@ void CMFCToolView::RenderLine() {
 }
 
 void CMFCToolView::CameraMove(float deltaTime) {
-	if (GetAsyncKeyState('W') & 0x8000) {
+	if (Engine::Get_DIKeyState(DIK_W) & 0x80){
 		m_Camera->m_vEye.x += m_CameraAtDir.x * moveSpeed * deltaTime;
 		m_Camera->m_vEye.z += m_CameraAtDir.z * moveSpeed * deltaTime;
 	}
-	else if (GetAsyncKeyState('S') & 0x8000) {
+	else if (Engine::Get_DIKeyState(DIK_S) & 0x80){
 		m_Camera->m_vEye.x -= m_CameraAtDir.x * moveSpeed * deltaTime;
 		m_Camera->m_vEye.z -= m_CameraAtDir.z * moveSpeed * deltaTime;
 	}
-	if (GetAsyncKeyState('A') & 0x8000) {
+	if (Engine::Get_DIKeyState(DIK_A) & 0x80){
 		m_Camera->m_vEye.x -= m_CameraAtDir.z * moveSpeed * deltaTime;
 		m_Camera->m_vEye.z += m_CameraAtDir.x * moveSpeed * deltaTime;
 	}
-	else if (GetAsyncKeyState('D') & 0x8000) {
+	else if (Engine::Get_DIKeyState(DIK_D) & 0x80){
 		m_Camera->m_vEye.x += m_CameraAtDir.z * moveSpeed * deltaTime;
 		m_Camera->m_vEye.z -= m_CameraAtDir.x * moveSpeed * deltaTime;
 	}
 
 
-	m_Camera->m_vAt.x = m_Camera->m_vEye.x + m_CameraAtDir.x * moveSpeed * deltaTime;
-	m_Camera->m_vAt.z = m_Camera->m_vEye.z + m_CameraAtDir.z * moveSpeed * deltaTime;
+	//m_Camera->m_vAt.x = m_Camera->m_vEye.x + m_CameraAtDir.x * moveSpeed * deltaTime;
+	//m_Camera->m_vAt.z = m_Camera->m_vEye.z + m_CameraAtDir.z * moveSpeed * deltaTime;
 }

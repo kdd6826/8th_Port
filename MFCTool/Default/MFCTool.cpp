@@ -228,7 +228,7 @@ int CMFCToolApp::Run()
 			{
 				Engine::Set_TimeDelta(L"Timer_FPS60");
 				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
-
+				Engine::Set_InputDev();
 				CMFCToolView::GetInstance()->Update(fTime60);
 				//pMainApp->Update_MainApp(fTime60);
 				//pMainApp->Render_MainApp();
