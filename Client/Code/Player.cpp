@@ -66,7 +66,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		/*D3DXVec3Normalize(&m_vDir, &m_vDir);
 		m_pTransformCom->Move_Pos(&(m_vDir * m_fSpeed * fTimeDelta));*/
-		m_pMeshCom->Set_AnimationSet(13);
+		m_pMeshCom->Set_AnimationSet(6);
 
 	}
 
@@ -90,11 +90,11 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
 	{
-		m_pMeshCom->Set_AnimationSet(30);
+		m_pMeshCom->Set_AnimationSet(1);
 	}
 
 	if(true == m_pMeshCom->Is_AnimationSetEnd())
-		m_pMeshCom->Set_AnimationSet(6);
+		m_pMeshCom->Set_AnimationSet(39);
 
 
 }
@@ -120,7 +120,7 @@ HRESULT Client::CPlayer::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
-	m_pMeshCom->Set_AnimationSet(47);
+	m_pMeshCom->Set_AnimationSet(39);
 
 	return S_OK;
 }

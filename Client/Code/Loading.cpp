@@ -139,6 +139,14 @@ _uint CLoading::Loading_ForStage(void)
 		L"NewArisha.X"),
 		E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Sword",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Arisha/Weapon/",
+		L"WeaponArisha.X"),
+		E_FAIL);
+
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//Engine::RESOURCE_STAGE,
 	//L"Mesh_Player",
@@ -156,6 +164,9 @@ _uint CLoading::Loading_ForStage(void)
 	//											L"Lyn.X"),
 	//											E_FAIL);
 
+
+
+
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,
 	//	L"Mesh_Sword",
@@ -163,6 +174,7 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"../Bin/Resource/Mesh/StaticMesh/Sword/",
 	//	L"Sword.X"),
 	//	E_FAIL);
+
 
 	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
