@@ -4,8 +4,10 @@ d:\nalvan\110c\frame110\engine\utility\default\debug\calculator.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\camera.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\collider.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\component.obj
+d:\nalvan\110c\frame110\engine\utility\default\debug\frustum.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\light.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\lightmgr.obj
+d:\nalvan\110c\frame110\engine\utility\default\debug\optimization.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\pipeline.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\protomgr.obj
 d:\nalvan\110c\frame110\engine\utility\default\debug\gameobject.obj

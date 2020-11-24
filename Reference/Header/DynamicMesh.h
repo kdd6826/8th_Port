@@ -17,7 +17,7 @@ private:
 public:
 	HRESULT			Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName);
 	void			Render_Meshes(void);
-	const  D3DXFRAME_DERIVED*	Get_FrameByName(const char* pFrameName);
+	const  D3DXFRAME_DERIVED*		Get_FrameByName(const char* pFrameName);
 	_bool							Is_AnimationSetEnd(void);
 public:
 	void			Set_AnimationSet(const _uint& iIndex);

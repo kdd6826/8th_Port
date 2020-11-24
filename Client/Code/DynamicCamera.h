@@ -17,7 +17,7 @@ public:
 
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 
-public:
+private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(void);
 	void		Mouse_Fix(void);

@@ -11,6 +11,7 @@
 #include "Monster.h"
 
 #include "Stone.h"
+#include "Sword.h"
 
 BEGIN(Client)
 
@@ -30,7 +31,6 @@ private:
 	HRESULT		Ready_GameLogic_Layer(const _tchar* pLayerTag);
 	HRESULT		Ready_UI_Layer(const _tchar* pLayerTag);
 
-	HRESULT		Ready_Resource(Engine::RESOURCETYPE eType);
 	HRESULT		Ready_LightInfo(void);
 
 public:

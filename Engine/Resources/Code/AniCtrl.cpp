@@ -49,7 +49,7 @@ void Engine::CAniCtrl::Set_AnimationSet(const _uint& iIndex)
 
 	// m_pAniCtrl->GetAnimationSetByName()
 
-	//m_dPeriod = pAS->GetPeriod(); // 애니메이션 셋의 재생 시간을 반환하는 함수
+	m_dPeriod = pAS->GetPeriod(); // 애니메이션 셋의 재생 시간을 반환하는 함수
 
 
 	// 0번 트랙에 애니메이션 셋 세팅

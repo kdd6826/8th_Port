@@ -1,20 +1,22 @@
-﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\8th\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Utility.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
   .\Engine\Utility\Code\Collider.h
   .\Engine\Utility\Code\Component.h
+  .\Engine\Utility\Code\Frustum.h
   .\Engine\Utility\Code\GameObject.h
   .\Engine\Utility\Code\Layer.h
   .\Engine\Utility\Code\Light.h
   .\Engine\Utility\Code\LightMgr.h
   .\Engine\Utility\Code\Management.h
+  .\Engine\Utility\Code\Optimization.h
   .\Engine\Utility\Code\Pipeline.h
   .\Engine\Utility\Code\ProtoMgr.h
   .\Engine\Utility\Code\Renderer.h
   .\Engine\Utility\Code\Scene.h
   .\Engine\Utility\Code\Transform.h
-         14개 파일이 복사되었습니다.
+         16개 파일이 복사되었습니다.
   .\Engine\Utility\Code\*.hpp 
   지정된 파일을 찾을 수 없습니다.
           0개 파일이 복사되었습니다.

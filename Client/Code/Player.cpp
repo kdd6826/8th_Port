@@ -69,8 +69,6 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_pMeshCom->Set_AnimationSet(13);
 
 	}
-	else
-		m_pMeshCom->Set_AnimationSet(6);
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
@@ -89,6 +87,15 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		_vec3	vPickPos = PickUp_OnTerrain();
 		m_pTransformCom->Pick_Pos(&vPickPos, m_fSpeed, fTimeDelta);
 	}
+
+	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
+	{
+		m_pMeshCom->Set_AnimationSet(30);
+	}
+
+	if(true == m_pMeshCom->Is_AnimationSetEnd())
+		m_pMeshCom->Set_AnimationSet(6);
+
 
 }
 

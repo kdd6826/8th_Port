@@ -73,6 +73,10 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
+	/*pGameObject = CSword::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);*/
+
 	/*for (_uint i = 0; i < 50; ++i)
 	{
 		pGameObject = CMonster::Create(m_pGraphicDev);
@@ -83,6 +87,8 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	pGameObject = CStone::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+
+	
 
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
@@ -95,23 +101,7 @@ HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 	return S_OK;
 }
 
-HRESULT Client::CStage::Ready_Resource(Engine::RESOURCETYPE eType)
-{
-	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(eType), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Stage", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Stage/Stage.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
-
-	Engine::CComponent*		pComponent = nullptr;
-
-	pComponent = Engine::CTransform::Create();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Engine::Ready_Proto(L"Proto_Transform", pComponent);
-
-	return S_OK;
-}
 
 HRESULT CStage::Ready_LightInfo(void)
 {

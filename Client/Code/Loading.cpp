@@ -64,6 +64,11 @@ _uint CLoading::Loading_ForStage(void)
 	pComponent = Engine::CCalculator::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Calculator", pComponent);
+	
+	pComponent = Engine::COptimization::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
+
 
 	// buffer
 
@@ -134,13 +139,13 @@ _uint CLoading::Loading_ForStage(void)
 		L"NewArisha.X"),
 		E_FAIL);
 
-		//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		//Engine::RESOURCE_STAGE,
-		//L"Mesh_Player",
-		//Engine::TYPE_DYNAMIC,
-		//L"../Bin/Resource/Sanctum/",
-		//L"Simo.X"),
-		//E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//Engine::RESOURCE_STAGE,
+	//L"Mesh_Player",
+	//Engine::TYPE_DYNAMIC,
+	//L"../Bin/Resource/Sanctum/",
+	//L"Simo.X"),
+	//E_FAIL);
 
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -158,6 +163,22 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"../Bin/Resource/Mesh/StaticMesh/Sword/",
 	//	L"Sword.X"),
 	//	E_FAIL);
+
+	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+												Engine::RESOURCE_STAGE,
+												L"Mesh_Player",
+												Engine::TYPE_DYNAMIC,
+												L"../Bin/Resource/Mesh/DynamicMesh/PlayerXFile/",
+												L"Player.X"),
+												E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+												Engine::RESOURCE_STAGE,
+												L"Mesh_Sword",
+												Engine::TYPE_STATIC,
+												L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+												L"Sword.X"),
+												E_FAIL);*/
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	RESOURCE_STAGE,
