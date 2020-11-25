@@ -205,8 +205,13 @@
     <ClInclude Include="..\Code\MFCToolDoc.h" />
     <ClInclude Include="..\Code\MFCToolView.h" />
     <ClInclude Include="..\Code\MFC_Terrain.h" />
+    <ClInclude Include="..\Code\MultiTex.h" />
+    <ClInclude Include="..\Code\NaviMesh.h" />
+    <ClInclude Include="..\Code\SingleTex.h" />
     <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\Terrain.h" />
+    <ClInclude Include="..\Code\Texture.h" />
+    <ClInclude Include="..\Code\Texture_Manager.h" />
     <ClInclude Include="..\Code\UnitTool.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
@@ -216,8 +221,8 @@
     <ClInclude Include="..\Header\Typedef.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="MFCTool.h" />
-    <ClInclude Include="NaviMesh.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SphereMesh.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -230,12 +235,17 @@
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />
     <ClCompile Include="..\Code\MFCToolView.cpp" />
     <ClCompile Include="..\Code\MFC_Terrain.cpp" />
+    <ClCompile Include="..\Code\MultiTex.cpp" />
+    <ClCompile Include="..\Code\NaviMesh.cpp" />
+    <ClCompile Include="..\Code\SingleTex.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
+    <ClCompile Include="..\Code\Texture.cpp" />
+    <ClCompile Include="..\Code\Texture_Manager.cpp" />
     <ClCompile Include="..\Code\UnitTool.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MFCTool.cpp" />
-    <ClCompile Include="NaviMesh.cpp" />
+    <ClCompile Include="SphereMesh.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

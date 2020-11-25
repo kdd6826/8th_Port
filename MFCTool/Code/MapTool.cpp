@@ -6,6 +6,7 @@
 #include "MapTool.h"
 #include "afxdialogex.h"
 #include "FileInfo.h"
+#include "Texture_Manager.h"
 #include "MainFrm.h"
 #include "MFCToolView.h"
 #include "Terrain.h"
@@ -106,23 +107,23 @@ void CMapTool::OnLbnSelchangePicture()
 	}
 	strFileName.Delete(0, i);
 	m_iDrawID = _ttoi(strFileName.GetString());
-	//CGraphic_Device::GetInstance()->Render_Begin();
-	//const TEXINFO* pTexInfo = CTexture_Manager::GetInstance()->Get_TexInfo(L"Terrain", L"Tile", m_iDrawID);
-	//if (nullptr == pTexInfo)
-	//	return; 
-	//float fCenterX = pTexInfo->tImageInfo.Width >> 1; 
-	//float fCenterY = pTexInfo->tImageInfo.Height >> 1; 
-	//
-	//_matrix matScale, matTrans, matWorld; 
-	//_float fRatioX = WINCX / float(TILECX); 
-	//_float fRatioY = WINCY / float(TILECY);
-	//D3DXMatrixScaling(&matScale,fRatioX, fRatioY , 0.f);
-	//D3DXMatrixTranslation(&matTrans, float(WINCX >> 1), float(WINCY >> 1), 0.f); 
-	//matWorld = matScale * matTrans; 
-	//CGraphic_Device::GetInstance()->Get_Sprite()->SetTransform(&matWorld);
-	//CGraphic_Device::GetInstance()->Get_Sprite()->Draw(pTexInfo->pTexture, nullptr, &_vec3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
-	//
-	//CGraphic_Device::GetInstance()->Render_End(m_Picture.GetSafeHwnd());
+	CGraphic_Device::GetInstance()->Render_Begin();
+	const TEXINFO* pTexInfo = CTexture_Manager::GetInstance()->Get_TexInfo(L"Terrain", L"Tile", m_iDrawID);
+	if (nullptr == pTexInfo)
+		return; 
+	float fCenterX = pTexInfo->tImageInfo.Width >> 1; 
+	float fCenterY = pTexInfo->tImageInfo.Height >> 1; 
+
+	_matrix matScale, matTrans, matWorld; 
+	_float fRatioX = WINCX / float(TILECX); 
+	_float fRatioY = WINCY / float(TILECY);
+	D3DXMatrixScaling(&matScale,fRatioX, fRatioY , 0.f);
+	D3DXMatrixTranslation(&matTrans, float(WINCX >> 1), float(WINCY >> 1), 0.f); 
+	matWorld = matScale * matTrans; 
+	CGraphic_Device::GetInstance()->Get_Sprite()->SetTransform(&matWorld);
+	CGraphic_Device::GetInstance()->Get_Sprite()->Draw(pTexInfo->pTexture, nullptr, &_vec3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	CGraphic_Device::GetInstance()->Render_End(m_Picture.GetSafeHwnd());
 
 	UpdateData(FALSE);
 }

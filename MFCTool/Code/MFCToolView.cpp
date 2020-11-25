@@ -11,6 +11,8 @@
 
 #include "MFCToolDoc.h"
 #include "MFCToolView.h"
+#include "Texture_Manager.h"
+#include "SingleTex.h"
 #include "MainFrm.h"
 
 #include "Form.h"
@@ -22,10 +24,12 @@
 #include "GameObject.h"
 #include "DynamicMesh.h"
 #include "DynamicCamera.h"
-#include "NaviMesh.h"
-
 #include "TimerMgr.h"
 #include "Renderer.h"
+#include "SphereMesh.h"
+#include "Layer.h"
+#include "NaviMesh.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -58,15 +62,20 @@ CMFCToolView::CMFCToolView()
 CMFCToolView::~CMFCToolView()
 {
 	CGraphic_Device::DestroyInstance();
+	CTexture_Manager::DestroyInstance();
 	Engine::CRenderer::GetInstance()->Clear_RenderGroup();
 	Engine::Release_Utility();
 	Engine::Release_Resoures();
 	Safe_Release(m_pGraphicDev);
 	
-	for (auto& obj : list_Object) {
-		obj->Release();
+	auto& iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == m_mapLayer.end())
+		return;
+	for (auto& obj : iter->second->m_mapObject)
+	{
+		obj.second->Release();
 	}
-	list_Object.clear();
+	iter->second->m_mapObject.clear();
 
 	//Engine::Release_System(); //이게 안되서 안에꺼에서 일부분만 처리해줌
 	{
@@ -99,8 +108,7 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	Engine::Safe_AddRef(*ppGraphicDev);
 
 	// InputDev 설치
-	g_hInst = AfxGetInstanceHandle();
-	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_InputDev(AfxGetInstanceHandle(), g_hWnd), E_FAIL);
 
 	return S_OK;
 }
@@ -108,7 +116,6 @@ HRESULT CMFCToolView::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 HRESULT CMFCToolView::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement)
 {
 	Engine::CScene* pScene = nullptr;
-
 	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
 	Safe_AddRef(*ppManagement);
 
@@ -116,6 +123,47 @@ HRESULT CMFCToolView::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManage
 	NULL_CHECK_RETURN(pScene, E_FAIL);
 
 	FAILED_CHECK_RETURN((*ppManagement)->SetUp_Scene(pScene), E_FAIL);
+
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
+
+	return S_OK;
+}
+
+HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
+{
+	Engine::CLayer*			pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject*		pGameObject = nullptr;
+
+	//pGameObject = CSkyBox::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
+
+	pGameObject = new CMFC_Terrain(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
+	m_pTerrain = dynamic_cast<CMFC_Terrain*>(pGameObject);
+	m_pTerrain->Ready_Object();
+
+	//pGameObject = new CNaviMesh(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Navi", pGameObject), E_FAIL);
+	//pGameObject = CTerrain::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
+	//pGameObject->Ready_Object();
+	//list_Object.emplace_back(pGameObject);
+
+	m_Camera = CDynamicCamera::Create(m_pGraphicDev, &_vec3(1.f, 5.f, -1.f),
+		&_vec3(10.f, 0.f, 10.f),
+		&_vec3(0.f, 1.f, 0.f));
+	pGameObject = m_Camera;
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject));
+
+	m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
 }
@@ -186,6 +234,7 @@ void CMFCToolView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
+
 	SetScrollSizes(MM_TEXT, CSize(TILECX * TILEX, (TILECY >> 1) * TILEY));
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	RECT rcMain = {};
@@ -219,6 +268,8 @@ void CMFCToolView::OnInitialUpdate()
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), );
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), );
 
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, );
 
 	//if (nullptr == m_pTerrain)
 	//{
@@ -233,16 +284,64 @@ void CMFCToolView::OnInitialUpdate()
 		MessageBox(L"Loading Failed in View");
 		return;
 	}
+	////////
+	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"));
+	// Calculator
+	Engine::CComponent* pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
+	NULL_CHECK_RETURN(pComponent);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
-	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), );
 
-
-	/*m_Camera->m_vEye = { 0.f, 5.f, -10.f };
-	m_Camera->m_vAt = {0.f, 5.f, -10.f};*/
-	RenderLine();
-	//Update(1.f);
+	//m_Camera->m_vEye = { 0.f, 5.f, -10.f };
+	//m_Camera->m_vAt = { -1.6f, 4.1f, -5.3f };
+	//RenderLine();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////// Update
+
+void CMFCToolView::Update(float deltaTime)
+{
+	Engine::Set_InputDev();
+	m_Camera->Update_Object(deltaTime);
+	/// Update
+	auto&	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == m_mapLayer.end())
+		return;
+	//iter->second->Get_mapObject();
+	for (auto& obj : iter->second->m_mapObject)
+	{
+		obj.second->Update_Object(deltaTime);
+	}
+	
+	//for (auto& obj : list_Object) {
+	//	obj->Update_Object(deltaTime);
+	//}
+	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
+	{
+		_vec3	vPickPos = PickUp_OnTerrain();
+		if (_vec3(0.f, 0.f, 0.f) != vPickPos) {
+			Engine::CGameObject* pGameObject = CSphereMesh::Create(m_pGraphicDev);
+			dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = vPickPos;
+			LayerAddObject(L"Environment", L"Sphere", pGameObject);
+		}
+		//m_pTransformCom->Pick_Pos(&vPickPos, m_fSpeed, fTimeDelta);
+	}
+
+
+	/// Render
+	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
+
+	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
+
+	for (auto& obj : iter->second->m_mapObject)
+	{
+		obj.second->Render_Object();
+	}
+
+	Engine::Render_End();
+
+	RenderLine();
+}
 
 void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 {
@@ -267,111 +366,14 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 void CMFCToolView::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	float iTemp = 0.2f;
-	if (!m_bCameraAddX) {
-		if (m_CameraAtDir.x >= 1.f) {
-			m_CameraAtDir.x -= iTemp;
-			m_bCameraAddX = true;
-		}
-		else
-			m_CameraAtDir.x += iTemp;
-	}
-	else {
-		if (m_CameraAtDir.x <= -1.f) {
-			m_CameraAtDir.x += iTemp;
-			m_bCameraAddX = false;
-		}
-		else
-			m_CameraAtDir.x -= iTemp;
-	}
-
-	if (!m_bCameraAddZ) {
-		if (m_CameraAtDir.z >= 1.f) {
-			m_CameraAtDir.z -= iTemp;
-			m_bCameraAddZ = true;
-		}
-		else
-			m_CameraAtDir.z += iTemp;
-	}
-	else {
-		if (m_CameraAtDir.z <= -1.f) {
-			m_CameraAtDir.z += iTemp;
-			m_bCameraAddZ = false;
-		}
-		else
-			m_CameraAtDir.z -= iTemp;
-	}
-	D3DXVec3Normalize(&m_Camera->m_vAt, &m_CameraAtDir);
-	m_Camera->m_vAt *= 5.f;
-	m_Camera->m_vAt += m_Camera->m_vEye;
-
-
-}
-
-void CMFCToolView::Update(float deltaTime)
-{
 	
-	//CameraMove(deltaTime);
-	m_Camera->Update_Object(deltaTime);
-	/// Update
-	for (auto& obj : list_Object) {
-		obj->Update_Object(deltaTime);
-	}
 
-
-	
-	/// Render
-	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
-
-	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
-	r->Render_GameObject();
-	Engine::Render_End();
-
-	RenderLine();
 }
 
-HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
-{
-
-	Engine::CLayer* pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-	////
-	Engine::CGameObject* obj = new CMFC_Terrain(m_pGraphicDev);
-	m_pTerrain = dynamic_cast<CMFC_Terrain*>(obj);
-	m_pTerrain->Ready_Object();
-	list_Object.emplace_back(obj);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", obj), E_FAIL);
-
-
-	m_Camera = CDynamicCamera::Create(m_pGraphicDev, &_vec3(1.f, 5.f, -1.f),
-		&_vec3(10.f, 0.f, 10.f),
-		&_vec3(0.f, 1.f, 0.f));
-	Engine::CGameObject* pGameObject = m_Camera;
-	NULL_CHECK_RETURN(pGameObject);
-	list_Object.emplace_back(pGameObject);
-
-
-	pGameObject = CNaviMesh::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, );
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Navi", pGameObject), );
-	list_Object.emplace_back(pGameObject);
-
-	m_mapLayer.emplace(pLayerTag, pLayer);
-
-	return S_OK;
-}
 
 HRESULT CMFCToolView::Loading()
 {
 	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
-
-
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Stage", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
-
-
-
 
 	//Buffer
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
@@ -391,6 +393,23 @@ HRESULT CMFCToolView::Loading()
 		L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
 		E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_Sphere",
+		Engine::BUFFER_SPHERE),
+		E_FAIL);
+	//Cube
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_CubeTex",
+		Engine::BUFFER_CUBETEX),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_TriCol",
+		Engine::BUFFER_TRICOL),
+		E_FAIL);
+
 	//Component
 	Engine::CComponent* pComponent = nullptr;
 
@@ -401,6 +420,7 @@ HRESULT CMFCToolView::Loading()
 	pComponent = Engine::CCalculator::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Calculator", pComponent);
+
 	return S_OK;
 }
 
@@ -424,25 +444,33 @@ void CMFCToolView::RenderLine() {
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
-void CMFCToolView::CameraMove(float deltaTime) {
-	if (Engine::Get_DIKeyState(DIK_W) & 0x80){
-		m_Camera->m_vEye.x += m_CameraAtDir.x * moveSpeed * deltaTime;
-		m_Camera->m_vEye.z += m_CameraAtDir.z * moveSpeed * deltaTime;
-	}
-	else if (Engine::Get_DIKeyState(DIK_S) & 0x80){
-		m_Camera->m_vEye.x -= m_CameraAtDir.x * moveSpeed * deltaTime;
-		m_Camera->m_vEye.z -= m_CameraAtDir.z * moveSpeed * deltaTime;
-	}
-	if (Engine::Get_DIKeyState(DIK_A) & 0x80){
-		m_Camera->m_vEye.x -= m_CameraAtDir.z * moveSpeed * deltaTime;
-		m_Camera->m_vEye.z += m_CameraAtDir.x * moveSpeed * deltaTime;
-	}
-	else if (Engine::Get_DIKeyState(DIK_D) & 0x80){
-		m_Camera->m_vEye.x += m_CameraAtDir.z * moveSpeed * deltaTime;
-		m_Camera->m_vEye.z -= m_CameraAtDir.x * moveSpeed * deltaTime;
-	}
+Engine::CComponent* CMFCToolView::Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, Engine::COMPONENTID eID)
+{
+	auto	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(pLayerTag));
 
+	if (iter == m_mapLayer.end())
+		return nullptr;
 
-	//m_Camera->m_vAt.x = m_Camera->m_vEye.x + m_CameraAtDir.x * moveSpeed * deltaTime;
-	//m_Camera->m_vAt.z = m_Camera->m_vEye.z + m_CameraAtDir.z * moveSpeed * deltaTime;
+	return iter->second->Get_Component(pObjTag, pComponentTag, eID);
+}
+
+_vec3 CMFCToolView::PickUp_OnTerrain(void)
+{
+	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
+	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3(0.f, 0.f, 0.f));
+
+	Engine::CTransform*		pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTerrainTransformCom, _vec3(0.f, 0.f, 0.f));
+	_vec3 Temp = m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
+	return Temp;
+	//return{ 0.f, 0.f, 0.f };
+}
+
+void CMFCToolView::LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag, Engine::CGameObject* pGameObject) {
+	auto	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(pLayerTag));
+
+	if (iter == m_mapLayer.end())
+		return;
+
+	iter->second->Add_GameObject(pObjTag, pGameObject);
 }

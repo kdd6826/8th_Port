@@ -13,22 +13,28 @@ CMFC_Terrain::~CMFC_Terrain()
 
 HRESULT CMFC_Terrain::Ready_Object(void)
 {
-	m_pBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_TerrainTex"));
+	Engine::CComponent*		pComponent = nullptr;
+
+	// buffer
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_TerrainTex"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
-	m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
 	// Renderer
-	m_pRendererCom = Engine::Get_Renderer();
+	pComponent = m_pRendererCom = Engine::Get_Renderer();
 	NULL_CHECK_RETURN(m_pRendererCom, E_FAIL);
 	Engine::Safe_AddRef(m_pRendererCom);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", m_pRendererCom);
 
 	// Transform
-	m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
+	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
+	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
 	return S_OK;
 }

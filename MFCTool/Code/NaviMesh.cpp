@@ -90,11 +90,11 @@ void CNaviMesh::Render_Object(void)
 _vec3 CNaviMesh::PickUp_OnTerrain(void)
 {
 	
-	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(CMFCToolView::GetInstance()->Get_Component(L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
-	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3(0.f, 0.f, 0.f));
+	//Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(CMFCToolView::GetInstance()->Get_Component(L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
+	//NULL_CHECK_RETURN(pTerrainBufferCom, _vec3(0.f, 0.f, 0.f));
 
-	Engine::CTransform*		pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pTerrainTransformCom, _vec3(0.f, 0.f, 0.f));
+	//Engine::CTransform*		pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
+	//NULL_CHECK_RETURN(pTerrainTransformCom, _vec3(0.f, 0.f, 0.f));
 
 	//return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 	return _vec3{ 0.f,0.f,0.f };
