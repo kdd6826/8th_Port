@@ -1,18 +1,4 @@
-﻿  VIBuffer.cpp
-  TriCol.cpp
-  Texture.cpp
-  TerrainTex.cpp
-  StaticMesh.cpp
-  ResourcesMgr.cpp
-  Resources.cpp
-  RcTex.cpp
-  Mesh.cpp
-  HierarchyLoader.cpp
-  DynamicMesh.cpp
-  CubeTex.cpp
-  AniCtrl.cpp
-  코드를 생성하고 있습니다...
-  LINK : ../Bin\Resources.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+﻿  Sphere.cpp
      ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
   Resources.vcxproj -> C:\Users\GMH\Desktop\8th\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
