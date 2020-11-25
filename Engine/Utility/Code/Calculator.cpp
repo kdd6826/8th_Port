@@ -180,9 +180,10 @@ Engine::_vec3 Engine::CCalculator::Picking_OnTerrain(HWND hWnd,
 				&pTerrainVtxPos[dwVtxIdx[2]],
 				&pTerrainVtxPos[dwVtxIdx[0]], &vRayPos, &vRayDir, &fU, &fV, &fDist))
 			{
-				return _vec3(pTerrainVtxPos[dwVtxIdx[1]].x + fU * (pTerrainVtxPos[dwVtxIdx[2]].x - pTerrainVtxPos[dwVtxIdx[1]].x),
+				/*return _vec3(pTerrainVtxPos[dwVtxIdx[1]].x + fU * (pTerrainVtxPos[dwVtxIdx[2]].x - pTerrainVtxPos[dwVtxIdx[1]].x),
 							 0.f, 
-							 pTerrainVtxPos[dwVtxIdx[1]].z + fU * (pTerrainVtxPos[dwVtxIdx[0]].z - pTerrainVtxPos[dwVtxIdx[1]].z));
+							 pTerrainVtxPos[dwVtxIdx[1]].z + fU * (pTerrainVtxPos[dwVtxIdx[0]].z - pTerrainVtxPos[dwVtxIdx[1]].z));*/
+				return pTerrainVtxPos[dwVtxIdx[1]] + fU * (pTerrainVtxPos[dwVtxIdx[2]] - pTerrainVtxPos[dwVtxIdx[1]]) + fV * (pTerrainVtxPos[dwVtxIdx[0]] - pTerrainVtxPos[dwVtxIdx[1]]);
 			}
 			
 			// ¿ÞÂÊ ¾Æ·¡
@@ -195,9 +196,10 @@ Engine::_vec3 Engine::CCalculator::Picking_OnTerrain(HWND hWnd,
 				&pTerrainVtxPos[dwVtxIdx[0]],
 				&pTerrainVtxPos[dwVtxIdx[1]], &vRayPos, &vRayDir, &fU, &fV, &fDist))
 			{
-				return _vec3(pTerrainVtxPos[dwVtxIdx[2]].x + fU * (pTerrainVtxPos[dwVtxIdx[1]].x - pTerrainVtxPos[dwVtxIdx[2]].x),
-						0.f,
-						pTerrainVtxPos[dwVtxIdx[2]].z + fU * (pTerrainVtxPos[dwVtxIdx[0]].z - pTerrainVtxPos[dwVtxIdx[2]].z));
+				//return _vec3(pTerrainVtxPos[dwVtxIdx[2]].x + fU * (pTerrainVtxPos[dwVtxIdx[1]].x - pTerrainVtxPos[dwVtxIdx[2]].x),
+				//		0.f,
+				//		pTerrainVtxPos[dwVtxIdx[2]].z + fU * (pTerrainVtxPos[dwVtxIdx[0]].z - pTerrainVtxPos[dwVtxIdx[2]].z));
+				return pTerrainVtxPos[dwVtxIdx[2]] + fU * (pTerrainVtxPos[dwVtxIdx[0]] - pTerrainVtxPos[dwVtxIdx[2]]) + fV * (pTerrainVtxPos[dwVtxIdx[1]] - pTerrainVtxPos[dwVtxIdx[2]]);
 			}
 
 		}
