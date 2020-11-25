@@ -16,18 +16,6 @@
     <Filter Include="98.Headers">
       <UniqueIdentifier>{b70ba477-1c21-43ac-92f7-3629df11d6d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Texture">
-      <UniqueIdentifier>{b781cae3-fa71-45ac-b0bd-b0e5dfacdbc5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04.Texture\SingleTexture">
-      <UniqueIdentifier>{47fa6ae7-15dd-48fe-af13-0159681410aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04.Texture\MultiTexture">
-      <UniqueIdentifier>{e2a30e3a-db77-4d29-a04b-350207813992}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04.Texture\Manager">
-      <UniqueIdentifier>{5acbddc3-8a59-4808-8e87-954f8d49c91f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05.Terrain">
       <UniqueIdentifier>{85f34618-59fd-4550-926a-3bc5293dd203}</UniqueIdentifier>
     </Filter>
@@ -83,18 +71,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\Graphic_Device.h">
       <Filter>03.Graphic_Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Texture_Manager.h">
-      <Filter>04.Texture\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\MultiTex.h">
-      <Filter>04.Texture\MultiTexture</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Texture.h">
-      <Filter>04.Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\SingleTex.h">
-      <Filter>04.Texture\SingleTexture</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Terrain.h">
       <Filter>05.Terrain</Filter>
@@ -160,18 +136,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Graphic_Device.cpp">
       <Filter>03.Graphic_Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Texture_Manager.cpp">
-      <Filter>04.Texture\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MultiTex.cpp">
-      <Filter>04.Texture\MultiTexture</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Texture.cpp">
-      <Filter>04.Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SingleTex.cpp">
-      <Filter>04.Texture\SingleTexture</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp">
       <Filter>05.Terrain</Filter>

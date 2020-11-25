@@ -205,12 +205,8 @@
     <ClInclude Include="..\Code\MFCToolDoc.h" />
     <ClInclude Include="..\Code\MFCToolView.h" />
     <ClInclude Include="..\Code\MFC_Terrain.h" />
-    <ClInclude Include="..\Code\MultiTex.h" />
-    <ClInclude Include="..\Code\SingleTex.h" />
     <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\Terrain.h" />
-    <ClInclude Include="..\Code\Texture.h" />
-    <ClInclude Include="..\Code\Texture_Manager.h" />
     <ClInclude Include="..\Code\UnitTool.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
@@ -233,12 +229,8 @@
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />
     <ClCompile Include="..\Code\MFCToolView.cpp" />
     <ClCompile Include="..\Code\MFC_Terrain.cpp" />
-    <ClCompile Include="..\Code\MultiTex.cpp" />
-    <ClCompile Include="..\Code\SingleTex.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
-    <ClCompile Include="..\Code\Texture.cpp" />
-    <ClCompile Include="..\Code\Texture_Manager.cpp" />
     <ClCompile Include="..\Code\UnitTool.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MFCTool.cpp" />

@@ -11,8 +11,6 @@
 
 #include "MFCToolDoc.h"
 #include "MFCToolView.h"
-#include "Texture_Manager.h"
-#include "SingleTex.h"
 #include "MainFrm.h"
 
 #include "Form.h"
@@ -58,7 +56,6 @@ CMFCToolView::CMFCToolView()
 CMFCToolView::~CMFCToolView()
 {
 	CGraphic_Device::DestroyInstance();
-	CTexture_Manager::DestroyInstance();
 	Engine::CRenderer::GetInstance()->Clear_RenderGroup();
 	Engine::Release_Utility();
 	Engine::Release_Resoures();
