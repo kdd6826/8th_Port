@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Define.h"
+#include "Scene.h"
 #include "Base.h"
 #include "Engine_Define.h"
 #include "Export_Function.h"
@@ -12,6 +13,7 @@ BEGIN(Engine)
 class CGraphicDev;
 class CManagement;
 class CGameObject;
+class CScene;
 END
 
 class CMFCToolDoc;
@@ -82,6 +84,10 @@ public:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	void Update(float deltaTime);
 
+
+	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
+	
+	map<const _tchar*, Engine::CLayer*>			m_mapLayer;//삭제해야함
 	list<Engine::CGameObject*> list_Object;
 	float moveSpeed = 15.f;
 };

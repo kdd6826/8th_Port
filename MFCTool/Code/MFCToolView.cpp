@@ -22,6 +22,8 @@
 #include "GameObject.h"
 #include "DynamicMesh.h"
 #include "DynamicCamera.h"
+#include "NaviMesh.h"
+
 #include "TimerMgr.h"
 #include "Renderer.h"
 #ifdef _DEBUG
@@ -217,8 +219,6 @@ void CMFCToolView::OnInitialUpdate()
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"πŸ≈¡", 15, 20, FW_HEAVY), );
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±√º≠", 30, 30, FW_HEAVY), );
 
-	Engine::CLayer* pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, );
 
 	//if (nullptr == m_pTerrain)
 	//{
@@ -234,21 +234,9 @@ void CMFCToolView::OnInitialUpdate()
 		return;
 	}
 
-	////
-	Engine::CGameObject* obj = new CMFC_Terrain(m_pGraphicDev);
-	m_pTerrain = dynamic_cast<CMFC_Terrain*>(obj);
-	m_pTerrain->Ready_Object();
-	list_Object.emplace_back(obj);
+	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), );
 
-	m_Camera = CDynamicCamera::Create(m_pGraphicDev, &_vec3(1.f, 5.f, -1.f),
-		&_vec3(10.f, 0.f, 10.f),
-		&_vec3(0.f, 1.f, 0.f));
-	Engine::CGameObject* pGameObject = m_Camera;
-	NULL_CHECK_RETURN(pGameObject);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject));
-	list_Object.emplace_back(pGameObject);
 
-	
 	/*m_Camera->m_vEye = { 0.f, 5.f, -10.f };
 	m_Camera->m_vAt = {0.f, 5.f, -10.f};*/
 	RenderLine();
@@ -342,9 +330,48 @@ void CMFCToolView::Update(float deltaTime)
 	RenderLine();
 }
 
+HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
+{
+
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+	////
+	Engine::CGameObject* obj = new CMFC_Terrain(m_pGraphicDev);
+	m_pTerrain = dynamic_cast<CMFC_Terrain*>(obj);
+	m_pTerrain->Ready_Object();
+	list_Object.emplace_back(obj);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", obj), E_FAIL);
+
+
+	m_Camera = CDynamicCamera::Create(m_pGraphicDev, &_vec3(1.f, 5.f, -1.f),
+		&_vec3(10.f, 0.f, 10.f),
+		&_vec3(0.f, 1.f, 0.f));
+	Engine::CGameObject* pGameObject = m_Camera;
+	NULL_CHECK_RETURN(pGameObject);
+	list_Object.emplace_back(pGameObject);
+
+
+	pGameObject = CNaviMesh::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, );
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Navi", pGameObject), );
+	list_Object.emplace_back(pGameObject);
+
+	m_mapLayer.emplace(pLayerTag, pLayer);
+
+	return S_OK;
+}
+
 HRESULT CMFCToolView::Loading()
 {
 	FAILED_CHECK_RETURN(Engine::Reserve_ContainerSize(Engine::RESOURCE_END), E_FAIL);
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Stage", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
+
+
+
 
 	//Buffer
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
@@ -371,6 +398,9 @@ HRESULT CMFCToolView::Loading()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Transform", pComponent);
 
+	pComponent = Engine::CCalculator::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_Calculator", pComponent);
 	return S_OK;
 }
 
