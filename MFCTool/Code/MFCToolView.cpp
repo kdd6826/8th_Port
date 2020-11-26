@@ -480,8 +480,6 @@ void CMFCToolView::Key_Input(float deltaTime) {
 	
 	VertexManager::GetInstance()->Key_Input(deltaTime);
 }
-	CSphereAndVtxManager::GetInstance()->Key_Input(deltaTime);
-}
 
 CSphereMesh* CMFCToolView::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
 {
