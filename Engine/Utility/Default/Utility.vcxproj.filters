@@ -52,6 +52,9 @@
     <Filter Include="04. Component\03. Optimization\00. Frustum">
       <UniqueIdentifier>{fa79828a-fbd2-4cfc-ac1a-9253c94a9340}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\03. Optimization\01. QuadTree">
+      <UniqueIdentifier>{c748033e-09c5-4dff-97e3-2d6d7448a242}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Component.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Frustum.cpp">
       <Filter>04. Component\03. Optimization\00. Frustum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuadTree.cpp">
+      <Filter>04. Component\03. Optimization\01. QuadTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Frustum.h">
       <Filter>04. Component\03. Optimization\00. Frustum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\QuadTree.h">
+      <Filter>04. Component\03. Optimization\01. QuadTree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -30,9 +30,13 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 _int CMainApp::Update_MainApp(const _float& fTimeDelta)
 {
+
 	if (nullptr == m_pManagementClass)
 		return -1;
 
+	m_fTime += fTimeDelta;
+
+		
 	Engine::Set_InputDev();
 
 	_long		Temp = 0;
@@ -53,13 +57,22 @@ void CMainApp::Render_MainApp(void)
 	if (nullptr == m_pManagementClass)
 		return;
 
+	++m_dwRenderCnt;
+
+	if (m_fTime >= 1.f)
+	{
+		wsprintf(m_szFPS, L"FPS : %d", m_dwRenderCnt);
+		m_fTime = 0.f;
+		m_dwRenderCnt = 0;
+	}
+
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-	
-	
+		
 	Engine::Render_Begin(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.f));
 	
 	m_pManagementClass->Render_Scene();
+	Engine::Render_Font(L"Font_Jinji", m_szFPS, &_vec2(500.f, 10.f), D3DXCOLOR(0.f, 0.f,0.f, 1.f));
 
 	Engine::Render_End();
 }

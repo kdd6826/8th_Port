@@ -17,6 +17,7 @@ public:
 
 	_ulong				Get_VtxCntX(void) const { return m_iH.biWidth; }
 	_ulong				Get_VtxCntZ(void) const { return m_iH.biHeight; }
+	void				Copy_Indices(INDEX32* pIndex, const _ulong& dwTriCnt);
 
 public:
 	virtual HRESULT	Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);

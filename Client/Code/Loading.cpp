@@ -65,7 +65,7 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Calculator", pComponent);
 	
-	pComponent = Engine::COptimization::Create(m_pGraphicDev);
+	pComponent = Engine::COptimization::Create(m_pGraphicDev, true, VTXCNTX, VTXCNTZ);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
@@ -123,29 +123,29 @@ _uint CLoading::Loading_ForStage(void)
 												L"TombStone.X"),
 												E_FAIL);
 
+
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	Engine::RESOURCE_STAGE,
 	//	L"Mesh_Player",
 	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Arisha/",
-	//	L"Arisha.X"),
+	//	L"../Bin/Resource/ArishaX/",
+	//	L"NewArisha.X"),
 	//	E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Player",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/ArishaX/",
-		L"NewArisha.X"),
-		E_FAIL);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Sword",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Arisha/Weapon/",
-		L"WeaponArisha.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Sword",
+	//	Engine::TYPE_STATIC,
+	//	L"../Bin/Resource/Arisha/Weapon/",
+	//	L"WeaponArisha.X"),
+	//	E_FAIL);
+		//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+//	Engine::RESOURCE_STAGE,
+//	L"Mesh_Player",
+//	Engine::TYPE_DYNAMIC,
+//	L"../Bin/Resource/Arisha/",
+//	L"Arisha.X"),
+//	E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//Engine::RESOURCE_STAGE,
@@ -174,8 +174,6 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"../Bin/Resource/Mesh/StaticMesh/Sword/",
 	//	L"Sword.X"),
 	//	E_FAIL);
-
-
 	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												L"Mesh_Player",

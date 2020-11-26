@@ -32,7 +32,7 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 
 void CStage::Render_Scene(void)
 {
-	Engine::CScene::Render_Scene();
+
 }
 
 HRESULT CStage::Ready_Environment_Layer(const _tchar * pLayerTag)
@@ -69,13 +69,13 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	Engine::CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CPlayer::Create(m_pGraphicDev);
+	/*pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
 	pGameObject = CSword::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);*/
 
 	/*for (_uint i = 0; i < 50; ++i)
 	{
