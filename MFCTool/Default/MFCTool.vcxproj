@@ -222,6 +222,7 @@
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="MFCTool.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SphereAndVtxManager.h" />
     <ClInclude Include="SphereMesh.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="..\Code\UnitTool.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MFCTool.cpp" />
+    <ClCompile Include="SphereAndVtxManager.cpp" />
     <ClCompile Include="SphereMesh.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

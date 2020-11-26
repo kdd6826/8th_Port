@@ -3,7 +3,6 @@
 #include "Base.h"
 #include "Engine_Define.h"
 #include "Export_Function.h"
-
 BEGIN(Engine)
 
 class CRcTex;
@@ -24,7 +23,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-
+	void Set_VtxPos();
 private:
 	HRESULT		Add_Component(void);
 	//void		SetUp_OnTerrain(void);
@@ -40,7 +39,7 @@ private:
 
 public:
 	static CSphereMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	Engine::VTXTEX* m_pVtx; //자료형 이게맞나? 아무튼 버텍스 포인터 위치
+	list<Engine::VTXCOL*> list_pVtx;
 private:
 	virtual void Free(void) override;
 
