@@ -20,7 +20,7 @@ Engine::CSphere::~CSphere(void)
 
 HRESULT Engine::CSphere::Ready_Buffer(void)
 {
-	D3DXCreateSphere(m_pGraphicDev, 1.5f, 8, 8, &pMesh, NULL);
+	D3DXCreateSphere(m_pGraphicDev, 0.6f, 8, 8, &pMesh, NULL);
 
 	m_dwFVF = pMesh->GetFVF();
 	if (!(m_dwFVF & D3DFVF_DIFFUSE))

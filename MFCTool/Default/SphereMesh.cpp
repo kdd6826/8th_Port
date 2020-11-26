@@ -5,7 +5,7 @@
 CSphereMesh::CSphereMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
-
+	
 }
 
 CSphereMesh::~CSphereMesh(void)
@@ -71,6 +71,10 @@ CSphereMesh* CSphereMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CSphereMesh::Free(void)
 {
 	Engine::CGameObject::Free();
+	for (auto& vtx : list_pVtx) {
+		delete vtx;
+		vtx = nullptr;
+	}
 }
 
 
@@ -79,13 +83,18 @@ HRESULT CSphereMesh::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransformCom->Set_Pos(_vec3(rand() % 100 + 1.f, 0.f, rand() % 100 + 1.f));
 
+	Engine::VTXCOL* vtx = new Engine::VTXCOL;
+	vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	vtx->dwColor = D3DXCOLOR{ 255.f, 0.f, 0.f, 255.f };
+	list_pVtx.emplace_back(vtx);
+
 	return S_OK;
 }
 _int CSphereMesh::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-
+	
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
 	return 0;
@@ -101,6 +110,13 @@ void CSphereMesh::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
+}
+void CSphereMesh::Set_VtxPos()
+{
+	for (auto& vtx : list_pVtx)
+	{
+		vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	}
 }
 //void CSphereMesh::SetUp_OnTerrain(void)
 //{

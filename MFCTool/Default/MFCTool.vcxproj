@@ -223,6 +223,7 @@
     <ClInclude Include="NaviPage.h" />
     <ClInclude Include="PKH.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SphereAndVtxManager.h" />
     <ClInclude Include="Sheets.h" />
     <ClInclude Include="SphereMesh.h" />
     <ClInclude Include="stdafx.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="..\Code\Texture_Manager.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MFCTool.cpp" />
+    <ClCompile Include="SphereAndVtxManager.cpp" />
     <ClCompile Include="NaviPage.cpp" />
     <ClCompile Include="PKH.cpp" />
     <ClCompile Include="Sheets.cpp" />
