@@ -18,6 +18,7 @@ class CMFCToolDoc;
 class CSingleTex;
 class CMFC_Terrain;
 class CDynamicCamera;
+class CSphereMesh;
 class CMFCToolView : public CScrollView
 {
 protected: // serialization에서만 만들어집니다.
@@ -92,6 +93,7 @@ public:
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	map<const _tchar*, Engine::CLayer*>			m_mapLayer;
 	map<const _tchar*, Engine::CComponent*>			m_mapComponent[Engine::ID_END];
+	bool wireFrame = false;
 
 };
 

@@ -19,6 +19,10 @@ private:
 public:
 	void Key_Input(float deltaTime);
 
+	CSphereMesh* Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
+
+	void Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color);
+
 
 private:
 	

@@ -49,7 +49,7 @@ HRESULT Engine::CSphere::Ready_Buffer(void)
 
 	FAILED_CHECK_RETURN(pMesh->GetVertexBuffer(&m_pVB), E_FAIL);
 	FAILED_CHECK_RETURN(pMesh->GetIndexBuffer(&m_pIB), E_FAIL);
-
+	
 
 	return S_OK;
 }

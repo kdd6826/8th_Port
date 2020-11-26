@@ -305,6 +305,7 @@ void CMFCToolView::OnInitialUpdate()
 void CMFCToolView::Update(float deltaTime)
 {	
 	Key_Input(deltaTime);
+
 	/// Update
 	auto&	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
 	if (iter == m_mapLayer.end())
@@ -318,7 +319,12 @@ void CMFCToolView::Update(float deltaTime)
 
 	/// Render
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
-
+	if (wireFrame) {
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	}
+	else {
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}
 	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
 
 	for (auto& obj : iter->second->m_mapObject)
@@ -465,7 +471,7 @@ void CMFCToolView::LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag
 
 void CMFCToolView::Key_Input(float deltaTime) {
 	Engine::Set_InputDev();
-	m_Camera->Update_Object(deltaTime);
+	//m_Camera->Update_Object(deltaTime);
 	
-	CSphereAndVtxManager::GetInstance()->Key_Input(deltaTime);
+	VertexManager::GetInstance()->Key_Input(deltaTime);
 }
