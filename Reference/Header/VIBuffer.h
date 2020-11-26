@@ -16,7 +16,7 @@ public:
 	virtual HRESULT	Ready_Buffer(void);
 	virtual void	Render_Buffer(void);
 
-protected:
+public:
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 	LPDIRECT3DINDEXBUFFER9		m_pIB;
 

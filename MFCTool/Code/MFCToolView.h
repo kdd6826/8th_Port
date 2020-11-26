@@ -81,7 +81,6 @@ public:
 	Engine::CComponent * Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, Engine::COMPONENTID eID);
 	void LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag, Engine::CGameObject* pGameObject);
 	void Key_Input(float deltaTime);
-	CSphereMesh* Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
 	_vec3 PickUp_OnTerrain(void);
 
 
@@ -94,6 +93,7 @@ public:
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	map<const _tchar*, Engine::CLayer*>			m_mapLayer;
 	map<const _tchar*, Engine::CComponent*>			m_mapComponent[Engine::ID_END];
+	bool wireFrame = false;
 
 };
 

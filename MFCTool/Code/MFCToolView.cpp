@@ -306,16 +306,6 @@ void CMFCToolView::Update(float deltaTime)
 {	
 	Key_Input(deltaTime);
 
-	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
-	{
-		Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTerrainTransformCom);
-		CSphereMesh* sphere =  Picking_Sphere(g_hWnd, pTerrainTransformCom);
-		if (sphere != nullptr) {
-			sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = { 0.f, 0.f, 0.f };
-		}
-		//Engine::Safe_Release(sphere);
-	}
 	/// Update
 	auto&	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
 	if (iter == m_mapLayer.end())
@@ -329,7 +319,12 @@ void CMFCToolView::Update(float deltaTime)
 
 	/// Render
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
-
+	if (wireFrame) {
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	}
+	else {
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}
 	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
 
 	for (auto& obj : iter->second->m_mapObject)
@@ -479,81 +474,4 @@ void CMFCToolView::Key_Input(float deltaTime) {
 	//m_Camera->Update_Object(deltaTime);
 	
 	VertexManager::GetInstance()->Key_Input(deltaTime);
-}
-
-CSphereMesh* CMFCToolView::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
-{
-	POINT		ptMouse{ 0 };
-
-	GetCursorPos(&ptMouse);
-	::ScreenToClient(hWnd, &ptMouse);
-
-	_vec3	vMousePos;
-
-	D3DVIEWPORT9		ViewPort;
-	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
-	m_pGraphicDev->GetViewport(&ViewPort);
-	// 뷰포트 -> 투영
-
-	vMousePos.x = (ptMouse.x / (ViewPort.Width * 0.5f)) - 1.f;
-	vMousePos.y = (ptMouse.y / -(ViewPort.Height * 0.5f)) + 1.f;
-	vMousePos.z = 0.f;
-
-	// L * W * V * P * (P^-1)
-	// L * W * V
-
-	// 투영 -> 뷰 스페이스
-	_matrix	matProj;
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-	D3DXMatrixInverse(&matProj, NULL, &matProj);
-	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
-
-	// 뷰 스페이스 -> 월드
-	_matrix	matView;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixInverse(&matView, NULL, &matView);
-
-	_vec3	vRayPos, vRayDir;
-
-
-	vRayPos = _vec3(0.f, 0.f, 0.f);
-	vRayDir = vMousePos - vRayPos;
-
-	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
-	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
-
-	// 월드 -> 로컬
-	_matrix	matWorld;
-	pTerrainTransformCom->Get_WorldMatrix(&matWorld);
-	D3DXMatrixInverse(&matWorld, NULL, &matWorld);
-
-	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matWorld);
-	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matWorld);
-
-	_matrix tmlnv;
-	_vec3 vSpherePos, vMinus;
-	float A, B, C, D;
-	//for (auto& sphere : CSphereAndVtxManager::GetInstance()->list_TotalSphere)
-	//{
-	//	vSpherePos = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS];
-	//	vMinus = vRayPos - vSpherePos;
-
-	//	A = D3DXVec3Dot(&vRayDir, &vRayDir);
-	//	B = D3DXVec3Dot(&vRayDir, &vMinus);
-	//	C = D3DXVec3Dot(&vMinus, &vMinus) - 0.6f * 0.6f;
-
-	//	D = B * B - A * C;
-
-	//	if (D < 0)
-	//		continue;
-
-	//	float t0, t1;
-
-	//	t0 = -(B + sqrt(D)) / A;
-	//	t1 = -(B - sqrt(D)) / A;
-	//	if (t0 < 0 && t1 < 0) continue;
-	//	return sphere;
-	//}
-
-	return nullptr;
 }
