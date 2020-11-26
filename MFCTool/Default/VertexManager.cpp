@@ -1,17 +1,17 @@
 #include "stdafx.h"
-#include "SphereAndVtxManager.h"
+#include "VertexManager.h"
 #include "SphereMesh.h"
 #include "MFCToolView.h"
 
-IMPLEMENT_SINGLETON(CSphereAndVtxManager)
+IMPLEMENT_SINGLETON(VertexManager)
 
-CSphereAndVtxManager::CSphereAndVtxManager()
+VertexManager::VertexManager()
 {
 	m_pGraphicDev = CMFCToolView::GetInstance()->m_pGraphicDev;
 }
 
 
-CSphereAndVtxManager::~CSphereAndVtxManager()
+VertexManager::~VertexManager()
 {
 	for (auto& sphere : list_TotalSphere)
 	{
@@ -20,7 +20,7 @@ CSphereAndVtxManager::~CSphereAndVtxManager()
 	list_TotalSphere.clear();
 }
 
-void CSphereAndVtxManager::Key_Input(float deltaTime)
+void VertexManager::Key_Input(float deltaTime)
 {
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
