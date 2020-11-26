@@ -58,6 +58,9 @@
     <Filter Include="94.SphereAndVtxManager">
       <UniqueIdentifier>{23f73007-1fb3-4537-9e3b-7de008eb1c27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.View\MyFormView\Pages">
+      <UniqueIdentifier>{1a276f88-ac93-4705-8604-ee5eb873cc84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -144,9 +147,15 @@
     <ClInclude Include="SphereAndVtxManager.h">
       <Filter>94.SphereAndVtxManager</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainPage.h" />
-    <ClInclude Include="PKH.h" />
-    <ClInclude Include="MeshPage.h" />
+    <ClInclude Include="MeshPage.h">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="PKH.h">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainPage.h">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -209,9 +218,15 @@
     <ClCompile Include="SphereAndVtxManager.cpp">
       <Filter>94.SphereAndVtxManager</Filter>
     </ClCompile>
-    <ClCompile Include="TerrainPage.cpp" />
-    <ClCompile Include="PKH.cpp" />
-    <ClCompile Include="MeshPage.cpp" />
+    <ClCompile Include="MeshPage.cpp">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="PKH.cpp">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainPage.cpp">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCTool.ico">
