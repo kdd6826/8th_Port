@@ -3,8 +3,13 @@
 
 
 // CForm 폼 뷰입니다.
-#include "UnitTool.h"
 #include "MapTool.h"
+#include "Sheets.h"
+#include "afxcmn.h"
+
+class TerrainPage;
+class NaviPage;
+class PKH;
 class CForm : public CFormView
 {
 	DECLARE_DYNCREATE(CForm)
@@ -13,7 +18,6 @@ protected:
 	CForm();           // 동적 만들기에 사용되는 protected 생성자입니다.
 	virtual ~CForm();
 public:
-	CUnitTool m_tUnitTool; 
 	CMapTool m_tMapTool; 
 
 public:
@@ -32,7 +36,17 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedUnitTool();
 	afx_msg void OnBnClickedMapTool();
+	
+
+	afx_msg void OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult);
+
+	TerrainPage	 *tab1;
+	NaviPage	 *tab2;
+	PKH	  		 *tab3;
+
+
+	CTabCtrl m_Tab;
+	virtual void OnInitialUpdate();
 };
 
