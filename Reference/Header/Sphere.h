@@ -22,6 +22,9 @@ public:
 	virtual CComponent* Clone(void);
 	virtual void Free(void);
 	LPD3DXMESH	pMesh;
+
+	bool colorGreenCheck = true;
+	bool colorGreen = true;
 };
 END
 
