@@ -79,13 +79,15 @@ public:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	Engine::CComponent * Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, Engine::COMPONENTID eID);
 	void LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag, Engine::CGameObject* pGameObject);
+	void Key_Input(float deltaTime);
+	_vec3 PickUp_OnTerrain(void);
+
 
 private:
 	HRESULT Loading();
 	void RenderLine();
-	_vec3 PickUp_OnTerrain(void);
 
-
+public:
 	float moveSpeed = 15.f;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	map<const _tchar*, Engine::CLayer*>			m_mapLayer;

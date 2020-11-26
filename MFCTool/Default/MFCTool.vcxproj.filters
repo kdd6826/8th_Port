@@ -58,6 +58,9 @@
     <Filter Include="95. GameObject">
       <UniqueIdentifier>{2a9a15fb-3111-425f-81c1-c848699ad061}</UniqueIdentifier>
     </Filter>
+    <Filter Include="94.SphereAndVtxManager">
+      <UniqueIdentifier>{23f73007-1fb3-4537-9e3b-7de008eb1c27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="..\Code\NaviMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="SphereAndVtxManager.h">
+      <Filter>94.SphereAndVtxManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -205,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>95. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereAndVtxManager.cpp">
+      <Filter>94.SphereAndVtxManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
