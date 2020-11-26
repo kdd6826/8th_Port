@@ -5,6 +5,10 @@
 #include "MFCTool.h"
 #include "Form.h"
 
+#include"TerrainPage.h"
+#include "NaviPage.h"
+#include "PKH.h"
+
 USING(Client)
 // CForm
 
@@ -23,11 +27,12 @@ CForm::~CForm()
 void CForm::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_TAB1, m_Tab);
 }
 
 BEGIN_MESSAGE_MAP(CForm, CFormView)
-	ON_BN_CLICKED(IDC_BUTTON1, &CForm::OnBnClickedUnitTool)
 	ON_BN_CLICKED(IDC_BUTTON6, &CForm::OnBnClickedMapTool)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CForm::OnTcnSelchangeTab1)
 END_MESSAGE_MAP()
 
 
@@ -51,23 +56,73 @@ void CForm::Dump(CDumpContext& dc) const
 // CForm 메시지 처리기입니다.
 
 
-void CForm::OnBnClickedUnitTool()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	//int i = 0; 
-	//ERR_MSG(L"성구는 몇성구?"); 
-	if(nullptr == m_tUnitTool.GetSafeHwnd())
-		m_tUnitTool.Create(IDD_UNITTOOL);
-
-	m_tUnitTool.ShowWindow(SW_SHOW); 
-
-}
-
-
 void CForm::OnBnClickedMapTool()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (nullptr == m_tMapTool.GetSafeHwnd())
 		m_tMapTool.Create(IDD_MAPTOOL); 
 	m_tMapTool.ShowWindow(SW_SHOW);
+}
+
+
+void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	int sel = m_Tab.GetCurSel();
+
+	switch (sel)
+	{
+	case 0:
+		tab1->ShowWindow(SW_SHOW);
+		tab2->ShowWindow(SW_HIDE);
+		tab3->ShowWindow(SW_HIDE);
+			break;
+	case 1:
+		tab1->ShowWindow(SW_HIDE);
+		tab2->ShowWindow(SW_SHOW);
+		tab3->ShowWindow(SW_HIDE);
+			break;
+	case 2:
+		tab1->ShowWindow(SW_HIDE);
+		tab2->ShowWindow(SW_HIDE);
+		tab3->ShowWindow(SW_SHOW);
+
+			break;
+	default:
+		break;
+	}
+
+	*pResult = 0;
+}
+
+
+void CForm::OnInitialUpdate()
+{
+	CFormView::OnInitialUpdate();
+
+	m_Tab.InsertItem(0, L"터레인");
+	m_Tab.InsertItem(1, L"네비");
+	m_Tab.InsertItem(2, L"박경훈");
+
+	m_Tab.SetCurSel(0);
+	
+	CRect rect;
+	m_Tab.GetWindowRect(&rect);
+
+	tab1 = new TerrainPage;
+	tab1->Create(IDD_DIALOG1, &m_Tab);
+	tab1->MoveWindow(0, 25, rect.Width(), rect.Height());
+	tab1->ShowWindow(SW_SHOW);
+
+	tab2 = new NaviPage;
+	tab2->Create(IDD_DIALOG2, &m_Tab);
+	tab2->MoveWindow(0, 25, rect.Width(), rect.Height());
+	tab2->ShowWindow(SW_HIDE);
+
+	tab3 = new PKH;
+	tab3->Create(IDD_DIALOG3, &m_Tab);
+	tab3->MoveWindow(0, 25, rect.Width(), rect.Height());
+	tab3->ShowWindow(SW_HIDE);
+
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
