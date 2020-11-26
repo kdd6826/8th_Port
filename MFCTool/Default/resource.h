@@ -36,16 +36,29 @@
 #define IDC_CHECK1                      1014
 #define IDC_BUTTON8                     1014
 #define IDC_CHECK2                      1015
+#define IDC_RADIO7                      1015
 #define IDC_CHECK3                      1016
+#define IDC_RADIO8                      1016
 #define IDC_BUTTON3                     1017
+#define IDC_RADIO9                      1017
 #define IDC_EDIT6                       1018
+#define IDC_RADIO10                     1018
 #define IDC_BUTTON4                     1019
+#define IDC_EDIT12                      1019
 #define IDC_BUTTON5                     1020
 #define IDC_PICTURE                     1020
+#define IDC_EDIT13                      1020
 #define IDC_TAB1                        1021
+#define IDC_EDIT14                      1021
+#define IDC_EDIT15                      1022
+#define IDC_EDIT16                      1023
+#define IDC_BUTTON9                     1024
 #define IDC_SPIN2                       1025
+#define IDC_BUTTON10                    1025
 #define IDC_SPIN3                       1026
+#define IDC_BUTTON11                    1026
 #define IDC_SPIN4                       1027
+#define IDC_BUTTON12                    1027
 #define IDC_SPIN5                       1028
 #define IDC_SPIN6                       1029
 #define IDC_SPIN7                       1030
@@ -53,7 +66,14 @@
 #define IDC_SPIN9                       1032
 #define IDC_SPIN10                      1033
 #define IDC_SPIN11                      1034
+#define IDC_SPIN12                      1035
+#define IDC_SPIN13                      1036
 #define IDC_LIST4                       1037
+#define IDC_SPIN14                      1037
+#define IDC_TREE1                       1038
+#define IDC_TREE2                       1039
+#define IDC_TREE3                       1040
+#define IDC_TREE4                       1041
 
 // Next default values for new objects
 // 
@@ -61,7 +81,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        319
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1038
+#define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           313
 #endif
 #endif
