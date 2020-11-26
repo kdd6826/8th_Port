@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(TerrainPage, CDialogEx)
 TerrainPage::TerrainPage(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG1, pParent)
 {
-
+	
 }
 
 TerrainPage::~TerrainPage()
@@ -24,12 +24,17 @@ TerrainPage::~TerrainPage()
 void TerrainPage::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	//  DDX_Control(pDX, IDC_RADIO1, Render_Solid);
+	//  DDX_Control(pDX, IDC_BUTTON1, Render_WireFrame);
+	DDX_Control(pDX, IDC_RADIO1, Render_Solid);
+	DDX_Control(pDX, IDC_RADIO2, Render_WireFrame);
 }
 
 
 BEGIN_MESSAGE_MAP(TerrainPage, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT1, &TerrainPage::OnEnChangeEdit1)
-
+	ON_BN_CLICKED(IDC_RADIO1, &TerrainPage::OnBnClickedRadio1)
+	ON_BN_CLICKED(IDC_RADIO2, &TerrainPage::OnBnClickedRadio2)
 END_MESSAGE_MAP()
 
 
@@ -50,4 +55,29 @@ void TerrainPage::OnEnChangeEdit1()
 void TerrainPage::OnCbnSelchangeCombo1()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void TerrainPage::OnBnClickedRadio1()
+{
+	
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void TerrainPage::OnBnClickedRadio2()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+BOOL TerrainPage::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	Render_Solid.SetCheck(BST_CHECKED);
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }

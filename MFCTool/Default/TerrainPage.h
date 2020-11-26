@@ -23,4 +23,12 @@ protected:
 public:
 	afx_msg void OnEnChangeEdit1();
 	afx_msg void OnCbnSelchangeCombo1();
+	afx_msg void OnBnClickedRadio1();
+//	CButton Render_Solid;
+//	CButton Render_WireFrame;
+	afx_msg void OnBnClickedRadio2();
+	
+	CButton Render_Solid;
+	CButton Render_WireFrame;
+	virtual BOOL OnInitDialog();
 };

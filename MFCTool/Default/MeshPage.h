@@ -20,4 +20,16 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CButton Render_Solid;
+	CButton Render_WireFrame;
+//	CButton mouse_Objcet;
+	CButton mouseObject;
+	CButton mouseNaviMesh;
+//	CButton typeDynamic;
+	CButton typeStatic;
+	CButton typeDynamic;
+	CButton vertexTogetther;
+	CButton vertexOnly;
+	virtual BOOL OnInitDialog();
 };
