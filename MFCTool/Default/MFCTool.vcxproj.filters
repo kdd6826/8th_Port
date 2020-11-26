@@ -55,11 +55,11 @@
     <Filter Include="95. GameObject">
       <UniqueIdentifier>{2a9a15fb-3111-425f-81c1-c848699ad061}</UniqueIdentifier>
     </Filter>
-    <Filter Include="94.SphereAndVtxManager">
-      <UniqueIdentifier>{23f73007-1fb3-4537-9e3b-7de008eb1c27}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00.View\MyFormView\Pages">
       <UniqueIdentifier>{1a276f88-ac93-4705-8604-ee5eb873cc84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="94.VertexManager">
+      <UniqueIdentifier>{23f73007-1fb3-4537-9e3b-7de008eb1c27}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,9 +144,6 @@
     <ClInclude Include="..\Code\NaviMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="SphereAndVtxManager.h">
-      <Filter>94.SphereAndVtxManager</Filter>
-    </ClInclude>
     <ClInclude Include="MeshPage.h">
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClInclude>
@@ -155,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="TerrainPage.h">
       <Filter>00.View\MyFormView\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexManager.h">
+      <Filter>94.VertexManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +215,6 @@
     <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>95. GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="SphereAndVtxManager.cpp">
-      <Filter>94.SphereAndVtxManager</Filter>
-    </ClCompile>
     <ClCompile Include="MeshPage.cpp">
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClCompile>
@@ -226,6 +223,9 @@
     </ClCompile>
     <ClCompile Include="TerrainPage.cpp">
       <Filter>00.View\MyFormView\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexManager.cpp">
+      <Filter>94.VertexManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
