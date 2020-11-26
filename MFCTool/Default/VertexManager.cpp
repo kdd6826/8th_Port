@@ -4,18 +4,8 @@
 #include "SphereMesh.h"
 #include "MFCToolView.h"
 
-
 #include "Sphere.h"
-#include "VIBuffer.h"
-#include "Resources.h"
-#include "Export_Function.h"
-#include "Export_Resouces.h"
-//#include "Export_Resouces.inl"
-#include "Export_System.h"
-//#include "Export_System.inl"
-#include "Export_Utility.h"
-//#include "export_utility.inl"
-#include "Engine_Function.h"
+USING(Engine)
 
 IMPLEMENT_SINGLETON(VertexManager)
 
@@ -39,8 +29,8 @@ void VertexManager::Key_Input(float deltaTime)
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
 		if (!mouseLClick) {
-			_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
-			if (_vec3(0.f, 0.f, 0.f) != vPickPos) {
+			Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
+			if (Engine::_vec3(0.f, 0.f, 0.f) != vPickPos) {
 				Engine::CGameObject* pGameObject = CSphereMesh::Create(m_pGraphicDev);
 				dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = vPickPos;
 				CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", pGameObject);
@@ -63,9 +53,9 @@ void VertexManager::Key_Input(float deltaTime)
 		NULL_CHECK_RETURN(pTerrainTransformCom);
 		CSphereMesh* sphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
 		if (sphere != nullptr) {
-			//Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 0, 0, 255));
+			Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
 			//sphere->m_pBufferCom->Set_Color(D3DCOLOR_ARGB(255, 0, 0, 255));
-			sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = { 0.f, 0.f, 0.f };
+			//sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = { 0.f, 0.f, 0.f };
 		}
 	}
 
@@ -82,7 +72,7 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 	GetCursorPos(&ptMouse);
 	::ScreenToClient(hWnd, &ptMouse);
 
-	_vec3	vMousePos;
+	Engine::_vec3	vMousePos;
 
 	D3DVIEWPORT9		ViewPort;
 	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
@@ -97,35 +87,35 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 	// L * W * V
 
 	// 투영 -> 뷰 스페이스
-	_matrix	matProj;
+	Engine::_matrix	matProj;
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 	D3DXMatrixInverse(&matProj, NULL, &matProj);
 	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
 
 	// 뷰 스페이스 -> 월드
-	_matrix	matView;
+	Engine::_matrix	matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, NULL, &matView);
 
-	_vec3	vRayPos, vRayDir;
+	Engine::_vec3	vRayPos, vRayDir;
 
 
-	vRayPos = _vec3(0.f, 0.f, 0.f);
+	vRayPos = Engine::_vec3(0.f, 0.f, 0.f);
 	vRayDir = vMousePos - vRayPos;
 
 	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
 	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
 
 	// 월드 -> 로컬
-	_matrix	matWorld;
+	Engine::_matrix	matWorld;
 	pTerrainTransformCom->Get_WorldMatrix(&matWorld);
 	D3DXMatrixInverse(&matWorld, NULL, &matWorld);
 
 	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matWorld);
 	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matWorld);
 
-	_matrix tmlnv;
-	_vec3 vSpherePos, vMinus;
+	Engine::_matrix tmlnv;
+	Engine::_vec3 vSpherePos, vMinus;
 	float A, B, C, D;
 	for (auto& sphere : list_TotalSphere)
 	{
@@ -154,15 +144,7 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 
 void VertexManager::Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color)
 {
-	Vtx->m_dwFVF = Vtx->pMesh->GetFVF();
-	if (!(Vtx->m_dwFVF & D3DFVF_DIFFUSE))
-	{
-		Vtx->pMesh->CloneMeshFVF(Vtx->pMesh->GetOptions(), Vtx->m_dwFVF |= D3DFVF_DIFFUSE, m_pGraphicDev, &Vtx->pMesh);
-	}
-	else
-	{
-		Vtx->pMesh->CloneMeshFVF(Vtx->pMesh->GetOptions(), Vtx->m_dwFVF, m_pGraphicDev, &Vtx->pMesh);
-	}
+	
 	void* pVertex = nullptr;
 	Vtx->pMesh->LockVertexBuffer(0, &pVertex);
 	// 색상 정보 위치 찾기 (초록색으로 바꾸려고)
