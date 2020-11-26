@@ -1,15 +1,15 @@
 #pragma once
 
 
-// NaviPage 대화 상자입니다.
+// MeshPage 대화 상자입니다.
 
-class NaviPage : public CDialogEx
+class MeshPage : public CDialogEx
 {
-	DECLARE_DYNAMIC(NaviPage)
+	DECLARE_DYNAMIC(MeshPage)
 
 public:
-	NaviPage(CWnd* pParent = NULL);   // 표준 생성자입니다.
-	virtual ~NaviPage();
+	MeshPage(CWnd* pParent = NULL);   // 표준 생성자입니다.
+	virtual ~MeshPage();
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME

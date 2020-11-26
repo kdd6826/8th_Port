@@ -29,7 +29,7 @@
 #include "SphereMesh.h"
 #include "Layer.h"
 #include "NaviMesh.h"
-#include "SphereAndVtxManager.h"
+#include "VertexManager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,7 +69,7 @@ CMFCToolView::~CMFCToolView()
 	Engine::Release_Resoures();
 	Safe_Release(m_pGraphicDev);
 
-	CSphereAndVtxManager::DestroyInstance();
+	VertexManager::DestroyInstance();
 	auto& iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
 	if (iter == m_mapLayer.end())
 		return;
@@ -136,7 +136,7 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CSphereAndVtxManager::GetInstance();
+	VertexManager::GetInstance();
 	Engine::CGameObject*		pGameObject = nullptr;
 
 	//pGameObject = CSkyBox::Create(m_pGraphicDev);
@@ -478,6 +478,8 @@ void CMFCToolView::Key_Input(float deltaTime) {
 	Engine::Set_InputDev();
 	//m_Camera->Update_Object(deltaTime);
 	
+	VertexManager::GetInstance()->Key_Input(deltaTime);
+}
 	CSphereAndVtxManager::GetInstance()->Key_Input(deltaTime);
 }
 

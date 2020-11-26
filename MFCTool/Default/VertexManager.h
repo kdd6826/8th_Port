@@ -7,13 +7,14 @@
 
 class SphereMesh;
 class CSphereMesh;
-class CSphereAndVtxManager
+
+class VertexManager
 {
 public:
-	DECLARE_SINGLETON(CSphereAndVtxManager)
+	DECLARE_SINGLETON(VertexManager)
 private:
-	CSphereAndVtxManager();
-	~CSphereAndVtxManager();
+	VertexManager();
+	~VertexManager();
 
 public:
 	void Key_Input(float deltaTime);
