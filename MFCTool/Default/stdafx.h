@@ -48,6 +48,7 @@ using namespace std;
 #include "Macro.h"
 #include "Function.h"
 #include "Graphic_Device.h"
+#include <afxdlgs.h>
 
 
 

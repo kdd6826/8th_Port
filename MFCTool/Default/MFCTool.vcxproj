@@ -212,7 +212,6 @@
     <ClInclude Include="..\Code\Terrain.h" />
     <ClInclude Include="..\Code\Texture.h" />
     <ClInclude Include="..\Code\Texture_Manager.h" />
-    <ClInclude Include="..\Code\UnitTool.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
     <ClInclude Include="..\Header\Function.h" />
@@ -221,11 +220,15 @@
     <ClInclude Include="..\Header\Typedef.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="MFCTool.h" />
+    <ClInclude Include="NaviPage.h" />
+    <ClInclude Include="PKH.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SphereAndVtxManager.h" />
+    <ClInclude Include="Sheets.h" />
     <ClInclude Include="SphereMesh.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TerrainPage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\FileInfo.cpp" />
@@ -243,10 +246,12 @@
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\Texture_Manager.cpp" />
-    <ClCompile Include="..\Code\UnitTool.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MFCTool.cpp" />
     <ClCompile Include="SphereAndVtxManager.cpp" />
+    <ClCompile Include="NaviPage.cpp" />
+    <ClCompile Include="PKH.cpp" />
+    <ClCompile Include="Sheets.cpp" />
     <ClCompile Include="SphereMesh.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -254,6 +259,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TerrainPage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\MFCTool.rc2" />
