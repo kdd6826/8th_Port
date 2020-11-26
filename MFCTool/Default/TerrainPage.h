@@ -32,4 +32,9 @@ public:
 	CButton Render_WireFrame;
 	virtual BOOL OnInitDialog();
 	
+	afx_msg void OnBnClickedButton1();
+	CEdit xCount;
+	CEdit zCount;
+	CEdit interval;
+	CEdit detail;
 };

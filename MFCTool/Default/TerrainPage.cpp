@@ -28,6 +28,10 @@ void TerrainPage::DoDataExchange(CDataExchange* pDX)
 	//  DDX_Control(pDX, IDC_BUTTON1, Render_WireFrame);
 	DDX_Control(pDX, IDC_RADIO1, Render_Solid);
 	DDX_Control(pDX, IDC_RADIO2, Render_WireFrame);
+	DDX_Control(pDX, IDC_EDIT1, xCount);
+	DDX_Control(pDX, IDC_EDIT2, zCount);
+	DDX_Control(pDX, IDC_EDIT3, interval);
+	DDX_Control(pDX, IDC_EDIT4, detail);
 }
 
 
@@ -36,6 +40,7 @@ BEGIN_MESSAGE_MAP(TerrainPage, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO1, &TerrainPage::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &TerrainPage::OnBnClickedRadio2)
 	
+	ON_BN_CLICKED(IDC_BUTTON1, &TerrainPage::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -85,4 +90,34 @@ BOOL TerrainPage::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
+
+
+void TerrainPage::OnBnClickedButton1()
+{
+
+	// TODO: 해야함
+	//map<const _tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+
+	//auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Terrain"));
+	//if (iter == (*m_map).end())
+	//	return;
+	//for (auto& obj : iter->second->m_mapObject)
+	//{
+	//	obj.second->Release();
+	//}
+	//iter->second->m_mapObject.clear();
+
+	CString xNum = L"";
+	CString zNum = L"";
+	CString intervalNum = L"";
+	CString detailNum = L"";
+
+	xCount.GetWindowTextW(xNum);
+	zCount.GetWindowTextW(zNum);
+	interval.GetWindowTextW(intervalNum);
+	detail.GetWindowTextW(detailNum);
+
+
+
 }
