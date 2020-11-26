@@ -1,22 +1,7 @@
-﻿  Transform.cpp
-  Scene.cpp
-  Renderer.cpp
-  QuadTree.cpp
-  Management.cpp
-  Layer.cpp
-  GameObject.cpp
-  ProtoMgr.cpp
-  Pipeline.cpp
+﻿  QuadTree.cpp
   Optimization.cpp
-  LightMgr.cpp
-  Light.cpp
   Frustum.cpp
-  Component.cpp
-  Collider.cpp
-  Camera.cpp
-  Calculator.cpp
   코드를 생성하고 있습니다...
-     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
   Utility.vcxproj -> C:\Users\GMH\Desktop\8th\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
