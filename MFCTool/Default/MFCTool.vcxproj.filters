@@ -34,9 +34,6 @@
     <Filter Include="00.View\MyFormView">
       <UniqueIdentifier>{af2bc7e8-b7e6-4f52-8946-109a5954893b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00.View\UnitTool">
-      <UniqueIdentifier>{723e18bd-8699-4b6e-b87a-7ddf6c8110ef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00.View\MapTool">
       <UniqueIdentifier>{81a71d89-933c-4299-a8cd-0c35238f020b}</UniqueIdentifier>
     </Filter>
@@ -74,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\Form.h">
       <Filter>00.View\MyFormView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\UnitTool.h">
-      <Filter>00.View\UnitTool</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\MainFrm.h">
       <Filter>01.Frame</Filter>
@@ -144,6 +138,12 @@
     <ClInclude Include="..\Code\NaviMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Sheets.h">
+      <Filter>00.View\MyFormView</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainPage.h" />
+    <ClInclude Include="NaviPage.h" />
+    <ClInclude Include="PKH.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -157,9 +157,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\MFCToolView.cpp">
       <Filter>00.View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UnitTool.cpp">
-      <Filter>00.View\UnitTool</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MainFrm.cpp">
       <Filter>01.Frame</Filter>
@@ -206,6 +203,12 @@
     <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>95. GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Sheets.cpp">
+      <Filter>00.View\MyFormView</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainPage.cpp" />
+    <ClCompile Include="NaviPage.cpp" />
+    <ClCompile Include="PKH.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCTool.ico">
