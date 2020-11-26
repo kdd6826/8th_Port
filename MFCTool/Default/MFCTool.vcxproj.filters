@@ -144,12 +144,9 @@
     <ClInclude Include="SphereAndVtxManager.h">
       <Filter>94.SphereAndVtxManager</Filter>
     </ClInclude>
-    <ClInclude Include="Sheets.h">
-      <Filter>00.View\MyFormView</Filter>
-    </ClInclude>
     <ClInclude Include="TerrainPage.h" />
-    <ClInclude Include="NaviPage.h" />
     <ClInclude Include="PKH.h" />
+    <ClInclude Include="MeshPage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -212,12 +209,9 @@
     <ClCompile Include="SphereAndVtxManager.cpp">
       <Filter>94.SphereAndVtxManager</Filter>
     </ClCompile>
-    <ClCompile Include="Sheets.cpp">
-      <Filter>00.View\MyFormView</Filter>
-    </ClCompile>
     <ClCompile Include="TerrainPage.cpp" />
-    <ClCompile Include="NaviPage.cpp" />
     <ClCompile Include="PKH.cpp" />
+    <ClCompile Include="MeshPage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCTool.ico">

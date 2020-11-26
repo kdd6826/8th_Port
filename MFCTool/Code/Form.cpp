@@ -6,7 +6,7 @@
 #include "Form.h"
 
 #include"TerrainPage.h"
-#include "NaviPage.h"
+#include "MeshPage.h"
 #include "PKH.h"
 
 USING(Client)
@@ -100,9 +100,9 @@ void CForm::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
 
-	m_Tab.InsertItem(0, L"터레인");
-	m_Tab.InsertItem(1, L"네비");
-	m_Tab.InsertItem(2, L"박경훈");
+	m_Tab.InsertItem(0, L"Terrain");
+	m_Tab.InsertItem(1, L"Mesh");
+	m_Tab.InsertItem(2, L"Temp");
 
 	m_Tab.SetCurSel(0);
 	
@@ -114,7 +114,7 @@ void CForm::OnInitialUpdate()
 	tab1->MoveWindow(0, 25, rect.Width(), rect.Height());
 	tab1->ShowWindow(SW_SHOW);
 
-	tab2 = new NaviPage;
+	tab2 = new MeshPage;
 	tab2->Create(IDD_DIALOG2, &m_Tab);
 	tab2->MoveWindow(0, 25, rect.Width(), rect.Height());
 	tab2->ShowWindow(SW_HIDE);

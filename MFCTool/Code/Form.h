@@ -4,11 +4,10 @@
 
 // CForm Æû ºäÀÔ´Ï´Ù.
 #include "MapTool.h"
-#include "Sheets.h"
 #include "afxcmn.h"
 
 class TerrainPage;
-class NaviPage;
+class MeshPage;
 class PKH;
 class CForm : public CFormView
 {
@@ -42,7 +41,7 @@ public:
 	afx_msg void OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult);
 
 	TerrainPage	 *tab1;
-	NaviPage	 *tab2;
+	MeshPage	 *tab2;
 	PKH	  		 *tab3;
 
 
