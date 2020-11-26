@@ -31,4 +31,5 @@ public:
 	CButton Render_Solid;
 	CButton Render_WireFrame;
 	virtual BOOL OnInitDialog();
+	
 };

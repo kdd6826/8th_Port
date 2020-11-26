@@ -5,7 +5,7 @@
 #include "MFCTool.h"
 #include "TerrainPage.h"
 #include "afxdialogex.h"
-
+#include "MFCToolView.h"
 
 // TerrainPage 대화 상자입니다.
 
@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(TerrainPage, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT1, &TerrainPage::OnEnChangeEdit1)
 	ON_BN_CLICKED(IDC_RADIO1, &TerrainPage::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &TerrainPage::OnBnClickedRadio2)
+	
 END_MESSAGE_MAP()
 
 
@@ -62,12 +63,15 @@ void TerrainPage::OnBnClickedRadio1()
 {
 	
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CMFCToolView::GetInstance()->wireFrame = false;
 }
 
 
 void TerrainPage::OnBnClickedRadio2()
 {
+	
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CMFCToolView::GetInstance()->wireFrame = true;
 }
 
 
@@ -76,6 +80,7 @@ BOOL TerrainPage::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	Render_Solid.SetCheck(BST_CHECKED);
+	CMFCToolView::GetInstance()->wireFrame = true;
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 
 	return TRUE;  // return TRUE unless you set the focus to a control
