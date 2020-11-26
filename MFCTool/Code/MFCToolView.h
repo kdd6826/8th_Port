@@ -18,6 +18,7 @@ class CMFCToolDoc;
 class CSingleTex;
 class CMFC_Terrain;
 class CDynamicCamera;
+class CSphereMesh;
 class CMFCToolView : public CScrollView
 {
 protected: // serialization에서만 만들어집니다.
@@ -80,6 +81,7 @@ public:
 	Engine::CComponent * Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, Engine::COMPONENTID eID);
 	void LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag, Engine::CGameObject* pGameObject);
 	void Key_Input(float deltaTime);
+	CSphereMesh* Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
 	_vec3 PickUp_OnTerrain(void);
 
 

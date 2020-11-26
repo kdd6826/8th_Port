@@ -30,7 +30,7 @@ private:
 	//void		Key_Input(const _float& fTimeDelta);
 	//_vec3		PickUp_OnTerrain(void);
 
-private:
+public:
 	Engine::CSphere* m_pBufferCom = nullptr;
 	Engine::CTexture* m_pTextureCom = nullptr;
 	Engine::CTransform* m_pTransformCom = nullptr;
