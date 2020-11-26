@@ -1,26 +1,45 @@
-#pragma once
-class CMFCToolView; 
+#ifndef Terrain_h__
+#define Terrain_h__
 
-class CTerrain final
+#include "GameObject.h"
+#include "Define.h"
+
+BEGIN(Engine)
+
+class CTerrainTex;
+class CTexture;
+class CRenderer;
+class CTransform;
+
+END
+
+class CTerrain : public Engine::CGameObject
 {
-public:
-	explicit CTerrain();
-	virtual ~CTerrain();
-public:
-	void Set_View(CMFCToolView* pView) { m_pView = pView; }
-public:
-	void TileChange(const _vec3& vPos, const _int& rDrawID, const _int& rOption = 0);
-	_int Get_TileIndex(const _vec3& vPos); 
-	bool IsPicking(const _vec3& vPos, const _int& i);
-	void Set_Ratio(_matrix& matWorld, const float& fRatioX, const float& fRatioY );
-public:
-	HRESULT Ready_Terrain(); 
-	void	MiniRender_Terrain(); 
-	void	Render_Terrain(); 
-	void	Release_Terrain(); 
+private:
+	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CTerrain(void);
 
 public:
-	vector<TILE*> m_vecTile; 
-	CMFCToolView* m_pView; 
+	virtual HRESULT Ready_Object(void) override;
+	virtual _int Update_Object(const _float& fTimeDelta) override;
+	virtual void Render_Object(void) override;
+
+private:
+	HRESULT		Add_Component(void);
+	HRESULT		SetUp_Material(void);
+
+private:
+	Engine::CTerrainTex*		m_pBufferCom = nullptr;
+	Engine::CTexture*			m_pTextureCom = nullptr;
+	Engine::CRenderer*			m_pRendererCom = nullptr;
+	Engine::CTransform*			m_pTransformCom = nullptr;
+
+public:
+	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	virtual void Free(void) override;
+
 };
 
+#endif // Terrain_h__

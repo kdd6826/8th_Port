@@ -6,6 +6,7 @@ public:
 	virtual ~CTexture();
 public:
 	virtual HRESULT Insert_Texture(const wstring& wstrFilePath,
+		LPDIRECT3DDEVICE9 * ppGraphicDev,
 		const wstring& wstrStateKey = L"",
 		const DWORD& rCount = 0)PURE;
 	virtual const TEXINFO* Get_Texture(	const wstring& wstrStateKey = L"",

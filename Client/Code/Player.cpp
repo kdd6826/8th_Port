@@ -30,7 +30,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	Engine::CComponent*		pComponent = nullptr;
 
 	// Mesh
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
@@ -51,9 +51,9 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
 	// Collider 
-	pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
+	//pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
 	return S_OK;
 }
@@ -64,8 +64,10 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
-		D3DXVec3Normalize(&m_vDir, &m_vDir);
-		m_pTransformCom->Move_Pos(&(m_vDir * m_fSpeed * fTimeDelta));
+		/*D3DXVec3Normalize(&m_vDir, &m_vDir);
+		m_pTransformCom->Move_Pos(&(m_vDir * m_fSpeed * fTimeDelta));*/
+		m_pMeshCom->Set_AnimationSet(6);
+
 	}
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
@@ -85,6 +87,15 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		_vec3	vPickPos = PickUp_OnTerrain();
 		m_pTransformCom->Pick_Pos(&vPickPos, m_fSpeed, fTimeDelta);
 	}
+
+	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
+	{
+		m_pMeshCom->Set_AnimationSet(1);
+	}
+
+	if(true == m_pMeshCom->Is_AnimationSetEnd())
+		m_pMeshCom->Set_AnimationSet(39);
+
 
 }
 
@@ -108,6 +119,9 @@ HRESULT Client::CPlayer::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
+	m_pMeshCom->Set_AnimationSet(39);
+
 	return S_OK;
 }
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
@@ -117,6 +131,8 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	Key_Input(fTimeDelta);
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
+
+	m_pMeshCom->Play_Animation(fTimeDelta);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -128,10 +144,10 @@ void Client::CPlayer::Render_Object(void)
 	
 
 	m_pMeshCom->Render_Meshes();
-	_matrix matWorld;
+	/*_matrix matWorld;
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 
-	m_pColliderCom->Render_Collider(Engine::COL_TRUE, &matWorld);
+	m_pColliderCom->Render_Collider(Engine::COL_TRUE, &matWorld);*/
 }
 void Client::CPlayer::SetUp_OnTerrain(void)
 {

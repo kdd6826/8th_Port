@@ -46,6 +46,12 @@
     <Filter Include="04. Component\02. Collider">
       <UniqueIdentifier>{41c72843-3138-4348-9926-cc4149b10d7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\03. Optimization">
+      <UniqueIdentifier>{8fcad743-525d-4963-87c7-ed6be5276a2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\03. Optimization\00. Frustum">
+      <UniqueIdentifier>{fa79828a-fbd2-4cfc-ac1a-9253c94a9340}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Component.cpp">
@@ -89,6 +95,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Collider.cpp">
       <Filter>04. Component\02. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Optimization.cpp">
+      <Filter>04. Component\03. Optimization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Frustum.cpp">
+      <Filter>04. Component\03. Optimization\00. Frustum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\Collider.h">
       <Filter>04. Component\02. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Optimization.h">
+      <Filter>04. Component\03. Optimization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Frustum.h">
+      <Filter>04. Component\03. Optimization\00. Frustum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

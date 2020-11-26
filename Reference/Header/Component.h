@@ -16,6 +16,9 @@ protected:
 public:
 	virtual _int	Update_Component(const _float& fTimeDelta);
 
+protected:
+	_bool		m_bClone;
+
 public:
 	virtual CComponent*		Clone(void)PURE;
 protected:

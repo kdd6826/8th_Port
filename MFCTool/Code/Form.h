@@ -36,4 +36,3 @@ public:
 	afx_msg void OnBnClickedMapTool();
 };
 
-

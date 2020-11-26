@@ -2,11 +2,13 @@
 USING(Engine)
 
 Engine::CComponent::CComponent(void)
+	: m_bClone(false)
 {
 
 }
 
 Engine::CComponent::CComponent(const CComponent& rhs)
+	:m_bClone(true)
 {
 
 }

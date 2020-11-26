@@ -11,6 +11,8 @@
 #include "MFCToolView.h"
 #include "Terrain.h"
 
+USING(Client)
+
 // CMapTool 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CMapTool, CDialog)
@@ -105,8 +107,8 @@ void CMapTool::OnLbnSelchangePicture()
 	}
 	strFileName.Delete(0, i);
 	m_iDrawID = _ttoi(strFileName.GetString());
-	CGraphic_Device::Get_Instance()->Render_Begin();
-	const TEXINFO* pTexInfo = CTexture_Manager::Get_Instance()->Get_TexInfo(L"Terrain", L"Tile", m_iDrawID);
+	CGraphic_Device::GetInstance()->Render_Begin();
+	const TEXINFO* pTexInfo = CTexture_Manager::GetInstance()->Get_TexInfo(L"Terrain", L"Tile", m_iDrawID);
 	if (nullptr == pTexInfo)
 		return; 
 	float fCenterX = pTexInfo->tImageInfo.Width >> 1; 
@@ -118,10 +120,10 @@ void CMapTool::OnLbnSelchangePicture()
 	D3DXMatrixScaling(&matScale,fRatioX, fRatioY , 0.f);
 	D3DXMatrixTranslation(&matTrans, float(WINCX >> 1), float(WINCY >> 1), 0.f); 
 	matWorld = matScale * matTrans; 
-	CGraphic_Device::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
-	CGraphic_Device::Get_Instance()->Get_Sprite()->Draw(pTexInfo->pTexture, nullptr, &_vec3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	CGraphic_Device::GetInstance()->Get_Sprite()->SetTransform(&matWorld);
+	CGraphic_Device::GetInstance()->Get_Sprite()->Draw(pTexInfo->pTexture, nullptr, &_vec3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	CGraphic_Device::Get_Instance()->Render_End(m_Picture.GetSafeHwnd());
+	CGraphic_Device::GetInstance()->Render_End(m_Picture.GetSafeHwnd());
 
 	UpdateData(FALSE);
 }
@@ -146,10 +148,6 @@ void CMapTool::OnBnClickedSave()
 			return;
 		CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 		CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_MainSplitter.GetPane(0, 1)); 
-		vector<TILE*>& vecTile = pView->m_pTerrain->m_vecTile;
-		DWORD dwByte = 0;
-		for (auto& pTile : vecTile)
-			WriteFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
 
 		CloseHandle(hFile);
 	}

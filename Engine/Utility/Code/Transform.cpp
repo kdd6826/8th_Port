@@ -154,6 +154,10 @@ void CTransform::Rotation(ROTATION eType, const _float & fAngle)
 	*(((_float*)&m_vAngle) + eType) += fAngle;
 }
 
+void CTransform::Set_ParentMatrix(const _matrix * pParent)
+{
+	m_matWorld *= *pParent;
+}
 void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, const _float& fTimeDelta)
 {
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];
@@ -205,6 +209,11 @@ const _matrix * CTransform::Get_NRotWorldMatrix(_matrix * pWorld) const
 		*pWorld = m_matNRotWorld;
 
 	return &m_matNRotWorld;
+}
+
+const _matrix * CTransform::Get_WorldMatrix(void) const
+{
+	return &m_matWorld;
 }
 
 //void Engine::CTransform::Set_Transform(LPDIRECT3DDEVICE9& pGraphicDev, _matrix* pMatrix, D3DTRANSFORMSTATETYPE iFlag) const

@@ -1,30 +1,21 @@
-﻿  VIBuffer.cpp
-  TriCol.cpp
-  Texture.cpp
-  TerrainTex.cpp
-  StaticMesh.cpp
-  ResourcesMgr.cpp
-  Resources.cpp
-  RcTex.cpp
-  Mesh.cpp
-  DynamicMesh.cpp
-  CubeTex.cpp
-  코드를 생성하고 있습니다...
-     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
+﻿     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
   Resources.vcxproj -> C:\Users\GMH\Desktop\8th\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
+  .\Engine\Resources\Code\AniCtrl.h
   .\Engine\Resources\Code\CubeTex.h
   .\Engine\Resources\Code\DynamicMesh.h
+  .\Engine\Resources\Code\HierarchyLoader.h
   .\Engine\Resources\Code\Mesh.h
   .\Engine\Resources\Code\RcTex.h
   .\Engine\Resources\Code\Resources.h
   .\Engine\Resources\Code\ResourcesMgr.h
+  .\Engine\Resources\Code\Sphere.h
   .\Engine\Resources\Code\StaticMesh.h
   .\Engine\Resources\Code\TerrainTex.h
   .\Engine\Resources\Code\Texture.h
   .\Engine\Resources\Code\TriCol.h
   .\Engine\Resources\Code\VIBuffer.h
-         11개 파일이 복사되었습니다.
+         14개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

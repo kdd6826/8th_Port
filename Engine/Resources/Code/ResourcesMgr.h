@@ -8,10 +8,11 @@
 #include "RcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
-
+#include "Sphere.h"
 #include "Texture.h"
 
 #include "StaticMesh.h"
+#include "DynamicMesh.h"
 
 BEGIN(Engine)
 

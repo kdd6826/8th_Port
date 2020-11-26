@@ -14,7 +14,7 @@
 #else
 #define ERR_MSG(Message) MessageBox(nullptr,Message,L"System_Error",MB_OK)
 #endif
-extern HWND g_hWND;
+extern HWND g_hWnd;
 
 #define OBJ_DEAD 1
 #define OBJ_NOEVENT 0 
@@ -29,24 +29,3 @@ extern HWND g_hWND;
 #define 지팡이	0x02	//0000 0010 
 #define 나이프	0x04	//0000 0100
 
-#define DECLARE_SINGLETON(ClassName)							\
-public:															\
-static ClassName* Get_Instance()								\
-{																\
-	if (nullptr == m_pInstance)									\
-		m_pInstance = new ClassName;							\
-	return m_pInstance;											\
-}																\
-static void Destroy_Instance()									\
-{																\
-	if (m_pInstance)											\
-	{															\
-		delete m_pInstance;										\
-		m_pInstance = nullptr;									\
-	}															\
-}																\
-private:														\
-	static ClassName* m_pInstance;				
-
-#define IMPLEMENT_SINGLETON(ClassName)							\
-ClassName* ClassName::m_pInstance = nullptr;

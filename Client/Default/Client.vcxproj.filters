@@ -55,9 +55,6 @@
     <Filter Include="02. GameObject\01. Stage\00. Terrain">
       <UniqueIdentifier>{ed11e66c-57c4-4ef6-a18e-1c388742b659}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\01. Player">
-      <UniqueIdentifier>{ffc15c7e-d4b7-4f70-9b86-57fc12ded1e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Public">
       <UniqueIdentifier>{c2c6d62a-edca-4e8f-8f02-21eebea93c21}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,12 @@
     </Filter>
     <Filter Include="02. GameObject\01. Stage\03. Stone">
       <UniqueIdentifier>{9ca9802c-94fd-45f3-8163-49d2396cdb9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\04. Sword">
+      <UniqueIdentifier>{f1cd01c4-b0c1-4441-8e88-75857e621480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Player">
+      <UniqueIdentifier>{ffc15c7e-d4b7-4f70-9b86-57fc12ded1e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +141,9 @@
     <ClInclude Include="..\Code\Stone.h">
       <Filter>02. GameObject\01. Stage\03. Stone</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Sword.h">
+      <Filter>02. GameObject\01. Stage\04. Sword</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Stone.cpp">
       <Filter>02. GameObject\01. Stage\03. Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Sword.cpp">
+      <Filter>02. GameObject\01. Stage\04. Sword</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

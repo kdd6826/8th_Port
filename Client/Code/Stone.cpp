@@ -43,6 +43,11 @@ HRESULT Client::CStone::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
+	// Optimization
+	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+
 	return S_OK;
 }
 
@@ -78,7 +83,13 @@ Client::_int Client::CStone::Update_Object(const _float& fTimeDelta)
 
 	SetUp_OnTerrain();
 
-	m_bColl = Collision_ToObject(L"GameLogic", L"Player");
+	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+
+	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
+
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -86,15 +97,19 @@ Client::_int Client::CStone::Update_Object(const _float& fTimeDelta)
 }
 void Client::CStone::Render_Object(void)
 {
+	if (false == m_bDraw)
+		return;
+
+
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 
 	m_pMeshCom->Render_Meshes();
 
-	_matrix matWorld;
+	//_matrix matWorld;
 		// m_pTransformCom->Get_WorldMatrix(&matWorld);
-		m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
+	//	m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
 
-	m_pColliderCom->Render_Collider(Engine::COLLTYPE(m_bColl), &matWorld);
+	//m_pColliderCom->Render_Collider(Engine::COLLTYPE(m_bColl), &matWorld);
 
 
 }

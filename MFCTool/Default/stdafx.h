@@ -40,11 +40,12 @@
 #include <algorithm>
 #include <functional>
 using namespace std;
-#include "d3d9.h"
-#include "d3dx9.h"
+#include <d3d9.h>
+#include <d3dx9.h>
 #include "Typedef.h"
 #include "Define.h"
 #include "Struct.h"
+#include "Macro.h"
 #include "Function.h"
 #include "Graphic_Device.h"
 

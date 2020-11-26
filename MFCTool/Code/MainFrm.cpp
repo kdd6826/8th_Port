@@ -7,14 +7,14 @@
 
 #include "MainFrm.h"
 #include "MFCToolView.h"
-#include "MiniView.h"
+
 #include "Form.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 // CMainFrame
-
+USING(Client)
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
 const int  iMaxUserToolbars = 10;

@@ -25,10 +25,13 @@ public:
 	void			Move_Pos(const float& fX, const float& fY, const float& fZ);
 	void			Rotation(ROTATION eType, const _float& fAngle);
 	
+	void			Set_ParentMatrix(const _matrix* pParent);
+
 	void			Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 	const _matrix*	Compute_LookAtTarget(const _vec3* pTargetPos);
 	void			Get_WorldMatrix(_matrix* pWorldMatrix)const;
 	const _matrix*	Get_NRotWorldMatrix(_matrix* pWorld) const;
+	const _matrix*	Get_WorldMatrix(void) const;
 public:
 	HRESULT			Ready_Transform(void);
 	virtual _int	Update_Component(const _float& fTimeDelta);

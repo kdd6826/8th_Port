@@ -11,6 +11,7 @@ class CTransform;
 class CRenderer;
 class CCalculator;
 class CCollider;
+class COptimization;
 
 END
 
@@ -38,7 +39,9 @@ private:
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	Engine::CCollider*			m_pColliderCom = nullptr;
+	Engine::COptimization*		m_pOptimizationCom = nullptr;
 	_bool						m_bColl = false;
+	_bool						m_bDraw = false;
 
 public:
 	static CStone*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
