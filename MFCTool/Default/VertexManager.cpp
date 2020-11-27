@@ -26,6 +26,9 @@ VertexManager::~VertexManager()
 
 void VertexManager::Key_Input(float deltaTime)
 {
+	if (!TerrainHaveCheck())
+		return;
+
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
 		if (!mouseLClick) {
@@ -63,6 +66,7 @@ void VertexManager::Key_Input(float deltaTime)
 	{
 		
 	}
+
 }
 
 CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
@@ -173,4 +177,17 @@ void VertexManager::Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color)
 	Vtx->pMesh->UnlockVertexBuffer();
 
 	return;
+}
+
+bool VertexManager::TerrainHaveCheck() {
+	map<const Engine::_tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == (*m_map).end())
+		return false;
+	multimap<const Engine::_tchar*, Engine::CGameObject*>* m_mapObject = &dynamic_cast<Engine::CLayer*>(iter->second)->m_mapObject;
+	auto& iter2 = find_if((*m_mapObject).begin(), (*m_mapObject).end(), Engine::CTag_Finder(L"Terrain"));
+	if (iter2 == (*m_mapObject).end())
+		return false;
+
+	return true;
 }

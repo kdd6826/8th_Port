@@ -38,6 +38,10 @@ HRESULT Client::CTerrain::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
+	// Optimization
+	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
 
 	return S_OK;
 }
@@ -54,6 +58,8 @@ CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CTerrain::Free(void)
 {
+	Engine::Safe_Delete_Array(m_pIndex);
+
 	Engine::CGameObject::Free();
 }
 
@@ -62,11 +68,19 @@ HRESULT CTerrain::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_pIndex = new Engine::INDEX32[m_pBufferCom->Get_TriCnt()];
+
 	return S_OK;
 }
 _int Client::CTerrain::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
+
+	m_pOptimizationCom->Is_InFrustumForTerrain(m_pBufferCom->Get_VtxPos(), 
+												m_pBufferCom->Get_VtxCntX(),
+												m_pBufferCom->Get_VtxCntZ(), 
+												m_pIndex, 
+												&m_dwTriCnt);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -81,6 +95,8 @@ void CTerrain::Render_Object(void)
 	m_pTextureCom->Render_Texture(0);
 
 	FAILED_CHECK_RETURN(SetUp_Material(), );
+	
+	m_pBufferCom->Copy_Indices(m_pIndex, m_dwTriCnt);
 
 	m_pBufferCom->Render_Buffer();
 

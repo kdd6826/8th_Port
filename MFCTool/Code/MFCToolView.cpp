@@ -77,6 +77,7 @@ CMFCToolView::~CMFCToolView()
 	{
 		obj.second->Release();
 	}
+	Engine::Safe_Release(m_Camera);
 	iter->second->m_mapObject.clear();
 
 	//Engine::Release_System(); //이게 안되서 안에꺼에서 일부분만 처리해줌
@@ -163,8 +164,7 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 		&_vec3(0.f, 1.f, 0.f));
 	pGameObject = m_Camera;
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject));
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
@@ -315,6 +315,7 @@ void CMFCToolView::Update(float deltaTime)
 	{
 		obj.second->Update_Object(deltaTime);
 	}
+	m_Camera->Update_Object(deltaTime);
 
 
 	/// Render

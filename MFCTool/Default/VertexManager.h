@@ -23,6 +23,8 @@ public:
 
 	void Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color);
 
+	bool TerrainHaveCheck();
+
 
 private:
 	

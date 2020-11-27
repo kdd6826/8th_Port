@@ -10,6 +10,7 @@ class CTerrainTex;
 class CTexture;
 class CRenderer;
 class CTransform;
+class COptimization;
 
 END
 
@@ -34,6 +35,10 @@ private:
 	Engine::CTexture*			m_pTextureCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
+	Engine::COptimization*		m_pOptimizationCom = nullptr;
+
+	Engine::INDEX32*			m_pIndex = nullptr;
+	_ulong						m_dwTriCnt = 0;
 
 public:
 	static CTerrain*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -26,6 +26,19 @@ Engine::CTerrainTex::~CTerrainTex(void)
 
 }
 
+void CTerrainTex::Copy_Indices(INDEX32 * pIndex, const _ulong & dwTriCnt)
+{
+	INDEX32*		pOriginIndex = nullptr;
+
+	m_pIB->Lock(0, 0, (void**)&pOriginIndex, 0);
+
+	memcpy(pOriginIndex, pIndex, sizeof(INDEX32) * dwTriCnt);
+
+	m_pIB->Unlock();
+
+	m_dwTriCnt = dwTriCnt;
+}
+
 HRESULT Engine::CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
 {
 	m_dwFVF = FVF_TEX;

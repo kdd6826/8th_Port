@@ -36,6 +36,10 @@ private:
 	Engine::CManagement*		m_pManagementClass = nullptr;
 	LPDIRECT3DDEVICE9			m_pGraphicDev = nullptr;
 
+	_ulong		m_dwRenderCnt = 0;
+	_tchar		m_szFPS[256];
+	_float		m_fTime = 0.f;
+
 	// 생성, 소멸 함수
 public:
 	static CMainApp*	Create(void);
