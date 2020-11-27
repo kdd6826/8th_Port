@@ -44,6 +44,10 @@ void VertexManager::Key_Input(float deltaTime)
 			}
 			mouseLClick = true;
 		}
+		//CResourcesMgr::GetInstance()->Create_TerrainTri(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Buffer_TerrainTri", Engine::_vec3(0.f, 1.f, 0.f), Engine::_vec3(1.f, -1.f, 0.f), Engine::_vec3(-1.f, -1.f, 0.f)
+		//, D3DXCOLOR(0.f, 1.f, 0.f, 1.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f));
+
+		//Engine::CTerrainTriCol* pTerrainTri = CTerrainTriCol::Create(m_pGraphicDev, Engine::_vec3(0.f, 1.f, 0.f), Engine::_vec3(1.f, -1.f, 0.f), Engine::_vec3(-1.f, -1.f, 0.f));
 		//m_pTransformCom->Pick_Pos(&vPickPos, m_fSpeed, fTimeDelta);
 	}
 	else {

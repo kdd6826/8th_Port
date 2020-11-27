@@ -1,3 +1,4 @@
+#include "Export_Resouces.h"
 // ResourcesMgr
 // Get
 CComponent*	Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag)
@@ -28,6 +29,12 @@ HRESULT		Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerI
 HRESULT		Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev,	const _ushort& wContainerIdx,	const _tchar* pMeshTag,	MESHTYPE eType,	const _tchar* pFilePath,	const _tchar* pFileName)
 {
 	return CResourcesMgr::GetInstance()->Ready_Meshes(pGraphicDev, wContainerIdx, pMeshTag, eType, pFilePath, pFileName);
+}
+
+HRESULT Create_TerrainTri(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort & wContainerIdx, const _tchar * pBufferTag, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3, D3DCOLOR VtxCol1, D3DCOLOR VtxCol2, D3DCOLOR VtxCol3)
+{
+	return CResourcesMgr::GetInstance()->Create_TerrainTri(pGraphicDev, wContainerIdx, pBufferTag, VtxPos1, VtxPos2, VtxPos3
+		, VtxCol1, VtxCol2, VtxCol3);
 }
 
 
