@@ -1,6 +1,4 @@
-﻿  ResourcesMgr.cpp
-     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
-  Resources.vcxproj -> C:\Users\GMH\Desktop\8th\Engine\Resources\Default\../Bin\Resources.dll
+﻿  Resources.vcxproj -> C:\Users\gg949\Documents\GitHub\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\AniCtrl.h
   .\Engine\Resources\Code\CubeTex.h
@@ -13,11 +11,10 @@
   .\Engine\Resources\Code\Sphere.h
   .\Engine\Resources\Code\StaticMesh.h
   .\Engine\Resources\Code\TerrainTex.h
-  .\Engine\Resources\Code\TerrainTriCol.h
   .\Engine\Resources\Code\Texture.h
   .\Engine\Resources\Code\TriCol.h
   .\Engine\Resources\Code\VIBuffer.h
-         15개 파일이 복사되었습니다.
+         14개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h
