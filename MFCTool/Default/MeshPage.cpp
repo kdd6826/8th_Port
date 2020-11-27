@@ -24,16 +24,6 @@ MeshPage::~MeshPage()
 void MeshPage::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_RADIO1, Render_Solid);
-	DDX_Control(pDX, IDC_RADIO2, Render_WireFrame);
-	//  DDX_Control(pDX, IDC_RADIO3, mouse_Objcet);
-	DDX_Control(pDX, IDC_RADIO3, mouseObject);
-	DDX_Control(pDX, IDC_RADIO5, mouseNaviMesh);
-	//  DDX_Control(pDX, IDC_RADIO7, typeDynamic);
-	DDX_Control(pDX, IDC_RADIO7, typeStatic);
-	DDX_Control(pDX, IDC_RADIO8, typeDynamic);
-	DDX_Control(pDX, IDC_RADIO9, vertexTogetther);
-	DDX_Control(pDX, IDC_RADIO10, vertexOnly);
 }
 
 
@@ -42,17 +32,3 @@ END_MESSAGE_MAP()
 
 
 // MeshPage 메시지 처리기입니다.
-
-BOOL MeshPage::OnInitDialog()
-{
-	CDialogEx::OnInitDialog();
-
-	Render_Solid.SetCheck(BST_CHECKED);
-	mouseObject.SetCheck(BST_CHECKED);
-	typeStatic.SetCheck(BST_CHECKED);
-	vertexTogetther.SetCheck(BST_CHECKED);
-	// TODO:  여기에 추가 초기화 작업을 추가합니다.
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
-}
