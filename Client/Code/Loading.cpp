@@ -122,56 +122,7 @@ _uint CLoading::Loading_ForStage(void)
 												L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
 												L"TombStone.X"),
 												E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Player",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/ArishaX/",
-		L"NewArisha.X"),
-		E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Sword",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Arisha/Weapon/",
-		L"WeaponArisha.X"),
-		E_FAIL);
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	Engine::RESOURCE_STAGE,
-	//	L"Mesh_Player",
-	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Arisha/",
-	//	L"Arisha.X"),
-	//	E_FAIL);
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//Engine::RESOURCE_STAGE,
-	//L"Mesh_Player",
-	//Engine::TYPE_DYNAMIC,
-	//L"../Bin/Resource/Sanctum/",
-	//L"Simo.X"),
-	//E_FAIL);
-
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//											Engine::RESOURCE_STAGE,
-	//											L"Mesh_Player",
-	//											Engine::TYPE_DYNAMIC,
-	//											L"../Bin/Resource/Lyn/Mesh/Lyn/",
-	//											L"Lyn.X"),
-	//											E_FAIL);
-
-
-
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	RESOURCE_STAGE,
-	//	L"Mesh_Sword",
-	//	Engine::TYPE_STATIC,
-	//	L"../Bin/Resource/Mesh/StaticMesh/Sword/",
-	//	L"Sword.X"),
-	//	E_FAIL);
 	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												L"Mesh_Player",
