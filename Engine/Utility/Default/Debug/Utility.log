@@ -1,8 +1,6 @@
-﻿  LINK : ../Bin\Utility.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+﻿  Calculator.cpp
+  LINK : ../Bin\Utility.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
      ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-QuadTree.obj : warning LNK4099: 'vc140.pdb' PDB를 'QuadTree.obj' 또는 'C:\Users\GMH\Desktop\8th\Engine\Utility\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-Optimization.obj : warning LNK4099: 'vc140.pdb' PDB를 'Optimization.obj' 또는 'C:\Users\GMH\Desktop\8th\Engine\Utility\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-Frustum.obj : warning LNK4099: 'vc140.pdb' PDB를 'Frustum.obj' 또는 'C:\Users\GMH\Desktop\8th\Engine\Utility\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   Utility.vcxproj -> C:\Users\GMH\Desktop\8th\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
