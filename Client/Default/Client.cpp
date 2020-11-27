@@ -79,14 +79,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 			_float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 
-			if (Engine::IsPermit_Call(L"Frame_FPS60", fTimeDelta))
+			/*if (Engine::IsPermit_Call(L"Frame_FPS60", fTimeDelta))
 			{
 				Engine::Set_TimeDelta(L"Timer_FPS60");
 				_float fTime60 = Engine::Get_TimeDelta(L"Timer_FPS60");
 
 				pMainApp->Update_MainApp(fTime60);
 				pMainApp->Render_MainApp();
-			}			
+			}		*/
+
+			pMainApp->Update_MainApp(fTimeDelta);
+			pMainApp->Render_MainApp();
 		}
     }
 	_ulong dwRefCnt = 0;
