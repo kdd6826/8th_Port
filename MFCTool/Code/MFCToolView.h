@@ -10,7 +10,7 @@
 #include "Export_Function.h"
 BEGIN(Engine)
 class CGraphicDev;
-
+class CManagement;
 class CGameObject;
 END
 
@@ -46,7 +46,7 @@ private:
 
 public:
 	Engine::CGraphicDev* m_pDeviceClass = nullptr;
-	
+	Engine::CManagement* m_pManagementClass = nullptr;
 	LPDIRECT3DDEVICE9			m_pGraphicDev = nullptr;
 
 	CDynamicCamera* m_Camera = nullptr;
