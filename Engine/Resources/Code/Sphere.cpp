@@ -10,7 +10,7 @@ Engine::CSphere::CSphere(LPDIRECT3DDEVICE9 pGraphicDev)
 Engine::CSphere::CSphere(const CSphere& rhs)
 	: CVIBuffer(rhs)
 {
-	
+	Ready_Buffer();
 }
 
 Engine::CSphere::~CSphere(void)
@@ -21,7 +21,7 @@ Engine::CSphere::~CSphere(void)
 HRESULT Engine::CSphere::Ready_Buffer(void)
 {
 	D3DXCreateSphere(m_pGraphicDev, 0.6f, 8, 8, &pMesh, NULL);
-
+	
 	m_dwFVF = pMesh->GetFVF();
 	if (!(m_dwFVF & D3DFVF_DIFFUSE))
 	{
@@ -49,7 +49,7 @@ HRESULT Engine::CSphere::Ready_Buffer(void)
 
 	FAILED_CHECK_RETURN(pMesh->GetVertexBuffer(&m_pVB), E_FAIL);
 	FAILED_CHECK_RETURN(pMesh->GetIndexBuffer(&m_pIB), E_FAIL);
-
+	
 
 	return S_OK;
 }

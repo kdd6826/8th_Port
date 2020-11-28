@@ -29,7 +29,7 @@
 #include "SphereMesh.h"
 #include "Layer.h"
 #include "NaviMesh.h"
-#include "SphereAndVtxManager.h"
+#include "VertexManager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,7 +69,7 @@ CMFCToolView::~CMFCToolView()
 	Engine::Release_Resoures();
 	Safe_Release(m_pGraphicDev);
 
-	CSphereAndVtxManager::DestroyInstance();
+	VertexManager::DestroyInstance();
 	auto& iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
 	if (iter == m_mapLayer.end())
 		return;
@@ -77,6 +77,7 @@ CMFCToolView::~CMFCToolView()
 	{
 		obj.second->Release();
 	}
+	Engine::Safe_Release(m_Camera);
 	iter->second->m_mapObject.clear();
 
 	//Engine::Release_System(); //이게 안되서 안에꺼에서 일부분만 처리해줌
@@ -136,7 +137,7 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CSphereAndVtxManager::GetInstance();
+	VertexManager::GetInstance();
 	Engine::CGameObject*		pGameObject = nullptr;
 
 	//pGameObject = CSkyBox::Create(m_pGraphicDev);
@@ -163,8 +164,7 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 		&_vec3(0.f, 1.f, 0.f));
 	pGameObject = m_Camera;
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject));
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
@@ -305,6 +305,7 @@ void CMFCToolView::OnInitialUpdate()
 void CMFCToolView::Update(float deltaTime)
 {	
 	Key_Input(deltaTime);
+
 	/// Update
 	auto&	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
 	if (iter == m_mapLayer.end())
@@ -314,11 +315,17 @@ void CMFCToolView::Update(float deltaTime)
 	{
 		obj.second->Update_Object(deltaTime);
 	}
+	m_Camera->Update_Object(deltaTime);
 
 
 	/// Render
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
-
+	if (wireFrame) {
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	}
+	else {
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}
 	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
 
 	for (auto& obj : iter->second->m_mapObject)
@@ -465,7 +472,7 @@ void CMFCToolView::LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag
 
 void CMFCToolView::Key_Input(float deltaTime) {
 	Engine::Set_InputDev();
-	m_Camera->Update_Object(deltaTime);
+	//m_Camera->Update_Object(deltaTime);
 	
-	CSphereAndVtxManager::GetInstance()->Key_Input(deltaTime);
+	VertexManager::GetInstance()->Key_Input(deltaTime);
 }
