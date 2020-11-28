@@ -1,6 +1,2 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
-<<<<<<< HEAD
-Debug|Win32|C:\Users\GMH\Desktop\8th\|
-=======
-Debug|Win32|C:\Users\sneg7\Desktop\8th_Port\|
->>>>>>> origin/분분
+Debug|Win32|C:\Users\GMH\Desktop\8th2\|

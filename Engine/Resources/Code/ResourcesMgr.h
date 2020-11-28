@@ -9,6 +9,7 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 #include "Sphere.h"
+#include "TerrainTriCol.h"
 #include "Texture.h"
 
 #include "StaticMesh.h"
@@ -52,6 +53,9 @@ public:
 	void		Render_Buffer(const _ushort& wContainerIdx, const _tchar* pBufferTag);
 	void		Render_Texture(const _ushort& wContainerIdx, const _tchar* pTextureTag, const _uint& iIndex);
 	CComponent*	Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag);
+
+	HRESULT		Create_TerrainTri(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3
+		, D3DCOLOR VtxCol1 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f), D3DCOLOR VtxCol2 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f), D3DCOLOR VtxCol3 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
 
 private:
 	CResources*		Find_Resources(const _ushort& wContainerIdx, const _tchar* pResourcesTag);
