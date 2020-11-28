@@ -6,6 +6,7 @@
 #include "MapTool.h"
 #include "afxcmn.h"
 
+
 class TerrainPage;
 class MeshPage;
 class PKH;
