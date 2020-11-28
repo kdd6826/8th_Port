@@ -107,7 +107,7 @@ void CMapTool::OnLbnSelchangePicture()
 	}
 	strFileName.Delete(0, i);
 	m_iDrawID = _ttoi(strFileName.GetString());
-	CGraphic_Device::GetInstance()->Render_Begin();
+	
 	const TEXINFO* pTexInfo = CTexture_Manager::GetInstance()->Get_TexInfo(L"Terrain", L"Tile", m_iDrawID);
 	if (nullptr == pTexInfo)
 		return; 
@@ -120,10 +120,7 @@ void CMapTool::OnLbnSelchangePicture()
 	D3DXMatrixScaling(&matScale,fRatioX, fRatioY , 0.f);
 	D3DXMatrixTranslation(&matTrans, float(WINCX >> 1), float(WINCY >> 1), 0.f); 
 	matWorld = matScale * matTrans; 
-	CGraphic_Device::GetInstance()->Get_Sprite()->SetTransform(&matWorld);
-	CGraphic_Device::GetInstance()->Get_Sprite()->Draw(pTexInfo->pTexture, nullptr, &_vec3(fCenterX, fCenterY, 0.f), nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	CGraphic_Device::GetInstance()->Render_End(m_Picture.GetSafeHwnd());
 
 	UpdateData(FALSE);
 }

@@ -10,9 +10,6 @@
     <Filter Include="02.Doc">
       <UniqueIdentifier>{e50570cf-e702-4348-b4ec-431195797803}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.Graphic_Device">
-      <UniqueIdentifier>{cba3113b-3a9b-443c-be53-81618f774b5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98.Headers">
       <UniqueIdentifier>{b70ba477-1c21-43ac-92f7-3629df11d6d3}</UniqueIdentifier>
     </Filter>
@@ -83,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\MFCToolDoc.h">
       <Filter>02.Doc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Graphic_Device.h">
-      <Filter>03.Graphic_Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Texture_Manager.h">
       <Filter>04.Texture\Manager</Filter>
@@ -178,9 +172,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\MFCToolDoc.cpp">
       <Filter>02.Doc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Graphic_Device.cpp">
-      <Filter>03.Graphic_Device</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Texture_Manager.cpp">
       <Filter>04.Texture\Manager</Filter>

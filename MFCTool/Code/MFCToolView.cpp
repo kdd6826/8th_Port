@@ -62,7 +62,7 @@ CMFCToolView::CMFCToolView()
 
 CMFCToolView::~CMFCToolView()
 {
-	CGraphic_Device::DestroyInstance();
+	
 	CTexture_Manager::DestroyInstance();
 	Engine::CRenderer::GetInstance()->Clear_RenderGroup();
 	Engine::Release_Utility();

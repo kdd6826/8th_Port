@@ -199,7 +199,6 @@
   <ItemGroup>
     <ClInclude Include="..\Code\FileInfo.h" />
     <ClInclude Include="..\Code\Form.h" />
-    <ClInclude Include="..\Code\Graphic_Device.h" />
     <ClInclude Include="..\Code\MainFrm.h" />
     <ClInclude Include="..\Code\MapTool.h" />
     <ClInclude Include="..\Code\MFCToolDoc.h" />
@@ -233,7 +232,6 @@
   <ItemGroup>
     <ClCompile Include="..\Code\FileInfo.cpp" />
     <ClCompile Include="..\Code\Form.cpp" />
-    <ClCompile Include="..\Code\Graphic_Device.cpp" />
     <ClCompile Include="..\Code\MainFrm.cpp" />
     <ClCompile Include="..\Code\MapTool.cpp" />
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />

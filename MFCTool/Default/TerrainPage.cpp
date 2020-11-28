@@ -98,17 +98,16 @@ void TerrainPage::OnBnClickedButton1()
 {
 
 	// TODO: ÇØ¾ßÇÔ
-	//map<const _tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+	map<const _tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == (*m_map).end())
+		return;
 
-	//auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Terrain"));
-	//if (iter == (*m_map).end())
-	//	return;
-	//for (auto& obj : iter->second->m_mapObject)
-	//{
-	//	obj.second->Release();
-	//}
-	//iter->second->m_mapObject.clear();
-
+	for (auto& obj : iter->second->m_mapObject)
+	{
+		obj.second->Release();
+	}
+	iter->second->m_mapObject.clear();
 	CString xNum = L"";
 	CString zNum = L"";
 	CString intervalNum = L"";
@@ -118,6 +117,16 @@ void TerrainPage::OnBnClickedButton1()
 	zCount.GetWindowTextW(zNum);
 	interval.GetWindowTextW(intervalNum);
 	detail.GetWindowTextW(detailNum);
+
+	//Buffer
+	//FAILED_CHECK_RETURN(Engine::Ready_Buffer(CMFCToolView::GetInstance(),
+	//	Engine::RESOURCE_STATIC,
+	//	L"Buffer_TerrainTex",
+	//	Engine::BUFFER_TERRAINTEX,
+	//	VTXCNTX,
+	//	VTXCNTZ,
+	//	VTXITV),
+	//	);
 
 
 
