@@ -84,6 +84,9 @@ public:
 	_vec3 PickUp_OnTerrain(void);
 
 
+	ID3DXLine* line= nullptr;
+	int i = 0;	
+	D3DXVECTOR3 vertex[3];
 private:
 	HRESULT Loading();
 	void RenderLine();

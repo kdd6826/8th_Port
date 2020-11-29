@@ -138,9 +138,6 @@
     <ClInclude Include="..\Code\NaviMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="SphereAndVtxManager.h">
-      <Filter>94. VertexManager</Filter>
-    </ClInclude>
     <ClInclude Include="MeshPage.h">
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClInclude>
@@ -208,9 +205,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>95. GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="SphereAndVtxManager.cpp">
-      <Filter>94. VertexManager</Filter>
     </ClCompile>
     <ClCompile Include="MeshPage.cpp">
       <Filter>00.View\MyFormView\Pages</Filter>

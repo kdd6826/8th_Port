@@ -40,7 +40,38 @@ void VertexManager::Key_Input(float deltaTime)
 				dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
 
 				list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
+
 				//pGameObject->AddRef();
+				
+				lineCount++;
+				if (lineCount == 3)
+				{
+					
+					Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
+					D3DXCreateLine(m_pGraphicDev, &line);
+					line->SetWidth(5.f);
+					line->SetAntialias(FALSE);
+					line->Begin();
+
+
+					// 투영 -> 뷰 스페이스
+					Engine::_matrix	out, view, proj, world;
+					vertex[lineCount-1] = vPickPos + Engine::_vec3(0.f, 1.f, 0.f);
+					m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
+					m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
+					m_pGraphicDev->GetTransform(D3DTS_WORLD, &world);
+					D3DXMatrixIdentity(&out);
+					out = world * view * proj;
+
+
+					//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+					//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+					line->DrawTransform(vertex, 3, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+					line->End();
+					line->Release();
+					Engine::Render_End();
+					lineCount = 0;
+				}
 			}
 			mouseLClick = true;
 		}
@@ -195,3 +226,4 @@ bool VertexManager::TerrainHaveCheck() {
 
 	return true;
 }
+

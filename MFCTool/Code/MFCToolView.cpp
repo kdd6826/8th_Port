@@ -294,7 +294,6 @@ void CMFCToolView::OnInitialUpdate()
 	NULL_CHECK_RETURN(pComponent);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
-
 	//m_Camera->m_vEye = { 0.f, 5.f, -10.f };
 	//m_Camera->m_vAt = { -1.6f, 4.1f, -5.3f };
 	//RenderLine();
@@ -327,11 +326,38 @@ void CMFCToolView::Update(float deltaTime)
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
 	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
-
+	
 	for (auto& obj : iter->second->m_mapObject)
 	{
 		obj.second->Render_Object();
 	}
+
+
+
+		D3DXCreateLine(m_pGraphicDev, &line);
+		line->SetWidth(5.f);
+		line->SetAntialias(FALSE);
+		line->Begin();
+
+
+		// 투영 -> 뷰 스페이스
+		Engine::_matrix	out, view, proj, world;
+		vertex[0] = Engine::_vec3(1.f, 1.f, 1.f);
+		vertex[1] = Engine::_vec3(0.f, 1.f, 2.f);
+		vertex[2] = Engine::_vec3(1.f, 1.f, 1.f);
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
+		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
+		m_pGraphicDev->GetTransform(D3DTS_WORLD, &world);
+		D3DXMatrixIdentity(&out);
+		out = world * view * proj;
+
+
+		//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		
+		line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+		line->End();
+
 
 	Engine::Render_End();
 
