@@ -12,41 +12,35 @@ class CRenderer;
 class CCalculator;
 
 END
-class CTerrainTri;
 
-class CSphereMesh : public Engine::CGameObject
+class CTerrainTri : public Engine::CGameObject
 {
 private:
-	explicit CSphereMesh(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CSphereMesh(void);
+	explicit CTerrainTri(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CTerrainTri(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
-	void Add_Vtx();
-	void Release_Vtx();
+	HRESULT			Ready_Object(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-	void Set_VtxPos();
+	//void Set_VtxPos();
 private:
-	HRESULT		Add_Component(void);
+	HRESULT		Add_Component(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	//void		SetUp_OnTerrain(void);
 	//void		Key_Input(const _float& fTimeDelta);
 	//_vec3		PickUp_OnTerrain(void);
 
 public:
-	Engine::CSphere* m_pBufferCom = nullptr;
+	Engine::CTerrainTriCol* m_pBufferCom = nullptr;
 	Engine::CTexture* m_pTextureCom = nullptr;
 	Engine::CTransform* m_pTransformCom = nullptr;
 	Engine::CRenderer* m_pRendererCom = nullptr;
 	Engine::CCalculator* m_pCalculatorCom = nullptr;
-
-public:
-	static CSphereMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	list<Engine::VTXCOL*> list_pVtx;
-	list<CTerrainTri*> list_pTerrainTri;
-	bool m_Dead = false;
-	bool m_Click = false; //하나의 원을 중복클릭하지않기위해
-
+public:
+	static CTerrainTri* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
+	//list<Engine::VTXCOL*> list_pVtx;
 private:
 	virtual void Free(void) override;
 

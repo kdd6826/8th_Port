@@ -1,15 +1,14 @@
 #include "stdafx.h"
-#include "SphereMesh.h"
+#include "TerrainTri.h"
 #include "Export_Function.h"
-#include "MFCToolView.h"
 
-CSphereMesh::CSphereMesh(LPDIRECT3DDEVICE9 pGraphicDev)
+CTerrainTri::CTerrainTri(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
-	
+
 }
 
-CSphereMesh::~CSphereMesh(void)
+CTerrainTri::~CTerrainTri(void)
 {
 
 }
@@ -25,12 +24,14 @@ CSphereMesh::~CSphereMesh(void)
 //	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 //}
 
-HRESULT CSphereMesh::Add_Component(void)
+HRESULT CTerrainTri::Add_Component(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
 {
 	Engine::CComponent* pComponent = nullptr;
 
+
 	// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CSphere*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Sphere"));
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CTerrainTriCol*>(Engine::Create_TerrainCol(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Buffer_TerrainTri", vtxPos1, vtxPos2, vtxPos3));
+	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTerrainTriCol*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_TriCol"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
@@ -44,6 +45,9 @@ HRESULT CSphereMesh::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
+	//m_pTransformCom->m_vInfo[Engine::INFO_POS].x += 0.01f;
+	m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.01f;
+	//m_pTransformCom->m_vInfo[Engine::INFO_POS].z += 0.01f;
 	// Renderer
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -58,91 +62,72 @@ HRESULT CSphereMesh::Add_Component(void)
 	return S_OK;
 }
 
-CSphereMesh* CSphereMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTerrainTri* CTerrainTri::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
 {
-	CSphereMesh* pInstance = new CSphereMesh(pGraphicDev);
+	CTerrainTri* pInstance = new CTerrainTri(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Object()))
+	if (FAILED(pInstance->Ready_Object(vtxPos1, vtxPos2, vtxPos3)))
 		Engine::Safe_Release(pInstance);
 
 	return pInstance;
 }
 
-void CSphereMesh::Free(void)
+void CTerrainTri::Free(void)
 {
 	Engine::CGameObject::Free();
-	for (auto& vtx : list_pVtx) {
-		delete vtx;
-		vtx = nullptr;
-	}
+	//for (auto& vtx : list_pVtx) {
+	//	delete vtx;
+	//	vtx = nullptr;
+	//}
 }
 
-
-HRESULT CSphereMesh::Ready_Object(void)
+HRESULT CTerrainTri::Ready_Object(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	FAILED_CHECK_RETURN(Add_Component(vtxPos1, vtxPos2, vtxPos3), E_FAIL);
+	//m_pTransformCom->Set_Pos(_vec3(rand() % 100 + 1.f, 0.f, rand() % 100 + 1.f));
 
-	Add_Vtx();
+	//Engine::VTXCOL* vtx = new Engine::VTXCOL;
+	//vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	//vtx->dwColor = D3DXCOLOR{ 255.f, 0.f, 0.f, 255.f };
+	//list_pVtx.emplace_back(vtx);
 
 	return S_OK;
 }
 
-void CSphereMesh::Add_Vtx() {
-	Engine::VTXCOL* vtx = new Engine::VTXCOL;
-	vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
-	vtx->dwColor = D3DXCOLOR{ 255.f, 0.f, 0.f, 255.f };
-	list_pVtx.emplace_back(vtx);
-	return;
-}
-
-void CSphereMesh::Release_Vtx() {
-	list_pVtx.pop_back();
-	if (list_pVtx.size() == 0) {
-		m_Dead = true;
-		
-		//Engine::Safe_Release(*this);
-	}
-}
-
-_int CSphereMesh::Update_Object(const _float& fTimeDelta)
+HRESULT CTerrainTri::Ready_Object(void)
 {
-	if (m_Dead)
-		return 1;
+	//FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	//Engine::VTXCOL* vtx = new Engine::VTXCOL;
+	//vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	//vtx->dwColor = D3DXCOLOR{ 255.f, 0.f, 0.f, 255.f };
+	//list_pVtx.emplace_back(vtx);
+
+	return S_OK;
+}
+_int CTerrainTri::Update_Object(const _float& fTimeDelta)
+{
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	
+
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
 	return 0;
 }
-void CSphereMesh::Render_Object(void)
+void CTerrainTri::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pBufferCom->Render_Buffer();
 	//m_pTextureCom->Render_Texture(0);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
-void CSphereMesh::Set_VtxPos()
-{
-	for (auto& vtx : list_pVtx)
-	{
-		vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
-	}
-}
-//void CSphereMesh::SetUp_OnTerrain(void)
+//void CTerrainTri::Set_VtxPos()
 //{
-//	_vec3	vPosition;
-//	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPosition);
-//
-//	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
-//	NULL_CHECK(pTerrainBufferCom);
-//
-//	_float fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPosition, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ, VTXITV);
-//
-//	m_pTransformCom->Move_Pos(vPosition.x, fHeight + 1.f, vPosition.z);
+//	for (auto& vtx : list_pVtx)
+//	{
+//		vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+//	}
 //}

@@ -31,21 +31,20 @@ HRESULT		Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev,	const _ushort& wContainerId
 	return CResourcesMgr::GetInstance()->Ready_Meshes(pGraphicDev, wContainerIdx, pMeshTag, eType, pFilePath, pFileName);
 }
 
-HRESULT Create_TerrainTri(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort & wContainerIdx, const _tchar * pBufferTag, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3, D3DCOLOR VtxCol1, D3DCOLOR VtxCol2, D3DCOLOR VtxCol3)
-{
-	return CResourcesMgr::GetInstance()->Create_TerrainTri(pGraphicDev, wContainerIdx, pBufferTag, VtxPos1, VtxPos2, VtxPos3
-		, VtxCol1, VtxCol2, VtxCol3);
-}
-
 
 void		Render_Texture(const _ushort& wContainerIdx, const _tchar* pTextureTag, const _uint& iIndex)
 {
 	CResourcesMgr::GetInstance()->Render_Texture(wContainerIdx, pTextureTag, iIndex);
 }
 
+CComponent* Create_TerrainCol(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
+{
+	return CResourcesMgr::GetInstance()->Create_TerrainCol(pGraphicDev, wContainerIdx, pBufferTag, vtxPos1, vtxPos2, vtxPos3);
+}
 
 // Release Resources
 void Release_Resoures()
 {
 	CResourcesMgr::GetInstance()->DestroyInstance();
 }
+

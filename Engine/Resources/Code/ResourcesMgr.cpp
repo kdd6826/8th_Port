@@ -179,25 +179,9 @@ Engine::CComponent* Engine::CResourcesMgr::Clone(const _ushort& wContainerIdx, c
 	return pProto->Clone();
 }
 
-HRESULT CResourcesMgr::Create_TerrainTri(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3, D3DCOLOR VtxCol1, D3DCOLOR VtxCol2, D3DCOLOR VtxCol3)
+Engine::CComponent* Engine::CResourcesMgr::Create_TerrainCol(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
 {
-	if (nullptr == m_pmapResource)
-	{
-		MSG_BOX("Resource Container not Reserved");
-		return E_FAIL;
-	}
 
-	CResources*		pResources = Find_Resources(wContainerIdx, pBufferTag);
-	if (nullptr != pResources)
-		return E_FAIL;
-
-
-	pResources = CTerrainTriCol::Create(pGraphicDev, VtxPos1, VtxPos2, VtxPos3, VtxCol1, VtxCol2, VtxCol3);
-
-	NULL_CHECK_RETURN(pResources, E_FAIL);
-
-	m_pmapResource[wContainerIdx].emplace(pBufferTag, pResources);
-
-	return S_OK;
+	CResources* pProto = CTerrainTriCol::Create(pGraphicDev, vtxPos1, vtxPos2, vtxPos3);
+	return pProto;
 }
-

@@ -311,10 +311,25 @@ void CMFCToolView::Update(float deltaTime)
 	if (iter == m_mapLayer.end())
 		return;
 	//iter->second->Get_mapObject();
-	for (auto& obj : iter->second->m_mapObject)
+	for (auto iter2 = iter->second->m_mapObject.begin(); iter2 != iter->second->m_mapObject.end();)
 	{
-		obj.second->Update_Object(deltaTime);
+		int dead = iter2->second->Update_Object(deltaTime);
+		if (dead == 1) {
+			Engine::Safe_Release(iter2->second);
+			iter2 = iter->second->m_mapObject.erase(iter2);
+		}
+		else {
+			iter2++;
+		}
 	}
+
+	/*for (auto& obj : iter->second->m_mapObject)
+	{
+		int dead = obj.second->Update_Object(deltaTime);
+		if (dead) {
+			Engine::Safe_Release(obj);
+		}
+	}*/
 	m_Camera->Update_Object(deltaTime);
 
 
@@ -328,10 +343,12 @@ void CMFCToolView::Update(float deltaTime)
 	}
 	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
 
-	for (auto& obj : iter->second->m_mapObject)
+	r->Render_GameObject();
+	/*for (auto& obj : iter->second->m_mapObject)
 	{
 		obj.second->Render_Object();
-	}
+		Engine::Safe_Release(iter);
+	}*/
 
 	Engine::Render_End();
 

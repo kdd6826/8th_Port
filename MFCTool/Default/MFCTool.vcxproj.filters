@@ -156,6 +156,9 @@
     <ClInclude Include="VertexManager.h">
       <Filter>94.VertexManager</Filter>
     </ClInclude>
+    <ClInclude Include="TerrainTri.h">
+      <Filter>95. GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -226,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="VertexManager.cpp">
       <Filter>94.VertexManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainTri.cpp">
+      <Filter>95. GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
