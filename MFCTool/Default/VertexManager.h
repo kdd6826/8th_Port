@@ -18,13 +18,13 @@ private:
 
 public:
 	void Key_Input(float deltaTime);
-
+	void DrawLine();
 	CSphereMesh* Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
 
 	void Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color);
 
 	bool TerrainHaveCheck();
-
+	
 private:
 	
 
@@ -43,9 +43,10 @@ private:
 	list<CSphereMesh*> list_Sphere;  //3개씩 저장할곳 SphereLockOn 이면 1개
 	
 
-	D3DXVECTOR3 vertex[3];
+	D3DXVECTOR3 vertex[128];
 	
-	ID3DXLine* line;
+	LPD3DXLINE line[128];
+	int triCount = 0;
 	int lineCount=0;
 	bool SphereLockOn = false;
 

@@ -332,32 +332,7 @@ void CMFCToolView::Update(float deltaTime)
 		obj.second->Render_Object();
 	}
 
-
-
-		D3DXCreateLine(m_pGraphicDev, &line);
-		line->SetWidth(5.f);
-		line->SetAntialias(FALSE);
-		line->Begin();
-
-
-		// 투영 -> 뷰 스페이스
-		Engine::_matrix	out, view, proj, world;
-		vertex[0] = Engine::_vec3(1.f, 1.f, 1.f);
-		vertex[1] = Engine::_vec3(0.f, 1.f, 2.f);
-		vertex[2] = Engine::_vec3(1.f, 1.f, 1.f);
-		m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
-		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
-		m_pGraphicDev->GetTransform(D3DTS_WORLD, &world);
-		D3DXMatrixIdentity(&out);
-		out = world * view * proj;
-
-
-		//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-		//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-		
-		line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-		line->End();
-
+	VertexManager::GetInstance()->DrawLine();
 
 	Engine::Render_End();
 
@@ -501,4 +476,5 @@ void CMFCToolView::Key_Input(float deltaTime) {
 	//m_Camera->Update_Object(deltaTime);
 	
 	VertexManager::GetInstance()->Key_Input(deltaTime);
+
 }

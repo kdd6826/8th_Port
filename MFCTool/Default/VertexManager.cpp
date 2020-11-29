@@ -26,6 +26,8 @@ VertexManager::~VertexManager()
 
 void VertexManager::Key_Input(float deltaTime)
 {
+
+
 	if (!TerrainHaveCheck())
 		return;
 
@@ -44,37 +46,18 @@ void VertexManager::Key_Input(float deltaTime)
 				//pGameObject->AddRef();
 				
 				lineCount++;
-				if (lineCount == 3)
+				vertex[lineCount - 1] = vPickPos + Engine::_vec3(0.f, 1.f, 0.f);
+				if (lineCount % 3 == 0)
 				{
-					
-					Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
-					D3DXCreateLine(m_pGraphicDev, &line);
-					line->SetWidth(5.f);
-					line->SetAntialias(FALSE);
-					line->Begin();
-
-
-					// 투영 -> 뷰 스페이스
-					Engine::_matrix	out, view, proj, world;
-					vertex[lineCount-1] = vPickPos + Engine::_vec3(0.f, 1.f, 0.f);
-					m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
-					m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
-					m_pGraphicDev->GetTransform(D3DTS_WORLD, &world);
-					D3DXMatrixIdentity(&out);
-					out = world * view * proj;
-
-
-					//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-					//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-					line->DrawTransform(vertex, 3, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-					line->End();
-					line->Release();
-					Engine::Render_End();
-					lineCount = 0;
+					vertex[lineCount] = vertex[lineCount - 3];
+					lineCount++;
+					triCount++;
 				}
+
 			}
 			mouseLClick = true;
 		}
+
 		//CResourcesMgr::GetInstance()->Create_TerrainTri(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Buffer_TerrainTri", Engine::_vec3(0.f, 1.f, 0.f), Engine::_vec3(1.f, -1.f, 0.f), Engine::_vec3(-1.f, -1.f, 0.f)
 		//, D3DXCOLOR(0.f, 1.f, 0.f, 1.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f));
 
@@ -102,6 +85,37 @@ void VertexManager::Key_Input(float deltaTime)
 		
 	}
 
+}
+
+void VertexManager::DrawLine()
+{
+	if (triCount == 1)
+		int i = 0;
+	D3DXCreateLine(m_pGraphicDev, &line[triCount]);
+	line[triCount]->SetWidth(5.f);
+	line[triCount]->SetAntialias(FALSE);
+
+
+
+	// 투영 -> 뷰 스페이스
+	Engine::_matrix	out, view, proj, world;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
+	m_pGraphicDev->GetTransform(D3DTS_WORLD, &world);
+
+	D3DXMatrixIdentity(&out);
+	out = view * proj;
+
+
+	//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+	//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+	
+	line[triCount]->Begin();
+	line[triCount]->DrawTransform(vertex, lineCount, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+	line[triCount]->End();
+	line[triCount]->Release();
+	
 }
 
 CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
