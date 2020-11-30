@@ -46,7 +46,7 @@ void VertexManager::Key_Input(float deltaTime)
 				//pGameObject->AddRef();
 				
 				lineCount++;
-				vertex[lineCount - 1] = vPickPos + Engine::_vec3(0.f, 1.f, 0.f);
+				vertex[lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
 				if (lineCount % 3 == 0)
 				{
 					vertex[lineCount] = vertex[lineCount - 3];

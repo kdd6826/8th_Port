@@ -332,8 +332,10 @@ void CMFCToolView::Update(float deltaTime)
 		obj.second->Render_Object();
 	}
 
-	VertexManager::GetInstance()->DrawLine();
-
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		VertexManager::GetInstance()->DrawLine();
+	}
 	Engine::Render_End();
 
 	RenderLine();
