@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "TerrainTri.h"
 #include "Export_Function.h"
+#include "Cell.h"
+#include "SphereMesh.h"
 
 CTerrainTri::CTerrainTri(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -75,6 +77,7 @@ CTerrainTri* CTerrainTri::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _
 void CTerrainTri::Free(void)
 {
 	Engine::CGameObject::Free();
+	Engine::Safe_Release(m_Cell);
 	//for (auto& vtx : list_pVtx) {
 	//	delete vtx;
 	//	vtx = nullptr;
@@ -84,12 +87,8 @@ void CTerrainTri::Free(void)
 HRESULT CTerrainTri::Ready_Object(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
 {
 	FAILED_CHECK_RETURN(Add_Component(vtxPos1, vtxPos2, vtxPos3), E_FAIL);
-	//m_pTransformCom->Set_Pos(_vec3(rand() % 100 + 1.f, 0.f, rand() % 100 + 1.f));
 
-	//Engine::VTXCOL* vtx = new Engine::VTXCOL;
-	//vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
-	//vtx->dwColor = D3DXCOLOR{ 255.f, 0.f, 0.f, 255.f };
-	//list_pVtx.emplace_back(vtx);
+	m_Cell = Engine::CCell::Create(m_pGraphicDev, &vtxPos1, &vtxPos2, &vtxPos3);
 
 	return S_OK;
 }
@@ -123,6 +122,21 @@ void CTerrainTri::Render_Object(void)
 	//m_pTextureCom->Render_Texture(0);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
+}
+void CTerrainTri::Set_InitBuffer()
+{
+	int sphereCount = 0;
+	Engine::VTXCOL* pVertex = NULL;
+	m_pBufferCom->m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
+
+	for (auto& sphere : list_SphereMesh)
+	{
+		pVertex[sphereCount].vPos = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+		sphereCount++;
+	}
+
+
+	m_pBufferCom->m_pVB->Unlock();
 }
 //void CTerrainTri::Set_VtxPos()
 //{

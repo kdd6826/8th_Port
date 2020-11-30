@@ -23,6 +23,7 @@ public:
 	CCell*			Get_Neighbor(NEIGHBOR eType) const { return m_pNeighbor[eType]; }
 	void			Set_Neighbor(NEIGHBOR eType, CCell* pNeighbor) { m_pNeighbor[eType] = pNeighbor; }
 
+	_vec3*			Get_pPoint(POINT eType)		 { return &m_vPoint[eType]; } //½ÂÇö
 
 public:
 	HRESULT				Ready_Cell(LPDIRECT3DDEVICE9 pGraphicDev,

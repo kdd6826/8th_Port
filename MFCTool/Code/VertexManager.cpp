@@ -6,6 +6,7 @@
 #include "TerrainTri.h"
 
 #include "Sphere.h"
+#include "Cell.h"
 #include "Export_Function.h"
 USING(Engine)
 
@@ -52,15 +53,16 @@ void VertexManager::Key_Input(float deltaTime)
 		NULL_CHECK_RETURN(pTerrainTransformCom);
 		CSphereMesh* sphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
 		if (sphere != nullptr) {
+			sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.1f;
+			
 			Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
-			//sphere->m_pBufferCom->Set_Color(D3DCOLOR_ARGB(255, 0, 0, 255));
-			//sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = { 0.f, 0.f, 0.f };
+			sphere->Set_InitPoint();
 		}
 	}
 
 	if (Engine::Get_DIKeyState(DIK_C) & 0x80)
 	{
-		if (!KeyC) {
+		/*if (!KeyC) {
 			KeyC = true;
 
 			  
@@ -72,7 +74,7 @@ void VertexManager::Key_Input(float deltaTime)
 					if (*iter == sphere) {
 						Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 0, 255, 0));
 						sphere->m_Click = false;
-						sphere->Release_Vtx();
+						sphere->Release_pPoint(sphere->list_pPoint.back());
 						if (sphere->m_Dead) {
 							iter = list_TotalSphere.erase(iter);
 						}
@@ -84,7 +86,7 @@ void VertexManager::Key_Input(float deltaTime)
 				}
 			}
 			list_Sphere.clear();
-		}
+		}*/
 	}
 	else {
 		KeyC = false;
@@ -315,8 +317,9 @@ void VertexManager::MouseLClick_NaviMesh()
 		
 		for (int i = 0; i < 3; i++)
 		{
+			pTerrainTri->list_SphereMesh.emplace_back(TempSphereMesh.front());
 			TempSphereMesh.front()->list_pTerrainTri.emplace_back(pTerrainTri);
-			pTerrainTri->list_pVtx.emplace_back(TempSphereMesh.front()->list_pVtx.back());
+			TempSphereMesh.front()->list_pPoint.emplace_back(pTerrainTri->m_Cell->Get_pPoint((CCell::POINT)i));
 			TempSphereMesh.pop_front();
 		}
 	}

@@ -2,6 +2,7 @@
 #include "SphereMesh.h"
 #include "Export_Function.h"
 #include "MFCToolView.h"
+#include "TerrainTri.h"
 
 CSphereMesh::CSphereMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -71,10 +72,10 @@ CSphereMesh* CSphereMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CSphereMesh::Free(void)
 {
 	Engine::CGameObject::Free();
-	for (auto& vtx : list_pVtx) {
+	/*for (auto& vtx : list_pVtx) {
 		delete vtx;
 		vtx = nullptr;
-	}
+	}*/
 }
 
 
@@ -82,24 +83,33 @@ HRESULT CSphereMesh::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	Add_Vtx();
+	//Add_Vtx();
 
 	return S_OK;
 }
 
 void CSphereMesh::Add_Vtx() {
+	//¹ö¸±°Å
 	Engine::VTXCOL* vtx = new Engine::VTXCOL;
 	vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
 	vtx->dwColor = D3DXCOLOR{ 255.f, 0.f, 0.f, 255.f };
-	list_pVtx.emplace_back(vtx);
+	//list_pVtx.emplace_back(vtx);
 	return;
 }
 
-void CSphereMesh::Release_Vtx() {
-	list_pVtx.pop_back();
-	if (list_pVtx.size() == 0) {
+void CSphereMesh::Release_pPoint(_vec3* point) {
+	for (auto& iter = list_pPoint.begin(); iter != list_pPoint.end();)
+	{
+		if (*iter = point) {
+			list_pPoint.erase(iter);
+			break;
+		}
+		else {
+			iter++;
+		}
+	}
+	if (list_pPoint.size() == 0) {
 		m_Dead = true;
-		
 		//Engine::Safe_Release(*this);
 	}
 }
@@ -129,9 +139,15 @@ void CSphereMesh::Render_Object(void)
 }
 void CSphereMesh::Set_VtxPos()
 {
-	for (auto& vtx : list_pVtx)
-	{
-		vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	//for (auto& vtx : list_pVtx)
+	//{
+	//	vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	//}
+}
+void CSphereMesh::Set_InitPoint()
+{
+	for (auto& tri : list_pTerrainTri) {
+		tri->Set_InitBuffer();
 	}
 }
 //void CSphereMesh::SetUp_OnTerrain(void)

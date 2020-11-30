@@ -82,7 +82,7 @@ CMFCToolView::~CMFCToolView()
 
 	//Engine::Release_System(); //이게 안되서 안에꺼에서 일부분만 처리해줌
 	{
-		//Engine::CInputDev::GetInstance()->DestroyInstance();
+		Engine::CInputDev::GetInstance()->DestroyInstance();
 		Engine::CFontMgr::GetInstance()->DestroyInstance();
 		Engine::CFrameMgr::GetInstance()->DestroyInstance();
 		Engine::CTimerMgr::GetInstance()->DestroyInstance();
@@ -306,7 +306,7 @@ void CMFCToolView::Update(float deltaTime)
 {	
 	Key_Input(deltaTime);
 
-	/// Update
+	///////////////// Update
 	auto&	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
 	if (iter == m_mapLayer.end())
 		return;
@@ -322,18 +322,10 @@ void CMFCToolView::Update(float deltaTime)
 			iter2++;
 		}
 	}
-
-	/*for (auto& obj : iter->second->m_mapObject)
-	{
-		int dead = obj.second->Update_Object(deltaTime);
-		if (dead) {
-			Engine::Safe_Release(obj);
-		}
-	}*/
 	m_Camera->Update_Object(deltaTime);
 
 
-	/// Render
+	///////////////// Render
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
 	if (wireFrame) {
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);

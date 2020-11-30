@@ -10,8 +10,9 @@ class CTexture;
 class CTransform;
 class CRenderer;
 class CCalculator;
-
+class CCell;
 END
+class CSphereMesh;
 
 class CTerrainTri : public Engine::CGameObject
 {
@@ -24,6 +25,7 @@ public:
 	HRESULT			Ready_Object(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
+	void Set_InitBuffer();
 	//void Set_VtxPos();
 private:
 	HRESULT		Add_Component(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
@@ -37,7 +39,8 @@ public:
 	Engine::CTransform* m_pTransformCom = nullptr;
 	Engine::CRenderer* m_pRendererCom = nullptr;
 	Engine::CCalculator* m_pCalculatorCom = nullptr;
-	list<Engine::VTXCOL*> list_pVtx;
+	Engine::CCell* m_Cell;
+	list<CSphereMesh*> list_SphereMesh; // 자기를 구성하는 SphereMesh 3개 / 꼭짓점
 public:
 	static CTerrainTri* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	//list<Engine::VTXCOL*> list_pVtx;

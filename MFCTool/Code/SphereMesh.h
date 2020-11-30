@@ -23,10 +23,11 @@ private:
 public:
 	virtual HRESULT Ready_Object(void) override;
 	void Add_Vtx();
-	void Release_Vtx();
+	void Release_pPoint(_vec3* Point);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 	void Set_VtxPos();
+	void Set_InitPoint();
 private:
 	HRESULT		Add_Component(void);
 	//void		SetUp_OnTerrain(void);
@@ -42,10 +43,13 @@ public:
 
 public:
 	static CSphereMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	list<Engine::VTXCOL*> list_pVtx;
+	//list<Engine::VTXCOL*> list_pVtx;
 	list<CTerrainTri*> list_pTerrainTri;
 	bool m_Dead = false;
 	bool m_Click = false; //하나의 원을 중복클릭하지않기위해
+
+	//
+	list<_vec3*> list_pPoint;
 
 private:
 	virtual void Free(void) override;
