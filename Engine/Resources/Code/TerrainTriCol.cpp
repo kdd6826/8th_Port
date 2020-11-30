@@ -18,8 +18,7 @@ Engine::CTerrainTriCol::~CTerrainTriCol(void)
 
 }
 
-HRESULT Engine::CTerrainTriCol::Ready_Buffer(_vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3
-	, D3DCOLOR VtxCol1, D3DCOLOR VtxCol2, D3DCOLOR VtxCol3)
+HRESULT Engine::CTerrainTriCol::Ready_Buffer(_vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3)
 {
 	m_dwFVF = FVF_COL;
 	m_dwTriCnt = 1;
@@ -40,13 +39,13 @@ HRESULT Engine::CTerrainTriCol::Ready_Buffer(_vec3 VtxPos1, _vec3 VtxPos2, _vec3
 	// 4인자 : 잠그는 형태를 묻는 인자, 정적 버퍼인 경우 0
 
 	pVertex[0].vPos = VtxPos1;
-	pVertex[0].dwColor = VtxCol1;
+	pVertex[0].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 
 	pVertex[1].vPos = VtxPos2;
-	pVertex[1].dwColor = VtxCol2;
+	pVertex[1].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 
 	pVertex[2].vPos = VtxPos3;
-	pVertex[2].dwColor = VtxCol3;
+	pVertex[2].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 
 	m_pVB->Unlock();
 
@@ -65,12 +64,11 @@ HRESULT Engine::CTerrainTriCol::Ready_Buffer(_vec3 VtxPos1, _vec3 VtxPos2, _vec3
 }
 
 
-Engine::CTerrainTriCol* Engine::CTerrainTriCol::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3
-	, D3DCOLOR VtxCol1, D3DCOLOR VtxCol2, D3DCOLOR VtxCol3)
+Engine::CTerrainTriCol* Engine::CTerrainTriCol::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3)
 {
 	CTerrainTriCol*	pInstance = new CTerrainTriCol(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Buffer(VtxPos1, VtxPos2, VtxPos3, VtxCol1, VtxCol2, VtxCol3)))
+	if (FAILED(pInstance->Ready_Buffer(VtxPos1, VtxPos2, VtxPos3)))
 		Safe_Release(pInstance);
 
 	return pInstance;

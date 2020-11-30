@@ -36,6 +36,11 @@ void		Render_Texture(const _ushort& wContainerIdx, const _tchar* pTextureTag, co
 	CResourcesMgr::GetInstance()->Render_Texture(wContainerIdx, pTextureTag, iIndex);
 }
 
+CComponent* Create_TerrainCol(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
+{
+	return CResourcesMgr::GetInstance()->Create_TerrainCol(pGraphicDev, vtxPos1, vtxPos2, vtxPos3);
+}
+
 
 // Release Resources
 void Release_Resoures()

@@ -1,7 +1,4 @@
-﻿  NaviMesh.cpp
-  Line.cpp
-  Cell.cpp
-  코드를 생성하고 있습니다...
+﻿  ResourcesMgr.cpp
      ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
   Resources.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)

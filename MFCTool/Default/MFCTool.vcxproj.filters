@@ -129,23 +129,26 @@
     <ClInclude Include="..\Code\MFC_Terrain.h">
       <Filter>97.Terrain</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicCamera.h">
-      <Filter>96.DynamicCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="SphereMesh.h">
+    <ClInclude Include="..\Code\SphereMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="MeshPage.h">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="PKH.h">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="TerrainPage.h">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexManager.h">
+    <ClInclude Include="..\Code\VertexManager.h">
       <Filter>94. VertexManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TerrainTri.h">
+      <Filter>95. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MeshPage.h">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TerrainPage.h">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DynamicCamera.h">
+      <Filter>96.DynamicCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PKH.h">
+      <Filter>00.View\MyFormView\Pages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,23 +197,26 @@
     <ClCompile Include="..\Code\MFC_Terrain.cpp">
       <Filter>97.Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="DynamicCamera.cpp">
-      <Filter>96.DynamicCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="SphereMesh.cpp">
+    <ClCompile Include="..\Code\SphereMesh.cpp">
       <Filter>95. GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="MeshPage.cpp">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClCompile>
-    <ClCompile Include="PKH.cpp">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClCompile>
-    <ClCompile Include="TerrainPage.cpp">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexManager.cpp">
+    <ClCompile Include="..\Code\VertexManager.cpp">
       <Filter>94. VertexManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainTri.cpp">
+      <Filter>95. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MeshPage.cpp">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainPage.cpp">
+      <Filter>00.View\MyFormView\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
+      <Filter>96.DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PKH.cpp">
+      <Filter>00.View\MyFormView\Pages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,12 +13,10 @@ protected:
 	virtual ~CTerrainTriCol(void);
 
 public:
-	virtual HRESULT	Ready_Buffer(_vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3
-		, D3DCOLOR VtxCol1 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f), D3DCOLOR VtxCol2 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f), D3DCOLOR VtxCol3 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+	virtual HRESULT	Ready_Buffer(_vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3);
 
 public:
-	static CTerrainTriCol*	Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3
-		, D3DCOLOR VtxCol1 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f), D3DCOLOR VtxCol2 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f), D3DCOLOR VtxCol3 = D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+	static CTerrainTriCol*	Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 VtxPos1, _vec3 VtxPos2, _vec3 VtxPos3);
 	virtual CComponent*	Clone(void);
 	virtual void Free(void);
 };

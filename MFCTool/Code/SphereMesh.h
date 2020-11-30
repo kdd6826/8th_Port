@@ -12,6 +12,7 @@ class CRenderer;
 class CCalculator;
 
 END
+class CTerrainTri;
 
 class CSphereMesh : public Engine::CGameObject
 {
@@ -21,6 +22,8 @@ private:
 
 public:
 	virtual HRESULT Ready_Object(void) override;
+	void Add_Vtx();
+	void Release_Vtx();
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 	void Set_VtxPos();
@@ -40,6 +43,10 @@ public:
 public:
 	static CSphereMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	list<Engine::VTXCOL*> list_pVtx;
+	list<CTerrainTri*> list_pTerrainTri;
+	bool m_Dead = false;
+	bool m_Click = false; //하나의 원을 중복클릭하지않기위해
+
 private:
 	virtual void Free(void) override;
 

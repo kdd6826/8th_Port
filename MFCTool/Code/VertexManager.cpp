@@ -3,8 +3,10 @@
 #include "VertexManager.h"
 #include "SphereMesh.h"
 #include "MFCToolView.h"
+#include "TerrainTri.h"
 
 #include "Sphere.h"
+#include "Export_Function.h"
 USING(Engine)
 
 IMPLEMENT_SINGLETON(VertexManager)
@@ -24,45 +26,21 @@ VertexManager::~VertexManager()
 	list_TotalSphere.clear();
 }
 
+void VertexManager::Update(float deltaTime)
+{
+	Key_Input(deltaTime);
+}
+
 void VertexManager::Key_Input(float deltaTime)
 {
-
-
 	if (!TerrainHaveCheck())
 		return;
 
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
 		if (!mouseLClick) {
-			Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
-			if (Engine::_vec3(0.f, 0.f, 0.f) != vPickPos) {
-				Engine::CGameObject* pGameObject = CSphereMesh::Create(m_pGraphicDev);
-				dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = vPickPos;
-				CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", pGameObject);
-				dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
-
-				list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
-
-				//pGameObject->AddRef();
-				
-				lineCount++;
-				vertex[lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
-				if (lineCount % 3 == 0)
-				{
-					vertex[lineCount] = vertex[lineCount - 3];
-					lineCount++;
-					triCount++;
-				}
-
-			}
-			mouseLClick = true;
+			MouseLClick_NaviMesh();
 		}
-
-		//CResourcesMgr::GetInstance()->Create_TerrainTri(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Buffer_TerrainTri", Engine::_vec3(0.f, 1.f, 0.f), Engine::_vec3(1.f, -1.f, 0.f), Engine::_vec3(-1.f, -1.f, 0.f)
-		//, D3DXCOLOR(0.f, 1.f, 0.f, 1.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f));
-
-		//Engine::CTerrainTriCol* pTerrainTri = CTerrainTriCol::Create(m_pGraphicDev, Engine::_vec3(0.f, 1.f, 0.f), Engine::_vec3(1.f, -1.f, 0.f), Engine::_vec3(-1.f, -1.f, 0.f));
-		//m_pTransformCom->Pick_Pos(&vPickPos, m_fSpeed, fTimeDelta);
 	}
 	else {
 		mouseLClick = false;
@@ -74,10 +52,42 @@ void VertexManager::Key_Input(float deltaTime)
 		NULL_CHECK_RETURN(pTerrainTransformCom);
 		CSphereMesh* sphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
 		if (sphere != nullptr) {
-			Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+			Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
 			//sphere->m_pBufferCom->Set_Color(D3DCOLOR_ARGB(255, 0, 0, 255));
 			//sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = { 0.f, 0.f, 0.f };
 		}
+	}
+
+	if (Engine::Get_DIKeyState(DIK_C) & 0x80)
+	{
+		if (!KeyC) {
+			KeyC = true;
+
+			  
+			for (auto sphere : list_Sphere)
+			{
+				auto iter = list_TotalSphere.begin();
+				for (; iter != list_TotalSphere.end();)
+				{
+					if (*iter == sphere) {
+						Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 0, 255, 0));
+						sphere->m_Click = false;
+						sphere->Release_Vtx();
+						if (sphere->m_Dead) {
+							iter = list_TotalSphere.erase(iter);
+						}
+						break;
+
+					}
+					else
+						iter++;
+				}
+			}
+			list_Sphere.clear();
+		}
+	}
+	else {
+		KeyC = false;
 	}
 
 	if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && Engine::Get_DIKeyState(DIK_Z) & 0x80)
@@ -110,14 +120,13 @@ void VertexManager::DrawLine()
 
 	//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 	//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-	
+
 	line[triCount]->Begin();
 	line[triCount]->DrawTransform(vertex, lineCount, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 	line[triCount]->End();
 	line[triCount]->Release();
-	
-}
 
+}
 CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
 {
 	POINT		ptMouse{ 0 };
@@ -189,6 +198,10 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 		t0 = -(B + sqrt(D)) / A;
 		t1 = -(B - sqrt(D)) / A;
 		if (t0 < 0 && t1 < 0) continue;
+
+		if (sphere->m_Click)
+			sphereOverlap = true;
+
 		return sphere;
 	}
 
@@ -241,3 +254,70 @@ bool VertexManager::TerrainHaveCheck() {
 	return true;
 }
 
+void VertexManager::MouseLClick_NaviMesh()
+{
+	mouseLClick = true;
+
+
+	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTerrainTransformCom);
+	CSphereMesh* sphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
+	if (sphereOverlap) {
+		sphereOverlap = false;
+		return;
+	}
+
+	if (sphere != nullptr) {
+		Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+		list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(sphere));
+		sphere->Add_Vtx();
+		sphere->m_Click = true;
+	}
+	else {
+		Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
+		if (Engine::_vec3(0.f, 0.f, 0.f) != vPickPos) {
+			Engine::CGameObject* pGameObject = CSphereMesh::Create(m_pGraphicDev);
+			dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = vPickPos;
+			CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", pGameObject);
+			dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
+			dynamic_cast<CSphereMesh*>(pGameObject)->m_Click = true;
+
+			list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
+			list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
+			//pGameObject->AddRef();
+
+			/////////////////////////////////////////
+			lineCount++;
+			vertex[lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
+			if (lineCount % 3 == 0)
+			{
+				vertex[lineCount] = vertex[lineCount - 3];
+				lineCount++;
+				triCount++;
+			}
+			//////////////////////////////////////////////
+		}
+	}
+
+	if (list_Sphere.size() == 3) {
+		Engine::_vec3 vtxPos[3];
+		list<CSphereMesh*> TempSphereMesh;
+		for (int i = 0; i < 3; i++)
+		{
+			Set_VtxColor(list_Sphere.front()->m_pBufferCom, D3DCOLOR_ARGB(255, 0, 255, 0));
+			list_Sphere.front()->m_Click = false;
+			vtxPos[i] = list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+			TempSphereMesh.emplace_back(list_Sphere.front());
+			list_Sphere.pop_front();
+		}
+		CTerrainTri* pTerrainTri = CTerrainTri::Create(m_pGraphicDev, vtxPos[0], vtxPos[1], vtxPos[2]);
+		CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"TerrainTri", pTerrainTri);
+		
+		for (int i = 0; i < 3; i++)
+		{
+			TempSphereMesh.front()->list_pTerrainTri.emplace_back(pTerrainTri);
+			pTerrainTri->list_pVtx.emplace_back(TempSphereMesh.front()->list_pVtx.back());
+			TempSphereMesh.pop_front();
+		}
+	}
+}

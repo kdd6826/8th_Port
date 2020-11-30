@@ -83,9 +83,9 @@ public:
 	void Key_Input(float deltaTime);
 	_vec3 PickUp_OnTerrain(void);
 
-	int i = 0;
 
 	D3DXVECTOR3 vertex[128];
+
 private:
 	HRESULT Loading();
 	void RenderLine();

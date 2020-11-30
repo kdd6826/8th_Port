@@ -197,63 +197,65 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\FileInfo.h" />
     <ClInclude Include="..\Code\Form.h" />
     <ClInclude Include="..\Code\MainFrm.h" />
     <ClInclude Include="..\Code\MapTool.h" />
+    <ClInclude Include="..\Code\MeshPage.h" />
     <ClInclude Include="..\Code\MFCToolDoc.h" />
     <ClInclude Include="..\Code\MFCToolView.h" />
     <ClInclude Include="..\Code\MFC_Terrain.h" />
     <ClInclude Include="..\Code\MultiTex.h" />
+    <ClInclude Include="..\Code\PKH.h" />
     <ClInclude Include="..\Code\SingleTex.h" />
+    <ClInclude Include="..\Code\SphereMesh.h" />
     <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\Terrain.h" />
+    <ClInclude Include="..\Code\TerrainPage.h" />
+    <ClInclude Include="..\Code\TerrainTri.h" />
     <ClInclude Include="..\Code\Texture.h" />
     <ClInclude Include="..\Code\Texture_Manager.h" />
+    <ClInclude Include="..\Code\VertexManager.h" />
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Enum.h" />
     <ClInclude Include="..\Header\Function.h" />
     <ClInclude Include="..\Header\Macro.h" />
     <ClInclude Include="..\Header\Struct.h" />
     <ClInclude Include="..\Header\Typedef.h" />
-    <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="MFCTool.h" />
-    <ClInclude Include="MeshPage.h" />
-    <ClInclude Include="PKH.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SphereMesh.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TerrainPage.h" />
-    <ClInclude Include="VertexManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\FileInfo.cpp" />
     <ClCompile Include="..\Code\Form.cpp" />
     <ClCompile Include="..\Code\MainFrm.cpp" />
     <ClCompile Include="..\Code\MapTool.cpp" />
+    <ClCompile Include="..\Code\MeshPage.cpp" />
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />
     <ClCompile Include="..\Code\MFCToolView.cpp" />
     <ClCompile Include="..\Code\MFC_Terrain.cpp" />
     <ClCompile Include="..\Code\MultiTex.cpp" />
+    <ClCompile Include="..\Code\PKH.cpp" />
     <ClCompile Include="..\Code\SingleTex.cpp" />
+    <ClCompile Include="..\Code\SphereMesh.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
+    <ClCompile Include="..\Code\TerrainPage.cpp" />
+    <ClCompile Include="..\Code\TerrainTri.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\Texture_Manager.cpp" />
-    <ClCompile Include="DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\VertexManager.cpp" />
     <ClCompile Include="MFCTool.cpp" />
-    <ClCompile Include="MeshPage.cpp" />
-    <ClCompile Include="PKH.cpp" />
-    <ClCompile Include="SphereMesh.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TerrainPage.cpp" />
-    <ClCompile Include="VertexManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\MFCTool.rc2" />

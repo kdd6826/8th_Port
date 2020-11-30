@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SphereMesh.h"
 #include "Export_Function.h"
+#include "MFCToolView.h"
 
 CSphereMesh::CSphereMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -27,7 +28,6 @@ CSphereMesh::~CSphereMesh(void)
 HRESULT CSphereMesh::Add_Component(void)
 {
 	Engine::CComponent* pComponent = nullptr;
-
 
 	// buffer
 	pComponent = m_pBufferCom = dynamic_cast<Engine::CSphere*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Sphere"));
@@ -81,17 +81,33 @@ void CSphereMesh::Free(void)
 HRESULT CSphereMesh::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Pos(_vec3(rand() % 100 + 1.f, 0.f, rand() % 100 + 1.f));
 
+	Add_Vtx();
+
+	return S_OK;
+}
+
+void CSphereMesh::Add_Vtx() {
 	Engine::VTXCOL* vtx = new Engine::VTXCOL;
 	vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
 	vtx->dwColor = D3DXCOLOR{ 255.f, 0.f, 0.f, 255.f };
 	list_pVtx.emplace_back(vtx);
-
-	return S_OK;
+	return;
 }
+
+void CSphereMesh::Release_Vtx() {
+	list_pVtx.pop_back();
+	if (list_pVtx.size() == 0) {
+		m_Dead = true;
+		
+		//Engine::Safe_Release(*this);
+	}
+}
+
 _int CSphereMesh::Update_Object(const _float& fTimeDelta)
 {
+	if (m_Dead)
+		return 1;
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	
