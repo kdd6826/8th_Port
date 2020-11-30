@@ -77,6 +77,8 @@ void Engine::CGraphicDev::Render_Begin(D3DXCOLOR Color)
 {
 	m_pGraphicDev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_STENCIL| D3DCLEAR_ZBUFFER, Color, 1.f, 0);
 	m_pGraphicDev->BeginScene();
+	
+	
 }
 
 void Engine::CGraphicDev::Render_End(void)

@@ -1,28 +1,18 @@
-﻿  VIBuffer.cpp
-  TriCol.cpp
-  Texture.cpp
-  TerrainTriCol.cpp
-  TerrainTex.cpp
-  StaticMesh.cpp
-  Sphere.cpp
-  ResourcesMgr.cpp
-  Resources.cpp
-  RcTex.cpp
-  Mesh.cpp
-  HierarchyLoader.cpp
-  DynamicMesh.cpp
-  CubeTex.cpp
-  AniCtrl.cpp
+﻿  NaviMesh.cpp
+  Line.cpp
+  Cell.cpp
   코드를 생성하고 있습니다...
-  LINK : ../Bin\Resources.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
      ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
-  Resources.vcxproj -> C:\Users\GMH\Desktop\8th2\Engine\Resources\Default\../Bin\Resources.dll
+  Resources.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\AniCtrl.h
+  .\Engine\Resources\Code\Cell.h
   .\Engine\Resources\Code\CubeTex.h
   .\Engine\Resources\Code\DynamicMesh.h
   .\Engine\Resources\Code\HierarchyLoader.h
+  .\Engine\Resources\Code\Line.h
   .\Engine\Resources\Code\Mesh.h
+  .\Engine\Resources\Code\NaviMesh.h
   .\Engine\Resources\Code\RcTex.h
   .\Engine\Resources\Code\Resources.h
   .\Engine\Resources\Code\ResourcesMgr.h
@@ -33,7 +23,7 @@
   .\Engine\Resources\Code\Texture.h
   .\Engine\Resources\Code\TriCol.h
   .\Engine\Resources\Code\VIBuffer.h
-         15개 파일이 복사되었습니다.
+         18개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

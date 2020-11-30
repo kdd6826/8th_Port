@@ -91,6 +91,7 @@ void CTerrain::Render_Object(void)
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->Render_Texture(0);
 
@@ -101,6 +102,7 @@ void CTerrain::Render_Object(void)
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 }
 

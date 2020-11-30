@@ -62,7 +62,7 @@ CMFCToolView::CMFCToolView()
 
 CMFCToolView::~CMFCToolView()
 {
-	CGraphic_Device::DestroyInstance();
+	
 	CTexture_Manager::DestroyInstance();
 	Engine::CRenderer::GetInstance()->Clear_RenderGroup();
 	Engine::Release_Utility();
@@ -294,7 +294,6 @@ void CMFCToolView::OnInitialUpdate()
 	NULL_CHECK_RETURN(pComponent);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
-
 	//m_Camera->m_vEye = { 0.f, 5.f, -10.f };
 	//m_Camera->m_vAt = { -1.6f, 4.1f, -5.3f };
 	//RenderLine();
@@ -327,12 +326,16 @@ void CMFCToolView::Update(float deltaTime)
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
 	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
-
+	
 	for (auto& obj : iter->second->m_mapObject)
 	{
 		obj.second->Render_Object();
 	}
 
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		VertexManager::GetInstance()->DrawLine();
+	}
 	Engine::Render_End();
 
 	RenderLine();
@@ -475,4 +478,5 @@ void CMFCToolView::Key_Input(float deltaTime) {
 	//m_Camera->Update_Object(deltaTime);
 	
 	VertexManager::GetInstance()->Key_Input(deltaTime);
+
 }
