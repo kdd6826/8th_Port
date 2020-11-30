@@ -49,6 +49,15 @@
     <Filter Include="00. Resources\05. TerrainTriCol">
       <UniqueIdentifier>{ab46718b-2994-48f4-808c-0d95d230f2be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Resources\02. Mesh\02. NaviMesh">
+      <UniqueIdentifier>{a5fc0ac9-e2d3-4ac4-91ed-a33af4f55cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\02. Mesh\02. NaviMesh\00. Cell">
+      <UniqueIdentifier>{7defb191-96b8-4d5d-9ad5-a8c87bd62ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\02. Mesh\02. NaviMesh\01. Line">
+      <UniqueIdentifier>{090c1be2-069d-46ed-98f8-b7b7ffeee5ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Resources.cpp">
@@ -95,6 +104,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\TerrainTriCol.cpp">
       <Filter>00. Resources\05. TerrainTriCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Cell.cpp">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Line.cpp">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NaviMesh.cpp">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +163,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\TerrainTriCol.h">
       <Filter>00. Resources\05. TerrainTriCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Cell.h">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Line.h">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\NaviMesh.h">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

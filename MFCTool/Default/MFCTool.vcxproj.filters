@@ -135,9 +135,6 @@
     <ClInclude Include="SphereMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\NaviMesh.h">
-      <Filter>95. GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="MeshPage.h">
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClInclude>
@@ -201,9 +198,6 @@
       <Filter>96.DynamicCamera</Filter>
     </ClCompile>
     <ClCompile Include="SphereMesh.cpp">
-      <Filter>95. GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\NaviMesh.cpp">
       <Filter>95. GameObject</Filter>
     </ClCompile>
     <ClCompile Include="MeshPage.cpp">

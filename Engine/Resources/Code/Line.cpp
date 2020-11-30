@@ -1,16 +1,10 @@
 #include "Line.h"
 
 USING(Engine)
-Engine::CLine::CLine(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev)
+
+Engine::CLine::CLine(void)
 {
 
-}
-
-Engine::CLine::CLine(const CLine& rhs)
-	: CVIBuffer(rhs)
-{
-	Ready_Buffer();
 }
 
 Engine::CLine::~CLine(void)
@@ -18,60 +12,44 @@ Engine::CLine::~CLine(void)
 
 }
 
-HRESULT Engine::CLine::Ready_Buffer(void)
+HRESULT Engine::CLine::Ready_Line(const _vec2* pPointA, const _vec2* pPointB)
 {
-	//D3DXCreateLine(m_pGraphicDev, 0.6f, 8, 8, &pMesh, NULL);
-	//
-	//m_dwFVF = pMesh->GetFVF();
-	//if (!(m_dwFVF & D3DFVF_DIFFUSE))
-	//{
-	//	pMesh->CloneMeshFVF(pMesh->GetOptions(), m_dwFVF |= D3DFVF_DIFFUSE, m_pGraphicDev, &pMesh);
-	//}
-	//else
-	//{
-	//	pMesh->CloneMeshFVF(pMesh->GetOptions(), m_dwFVF, m_pGraphicDev, &pMesh);
-	//}
-	//
-	//Set_Color(D3DCOLOR_ARGB(255, 0, 255, 0));
+	m_vPoint[POINT_START] = *pPointA;
+	m_vPoint[POINT_FINISH] = *pPointB;
 
+	m_vDirection = m_vPoint[POINT_FINISH] - m_vPoint[POINT_START];
 
-	//m_dwTriCnt = pMesh->GetNumFaces();
-	//m_dwVtxCnt = pMesh->GetNumVertices();
-	//m_dwVtxSize = pMesh->GetNumBytesPerVertex();
-	////for (int i = 0; i < m_dwTriCnt; i++)
-	////{
-	////	//인덱스 사이즈만큼 넘겨준다
-	////}
-	//m_dwIdxSize = sizeof(INDEX16);
-	//m_IdxFmt = D3DFMT_INDEX16;
+	m_vNormal = _vec2(m_vDirection.y * -1.f, m_vDirection.x);
+	D3DXVec2Normalize(&m_vNormal, &m_vNormal);
 
-	////FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
-
-	//FAILED_CHECK_RETURN(pMesh->GetVertexBuffer(&m_pVB), E_FAIL);
-	//FAILED_CHECK_RETURN(pMesh->GetIndexBuffer(&m_pIB), E_FAIL);
-	//
 
 	return S_OK;
 }
 
-
-Engine::CLine* Engine::CLine::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+Engine::CLine::COMPARE Engine::CLine::Compare(const _vec2* pPos)
 {
-	CLine* pInstance = new CLine(pGraphicDev);
+	_vec2		vDest = *pPos - m_vPoint[POINT_START];
 
-	if (FAILED(pInstance->Ready_Buffer()))
+	_float		fDot = D3DXVec2Dot(D3DXVec2Normalize(&vDest, &vDest), &m_vNormal);
+
+	if (0.f <= fDot)
+		return COMPARE_LEFT;
+	else
+		return COMPARE_RIGHT;
+}
+
+Engine::CLine* Engine::CLine::Create(const _vec2* pPointA, const _vec2* pPointB)
+{
+	CLine*	pInstance = new CLine;
+
+	if (FAILED(pInstance->Ready_Line(pPointA, pPointB)))
 		Safe_Release(pInstance);
 
 	return pInstance;
 }
 
-CComponent* CLine::Clone(void)
-{
-	return new CLine(*this);
-}
-
 void Engine::CLine::Free(void)
 {
-	CVIBuffer::Free();
+
 }
 
