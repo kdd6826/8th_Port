@@ -45,7 +45,7 @@ private:
 	list<CSphereMesh*> list_Sphere;  //3개씩 저장할곳 SphereLockOn 이면 1개
 	bool sphereLockOn = false;
 	bool sphereOverlap = false;
-	D3DXVECTOR3 vertex[128];
+	D3DXVECTOR3 vertex[128][4];
 
 	LPD3DXLINE line[128];
 	int triCount = 0;

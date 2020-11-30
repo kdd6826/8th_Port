@@ -99,14 +99,16 @@ void VertexManager::Key_Input(float deltaTime)
 
 void VertexManager::DrawLine()
 {
-	if (triCount == 1)
-		int i = 0;
-	D3DXCreateLine(m_pGraphicDev, &line[triCount]);
-	line[triCount]->SetWidth(5.f);
-	line[triCount]->SetAntialias(FALSE);
 
 
+	
 
+	for (int i = 0; i < triCount+1; i++)
+	{
+		//D3DXCreateLine(m_pGraphicDev, &line[i]);
+		//line[i]->SetWidth(5.f);
+		//line[i]->SetAntialias(FALSE);
+	}
 	// 투영 -> 뷰 스페이스
 	Engine::_matrix	out, view, proj, world;
 
@@ -120,11 +122,17 @@ void VertexManager::DrawLine()
 
 	//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 	//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+	for (int i = 0; i < triCount + 1; ++i)
+	{
 
-	line[triCount]->Begin();
-	line[triCount]->DrawTransform(vertex, lineCount, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-	line[triCount]->End();
-	line[triCount]->Release();
+		D3DXCreateLine(m_pGraphicDev, &line[i]);
+		line[i]->SetWidth(5.f);
+		line[i]->SetAntialias(FALSE);
+		line[i]->Begin();
+		line[i]->DrawTransform(vertex[i],4, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		line[i]->End();
+		line[i]->Release();
+	}
 
 }
 CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
@@ -288,13 +296,15 @@ void VertexManager::MouseLClick_NaviMesh()
 
 			/////////////////////////////////////////
 			lineCount++;
-			vertex[lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
+			vertex[triCount][lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
 			if (lineCount % 3 == 0)
 			{
-				vertex[lineCount] = vertex[lineCount - 3];
+				vertex[triCount][lineCount] = vertex[triCount][lineCount - 3];
 				lineCount++;
 				triCount++;
+				lineCount = 0;
 			}
+			
 			//////////////////////////////////////////////
 		}
 	}
