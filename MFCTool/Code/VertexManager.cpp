@@ -7,6 +7,7 @@
 
 #include "Sphere.h"
 #include "Export_Function.h"
+#include "MeshPage.h"
 USING(Engine)
 
 IMPLEMENT_SINGLETON(VertexManager)
@@ -295,14 +296,30 @@ void VertexManager::MouseLClick_NaviMesh()
 			//pGameObject->AddRef();
 
 			/////////////////////////////////////////
+			//삼각형 라인 생성
 			lineCount++;
 			vertex[triCount][lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
+			//삼각형 마지막
 			if (lineCount % 3 == 0)
 			{
 				vertex[triCount][lineCount] = vertex[triCount][lineCount - 3];
+				//
+				MeshPage* pMeshPage = MeshPage::GetInstance();;
+				
+				if (pMeshPage != nullptr)
+				{
+					pMeshPage->treeControl(triCount);
+					//pMeshPage->tri[triCount] = pMeshPage->treeNavi.InsertItem(L"1", 0, 0, TVI_ROOT, TVI_LAST);
+					//pMeshPage->vertex[triCount][0] = pMeshPage->treeNavi.InsertItem(L"a", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+					//pMeshPage->vertex[triCount][1] = pMeshPage->treeNavi.InsertItem(L"b", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+					//pMeshPage->vertex[triCount][2] = pMeshPage->treeNavi.InsertItem(L"c", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+				}
+				//
+
 				lineCount++;
 				triCount++;
 				lineCount = 0;
+
 			}
 			
 			//////////////////////////////////////////////

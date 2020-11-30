@@ -6,7 +6,7 @@
 class MeshPage : public CDialogEx
 {
 	DECLARE_DYNAMIC(MeshPage)
-
+	DECLARE_SINGLETON(MeshPage)
 public:
 	MeshPage(CWnd* pParent = NULL);   // 표준 생성자입니다.
 	virtual ~MeshPage();
@@ -31,8 +31,15 @@ public:
 	CButton typeDynamic;
 	CButton vertexTogetther;
 	CButton vertexOnly;
+
+	HTREEITEM tri[128] , vertex[128][3];
+	
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio1();
 	afx_msg void OnBnClickedRadio2();
 	
+	void treeControl(int triCount);
+
+	CTreeCtrl treeNavi;
+	afx_msg void OnBnClickedButton10();
 };
