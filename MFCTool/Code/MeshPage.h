@@ -42,4 +42,8 @@ public:
 
 	CTreeCtrl treeNavi;
 	afx_msg void OnBnClickedButton10();
+	afx_msg void OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult);
+	void CheckChildItems(HTREEITEM _hItem);
+	void UnCheckChildItems(HTREEITEM _hItem);
+
 };

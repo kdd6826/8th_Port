@@ -46,6 +46,7 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO1, &MeshPage::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &MeshPage::OnBnClickedRadio2)
 	ON_BN_CLICKED(IDC_BUTTON10, &MeshPage::OnBnClickedButton10)
+	ON_NOTIFY(NM_CLICK, IDC_TREE4, &MeshPage::OnNMClickTree4)
 END_MESSAGE_MAP()
 
 
@@ -107,3 +108,98 @@ void MeshPage::OnBnClickedButton10()
 	}
 }
 
+
+
+void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	//HTREEITEM hItem = treeNavi.GetSelectedItem();
+	//CStringW a =	treeNavi.GetItemText(hItem);
+	
+	CPoint point; 
+	UINT nFlags = 0;
+
+	GetCursorPos(&point);
+	::ScreenToClient(treeNavi.m_hWnd, &point);
+
+	HTREEITEM hItem = treeNavi.HitTest(point, &nFlags);
+	CString naviIndex = treeNavi.GetItemText(hItem);
+
+	if (treeNavi.GetParentItem(hItem) == 0)
+	{
+		//삼각형
+		int i = 0;
+	}
+	else if (treeNavi.GetParentItem(hItem) != 0)
+	{
+		//버텍스
+		int i = 0;
+	}
+	
+	
+	int triIndex;
+	triIndex = _ttoi(naviIndex);
+
+	
+
+	if (hItem != NULL && (nFlags & TVHT_ONITEMSTATEICON) != 0)
+	{
+		if (treeNavi.GetCheck(hItem))
+		{
+			UnCheckChildItems(hItem);
+		}
+		else
+		{
+			CheckChildItems(hItem);
+		}
+	}
+
+
+	wchar_t text[16];
+
+	
+	TVITEMW item;
+	item.mask = TVIF_TEXT;
+	item.hItem = hItem;
+	item.pszText = text;
+	item.cchTextMax = 16;
+	treeNavi.GetItem(&item);
+
+	OutputDebugString(text);
+
+	*pResult = 0;
+}
+
+void MeshPage::CheckChildItems(HTREEITEM _hItem)
+{
+	HTREEITEM hChildItem = treeNavi.GetChildItem(_hItem);
+	while (hChildItem != NULL)
+	{
+		treeNavi.SetCheck(hChildItem, TRUE);
+
+		if (treeNavi.ItemHasChildren(hChildItem))
+		{
+			CheckChildItems(hChildItem);
+		}
+
+		hChildItem = treeNavi.GetNextItem(hChildItem, TVGN_NEXT);
+	}
+
+}
+
+void MeshPage::UnCheckChildItems(HTREEITEM _hItem)
+{
+	HTREEITEM hChildItem = treeNavi.GetChildItem(_hItem);
+	while (hChildItem != NULL)
+	{
+		treeNavi.SetCheck(hChildItem, FALSE);
+
+		if (treeNavi.ItemHasChildren(hChildItem))
+		{
+			CheckChildItems(hChildItem);
+		}
+
+		hChildItem = treeNavi.GetNextItem(hChildItem, TVGN_NEXT);
+	}
+}
