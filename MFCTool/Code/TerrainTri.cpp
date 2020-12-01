@@ -3,6 +3,7 @@
 #include "Export_Function.h"
 #include "Cell.h"
 #include "SphereMesh.h"
+#include "MFCToolView.h"
 
 CTerrainTri::CTerrainTri(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -108,8 +109,9 @@ _int CTerrainTri::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	if (!CMFCToolView::GetInstance()->wireFrame) {
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	}
 
 	return 0;
 }

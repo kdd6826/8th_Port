@@ -39,13 +39,13 @@ HRESULT Engine::CTerrainTriCol::Ready_Buffer(_vec3 VtxPos1, _vec3 VtxPos2, _vec3
 	// 4인자 : 잠그는 형태를 묻는 인자, 정적 버퍼인 경우 0
 
 	pVertex[0].vPos = VtxPos1;
-	pVertex[0].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	pVertex[0].dwColor = D3DCOLOR_ARGB(255, 100, 255, 100);
 
 	pVertex[1].vPos = VtxPos2;
-	pVertex[1].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	pVertex[1].dwColor = D3DCOLOR_ARGB(255, 100, 255, 100);
 
 	pVertex[2].vPos = VtxPos3;
-	pVertex[2].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	pVertex[2].dwColor = D3DCOLOR_ARGB(255, 100, 255, 100);
 
 	m_pVB->Unlock();
 

@@ -19,6 +19,7 @@ class CSingleTex;
 class CMFC_Terrain;
 class CDynamicCamera;
 class CSphereMesh;
+class CTerrainTri;
 class CMFCToolView : public CScrollView
 {
 protected: // serialization에서만 만들어집니다.
@@ -82,6 +83,8 @@ public:
 	void LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag, Engine::CGameObject* pGameObject);
 	void Key_Input(float deltaTime);
 	_vec3 PickUp_OnTerrain(void);
+
+	CTerrainTri* PickUp_Tri(void);
 
 
 	D3DXVECTOR3 vertex[128];

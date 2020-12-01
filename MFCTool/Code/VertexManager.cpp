@@ -49,15 +49,33 @@ void VertexManager::Key_Input(float deltaTime)
 
 	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
 	{
-		Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTerrainTransformCom);
-		CSphereMesh* sphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
-		if (sphere != nullptr) {
-			sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.1f;
-			
-			Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
-			sphere->Set_InitPoint();
+		if (!mouseRClick) {
+			mouseRClick = true;
+			Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTerrainTransformCom);
+			CSphereMesh* pickUpSphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
+			CTerrainTri* pickUpTri = (CMFCToolView::GetInstance()->PickUp_Tri());
+
+			if (pickUpSphere != nullptr) {
+				//구체락온
+				LockOnObject(VM_Obj::SPHERE, pickUpSphere);
+
+				pickUpSphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.1f; //나중에삭제 테스트용
+
+				Set_SphereColor(pickUpSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
+				pickUpSphere->Set_InitPoint(); //포지션값 이동후 이거 반드시 불러올것
+			}
+			else if (pickUpTri != nullptr) {
+				//삼각형락온
+				LockOnObject(VM_Obj::TRI, pickUpTri);
+
+				//Set_TriColor(pickUpTri->m_pBufferCom,D3DCOLOR_ARGB(255, 0, 44, 145));
+				Set_TriColor(pickUpTri->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
+			}
 		}
+	}
+	else {
+		mouseRClick = false;
 	}
 
 	if (Engine::Get_DIKeyState(DIK_C) & 0x80)
@@ -90,11 +108,6 @@ void VertexManager::Key_Input(float deltaTime)
 	}
 	else {
 		KeyC = false;
-	}
-
-	if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && Engine::Get_DIKeyState(DIK_Z) & 0x80)
-	{
-		
 	}
 
 }
@@ -210,7 +223,7 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 	return nullptr;
 }
 
-void VertexManager::Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color)
+void VertexManager::Set_SphereColor(Engine::CSphere* Vtx, D3DCOLOR color)
 {
 	
 	void* pVertex = nullptr;
@@ -243,6 +256,21 @@ void VertexManager::Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color)
 	return;
 }
 
+void VertexManager::Set_TriColor(Engine::CTerrainTriCol* Vtx, D3DCOLOR color)
+{
+
+	VTXCOL* pVertex = NULL;
+	Vtx->m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
+
+	for (int i = 0; i < 3; i++)
+	{
+		pVertex[i].dwColor = color;
+	}
+	Vtx->m_pVB->Unlock();
+
+	return;
+}
+
 bool VertexManager::TerrainHaveCheck() {
 	map<const Engine::_tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
 	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
@@ -259,7 +287,7 @@ bool VertexManager::TerrainHaveCheck() {
 void VertexManager::MouseLClick_NaviMesh()
 {
 	mouseLClick = true;
-
+	LockOnObject(VM_Obj::NONE, nullptr);
 
 	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom);
@@ -268,14 +296,18 @@ void VertexManager::MouseLClick_NaviMesh()
 		sphereOverlap = false;
 		return;
 	}
+	CTerrainTri* pickUpTri = (CMFCToolView::GetInstance()->PickUp_Tri());
 
-	if (sphere != nullptr) {
-		Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+	if (sphere != nullptr) {		//구체를 클릭했을때
+		Set_SphereColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
 		list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(sphere));
 		sphere->Add_Vtx();
 		sphere->m_Click = true;
 	}
-	else {
+	else if(pickUpTri != nullptr){	//삼각형을 클릭했을때
+		
+	}
+	else {							//지형을 클릭했을때
 		Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
 		if (Engine::_vec3(0.f, 0.f, 0.f) != vPickPos) {
 			Engine::CGameObject* pGameObject = CSphereMesh::Create(m_pGraphicDev);
@@ -306,7 +338,7 @@ void VertexManager::MouseLClick_NaviMesh()
 		list<CSphereMesh*> TempSphereMesh;
 		for (int i = 0; i < 3; i++)
 		{
-			Set_VtxColor(list_Sphere.front()->m_pBufferCom, D3DCOLOR_ARGB(255, 0, 255, 0));
+			Set_SphereColor(list_Sphere.front()->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
 			list_Sphere.front()->m_Click = false;
 			vtxPos[i] = list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
 			TempSphereMesh.emplace_back(list_Sphere.front());
@@ -323,4 +355,29 @@ void VertexManager::MouseLClick_NaviMesh()
 			TempSphereMesh.pop_front();
 		}
 	}
+}
+
+void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
+{
+	switch (lockOnObjName)
+	{
+	case VM_Obj::SPHERE: {
+		CSphereMesh* _sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
+		if (_sphere->m_Click)
+			Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+		else
+			Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+		break;
+	}
+	case VM_Obj::TRI: {
+		CTerrainTri* _tri = dynamic_cast<CTerrainTri*>(lockOnObj);
+		Set_TriColor(_tri->m_pBufferCom, D3DCOLOR_ARGB(255, 100, 255, 100));
+		break;
+	}
+	default:
+		break;
+	}
+	lockOnObjName = name;
+	if(obj != nullptr)
+		lockOnObj = obj;
 }

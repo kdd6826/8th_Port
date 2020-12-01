@@ -5,11 +5,13 @@
 #include "Engine_Define.h"
 #include "Export_Function.h"
 
-class SphereMesh;
 class CSphereMesh;
 
 class VertexManager
 {
+	enum class VM_Obj{
+		NONE, SPHERE, TRI, _END
+	};
 public:
 	DECLARE_SINGLETON(VertexManager)
 private:
@@ -20,12 +22,20 @@ public:
 	void Update(float deltaTime);
 	void Key_Input(float deltaTime);
 	void DrawLine();
+
+	//구체를 클릭했을때, 실패하면 nullptr 성공하면 해당 SphereMesh 포인터
 	CSphereMesh* Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
+	//Sphere컬러값을 바꾼다. (Buffer컴포넌트, 컬러)
+	void Set_SphereColor(Engine::CSphere* Vtx, D3DCOLOR color);
+	//TerrainTri컬러값을 바꾼다. (Buffer컴포넌트, 컬러)
+	void Set_TriColor(Engine::CTerrainTriCol * Vtx, D3DCOLOR color);
 
-	void Set_VtxColor(Engine::CSphere* Vtx, D3DCOLOR color);
-
+	//Terrain 지형이 지금 존재하면 true 아니면 false
 	bool TerrainHaveCheck();
+	//좌클릭을 했을때 해당함수 실행
 	void MouseLClick_NaviMesh();
+	//락온 해제시 그전꺼 색상 바꿔주는등 Or 새로운 락온 객체 설정
+	void LockOnObject(VM_Obj name, Engine::CGameObject * obj);
 
 private:
 	
@@ -38,13 +48,16 @@ private:
 	bool mouseRClick = false;
 	bool KeyC = false;
 
-	//list<Engine::VTXCOL*> list_Vtx;
-	//TODO: 나중에 인덱스버퍼 쪽도 저장
-	// list<Engine::Index*> list_Index;
-	list<CSphereMesh*> list_TotalSphere; //Sphere 전부 모아논곳
-	list<CSphereMesh*> list_Sphere;  //3개씩 저장할곳 SphereLockOn 이면 1개
-	bool sphereLockOn = false;
+	//CSphereMesh 전부 모아논 리스트
+	list<CSphereMesh*> list_TotalSphere;
+	//삼각형을 만들기위해 3번 찍을동안 담아놓는 SphereMesh 리스트
+	list<CSphereMesh*> list_Sphere;
+	//이미 한번 눌렀던거 다시 못하게
 	bool sphereOverlap = false;
+	//내가 무슨종류 객체를 락했는지
+	VM_Obj lockOnObjName = VM_Obj::_END;
+	//락을 한 객체의 포인터
+	Engine::CGameObject* lockOnObj = nullptr;
 
 	D3DXVECTOR3 vertex[128];
 	LPD3DXLINE line[128];

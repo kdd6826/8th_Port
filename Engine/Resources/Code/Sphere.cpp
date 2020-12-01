@@ -32,7 +32,7 @@ HRESULT Engine::CSphere::Ready_Buffer(void)
 		pMesh->CloneMeshFVF(pMesh->GetOptions(), m_dwFVF, m_pGraphicDev, &pMesh);
 	}
 	
-	Set_Color(D3DCOLOR_ARGB(255, 0, 255, 0));
+	Set_Color(D3DCOLOR_ARGB(255, 8, 103, 1));
 
 
 	m_dwTriCnt = pMesh->GetNumFaces();

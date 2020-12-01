@@ -30,6 +30,7 @@
 #include "Layer.h"
 #include "NaviMesh.h"
 #include "VertexManager.h"
+#include "TerrainTri.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -487,4 +488,83 @@ void CMFCToolView::Key_Input(float deltaTime) {
 	//m_Camera->Update_Object(deltaTime);
 	
 	VertexManager::GetInstance()->Key_Input(deltaTime);
+}
+
+CTerrainTri* CMFCToolView::PickUp_Tri(void)
+{
+	Engine::CTransform*		pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTerrainTransformCom, nullptr);
+
+	POINT		ptMouse{ 0 };
+
+	GetCursorPos(&ptMouse);
+	::ScreenToClient(g_hWnd, &ptMouse);
+
+	Engine::_vec3	vMousePos;
+
+	D3DVIEWPORT9		ViewPort;
+	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
+	m_pGraphicDev->GetViewport(&ViewPort);
+
+	// 뷰포트 -> 투영
+
+	vMousePos.x = (ptMouse.x / (ViewPort.Width * 0.5f)) - 1.f;
+	vMousePos.y = (ptMouse.y / -(ViewPort.Height * 0.5f)) + 1.f;
+	vMousePos.z = 0.f;
+
+	// L * W * V * P * (P^-1)
+	// L * W * V
+
+	// 투영 -> 뷰 스페이스
+	Engine::_matrix	matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
+
+	// 뷰 스페이스 -> 월드
+	Engine::_matrix	matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	Engine::_vec3	vRayPos, vRayDir;
+
+
+	vRayPos = Engine::_vec3(0.f, 0.f, 0.f);
+	vRayDir = vMousePos - vRayPos;
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
+
+	// 월드 -> 로컬
+	Engine::_matrix	matWorld;
+	pTerrainTransformCom->Get_WorldMatrix(&matWorld);
+	D3DXMatrixInverse(&matWorld, NULL, &matWorld);
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matWorld);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matWorld);
+
+	///////
+	map<const Engine::_tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == (*m_map).end())
+		return nullptr;
+	multimap<const Engine::_tchar*, Engine::CGameObject*>* m_mapObject = &dynamic_cast<Engine::CLayer*>(iter->second)->m_mapObject;
+	for (auto& iter2 = (*m_mapObject).begin(); iter2 != (*m_mapObject).end();)
+	{
+		if (0 == lstrcmpW(L"TerrainTri", (*iter2).first))
+		{
+			Engine::_float	fU, fV, fDist;
+			CTerrainTri* tri = dynamic_cast<CTerrainTri*>((*iter2).second);
+			if (D3DXIntersectTri(tri->m_Cell->Get_Point(Engine::CCell::POINT_A),
+				tri->m_Cell->Get_Point(Engine::CCell::POINT_B),
+				tri->m_Cell->Get_Point(Engine::CCell::POINT_C), &vRayPos, &vRayDir, &fU, &fV, &fDist))
+			{
+				return tri;
+			}
+		}
+		iter2++;
+		
+
+	}
+	return nullptr;
 }
