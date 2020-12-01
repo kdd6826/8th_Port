@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // MeshPage 대화 상자입니다.
@@ -46,4 +47,14 @@ public:
 	void CheckChildItems(HTREEITEM _hItem);
 	void UnCheckChildItems(HTREEITEM _hItem);
 
+	afx_msg void OnEnChangeEdit14();
+	CEdit transformPosX;
+	CEdit transformPosY;
+	CEdit transformPosZ;
+	CEdit transformScalX;
+	CEdit transformScalY;
+	CEdit transformScalZ;
+	CEdit transformRotX;
+	CEdit transformRotY;
+	CEdit transformRotZ;
 };
