@@ -6,6 +6,8 @@
 #include "TerrainPage.h"
 #include "afxdialogex.h"
 #include "MFCToolView.h"
+#include "VertexManager.h"
+#include "SphereMesh.h"
 
 // TerrainPage 대화 상자입니다.
 
@@ -97,7 +99,7 @@ BOOL TerrainPage::OnInitDialog()
 void TerrainPage::OnBnClickedButton1()
 {
 
-	// TODO: 해야함
+	///////////////////
 	map<const _tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
 	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
 	if (iter == (*m_map).end())
@@ -107,7 +109,10 @@ void TerrainPage::OnBnClickedButton1()
 	{
 		obj.second->Release();
 	}
+	VertexManager::GetInstance()->DestroyValue();
 	iter->second->m_mapObject.clear();
+	///////////////////
+
 	CString xNum = L"";
 	CString zNum = L"";
 	CString intervalNum = L"";

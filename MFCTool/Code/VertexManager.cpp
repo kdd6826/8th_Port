@@ -8,6 +8,7 @@
 #include "Sphere.h"
 #include "Cell.h"
 #include "Export_Function.h"
+#include "DynamicCamera.h"
 USING(Engine)
 
 IMPLEMENT_SINGLETON(VertexManager)
@@ -20,11 +21,22 @@ VertexManager::VertexManager()
 
 VertexManager::~VertexManager()
 {
+	DestroyValue();
+}
+
+void VertexManager::DestroyValue()
+{
 	for (auto& sphere : list_TotalSphere)
 	{
 		sphere->Release();
 	}
 	list_TotalSphere.clear();
+	list_Sphere.clear();
+	lockOnObjName = VM_Obj::NONE;
+	lockOnObj = nullptr;
+	/////////////////////////
+	//triCount = 0;
+	//lineCount = 0;
 }
 
 void VertexManager::Update(float deltaTime)

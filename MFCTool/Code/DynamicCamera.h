@@ -16,6 +16,8 @@ public:
 
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 
+public:
+	_bool		Get_ClickPossible() { return m_bFix; }
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(void);

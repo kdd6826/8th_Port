@@ -486,8 +486,9 @@ void CMFCToolView::LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag
 void CMFCToolView::Key_Input(float deltaTime) {
 	Engine::Set_InputDev();
 	//m_Camera->Update_Object(deltaTime);
-	
-	VertexManager::GetInstance()->Key_Input(deltaTime);
+	if (m_Camera->Get_ClickPossible()) {
+		VertexManager::GetInstance()->Key_Input(deltaTime);
+	}
 }
 
 CTerrainTri* CMFCToolView::PickUp_Tri(void)

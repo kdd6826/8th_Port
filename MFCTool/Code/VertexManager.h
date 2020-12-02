@@ -18,10 +18,12 @@ private:
 	VertexManager();
 	~VertexManager();
 
+
 public:
 	void Update(float deltaTime);
 	void Key_Input(float deltaTime);
 	void DrawLine();
+	void DestroyValue();
 
 	//구체를 클릭했을때, 실패하면 nullptr 성공하면 해당 SphereMesh 포인터
 	CSphereMesh* Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
@@ -43,7 +45,7 @@ private:
 public:
 	LPDIRECT3DDEVICE9			m_pGraphicDev = nullptr;
 
-private:
+public:
 	bool mouseLClick = false;
 	bool mouseRClick = false;
 	bool KeyC = false;
