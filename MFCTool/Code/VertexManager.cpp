@@ -75,9 +75,9 @@ void VertexManager::Key_Input(float deltaTime)
 				//구체락온
 				LockOnObject(VM_Obj::SPHERE, pickUpSphere);
 
-				pickUpSphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.1f; //나중에삭제 테스트용
-
 				Set_SphereColor(pickUpSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
+
+				pickUpSphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.1f; //나중에삭제 테스트용
 				pickUpSphere->Set_InitPoint(); //포지션값 이동후 이거 반드시 불러올것
 			}
 			else if (pickUpTri != nullptr) {
@@ -314,36 +314,22 @@ void VertexManager::MouseLClick_NaviMesh()
 			list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
 			//pGameObject->AddRef();
 
-			/////////////////////////////////////////
-			//CCW
-
-			//	if (CCW2(vertex[triCount][0], vertex[triCount][1], vertex[triCount][2]) == 1)
-			//	{
-
-			//		vertex[triCount][0] = Engine::_vec3{ 0.f,0.f,0.f };
-			//		vertex[triCount][1] = Engine::_vec3{ 0.f,0.f,0.f };
-			//		vertex[triCount][2] = Engine::_vec3{ 0.f,0.f,0.f };
-			//		vertex[triCount][3] = Engine::_vec3{ 0.f,0.f,0.f };
-			//		lineCount = 0;
-			//		return;
-			//	}
-			//	
-
-
-			
-			//////////////////////////////////////////////
 		}
 	}
 
 	if (list_Sphere.size() == 3) {
 		Engine::_vec3 vtxPos[3];
 		list<CSphereMesh*> TempSphereMesh;
+		int sphereCnt = 0;
+		Engine::_vec3 sphereVec[3];
 		for (int i = 0; i < 3; i++)
 		{
 			Set_SphereColor(list_Sphere.front()->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
 			list_Sphere.front()->m_Click = false;
 			vtxPos[i] = list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
 			TempSphereMesh.emplace_back(list_Sphere.front());
+			sphereVec[sphereCnt] = list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+			sphereCnt++;
 			list_Sphere.pop_front();
 		}
 		CTerrainTri* pTerrainTri = CTerrainTri::Create(m_pGraphicDev, vtxPos[0], vtxPos[1], vtxPos[2]);
@@ -356,6 +342,23 @@ void VertexManager::MouseLClick_NaviMesh()
 			TempSphereMesh.front()->list_pPoint.emplace_back(pTerrainTri->m_Cell->Get_pPoint((CCell::POINT)i));
 			TempSphereMesh.pop_front();
 		}
+
+		/////////////////////////////////////////
+		//CCW
+
+		if (CCW2(sphereVec[0], sphereVec[1], sphereVec[2]) == 1)
+		{
+			pTerrainTri->DeleteWithSphere();
+			/*vertex[triCount][0] = Engine::_vec3{ 0.f,0.f,0.f };
+			vertex[triCount][1] = Engine::_vec3{ 0.f,0.f,0.f };
+			vertex[triCount][2] = Engine::_vec3{ 0.f,0.f,0.f };
+			vertex[triCount][3] = Engine::_vec3{ 0.f,0.f,0.f };
+			lineCount = 0;*/
+			return;
+		}
+		CMFCToolView::GetInstance()->Sort_TriNumber();
+		CMFCToolView::GetInstance()->Get_TriOfNumber(1);
+		//////////////////////////////////////////////
 	}
 }
 

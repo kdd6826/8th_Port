@@ -317,7 +317,15 @@ void CMFCToolView::Update(float deltaTime)
 		int dead = iter2->second->Update_Object(deltaTime);
 		if (dead == 1) {
 			Engine::Safe_Release(iter2->second);
-			iter2 = iter->second->m_mapObject.erase(iter2);
+			if (0 == lstrcmpW(L"TerrainTri", iter2->first))
+			{
+				iter2 = iter->second->m_mapObject.erase(iter2);
+				Sort_TriNumber();
+			}
+			else
+			{
+				iter2 = iter->second->m_mapObject.erase(iter2);
+			}
 		}
 		else {
 			iter2++;
@@ -564,5 +572,48 @@ CTerrainTri* CMFCToolView::PickUp_Tri(void)
 		
 
 	}
+	return nullptr;
+}
+
+void CMFCToolView::Sort_TriNumber()
+{
+	map<const Engine::_tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == (*m_map).end())
+		return;
+
+	int triCount = 0;
+	for (auto& iter2 = iter->second->m_mapObject.begin(); iter2 != iter->second->m_mapObject.end();)
+	{
+		if (0 == lstrcmpW(L"TerrainTri", iter2->first))
+		{
+			dynamic_cast<CTerrainTri*>(iter2->second)->m_indexNumber = triCount;
+			triCount++;
+		}
+		iter2++;
+	}
+}
+
+CTerrainTri* CMFCToolView::Get_TriOfNumber(int number)
+{
+	Sort_TriNumber();
+
+	map<const Engine::_tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == (*m_map).end())
+		return nullptr;
+
+	for (auto& iter2 = iter->second->m_mapObject.begin(); iter2 != iter->second->m_mapObject.end();)
+	{
+		if (0 == lstrcmpW(L"TerrainTri", iter2->first))
+		{
+			if (dynamic_cast<CTerrainTri*>(iter2->second)->m_indexNumber == number)
+			{
+				return dynamic_cast<CTerrainTri*>(iter2->second);
+			}
+		}
+		iter2++;
+	}
+
 	return nullptr;
 }

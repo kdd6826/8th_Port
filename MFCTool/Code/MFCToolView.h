@@ -86,6 +86,9 @@ public:
 
 	CTerrainTri* PickUp_Tri(void);
 
+	void Sort_TriNumber();
+	CTerrainTri* Get_TriOfNumber(int number);
+
 
 	D3DXVECTOR3 vertex[128];
 
@@ -99,7 +102,7 @@ public:
 	map<const _tchar*, Engine::CLayer*>			m_mapLayer;
 	map<const _tchar*, Engine::CComponent*>			m_mapComponent[Engine::ID_END];
 	bool wireFrame = false;
-
+	
 };
 
 #ifndef _DEBUG  // MFCToolView.cpp의 디버그 버전

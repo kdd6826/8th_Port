@@ -25,7 +25,9 @@ public:
 	HRESULT			Ready_Object(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
+	// 삼각형 위치 다시 셋팅해주는 함수 SphereMesh에서 이거 불러오는거라 따로 불러올필요X
 	void Set_InitBuffer();
+	// 삼각형 삭제하는 함수
 	void DeleteWithSphere();
 	//void Set_VtxPos();
 private:
@@ -43,6 +45,7 @@ public:
 	Engine::CCell* m_Cell;
 	list<CSphereMesh*> list_SphereMesh; // 자기를 구성하는 SphereMesh 3개 / 꼭짓점
 	bool m_Dead = false;
+	int m_indexNumber = -1;
 public:
 	static CTerrainTri* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	//list<Engine::VTXCOL*> list_pVtx;
