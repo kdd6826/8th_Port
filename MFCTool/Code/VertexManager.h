@@ -52,13 +52,15 @@ public:
 	void Delete_LockObject();
 
 	void Erase_list_TotalSphere(CSphereMesh * sphere);
-
+	
+	bool isNaviMesh = false;
 
 
 private:
 	bool mouseLClick = false;
 	bool mouseRClick = false;
 	bool KeyC = false;
+	
 
 	//CSphereMesh 전부 모아논 리스트
 	list<CSphereMesh*> list_TotalSphere;

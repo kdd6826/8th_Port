@@ -132,16 +132,13 @@ void CTerrainTri::Render_Object(void)
 }
 void CTerrainTri::Set_InitBuffer()
 {
-	int sphereCount = 0;
 	Engine::VTXCOL* pVertex = NULL;
 	m_pBufferCom->m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
 
-	for (auto& sphere : list_SphereMesh)
+	for (int i = 0; i < 3; i++)
 	{
-		pVertex[sphereCount].vPos = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS];
-		sphereCount++;
+		*m_Cell->Get_pPoint((Engine::CCell::POINT)i) = pVertex[i].vPos = list_SphereMesh[i]->m_pTransformCom->m_vInfo[Engine::INFO_POS];
 	}
-
 
 	m_pBufferCom->m_pVB->Unlock();
 }

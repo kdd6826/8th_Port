@@ -43,7 +43,7 @@ public:
 	Engine::CRenderer* m_pRendererCom = nullptr;
 	Engine::CCalculator* m_pCalculatorCom = nullptr;
 	Engine::CCell* m_Cell;
-	list<CSphereMesh*> list_SphereMesh; // 자기를 구성하는 SphereMesh 3개 / 꼭짓점
+	vector <CSphereMesh*> list_SphereMesh; // 자기를 구성하는 SphereMesh 3개 / 꼭짓점
 	bool m_Dead = false;
 	int m_indexNumber = -1;
 public:

@@ -42,6 +42,7 @@ public:
 	void treeControl(int triCount);
 
 	CTreeCtrl treeNavi;
+	HTREEITEM selectItem;
 	afx_msg void OnBnClickedButton10();
 	afx_msg void OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult);
 	void CheckChildItems(HTREEITEM _hItem);
@@ -77,4 +78,6 @@ public:
 	afx_msg void OnDeltaposSpin6(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin8(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnBnClickedRadio3();
+	afx_msg void OnBnClickedRadio5();
 };

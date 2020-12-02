@@ -7,6 +7,8 @@
 #include "afxdialogex.h"
 #include "MFCToolView.h"
 #include "VertexManager.h"
+#include "TerrainTri.h"
+#include "SphereMesh.h"
 // MeshPage 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(MeshPage, CDialogEx)
@@ -66,6 +68,8 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN6, &MeshPage::OnDeltaposSpin6)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN8, &MeshPage::OnDeltaposSpin8)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN7, &MeshPage::OnDeltaposSpin7)
+	ON_BN_CLICKED(IDC_RADIO5, &MeshPage::OnBnClickedRadio5)
+	ON_BN_CLICKED(IDC_RADIO3, &MeshPage::OnBnClickedRadio3)
 END_MESSAGE_MAP()
 
 
@@ -169,9 +173,9 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 	GetCursorPos(&point);
 	::ScreenToClient(treeNavi.m_hWnd, &point);
 
-	HTREEITEM hItem = treeNavi.HitTest(point, &nFlags);
+	selectItem = treeNavi.HitTest(point, &nFlags);
 	//해당 셀에 담긴 Text
-	CString naviIndex = treeNavi.GetItemText(hItem);
+	CString naviIndex = treeNavi.GetItemText(selectItem);
 
 	//Text를 int로 바꾸기
 	int indexNum;
@@ -179,27 +183,46 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 
 	
 
-	if (treeNavi.GetParentItem(hItem) == 0)
+
+	if (treeNavi.GetParentItem(selectItem) == 0)
 	{
 		//삼각형 셀이 선택
 		//VertexManager::GetInstance()->vertex[indexNum];
+		
 	}
-	else if (treeNavi.GetParentItem(hItem) != 0)
+	else if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(hItem));
+		
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+		
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
 		int triIndex;
 		triIndex = _ttoi(parentIndex);
+		
 
-		//CMFCToolView::GetInstance()->Get_TriOfNumber(0)
+		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
 		
 		//float m_fTransformPosX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
 		//float m_fTransformPosY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
 		//float m_fTransformPosZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
 		
 		CString cVertexX, cVertexY, cVertexZ;
-		//cVertexX.Format(_T("%f"), m_fTransformPosX);
-		//cVertexY.Format(_T("%f"), m_fTransformPosY);
-		//cVertexZ.Format(_T("%f"), m_fTransformPosZ);
+
+		cVertexX.Format(_T("%f"), m_fTransformPosX);
+		cVertexY.Format(_T("%f"), m_fTransformPosY);
+		cVertexZ.Format(_T("%f"), m_fTransformPosZ);
 
 		SetDlgItemText(IDC_EDIT14, cVertexX);
 		SetDlgItemText(IDC_EDIT15, cVertexY);
@@ -211,15 +234,15 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 
 	
 
-	if (hItem != NULL && (nFlags & TVHT_ONITEMSTATEICON) != 0)
+	if (selectItem != NULL && (nFlags & TVHT_ONITEMSTATEICON) != 0)
 	{
-		if (treeNavi.GetCheck(hItem))
+		if (treeNavi.GetCheck(selectItem))
 		{
-			UnCheckChildItems(hItem);
+			UnCheckChildItems(selectItem);
 		}
 		else
 		{
-			CheckChildItems(hItem);
+			CheckChildItems(selectItem);
 		}
 	}
 
@@ -229,7 +252,7 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 	
 	TVITEMW item;
 	item.mask = TVIF_TEXT;
-	item.hItem = hItem;
+	item.hItem = selectItem;
 	item.pszText = text;
 	item.cchTextMax = 16;
 	treeNavi.GetItem(&item);
@@ -284,8 +307,6 @@ void MeshPage::OnEnChangeEdit14()
 	//CWnd *p = GetDlgItem(IDC_EDIT14);
 	//SetDlgItemText(IDC_EDIT14, L"하이");
 
-
-	transformPosX;
 	
 	//VertexManager::GetInstance()->vertex[0][0].x;
 }
@@ -295,24 +316,60 @@ void MeshPage::OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-	
+	//////////////////////////
 
-	if (pNMUpDown->iDelta < 0)
+
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformPosX+=0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
-	}
-	else
-	{
-		m_fTransformPosX -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
-	}
-	*pResult = 0;
-	
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT14, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
 
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+
+
+		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+
+		////////////////////
+
+		CString cVertex;
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformPosX += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+		}
+		else
+		{
+			m_fTransformPosX -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+		}
+		*pResult = 0;
+		sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT14, cVertex);
+	}
 }
 
 
@@ -320,23 +377,62 @@ void MeshPage::OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-	
+		//////////////////////////
 
-	if (pNMUpDown->iDelta < 0)
+
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformPosY+=0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
-	}
-	else
-	{
-		m_fTransformPosY -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
+
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
 
 
-	SetDlgItemText(IDC_EDIT15, cVertex);
+		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformPosY += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+		}
+		else
+		{
+			m_fTransformPosY -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+		}
+		*pResult = 0;
+
+		sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT15, cVertex);
+	}
 }
 
 
@@ -344,22 +440,59 @@ void MeshPage::OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-
-
-	if (pNMUpDown->iDelta < 0)
+	///////////////
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformPosZ += 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
-	}
-	else
-	{
-		m_fTransformPosZ -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT16, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+
+
+		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformPosZ += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+		}
+		else
+		{
+			m_fTransformPosZ -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+		}
+		*pResult = 0;
+		sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT16, cVertex);
+	}
 }
 
 
@@ -367,22 +500,56 @@ void MeshPage::OnDeltaposSpin9(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-
-
-	if (pNMUpDown->iDelta < 0)
+	///////////////
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformRotX += 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
-	}
-	else
-	{
-		m_fTransformRotX -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT10, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+
+
+
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformRotX += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+		}
+		else
+		{
+			m_fTransformRotX -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+		}
+		*pResult = 0;
+		sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT10, cVertex);
+	}
 }
 
 
@@ -390,22 +557,54 @@ void MeshPage::OnDeltaposSpin11(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-
-
-	if (pNMUpDown->iDelta < 0)
+	///////////////
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformRotY += 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
-	}
-	else
-	{
-		m_fTransformRotY -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT12, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformRotY += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+		}
+		else
+		{
+			m_fTransformRotY -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+		}
+		*pResult = 0;
+		sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT12, cVertex);
+	}
 }
 
 
@@ -413,22 +612,54 @@ void MeshPage::OnDeltaposSpin10(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-
-
-	if (pNMUpDown->iDelta < 0)
+	///////////////
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformRotZ += 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
-	}
-	else
-	{
-		m_fTransformRotZ -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT13, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformRotZ += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+		}
+		else
+		{
+			m_fTransformRotZ -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+		}
+		*pResult = 0;
+		sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT13, cVertex);
+	}
 }
 
 
@@ -499,3 +730,16 @@ void MeshPage::OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult)
 
 	SetDlgItemText(IDC_EDIT8, cVertex);
 }
+void MeshPage::OnBnClickedRadio3()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	VertexManager::GetInstance()->isNaviMesh = false;
+}
+
+void MeshPage::OnBnClickedRadio5()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	VertexManager::GetInstance()->isNaviMesh = true;
+}
+
+

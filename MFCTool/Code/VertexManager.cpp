@@ -54,7 +54,7 @@ void VertexManager::Key_Input(float deltaTime)
 	
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
-		if (!mouseLClick) {
+		if (!mouseLClick&&isNaviMesh) {
 			MouseLClick_NaviMesh();
 		}
 	}
@@ -333,6 +333,9 @@ void VertexManager::MouseLClick_NaviMesh()
 			list_Sphere.pop_front();
 		}
 		CTerrainTri* pTerrainTri = CTerrainTri::Create(m_pGraphicDev, vtxPos[0], vtxPos[1], vtxPos[2]);
+
+		
+
 		CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"TerrainTri", pTerrainTri);
 		
 		for (int i = 0; i < 3; i++)
@@ -357,7 +360,21 @@ void VertexManager::MouseLClick_NaviMesh()
 			return;
 		}
 		CMFCToolView::GetInstance()->Sort_TriNumber();
-		CMFCToolView::GetInstance()->Get_TriOfNumber(1);
+
+		MeshPage* pMeshPage = MeshPage::GetInstance();
+
+		if (pMeshPage != nullptr)
+		{
+			pMeshPage->treeControl(pTerrainTri->m_indexNumber);
+			//pMeshPage->tri[triCount] = pMeshPage->treeNavi.InsertItem(L"1", 0, 0, TVI_ROOT, TVI_LAST);
+			//pMeshPage->vertex[triCount][0] = pMeshPage->treeNavi.InsertItem(L"a", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+			//pMeshPage->vertex[triCount][1] = pMeshPage->treeNavi.InsertItem(L"b", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+			//pMeshPage->vertex[triCount][2] = pMeshPage->treeNavi.InsertItem(L"c", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+		}
+
+
+	
+
 		//////////////////////////////////////////////
 	}
 }
