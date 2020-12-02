@@ -89,8 +89,8 @@ void CTerrainTri::Free(void)
 HRESULT CTerrainTri::Ready_Object(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
 {
 	FAILED_CHECK_RETURN(Add_Component(vtxPos1, vtxPos2, vtxPos3), E_FAIL);
-
-	m_Cell = Engine::CCell::Create(m_pGraphicDev, &vtxPos1, &vtxPos2, &vtxPos3);
+	//TODO 수정해야함
+	m_Cell = Engine::CCell::Create(m_pGraphicDev, NULL,&vtxPos1, &vtxPos2, &vtxPos3);
 
 	return S_OK;
 }
