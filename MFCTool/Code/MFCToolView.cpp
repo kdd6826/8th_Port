@@ -633,14 +633,14 @@ void CMFCToolView::CreateTerrain(int _countX, int _countZ, int _interval, int _d
 
 	CString createNum;
 	createNum.Format(_T("%d"), CreateTerrainCount);
-	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+	Engine::Ready_Buffer(m_pGraphicDev,
 		Engine::RESOURCE_STATIC,
 		createNum,
 		Engine::BUFFER_TERRAINTEX,
 		_countX,
 		_countZ,
-		1),
-		);
+		1);
+		
 
 	Engine::CGameObject* pGameObject = nullptr;
 

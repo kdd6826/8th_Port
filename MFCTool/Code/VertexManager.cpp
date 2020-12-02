@@ -307,7 +307,7 @@ void VertexManager::MouseLClick_NaviMesh()
 			Engine::CGameObject* pGameObject = CSphereMesh::Create(m_pGraphicDev);
 			dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = vPickPos;
 			CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", pGameObject);
-			dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
+			//dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
 			dynamic_cast<CSphereMesh*>(pGameObject)->m_Click = true;
 
 			list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));

@@ -190,6 +190,7 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 		int triIndex;
 		triIndex = _ttoi(parentIndex);
 
+		//CMFCToolView::GetInstance()->Get_TriOfNumber(0)
 		
 		//float m_fTransformPosX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
 		//float m_fTransformPosY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
