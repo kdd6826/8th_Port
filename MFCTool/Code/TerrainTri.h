@@ -26,6 +26,7 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 	void Set_InitBuffer();
+	void DeleteWithSphere();
 	//void Set_VtxPos();
 private:
 	HRESULT		Add_Component(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
@@ -41,6 +42,7 @@ public:
 	Engine::CCalculator* m_pCalculatorCom = nullptr;
 	Engine::CCell* m_Cell;
 	list<CSphereMesh*> list_SphereMesh; // 자기를 구성하는 SphereMesh 3개 / 꼭짓점
+	bool m_Dead = false;
 public:
 	static CTerrainTri* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	//list<Engine::VTXCOL*> list_pVtx;

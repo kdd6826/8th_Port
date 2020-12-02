@@ -4,6 +4,7 @@
 #include "Cell.h"
 #include "SphereMesh.h"
 #include "MFCToolView.h"
+#include "VertexManager.h"
 
 CTerrainTri::CTerrainTri(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -107,6 +108,9 @@ HRESULT CTerrainTri::Ready_Object(void)
 }
 _int CTerrainTri::Update_Object(const _float& fTimeDelta)
 {
+	if (m_Dead)
+		return 1;
+
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	if (!CMFCToolView::GetInstance()->wireFrame) {
@@ -147,3 +151,45 @@ void CTerrainTri::Set_InitBuffer()
 //		vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
 //	}
 //}
+
+void CTerrainTri::DeleteWithSphere()
+{
+	//CTerrainTri 에서 자기를 연결해주는 SphereMesh 를 3개 가지고 있고,
+	//SphereMesh 에서도 자기가 만든 CTerrainTri를 알고있기때문에 삭제해주는 작업
+	//반시계 방향으로 삼각형을 잘못만들면 삼각형을 일단 만들어주고 바로 삭제해주는 식으로 하고싶음.
+	for (auto& sphere : list_SphereMesh)
+	{
+		for (auto& iter = sphere->list_pTerrainTri.begin(); iter != sphere->list_pTerrainTri.end();)
+		{
+			if (*iter == this) {
+				iter = sphere->list_pTerrainTri.erase(iter);
+			}
+			else {
+				iter++;
+			}
+		}
+		for (auto& iter = sphere->list_pPoint.begin(); iter != sphere->list_pPoint.end();)
+		{
+			bool check = false;
+			for (int i = 0; i < 3; i++)
+			{
+				if (*iter == m_Cell->Get_pPoint((Engine::CCell::POINT)i)) {
+					check = true;
+					/*iter = */sphere->list_pPoint.erase(iter);
+					break;
+				}
+			}
+			if (check)
+				break;
+			else
+				iter++;
+		}
+
+		if (sphere->list_pTerrainTri.size() == 0) {
+			VertexManager::GetInstance()->Erase_list_TotalSphere(sphere);
+			sphere->m_Dead = true;
+		}
+	}
+
+	m_Dead = true;
+}

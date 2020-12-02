@@ -38,7 +38,7 @@ public:
 	void MouseLClick_NaviMesh();
 	//락온 해제시 그전꺼 색상 바꿔주는등 Or 새로운 락온 객체 설정
 	void LockOnObject(VM_Obj name, Engine::CGameObject * obj);
-
+	
 private:
 	
 
@@ -54,6 +54,11 @@ public:
 
 	//CCW 알고리즘으로 시계방향 체크
 	int CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3);
+
+	void Delete_LockObject();
+
+	void Erase_list_TotalSphere(CSphereMesh * sphere);
+
 
 
 private:

@@ -28,6 +28,7 @@ public:
 	virtual void Render_Object(void) override;
 	void Set_VtxPos();
 	void Set_InitPoint();
+	void DeleteWithTerrainTri();
 private:
 	HRESULT		Add_Component(void);
 	//void		SetUp_OnTerrain(void);

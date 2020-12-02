@@ -150,6 +150,14 @@ void CSphereMesh::Set_InitPoint()
 		tri->Set_InitBuffer();
 	}
 }
+
+void CSphereMesh::DeleteWithTerrainTri() {
+	list<CTerrainTri*> list_pTerrainTri2 = list_pTerrainTri;
+	for (auto& tri : list_pTerrainTri2)
+	{
+		tri->DeleteWithSphere();
+	}
+}
 //void CSphereMesh::SetUp_OnTerrain(void)
 //{
 //	_vec3	vPosition;
@@ -162,3 +170,4 @@ void CSphereMesh::Set_InitPoint()
 //
 //	m_pTransformCom->Move_Pos(vPosition.x, fHeight + 1.f, vPosition.z);
 //}
+

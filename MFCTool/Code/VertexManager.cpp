@@ -95,6 +95,7 @@ void VertexManager::Key_Input(float deltaTime)
 
 	if (Engine::Get_DIKeyState(DIK_C) & 0x80)
 	{
+		Delete_LockObject();
 		/*if (!KeyC) {
 			KeyC = true;
 
@@ -441,7 +442,7 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 	if(obj != nullptr)
 		lockOnObj = obj;
 }
-}
+
 
 int VertexManager::CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3)
 {
@@ -455,4 +456,43 @@ int VertexManager::CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3)
 		return -1;
 	else //ÀÏÁ÷¼±
 		return 0;
+}
+
+void VertexManager::Delete_LockObject() {
+	if (lockOnObj == nullptr) {
+		LockOnObject(VM_Obj::NONE, nullptr);
+		return;
+	}
+
+	switch (lockOnObjName)
+	{
+	case VM_Obj::SPHERE: {
+		CSphereMesh* _sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
+		_sphere->DeleteWithTerrainTri();
+		break;
+	}
+	case VM_Obj::TRI: {
+		CTerrainTri* _tri = dynamic_cast<CTerrainTri*>(lockOnObj);
+		_tri->DeleteWithSphere();
+		break;
+	}
+	default:
+		break;
+	}
+
+
+
+	LockOnObject(VM_Obj::NONE, nullptr);
+}
+
+void VertexManager::Erase_list_TotalSphere(CSphereMesh* sphere)
+{
+	for (auto& iter = list_TotalSphere.begin(); iter != list_TotalSphere.end();)
+	{
+		if (*iter == sphere) {
+			list_TotalSphere.erase(iter);
+			break;
+		}
+		iter++;
+	}
 }
