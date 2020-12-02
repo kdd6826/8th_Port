@@ -37,6 +37,8 @@ void VertexManager::Key_Input(float deltaTime)
 	if (!TerrainHaveCheck())
 		return;
 
+	
+	
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
 		if (!mouseLClick) {
@@ -142,6 +144,7 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 
 	GetCursorPos(&ptMouse);
 	::ScreenToClient(hWnd, &ptMouse);
+
 
 	Engine::_vec3	vMousePos;
 
@@ -267,6 +270,11 @@ void VertexManager::MouseLClick_NaviMesh()
 {
 	mouseLClick = true;
 
+	POINT		ptMouse{ 0 };
+	GetCursorPos(&ptMouse);
+	::ScreenToClient(g_hWnd, &ptMouse);
+	if (ptMouse.x < 0.f)
+		return;
 
 	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom);
@@ -305,6 +313,15 @@ void VertexManager::MouseLClick_NaviMesh()
 				vertex[triCount][lineCount] = vertex[triCount][lineCount - 3];
 				//
 				MeshPage* pMeshPage = MeshPage::GetInstance();;
+
+				if (CCW2(vertex[triCount][0], vertex[triCount][1], vertex[triCount][2]) == 1)
+				{
+
+					vertex[triCount][0] = Engine::_vec3{ 0.f,0.f,0.f };
+					vertex[triCount][1] = Engine::_vec3{ 0.f,0.f,0.f };
+					vertex[triCount][2] = Engine::_vec3{ 0.f,0.f,0.f };
+					return;
+				}
 				
 				if (pMeshPage != nullptr)
 				{
@@ -316,10 +333,13 @@ void VertexManager::MouseLClick_NaviMesh()
 				}
 				//
 
+				
+
 				lineCount++;
 				triCount++;
 				lineCount = 0;
-
+				
+			
 			}
 			
 			//////////////////////////////////////////////
@@ -347,4 +367,18 @@ void VertexManager::MouseLClick_NaviMesh()
 			TempSphereMesh.pop_front();
 		}
 	}
+}
+
+int VertexManager::CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3)
+{
+	float temp1 = (vec1.x * vec2.z) + (vec2.x * vec3.z) + (vec3.x * vec1.z);
+	float temp2 = temp1 - (vec1.z * vec2.x) - (vec2.z*vec3.x) - (vec3.z*vec1.x);
+
+
+	if (temp2>0)//반시계
+		return 1;
+	else if (temp2<0)//시계
+		return -1;
+	else //일직선
+		return 0;
 }

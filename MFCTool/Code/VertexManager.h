@@ -40,6 +40,10 @@ public:
 	int triCount = 0;
 	int lineCount = 0;
 
+	//CCW 알고리즘으로 시계방향 체크
+	int CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3);
+
+
 private:
 	bool mouseLClick = false;
 	bool mouseRClick = false;
