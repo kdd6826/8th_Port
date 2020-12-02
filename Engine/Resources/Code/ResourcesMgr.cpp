@@ -116,7 +116,6 @@ HRESULT Engine::CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev,
 		break;
 
 	case TYPE_NAVI:
-		pResources = CNaviMesh::Create(pGraphicDev);
 		break;
 	}
 
