@@ -26,8 +26,9 @@ public:
 	void Release_pPoint(_vec3* Point);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-	void Set_VtxPos();
+	// Sphere 위치를 바꾸고나서 이 Sphere가 참조하고 있는 모든 삼각형 위치도 같이 변경
 	void Set_InitPoint();
+	// Sphere 삭제하는 함수
 	void DeleteWithTerrainTri();
 private:
 	HRESULT		Add_Component(void);

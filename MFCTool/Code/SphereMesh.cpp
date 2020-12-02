@@ -137,13 +137,7 @@ void CSphereMesh::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
-void CSphereMesh::Set_VtxPos()
-{
-	//for (auto& vtx : list_pVtx)
-	//{
-	//	vtx->vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
-	//}
-}
+
 void CSphereMesh::Set_InitPoint()
 {
 	for (auto& tri : list_pTerrainTri) {
