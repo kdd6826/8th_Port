@@ -47,14 +47,14 @@ void VertexManager::Update(float deltaTime)
 
 void VertexManager::Key_Input(float deltaTime)
 {
-	if (!TerrainHaveCheck())
+	if (!TerrainHaveCheck()||!isNaviMesh)
 		return;
 
 	
 	
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
-		if (!mouseLClick&&isNaviMesh) {
+		if (!mouseLClick) {
 			MouseLClick_NaviMesh();
 		}
 	}
@@ -76,9 +76,6 @@ void VertexManager::Key_Input(float deltaTime)
 				LockOnObject(VM_Obj::SPHERE, pickUpSphere);
 
 				Set_SphereColor(pickUpSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
-
-				pickUpSphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.1f; //나중에삭제 테스트용
-				pickUpSphere->Set_InitPoint(); //포지션값 이동후 이거 반드시 불러올것
 			}
 			else if (pickUpTri != nullptr) {
 				//삼각형락온

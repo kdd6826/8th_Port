@@ -8,7 +8,7 @@
 #include"TerrainPage.h"
 #include "MeshPage.h"
 #include "PKH.h"
-
+#include "VertexManager.h"
 USING(Client)
 // CForm
 
@@ -76,6 +76,7 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		tab1->ShowWindow(SW_SHOW);
 		tab2->ShowWindow(SW_HIDE);
 		tab3->ShowWindow(SW_HIDE);
+		VertexManager::GetInstance()->isNaviMesh = false;
 			break;
 	case 1:
 		tab1->ShowWindow(SW_HIDE);
@@ -86,7 +87,7 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		tab1->ShowWindow(SW_HIDE);
 		tab2->ShowWindow(SW_HIDE);
 		tab3->ShowWindow(SW_SHOW);
-
+		VertexManager::GetInstance()->isNaviMesh = false;
 			break;
 	default:
 		break;
