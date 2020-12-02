@@ -91,6 +91,7 @@ BOOL MeshPage::OnInitDialog()
 	SetDlgItemText(IDC_EDIT16, cPosVertexZ);
 	//
 	//Scale X,Y,Z
+	
 	CString cScalVertexX, cScalVertexY, cScalVertexZ;
 	cScalVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
 	cScalVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
@@ -213,20 +214,33 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
 		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
 		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
-		
+
+		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
+		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
+		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
 		//float m_fTransformPosX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
 		//float m_fTransformPosY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
 		//float m_fTransformPosZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
 		
 		CString cVertexX, cVertexY, cVertexZ;
 
-		cVertexX.Format(_T("%f"), m_fTransformPosX);
-		cVertexY.Format(_T("%f"), m_fTransformPosY);
-		cVertexZ.Format(_T("%f"), m_fTransformPosZ);
+		cVertexX.Format(_T("%9.1f\n"), m_fTransformPosX);
+		cVertexY.Format(_T("%9.1f\n"), m_fTransformPosY);
+		cVertexZ.Format(_T("%9.1f\n"), m_fTransformPosZ);
 
 		SetDlgItemText(IDC_EDIT14, cVertexX);
 		SetDlgItemText(IDC_EDIT15, cVertexY);
 		SetDlgItemText(IDC_EDIT16, cVertexZ);
+
+		cVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
+		cVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
+		cVertexZ.Format(_T("%9.1f\n"), m_fTransformScalZ);
+
+		SetDlgItemText(IDC_EDIT5, cVertexX);
+		SetDlgItemText(IDC_EDIT7, cVertexY);
+		SetDlgItemText(IDC_EDIT8, cVertexZ);
+
+
 	}
 	
 	
@@ -667,22 +681,56 @@ void MeshPage::OnDeltaposSpin6(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-
-
-	if (pNMUpDown->iDelta < 0)
+		///////////////
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformScalX += 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
-	}
-	else
-	{
-		m_fTransformScalX -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT5, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
+		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
+		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformScalX += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+		}
+		else
+		{
+			m_fTransformScalX -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+		}
+		*pResult = 0;
+		sphere[indexNum]->m_pTransformCom->m_vScale.x= m_fTransformScalX;
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT5, cVertex);
+	}
 }
 
 
@@ -690,22 +738,57 @@ void MeshPage::OnDeltaposSpin8(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-
-
-	if (pNMUpDown->iDelta < 0)
+		///////////////
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformScalY += 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
-	}
-	else
-	{
-		m_fTransformScalY -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT7, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
+		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
+		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformScalY += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+		}
+		else
+		{
+			m_fTransformScalY -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+		}
+		*pResult = 0;
+
+		sphere[indexNum]->m_pTransformCom->m_vScale.y = m_fTransformScalY;
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT7, cVertex);
+	}
 }
 
 
@@ -713,22 +796,58 @@ void MeshPage::OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString cVertex;
-
-
-	if (pNMUpDown->iDelta < 0)
+		///////////////
+	if (treeNavi.GetParentItem(selectItem) != 0)
 	{
-		m_fTransformScalZ += 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
-	}
-	else
-	{
-		m_fTransformScalZ -= 0.1f;
-		cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
-	}
-	*pResult = 0;
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
 
-	SetDlgItemText(IDC_EDIT8, cVertex);
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+		int iParentIndex = _ttoi(parentIndex);
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		CSphereMesh* sphere[3];
+		int Temp = 0;
+		for (auto& _sphere : tri->list_SphereMesh)
+		{
+			sphere[Temp] = _sphere;
+			Temp++;
+		}
+
+		int triIndex;
+		triIndex = _ttoi(parentIndex);
+
+		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
+		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
+		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
+
+		////////////////////
+		CString cVertex;
+
+
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformScalZ += 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+		}
+		else
+		{
+			m_fTransformScalZ -= 0.1f;
+			cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+		}
+		*pResult = 0;
+		sphere[indexNum]->m_pTransformCom->m_vScale.z = m_fTransformScalZ;
+		sphere[indexNum]->Set_InitPoint();
+		SetDlgItemText(IDC_EDIT8, cVertex);
+	}
 }
 void MeshPage::OnBnClickedRadio3()
 {
