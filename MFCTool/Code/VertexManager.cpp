@@ -440,7 +440,7 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 	lockOnObjName = name;
 	if(obj != nullptr)
 		lockOnObj = obj;
-}
+
 }
 
 int VertexManager::CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3)
