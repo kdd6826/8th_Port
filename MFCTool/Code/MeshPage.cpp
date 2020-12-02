@@ -124,8 +124,9 @@ void MeshPage::OnBnClickedButton10()
 
 void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// TODO: 여기 버텍스 넣어야함
 
+	
 	//HTREEITEM hItem = treeNavi.GetSelectedItem();
 	//CStringW a =	treeNavi.GetItemText(hItem);
 	
@@ -143,10 +144,12 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 	int indexNum;
 	indexNum = _ttoi(naviIndex);
 
+	
+
 	if (treeNavi.GetParentItem(hItem) == 0)
 	{
 		//삼각형 셀이 선택
-		VertexManager::GetInstance()->vertex[indexNum];
+		//VertexManager::GetInstance()->vertex[indexNum];
 	}
 	else if (treeNavi.GetParentItem(hItem) != 0)
 	{
@@ -155,14 +158,14 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 		triIndex = _ttoi(parentIndex);
 
 		
-		float vertexX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
-		float vertexY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
-		float vertexZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
+		//float vertexX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
+		//float vertexY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
+		//float vertexZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
 		
 		CString cVertexX, cVertexY, cVertexZ;
-		cVertexX.Format(_T("%f"), vertexX);
-		cVertexY.Format(_T("%f"), vertexY);
-		cVertexZ.Format(_T("%f"), vertexZ);
+		//cVertexX.Format(_T("%f"), vertexX);
+		//cVertexY.Format(_T("%f"), vertexY);
+		//cVertexZ.Format(_T("%f"), vertexZ);
 
 		SetDlgItemText(IDC_EDIT14, cVertexX);
 		SetDlgItemText(IDC_EDIT15, cVertexZ);

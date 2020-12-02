@@ -123,8 +123,9 @@ void CTerrainTri::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
+	
 	m_pBufferCom->Render_Buffer();
+	m_Cell->Render_Cell();
 	//m_pTextureCom->Render_Texture(0);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

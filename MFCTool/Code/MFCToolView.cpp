@@ -342,11 +342,7 @@ void CMFCToolView::Update(float deltaTime)
 		obj.second->Render_Object();
 		Engine::Safe_Release(iter);
 	}*/
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-	{
 	
-	}
-	VertexManager::GetInstance()->DrawLine();
 	Engine::Render_End();
 
 	RenderLine();

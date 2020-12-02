@@ -22,7 +22,7 @@ private:
 public:
 	void Update(float deltaTime);
 	void Key_Input(float deltaTime);
-	void DrawLine();
+	
 	void DestroyValue();
 
 	//구체를 클릭했을때, 실패하면 nullptr 성공하면 해당 SphereMesh 포인터
@@ -46,12 +46,6 @@ public:
 	LPDIRECT3DDEVICE9			m_pGraphicDev = nullptr;
 
 public:
-	D3DXVECTOR3 vertex[128][4];
-
-	LPD3DXLINE line[128];
-	int triCount = 0;
-	int lineCount = 0;
-
 	//CCW 알고리즘으로 시계방향 체크
 	int CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3);
 

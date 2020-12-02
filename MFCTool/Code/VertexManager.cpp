@@ -128,44 +128,7 @@ void VertexManager::Key_Input(float deltaTime)
 
 }
 
-void VertexManager::DrawLine()
-{
 
-
-	
-
-	for (int i = 0; i < triCount+1; i++)
-	{
-		//D3DXCreateLine(m_pGraphicDev, &line[i]);
-		//line[i]->SetWidth(5.f);
-		//line[i]->SetAntialias(FALSE);
-	}
-	// 투영 -> 뷰 스페이스
-	Engine::_matrix	out, view, proj, world;
-
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
-	m_pGraphicDev->GetTransform(D3DTS_WORLD, &world);
-
-	D3DXMatrixIdentity(&out);
-	out = view * proj;
-
-
-	//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-	//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-	for (int i = 0; i < triCount + 1; ++i)
-	{
-
-		D3DXCreateLine(m_pGraphicDev, &line[i]);
-		line[i]->SetWidth(5.f);
-		line[i]->SetAntialias(FALSE);
-		line[i]->Begin();
-		line[i]->DrawTransform(vertex[i],4, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-		line[i]->End();
-		line[i]->Release();
-	}
-
-}
 CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
 {
 	POINT		ptMouse{ 0 };
@@ -352,43 +315,21 @@ void VertexManager::MouseLClick_NaviMesh()
 			//pGameObject->AddRef();
 
 			/////////////////////////////////////////
-			//삼각형 라인 생성
-			lineCount++;
-			vertex[triCount][lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
-			//삼각형 마지막
-			if (lineCount % 3 == 0)
-			{
-				vertex[triCount][lineCount] = vertex[triCount][lineCount - 3];
-				//
-				MeshPage* pMeshPage = MeshPage::GetInstance();;
+			//CCW
 
-				if (CCW2(vertex[triCount][0], vertex[triCount][1], vertex[triCount][2]) == 1)
-				{
+			//	if (CCW2(vertex[triCount][0], vertex[triCount][1], vertex[triCount][2]) == 1)
+			//	{
 
-					vertex[triCount][0] = Engine::_vec3{ 0.f,0.f,0.f };
-					vertex[triCount][1] = Engine::_vec3{ 0.f,0.f,0.f };
-					vertex[triCount][2] = Engine::_vec3{ 0.f,0.f,0.f };
-					return;
-				}
-				
-				if (pMeshPage != nullptr)
-				{
-					pMeshPage->treeControl(triCount);
-					//pMeshPage->tri[triCount] = pMeshPage->treeNavi.InsertItem(L"1", 0, 0, TVI_ROOT, TVI_LAST);
-					//pMeshPage->vertex[triCount][0] = pMeshPage->treeNavi.InsertItem(L"a", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
-					//pMeshPage->vertex[triCount][1] = pMeshPage->treeNavi.InsertItem(L"b", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
-					//pMeshPage->vertex[triCount][2] = pMeshPage->treeNavi.InsertItem(L"c", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
-				}
-				//
+			//		vertex[triCount][0] = Engine::_vec3{ 0.f,0.f,0.f };
+			//		vertex[triCount][1] = Engine::_vec3{ 0.f,0.f,0.f };
+			//		vertex[triCount][2] = Engine::_vec3{ 0.f,0.f,0.f };
+			//		vertex[triCount][3] = Engine::_vec3{ 0.f,0.f,0.f };
+			//		lineCount = 0;
+			//		return;
+			//	}
+			//	
 
-				
 
-				lineCount++;
-				triCount++;
-				lineCount = 0;
-				
-			
-			}
 			
 			//////////////////////////////////////////////
 		}
