@@ -76,6 +76,12 @@
     <Filter Include="02. GameObject\01. Stage\04. Sword">
       <UniqueIdentifier>{f1cd01c4-b0c1-4441-8e88-75857e621480}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\05. Tree">
+      <UniqueIdentifier>{2f3094b5-b57d-4610-bfbf-d92554bb16ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\06. Effect">
+      <UniqueIdentifier>{1026821e-213a-454c-a6a1-edd29cc14ee9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -144,6 +150,12 @@
     <ClInclude Include="..\Code\Sword.h">
       <Filter>02. GameObject\01. Stage\04. Sword</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Tree.h">
+      <Filter>02. GameObject\01. Stage\05. Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Effect.h">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -193,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Sword.cpp">
       <Filter>02. GameObject\01. Stage\04. Sword</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tree.cpp">
+      <Filter>02. GameObject\01. Stage\05. Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

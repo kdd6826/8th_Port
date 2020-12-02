@@ -76,7 +76,7 @@ void CMonster::Free(void)
 HRESULT Client::CMonster::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Pos(_vec3(rand() % 100 + 1.f, 0.f, rand() % 100 + 1.f));
+	m_pTransformCom->Set_Pos(&_vec3(rand() % 100 + 1.f, 0.f, rand() % 100 + 1.f));
 
 	return S_OK;
 }

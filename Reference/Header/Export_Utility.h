@@ -21,7 +21,7 @@ inline CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjT
 inline HRESULT Create_Management(CManagement** ppManagement);
 inline HRESULT	SetUp_Scene(CScene* pScene);
 inline _int	Update_Scene(const _float& fTimeDelta);
-inline void	Render_Scene(void);
+inline void	Render_Scene(LPDIRECT3DDEVICE9 & pGraphicDev);
 
 // protomgr
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pInstance);

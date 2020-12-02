@@ -19,7 +19,7 @@ public:
 public:
 	HRESULT	SetUp_Scene(CScene* pScene);
 	_int	Update_Scene(const _float& fTimeDelta);
-	void	Render_Scene(void);
+	void	Render_Scene(LPDIRECT3DDEVICE9 & pGraphicDev);
 
 private:
 	CScene*			m_pScene;

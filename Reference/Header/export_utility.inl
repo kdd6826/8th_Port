@@ -20,9 +20,9 @@ _int	Update_Scene(const _float& fTimeDelta)
 {
 	return CManagement::GetInstance()->Update_Scene(fTimeDelta);
 }
-void	Render_Scene(void)
+void	Render_Scene(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	return CManagement::GetInstance()->Render_Scene();
+	return CManagement::GetInstance()->Render_Scene(pGraphicDev);
 }
 
 // protomgr

@@ -33,9 +33,9 @@ Engine::_int Engine::CManagement::Update_Scene(const _float& fTimeDelta)
 	return 0;
 }
 
-void Engine::CManagement::Render_Scene(void)
+void Engine::CManagement::Render_Scene(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	Get_Renderer()->Render_GameObject();
+	Get_Renderer()->Render_GameObject(pGraphicDev);
 
 	if (nullptr == m_pScene)
 		return;

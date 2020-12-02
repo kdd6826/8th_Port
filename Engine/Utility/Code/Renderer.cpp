@@ -22,17 +22,14 @@ void Engine::CRenderer::Add_RenderGroup(RENDERID eGroup, CGameObject* pGameObjec
 	Safe_AddRef(pGameObject);
 }
 
-void Engine::CRenderer::Render_GameObject(void)
+void Engine::CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	for (_uint i = 0; i < RENDER_END; ++i)
-	{
-		for (auto& iter : m_RenderGroup[i])
-		{
-			iter->Render_Object();
-			Safe_Release(iter);
-		}
-		m_RenderGroup[i].clear();
-	}	
+	Render_Priority(pGraphicDev);
+	Render_NonAlpha(pGraphicDev);
+	Render_Alpha(pGraphicDev);
+	Render_UI(pGraphicDev);
+
+	Clear_RenderGroup();
 }
 
 void Engine::CRenderer::Clear_RenderGroup(void)
@@ -42,6 +39,30 @@ void Engine::CRenderer::Clear_RenderGroup(void)
 		for_each(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), CDeleteObj());
 		m_RenderGroup[i].clear();
 	}
+}
+
+void CRenderer::Render_Priority(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_PRIORITY])
+		iter->Render_Object();
+}
+
+void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
+		iter->Render_Object();
+}
+
+void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_ALPHA])
+		iter->Render_Object();
+}
+
+void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_UI])
+		iter->Render_Object();
 }
 
 void Engine::CRenderer::Free(void)

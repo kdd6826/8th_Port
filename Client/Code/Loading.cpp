@@ -111,7 +111,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
 		E_FAIL);
 
-	
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	// Stone
@@ -123,38 +123,54 @@ _uint CLoading::Loading_ForStage(void)
 												L"TombStone.X"),
 												E_FAIL);
 
-	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
-												L"Mesh_Player",
-												Engine::TYPE_DYNAMIC,
-												L"../Bin/Resource/Mesh/DynamicMesh/PlayerXFile/",
-												L"Player.X"),
+												L"Mesh_Navi",
+												Engine::TYPE_NAVI,
+												NULL,
+												NULL),
 												E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												L"Mesh_Sword",
-												Engine::TYPE_STATIC,
-												L"../Bin/Resource/Mesh/StaticMesh/Sword/",
-												L"Sword.X"),
-												E_FAIL);*/
+	Engine::RESOURCE_STAGE,
+	L"Mesh_Player",
+	Engine::TYPE_DYNAMIC,
+	L"../Bin/Resource/ArishaX/",
+	L"NewArisha.X"),
+	E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Sword",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Arisha/Weapon/",
+		L"WeaponArisha.X"),
+		E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	RESOURCE_STAGE,
-	//	L"Mesh_Tree",
-	//	Engine::TYPE_STATIC,
-	//	L"../Bin/Resource/Mesh/StaticMesh/Tree/",
-	//	L"Tree01.X"),
-	//	E_FAIL);
+	//											Engine::RESOURCE_STAGE,
+	//											L"Mesh_Player",
+	//											Engine::TYPE_DYNAMIC,
+	//											L"../Bin/Resource/Mesh/DynamicMesh/PlayerXFile/",
+	//											L"Player.X"),
+	//											E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	RESOURCE_STAGE,
-	//	L"Mesh_Navi",
-	//	Engine::TYPE_NAVI,
-	//	NULL,
-	//	NULL),
-	//	E_FAIL);
+	//											Engine::RESOURCE_STAGE,
+	//											L"Mesh_Sword",
+	//											Engine::TYPE_STATIC,
+	//											L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+	//											L"Sword.X"),
+	//											E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											Engine::RESOURCE_STAGE,
+											L"Mesh_Tree",
+											Engine::TYPE_STATIC,
+											L"../Bin/Resource/Mesh/StaticMesh/Tree/",
+											L"Tree01.X"),
+											E_FAIL);
+	
 	
 	lstrcpy(m_szLoading, L"Loading Complete!!!");
 

@@ -144,9 +144,9 @@ void Engine::CTransform::Pick_Pos(const _vec3* pPos, const _float & fSpeed, cons
 	m_vInfo[INFO_POS] += vDir * fSpeed * fTimeDelta;
 }
 
-void CTransform::Set_Pos(const _vec3& pPos)
+void CTransform::Set_Pos(const _vec3* pPos)
 {
-	m_vInfo[INFO_POS] = pPos;
+	m_vInfo[INFO_POS] = *pPos;
 }
 
 void CTransform::Rotation(ROTATION eType, const _float & fAngle)

@@ -336,7 +336,7 @@ void CMFCToolView::Update(float deltaTime)
 	}
 	Engine::CRenderer* r = Engine::CRenderer::GetInstance();
 
-	r->Render_GameObject();
+	r->Render_GameObject(m_pGraphicDev);
 	/*for (auto& obj : iter->second->m_mapObject)
 	{
 		obj.second->Render_Object();

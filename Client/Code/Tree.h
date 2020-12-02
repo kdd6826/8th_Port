@@ -1,26 +1,26 @@
-#ifndef Player_h__
-#define Player_h__
+#ifndef Tree_h__
+#define Tree_h__
 
 #include "GameObject.h"
 #include "Define.h"
 
 BEGIN(Engine)
 
-class CDynamicMesh;
+class CStaticMesh;
 class CTransform;
 class CRenderer;
 class CCalculator;
 class CCollider;
-class CNaviMesh;
+class COptimization;
 
 END
 
 BEGIN(Client)
-class CPlayer : public Engine::CGameObject
+class CTree : public Engine::CGameObject
 {
 private:
-	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CPlayer(void);
+	explicit CTree(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CTree(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -30,21 +30,16 @@ public:
 private:
 	HRESULT		Add_Component(void);
 	void		SetUp_OnTerrain(void);
-	void		Key_Input(const _float& fTimeDelta);
-	_vec3		PickUp_OnTerrain(void);
 
 private:
-	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
-	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr; 
+
+	Engine::CStaticMesh*		m_pMeshCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
-	Engine::CCollider*			m_pColliderCom = nullptr;
-	_vec3						m_vDir;
-	_float						m_fSpeed = 5.f;
 
 public:
-	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTree*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
@@ -52,4 +47,4 @@ private:
 };
 
 END
-#endif // Player_h__
+#endif // Tree_h__

@@ -34,6 +34,10 @@ HRESULT Client::CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
+	pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
+
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -64,8 +68,13 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
-		/*D3DXVec3Normalize(&m_vDir, &m_vDir);
-		m_pTransformCom->Move_Pos(&(m_vDir * m_fSpeed * fTimeDelta));*/
+		_vec3	vPos, vDir;
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+		
 		m_pMeshCom->Set_AnimationSet(6);
 
 	}
@@ -122,6 +131,8 @@ HRESULT Client::CPlayer::Ready_Object(void)
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pMeshCom->Set_AnimationSet(39);
 
+	m_pNaviMeshCom->Set_NaviIndex(0);
+
 	return S_OK;
 }
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
@@ -142,6 +153,7 @@ void Client::CPlayer::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 	
+	m_pNaviMeshCom->Render_NaviMeshes();
 
 	m_pMeshCom->Render_Meshes();
 	/*_matrix matWorld;
