@@ -39,6 +39,36 @@ HRESULT CMFC_Terrain::Ready_Object(void)
 	return S_OK;
 }
 
+HRESULT CMFC_Terrain::Ready_Object(int terrainCount)
+{
+	Engine::CComponent* pComponent = nullptr;
+	CString cTerrainCount = L"";
+	cTerrainCount.Format(_T("%d"), terrainCount);
+	
+	// buffer
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Clone(Engine::RESOURCE_STATIC, cTerrainCount));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+
+	// texture
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+
+	// Renderer
+	pComponent = m_pRendererCom = Engine::Get_Renderer();
+	NULL_CHECK_RETURN(m_pRendererCom, E_FAIL);
+	Engine::Safe_AddRef(m_pRendererCom);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", m_pRendererCom);
+
+	// Transform
+	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
+	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
+
+	return S_OK;
+}
+
 _int CMFC_Terrain::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);

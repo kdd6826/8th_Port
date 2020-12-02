@@ -86,7 +86,8 @@ public:
 
 	CTerrainTri* PickUp_Tri(void);
 
-
+	void CreateTerrain(int _countX,int _countZ, int _interval,int _detail);
+	int CreateTerrainCount = 0;
 	D3DXVECTOR3 vertex[128];
 
 private:

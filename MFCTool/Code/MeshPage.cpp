@@ -57,6 +57,15 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON10, &MeshPage::OnBnClickedButton10)
 	ON_NOTIFY(NM_CLICK, IDC_TREE4, &MeshPage::OnNMClickTree4)
 	ON_EN_CHANGE(IDC_EDIT14, &MeshPage::OnEnChangeEdit14)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN12, &MeshPage::OnDeltaposSpin12)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN14, &MeshPage::OnDeltaposSpin14)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN13, &MeshPage::OnDeltaposSpin13)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN9, &MeshPage::OnDeltaposSpin9)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN11, &MeshPage::OnDeltaposSpin11)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN10, &MeshPage::OnDeltaposSpin10)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN6, &MeshPage::OnDeltaposSpin6)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN8, &MeshPage::OnDeltaposSpin8)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN7, &MeshPage::OnDeltaposSpin7)
 END_MESSAGE_MAP()
 
 
@@ -68,10 +77,34 @@ BOOL MeshPage::OnInitDialog()
 
 	Render_Solid.SetCheck(BST_CHECKED);
 	CMFCToolView::GetInstance()->wireFrame = false;
+	//Pos X,Y,Z
+	CString cPosVertexX, cPosVertexY, cPosVertexZ;
+	cPosVertexX.Format(_T("%9.1f\n"), m_fTransformPosX);
+	cPosVertexY.Format(_T("%9.1f\n"), m_fTransformPosY);
+	cPosVertexZ.Format(_T("%9.1f\n"), m_fTransformPosZ);
+	SetDlgItemText(IDC_EDIT14, cPosVertexX);
+	SetDlgItemText(IDC_EDIT15, cPosVertexY);
+	SetDlgItemText(IDC_EDIT16, cPosVertexZ);
+	//
+	//Scale X,Y,Z
+	CString cScalVertexX, cScalVertexY, cScalVertexZ;
+	cScalVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
+	cScalVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
+	cScalVertexZ.Format(_T("%9.1f\n"), m_fTransformScalZ);
+	SetDlgItemText(IDC_EDIT5, cScalVertexX);
+	SetDlgItemText(IDC_EDIT7, cScalVertexY);
+	SetDlgItemText(IDC_EDIT8, cScalVertexZ);
+	//
+	//Rotation X,Y,Z
+	CString cRotVertexX, cRotVertexY, cRotVertexZ;
+	cRotVertexX.Format(_T("%9.1f\n"), m_fTransformRotX);
+	cRotVertexY.Format(_T("%9.1f\n"), m_fTransformRotY);
+	cRotVertexZ.Format(_T("%9.1f\n"), m_fTransformRotZ);
+	SetDlgItemText(IDC_EDIT10, cRotVertexX);
+	SetDlgItemText(IDC_EDIT12, cRotVertexY);
+	SetDlgItemText(IDC_EDIT13, cRotVertexZ);
+	//
 
-	SetDlgItemText(IDC_EDIT14, L"0");
-	SetDlgItemText(IDC_EDIT15, L"0");
-	SetDlgItemText(IDC_EDIT16, L"0");
 	mouseObject.SetCheck(BST_CHECKED);
 	typeStatic.SetCheck(BST_CHECKED);
 	vertexTogetther.SetCheck(BST_CHECKED);
@@ -158,17 +191,17 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 		triIndex = _ttoi(parentIndex);
 
 		
-		//float vertexX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
-		//float vertexY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
-		//float vertexZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
+		//float m_fTransformPosX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
+		//float m_fTransformPosY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
+		//float m_fTransformPosZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
 		
 		CString cVertexX, cVertexY, cVertexZ;
-		//cVertexX.Format(_T("%f"), vertexX);
-		//cVertexY.Format(_T("%f"), vertexY);
-		//cVertexZ.Format(_T("%f"), vertexZ);
+		//cVertexX.Format(_T("%f"), m_fTransformPosX);
+		//cVertexY.Format(_T("%f"), m_fTransformPosY);
+		//cVertexZ.Format(_T("%f"), m_fTransformPosZ);
 
 		SetDlgItemText(IDC_EDIT14, cVertexX);
-		SetDlgItemText(IDC_EDIT15, cVertexZ);
+		SetDlgItemText(IDC_EDIT15, cVertexY);
 		SetDlgItemText(IDC_EDIT16, cVertexZ);
 	}
 	
@@ -254,4 +287,214 @@ void MeshPage::OnEnChangeEdit14()
 	transformPosX;
 	
 	//VertexManager::GetInstance()->vertex[0][0].x;
+}
+
+
+void MeshPage::OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+	
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformPosX+=0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+	}
+	else
+	{
+		m_fTransformPosX -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+	}
+	*pResult = 0;
+	
+
+	SetDlgItemText(IDC_EDIT14, cVertex);
+
+}
+
+
+void MeshPage::OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+	
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformPosY+=0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+	}
+	else
+	{
+		m_fTransformPosY -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+	}
+	*pResult = 0;
+
+
+	SetDlgItemText(IDC_EDIT15, cVertex);
+}
+
+
+void MeshPage::OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformPosZ += 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+	}
+	else
+	{
+		m_fTransformPosZ -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT16, cVertex);
+}
+
+
+void MeshPage::OnDeltaposSpin9(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformRotX += 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+	}
+	else
+	{
+		m_fTransformRotX -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT10, cVertex);
+}
+
+
+void MeshPage::OnDeltaposSpin11(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformRotY += 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+	}
+	else
+	{
+		m_fTransformRotY -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT12, cVertex);
+}
+
+
+void MeshPage::OnDeltaposSpin10(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformRotZ += 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+	}
+	else
+	{
+		m_fTransformRotZ -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT13, cVertex);
+}
+
+
+void MeshPage::OnDeltaposSpin6(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformScalX += 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+	}
+	else
+	{
+		m_fTransformScalX -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT5, cVertex);
+}
+
+
+void MeshPage::OnDeltaposSpin8(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformScalY += 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+	}
+	else
+	{
+		m_fTransformScalY -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT7, cVertex);
+}
+
+
+void MeshPage::OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		m_fTransformScalZ += 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+	}
+	else
+	{
+		m_fTransformScalZ -= 0.1f;
+		cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT8, cVertex);
 }

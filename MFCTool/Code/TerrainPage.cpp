@@ -44,6 +44,10 @@ BEGIN_MESSAGE_MAP(TerrainPage, CDialogEx)
 	
 	ON_BN_CLICKED(IDC_BUTTON1, &TerrainPage::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_RADIO1, &TerrainPage::OnBnClickedRadio1)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN2, &TerrainPage::OnDeltaposSpin2)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &TerrainPage::OnDeltaposSpin3)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN4, &TerrainPage::OnDeltaposSpin4)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN5, &TerrainPage::OnDeltaposSpin5)
 END_MESSAGE_MAP()
 
 
@@ -88,6 +92,11 @@ BOOL TerrainPage::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	Render_Solid.SetCheck(BST_CHECKED);
+	
+	xCount.SetWindowTextW(L"2");
+	zCount.SetWindowTextW(L"2");
+	interval.SetWindowTextW(L"미구현");
+	detail.SetWindowTextW(L"미구현");
 	CMFCToolView::GetInstance()->wireFrame = true;
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 
@@ -113,6 +122,9 @@ void TerrainPage::OnBnClickedButton1()
 	iter->second->m_mapObject.clear();
 	///////////////////
 
+	
+
+	//
 	CString xNum = L"";
 	CString zNum = L"";
 	CString intervalNum = L"";
@@ -123,17 +135,108 @@ void TerrainPage::OnBnClickedButton1()
 	interval.GetWindowTextW(intervalNum);
 	detail.GetWindowTextW(detailNum);
 
-	//Buffer
-	//FAILED_CHECK_RETURN(Engine::Ready_Buffer(CMFCToolView::GetInstance(),
-	//	Engine::RESOURCE_STATIC,
-	//	L"Buffer_TerrainTex",
-	//	Engine::BUFFER_TERRAINTEX,
-	//	VTXCNTX,
-	//	VTXCNTZ,
-	//	VTXITV),
-	//	);
+	
+	iXCount = _ttoi(xNum);
+	iZCount = _ttoi(zNum);
+	iInterval = _ttoi(intervalNum);
+	iDetail = _ttoi(detailNum);
 
 
+	CMFCToolView::GetInstance()->CreateTerrain(iXCount, iZCount, iInterval, iDetail);
+
+	
 
 }
 
+
+
+void TerrainPage::OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		iXCount++;
+		cVertex.Format(_T("%d"), iXCount);
+	}
+	else
+	{
+		iXCount--;
+		cVertex.Format(_T("%d"), iXCount);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT1, cVertex);
+}
+
+
+void TerrainPage::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		iZCount++;
+		cVertex.Format(_T("%d"), iZCount);
+	}
+	else
+	{
+		iZCount--;
+		cVertex.Format(_T("%d"), iZCount);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT2, cVertex);
+}
+
+
+void TerrainPage::OnDeltaposSpin4(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		iInterval++;
+		cVertex.Format(_T("%d"), iInterval);
+	}
+	else
+	{
+		iInterval--;
+		cVertex.Format(_T("%d"), iInterval);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT3, cVertex);
+}
+
+
+void TerrainPage::OnDeltaposSpin5(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString cVertex;
+
+
+	if (pNMUpDown->iDelta < 0)
+	{
+		iDetail++;
+		cVertex.Format(_T("%d"), iDetail);
+	}
+	else
+	{
+		iDetail--;
+		cVertex.Format(_T("%d"), iDetail);
+	}
+	*pResult = 0;
+
+	SetDlgItemText(IDC_EDIT4, cVertex);
+}

@@ -57,4 +57,24 @@ public:
 	CEdit transformRotX;
 	CEdit transformRotY;
 	CEdit transformRotZ;
+	float m_fTransformPosX=0;
+	float m_fTransformPosY=0;
+	float m_fTransformPosZ=0;
+	float m_fTransformScalX=0;
+	float m_fTransformScalY=0;
+	float m_fTransformScalZ=0;
+	float m_fTransformRotX=0;
+	float m_fTransformRotY=0;
+	float m_fTransformRotZ=0;
+
+
+	afx_msg void OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin9(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin11(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin10(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin6(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin8(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult);
 };

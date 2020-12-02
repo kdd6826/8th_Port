@@ -16,6 +16,7 @@ public:
 	virtual ~CMFC_Terrain();
 public:
 	virtual HRESULT Ready_Object(void) override;
+	virtual HRESULT Ready_Object(int terrainCount);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 private:

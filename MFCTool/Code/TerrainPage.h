@@ -37,4 +37,9 @@ public:
 	CEdit zCount;
 	CEdit interval;
 	CEdit detail;
+	int iXCount=2, iZCount=2, iInterval, iDetail;
+	afx_msg void OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin4(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin5(NMHDR* pNMHDR, LRESULT* pResult);
 };

@@ -138,7 +138,7 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	VertexManager::GetInstance();
+	
 	Engine::CGameObject*		pGameObject = nullptr;
 
 	//pGameObject = CSkyBox::Create(m_pGraphicDev);
@@ -150,7 +150,7 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
 	m_pTerrain = dynamic_cast<CMFC_Terrain*>(pGameObject);
 	m_pTerrain->Ready_Object();
-
+	
 	//pGameObject = new CNaviMesh(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Navi", pGameObject), E_FAIL);
@@ -272,8 +272,6 @@ void CMFCToolView::OnInitialUpdate()
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"¹ÙÅÁ", 15, 20, FW_HEAVY), );
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY), );
 
-	Engine::CLayer* pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, );
 
 	//if (nullptr == m_pTerrain)
 	//{
@@ -565,4 +563,45 @@ CTerrainTri* CMFCToolView::PickUp_Tri(void)
 
 	}
 	return nullptr;
+}
+
+void CMFCToolView::CreateTerrain(int _countX, int _countZ, int _interval, int _detail)
+{
+	
+
+
+	////Buffer
+	//FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+	//	Engine::RESOURCE_STATIC,
+	//	L"Buffer_TerrainTex",
+	//	Engine::BUFFER_TERRAINTEX,
+	//	VTXCNTX,
+	//	VTXCNTZ,
+	//	VTXITV),
+	//	E_FAIL);
+
+	CString createNum;
+	createNum.Format(_T("%d"), CreateTerrainCount);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		createNum,
+		Engine::BUFFER_TERRAINTEX,
+		_countX,
+		_countZ,
+		1),
+		);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//pGameObject = CSkyBox::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
+
+	pGameObject = new CMFC_Terrain(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, );
+	LayerAddObject(L"Environment", createNum, pGameObject);
+	
+	m_pTerrain = dynamic_cast<CMFC_Terrain*>(pGameObject);
+	m_pTerrain->Ready_Object(CreateTerrainCount);
+	CreateTerrainCount++;
 }
