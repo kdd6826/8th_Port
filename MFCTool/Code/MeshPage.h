@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // MeshPage 대화 상자입니다.
@@ -6,7 +7,7 @@
 class MeshPage : public CDialogEx
 {
 	DECLARE_DYNAMIC(MeshPage)
-
+	DECLARE_SINGLETON(MeshPage)
 public:
 	MeshPage(CWnd* pParent = NULL);   // 표준 생성자입니다.
 	virtual ~MeshPage();
@@ -31,7 +32,29 @@ public:
 	CButton typeDynamic;
 	CButton vertexTogetther;
 	CButton vertexOnly;
+
+	HTREEITEM tri[128] , vertex[128][3];
+	
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio1();
 	afx_msg void OnBnClickedRadio2();
+	
+	void treeControl(int triCount);
+
+	CTreeCtrl treeNavi;
+	afx_msg void OnBnClickedButton10();
+	afx_msg void OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult);
+	void CheckChildItems(HTREEITEM _hItem);
+	void UnCheckChildItems(HTREEITEM _hItem);
+
+	afx_msg void OnEnChangeEdit14();
+	CEdit transformPosX;
+	CEdit transformPosY;
+	CEdit transformPosZ;
+	CEdit transformScalX;
+	CEdit transformScalY;
+	CEdit transformScalZ;
+	CEdit transformRotX;
+	CEdit transformRotY;
+	CEdit transformRotZ;
 };

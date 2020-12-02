@@ -8,6 +8,7 @@
 #include "Sphere.h"
 #include "Cell.h"
 #include "Export_Function.h"
+#include "MeshPage.h"
 #include "DynamicCamera.h"
 USING(Engine)
 
@@ -49,6 +50,8 @@ void VertexManager::Key_Input(float deltaTime)
 	if (!TerrainHaveCheck())
 		return;
 
+	
+	
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
 		if (!mouseLClick) {
@@ -126,14 +129,16 @@ void VertexManager::Key_Input(float deltaTime)
 
 void VertexManager::DrawLine()
 {
-	if (triCount == 1)
-		int i = 0;
-	D3DXCreateLine(m_pGraphicDev, &line[triCount]);
-	line[triCount]->SetWidth(5.f);
-	line[triCount]->SetAntialias(FALSE);
 
 
+	
 
+	for (int i = 0; i < triCount+1; i++)
+	{
+		//D3DXCreateLine(m_pGraphicDev, &line[i]);
+		//line[i]->SetWidth(5.f);
+		//line[i]->SetAntialias(FALSE);
+	}
 	// 투영 -> 뷰 스페이스
 	Engine::_matrix	out, view, proj, world;
 
@@ -147,11 +152,17 @@ void VertexManager::DrawLine()
 
 	//line->DrawTransform(vertex, 1, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
 	//line->DrawTransform(vertex, 2, &world, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+	for (int i = 0; i < triCount + 1; ++i)
+	{
 
-	line[triCount]->Begin();
-	line[triCount]->DrawTransform(vertex, lineCount, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
-	line[triCount]->End();
-	line[triCount]->Release();
+		D3DXCreateLine(m_pGraphicDev, &line[i]);
+		line[i]->SetWidth(5.f);
+		line[i]->SetAntialias(FALSE);
+		line[i]->Begin();
+		line[i]->DrawTransform(vertex[i],4, &out, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+		line[i]->End();
+		line[i]->Release();
+	}
 
 }
 CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
@@ -160,6 +171,7 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 
 	GetCursorPos(&ptMouse);
 	::ScreenToClient(hWnd, &ptMouse);
+
 
 	Engine::_vec3	vMousePos;
 
@@ -301,6 +313,12 @@ void VertexManager::MouseLClick_NaviMesh()
 	mouseLClick = true;
 	LockOnObject(VM_Obj::NONE, nullptr);
 
+	POINT		ptMouse{ 0 };
+	GetCursorPos(&ptMouse);
+	::ScreenToClient(g_hWnd, &ptMouse);
+	if (ptMouse.x < 0.f)
+		return;
+
 	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom);
 	CSphereMesh* sphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
@@ -333,14 +351,44 @@ void VertexManager::MouseLClick_NaviMesh()
 			//pGameObject->AddRef();
 
 			/////////////////////////////////////////
+			//삼각형 라인 생성
 			lineCount++;
-			vertex[lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
+			vertex[triCount][lineCount - 1] = vPickPos + Engine::_vec3(0.01f, 0.01f, 0.01f);
+			//삼각형 마지막
 			if (lineCount % 3 == 0)
 			{
-				vertex[lineCount] = vertex[lineCount - 3];
+				vertex[triCount][lineCount] = vertex[triCount][lineCount - 3];
+				//
+				MeshPage* pMeshPage = MeshPage::GetInstance();;
+
+				if (CCW2(vertex[triCount][0], vertex[triCount][1], vertex[triCount][2]) == 1)
+				{
+
+					vertex[triCount][0] = Engine::_vec3{ 0.f,0.f,0.f };
+					vertex[triCount][1] = Engine::_vec3{ 0.f,0.f,0.f };
+					vertex[triCount][2] = Engine::_vec3{ 0.f,0.f,0.f };
+					return;
+				}
+				
+				if (pMeshPage != nullptr)
+				{
+					pMeshPage->treeControl(triCount);
+					//pMeshPage->tri[triCount] = pMeshPage->treeNavi.InsertItem(L"1", 0, 0, TVI_ROOT, TVI_LAST);
+					//pMeshPage->vertex[triCount][0] = pMeshPage->treeNavi.InsertItem(L"a", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+					//pMeshPage->vertex[triCount][1] = pMeshPage->treeNavi.InsertItem(L"b", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+					//pMeshPage->vertex[triCount][2] = pMeshPage->treeNavi.InsertItem(L"c", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
+				}
+				//
+
+				
+
 				lineCount++;
 				triCount++;
+				lineCount = 0;
+				
+			
 			}
+			
 			//////////////////////////////////////////////
 		}
 	}
@@ -392,4 +440,19 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 	lockOnObjName = name;
 	if(obj != nullptr)
 		lockOnObj = obj;
+}
+}
+
+int VertexManager::CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3)
+{
+	float temp1 = (vec1.x * vec2.z) + (vec2.x * vec3.z) + (vec3.x * vec1.z);
+	float temp2 = temp1 - (vec1.z * vec2.x) - (vec2.z*vec3.x) - (vec3.z*vec1.x);
+
+
+	if (temp2>0)//반시계
+		return 1;
+	else if (temp2<0)//시계
+		return -1;
+	else //일직선
+		return 0;
 }

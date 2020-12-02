@@ -25,6 +25,21 @@ void Safe_Release(T& rObj)
 		rObj->Release(); 
 }
 
+////CCW 알고리즘으로 시계방향 체크
+//int CCW(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3)
+//{
+//	float temp1 = (vec2.z - vec1.z)*(vec3.x - vec1.x) + vec1.z*(vec2.x - vec1.x);
+//	float temp2 = (vec2.x - vec1.x)*vec3.z;
+//
+//	
+//	if (temp1 < temp2)//반시계
+//		return 1;
+//	else if (temp1 > temp2)//시계
+//		return -1;
+//	else //일직선
+//		return 0;
+//}
+
 
 namespace Client
 {

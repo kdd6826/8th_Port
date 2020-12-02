@@ -46,6 +46,17 @@ public:
 	LPDIRECT3DDEVICE9			m_pGraphicDev = nullptr;
 
 public:
+	D3DXVECTOR3 vertex[128][4];
+
+	LPD3DXLINE line[128];
+	int triCount = 0;
+	int lineCount = 0;
+
+	//CCW 알고리즘으로 시계방향 체크
+	int CCW2(D3DXVECTOR3 vec1, D3DXVECTOR3 vec2, D3DXVECTOR3 vec3);
+
+
+private:
 	bool mouseLClick = false;
 	bool mouseRClick = false;
 	bool KeyC = false;
@@ -61,9 +72,5 @@ public:
 	//락을 한 객체의 포인터
 	Engine::CGameObject* lockOnObj = nullptr;
 
-	D3DXVECTOR3 vertex[128];
-	LPD3DXLINE line[128];
-	int triCount = 0;
-	int lineCount = 0;
 };
 
