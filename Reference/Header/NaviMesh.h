@@ -15,13 +15,20 @@ private:
 	virtual ~CNaviMesh(void);
 
 public:
+	void		Set_NaviIndex(const _ulong& dwIndex) { m_dwIndex = dwIndex; }
+
+public:
 	HRESULT		Ready_NaviMeshes(void);
+	void		Render_NaviMeshes(void);
+
+	_vec3			Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir);
 
 private:
 	HRESULT		Link_Cell(void);
 
 private:
 	vector<CCell*>			m_vecCell;
+	_ulong					m_dwIndex;
 
 public:
 	static CNaviMesh*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
