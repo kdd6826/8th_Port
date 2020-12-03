@@ -9,6 +9,8 @@
 #include "VertexManager.h"
 #include "TerrainTri.h"
 #include "SphereMesh.h"
+#include "MainFrm.h"
+#include "Cell.h"
 // MeshPage 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(MeshPage, CDialogEx)
@@ -70,6 +72,8 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN7, &MeshPage::OnDeltaposSpin7)
 	ON_BN_CLICKED(IDC_RADIO5, &MeshPage::OnBnClickedRadio5)
 	ON_BN_CLICKED(IDC_RADIO3, &MeshPage::OnBnClickedRadio3)
+	ON_BN_CLICKED(IDC_BUTTON7, &MeshPage::OnBnClickedButton7)
+	ON_BN_CLICKED(IDC_BUTTON8, &MeshPage::OnBnClickedButton8)
 END_MESSAGE_MAP()
 
 
@@ -152,10 +156,34 @@ void MeshPage::treeControl(int triCount)
 void MeshPage::OnBnClickedButton10()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	for (int i = 0; i < 128; i++)
+	// 삭제
+	//////////////////////////
+	if (selectItem == nullptr)
+		return;
+
+	if (treeNavi.GetParentItem(selectItem) == 0)
 	{
-		treeNavi.DeleteItem(tri[i]);
+		//HTREEITEM hItem = treeNavi;
+		treeNavi.GetItemText(selectItem);
+
+		//해당 셀에 담긴 Text
+		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+		//Text를 int로 바꾸기
+		int indexNum;
+		indexNum = _ttoi(naviIndex);
+
+		CTerrainTri* triangle = CMFCToolView::GetInstance()->Get_TriOfNumber(indexNum);
+		triangle->DeleteWithSphere();
+
+		////////////////////
+
+
+		treeNavi.DeleteItem(tri[indexNum]);
+		selectItem=nullptr;
 	}
+	
+
 }
 
 
@@ -862,3 +890,118 @@ void MeshPage::OnBnClickedRadio5()
 }
 
 
+
+
+void MeshPage::OnBnClickedButton7()
+{
+	CFileDialog Dlg(FALSE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Data");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+		DWORD dwByte = 0;
+		DWORD dwstrByte = 0;
+
+		int triTotalNumber=0;
+		vector<Engine::CCell*> vecTri=CMFCToolView::GetInstance()->Get_VectorTri(&triTotalNumber);
+
+		for (auto& rPair : vecTri)
+		{
+			
+			dwstrByte = sizeof(Engine::CCell) * (vecTri.size() + 1);
+			WriteFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
+			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_A), sizeof(_vec3), &dwByte, nullptr);
+			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_B), sizeof(_vec3), &dwByte, nullptr);
+			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_C), sizeof(_vec3), &dwByte, nullptr);
+			
+		}
+		CloseHandle(hFile);
+	}
+}
+
+
+void MeshPage::OnBnClickedButton8()
+{
+	UpdateData(TRUE);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog Dlg(TRUE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Data");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+		DWORD dwByte = 0;
+		DWORD dwstrByte = 0;
+		UNITINFO* pUnit = nullptr;
+		int triTotalNumber=0;
+		vector<Engine::CCell*> vecTri=CMFCToolView::GetInstance()->Get_VectorTri(&triTotalNumber);
+
+		for (auto& rPair : vecTri)
+		{
+			
+			dwstrByte = sizeof(Engine::CCell) * (vecTri.size() + 1);
+			WriteFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
+			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_A), sizeof(_vec3), &dwByte, nullptr);
+			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_B), sizeof(_vec3), &dwByte, nullptr);
+			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_C), sizeof(_vec3), &dwByte, nullptr);
+			
+		}
+		while (true)
+		{
+			ReadFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
+			TCHAR* szName = new TCHAR[dwstrByte];
+			pUnit = new UNITINFO;
+			ReadFile(hFile, szName, dwstrByte, &dwByte, nullptr);
+			pUnit->strName = szName;
+			Safe_Delete_Array(szName);
+
+			ReadFile(hFile, &pUnit->iAtt, sizeof(pUnit->iAtt), &dwByte, nullptr);
+			ReadFile(hFile, &pUnit->iDef, sizeof(pUnit->iDef), &dwByte, nullptr);
+			ReadFile(hFile, &pUnit->byJopIndex, sizeof(pUnit->byJopIndex), &dwByte, nullptr);
+			ReadFile(hFile, &pUnit->byItem, sizeof(pUnit->byItem), &dwByte, nullptr);
+			if (0 == dwByte)
+			{
+				Safe_Delete(pUnit);
+				break;
+			}
+			//m_mapUnitData.emplace(pUnit->strName, pUnit);
+			//for (int i = 0; i < 3; ++i)
+			//{
+			//	m_JopIndex[i].SetCheck(0);
+			//	m_CheckBox[i].SetCheck(0);
+			//}
+
+			//m_ListBox.AddString(pUnit->strName);
+			//m_iAtt = pUnit->iAtt;
+			//m_iDef = pUnit->iDef;
+			//m_JopIndex[pUnit->byJopIndex].SetCheck(1);
+
+			//if (pUnit->byItem & 강철검)
+			//	m_CheckBox[0].SetCheck(1);
+			//if (pUnit->byItem & 지팡이)
+			//	m_CheckBox[1].SetCheck(1);
+			//if (pUnit->byItem & 나이프)
+			//	m_CheckBox[2].SetCheck(1);
+
+		}
+		CloseHandle(hFile);
+	}
+	UpdateData(FALSE);
+}

@@ -89,10 +89,13 @@ public:
 	void Sort_TriNumber();
 	CTerrainTri* Get_TriOfNumber(int number);
 
+	vector<Engine::CCell*> Get_VectorTri(int * _triNumber);
+
+
 
 	void CreateTerrain(int _countX,int _countZ, int _interval,int _detail);
 	int CreateTerrainCount = 0;
-	D3DXVECTOR3 vertex[128];
+
 
 private:
 	HRESULT Loading();
