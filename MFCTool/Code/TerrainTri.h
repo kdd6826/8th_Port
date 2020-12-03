@@ -29,6 +29,7 @@ public:
 	void Set_InitBuffer();
 	// 삼각형 삭제하는 함수
 	void DeleteWithSphere();
+	CTerrainTri* CellToCreate(Engine::CCell* _cell);
 	//void Set_VtxPos();
 private:
 	HRESULT		Add_Component(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);

@@ -47,7 +47,7 @@ void VertexManager::Update(float deltaTime)
 
 void VertexManager::Key_Input(float deltaTime)
 {
-	if (!TerrainHaveCheck()||!isNaviMesh)
+	if (!TerrainHaveCheck())
 		return;
 
 	
@@ -55,7 +55,11 @@ void VertexManager::Key_Input(float deltaTime)
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
 		if (!mouseLClick) {
-			MouseLClick_NaviMesh();
+			if(isNaviMesh)
+				MouseLClick_NaviMesh();
+			else
+				MouseLClick_ObjectMesh();
+			mouseLClick = true;
 		}
 	}
 	else {
@@ -64,26 +68,12 @@ void VertexManager::Key_Input(float deltaTime)
 
 	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
 	{
+		
 		if (!mouseRClick) {
+			if (isNaviMesh)
+				MouseRClick_NaviMesh();
+			
 			mouseRClick = true;
-			Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
-			NULL_CHECK_RETURN(pTerrainTransformCom);
-			CSphereMesh* pickUpSphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
-			CTerrainTri* pickUpTri = (CMFCToolView::GetInstance()->PickUp_Tri());
-
-			if (pickUpSphere != nullptr) {
-				//구체락온
-				LockOnObject(VM_Obj::SPHERE, pickUpSphere);
-
-				Set_SphereColor(pickUpSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
-			}
-			else if (pickUpTri != nullptr) {
-				//삼각형락온
-				LockOnObject(VM_Obj::TRI, pickUpTri);
-
-				//Set_TriColor(pickUpTri->m_pBufferCom,D3DCOLOR_ARGB(255, 0, 44, 145));
-				Set_TriColor(pickUpTri->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
-			}
 		}
 	}
 	else {
@@ -208,6 +198,94 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 	return nullptr;
 }
 
+Engine::CGameObject* VertexManager::Picking_ObjectMesh(HWND hWnd, Engine::CTransform* pTerrainTransformCom)
+{
+	POINT		ptMouse{ 0 };
+
+	GetCursorPos(&ptMouse);
+	::ScreenToClient(hWnd, &ptMouse);
+
+
+	Engine::_vec3	vMousePos;
+
+	D3DVIEWPORT9		ViewPort;
+	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
+	m_pGraphicDev->GetViewport(&ViewPort);
+	// 뷰포트 -> 투영
+
+	vMousePos.x = (ptMouse.x / (ViewPort.Width * 0.5f)) - 1.f;
+	vMousePos.y = (ptMouse.y / -(ViewPort.Height * 0.5f)) + 1.f;
+	vMousePos.z = 0.f;
+
+	// L * W * V * P * (P^-1)
+	// L * W * V
+
+	// 투영 -> 뷰 스페이스
+	Engine::_matrix	matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
+
+	// 뷰 스페이스 -> 월드
+	Engine::_matrix	matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	Engine::_vec3	vRayPos, vRayDir;
+
+
+	vRayPos = Engine::_vec3(0.f, 0.f, 0.f);
+	vRayDir = vMousePos - vRayPos;
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
+
+	// 월드 -> 로컬
+	Engine::_matrix	matWorld;
+	pTerrainTransformCom->Get_WorldMatrix(&matWorld);
+	D3DXMatrixInverse(&matWorld, NULL, &matWorld);
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matWorld);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matWorld);
+
+	Engine::_matrix tmlnv;
+	Engine::_vec3 vSpherePos, vMinus;
+	float A, B, C, D;
+
+	auto& iter = find_if(CMFCToolView::GetInstance()->m_mapLayer.begin(), CMFCToolView::GetInstance()->m_mapLayer.end(), Engine::CTag_Finder(L"GameLogic"));
+	if (iter == CMFCToolView::GetInstance()->m_mapLayer.end())
+		return nullptr;
+
+
+	for (auto& sphere : iter->second->m_mapObject)
+	{
+		vSpherePos = dynamic_cast<Engine::CTransform*>(sphere.second->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS];
+		vMinus = vRayPos - vSpherePos;
+
+		A = D3DXVec3Dot(&vRayDir, &vRayDir);
+		B = D3DXVec3Dot(&vRayDir, &vMinus);
+		C = D3DXVec3Dot(&vMinus, &vMinus) - 0.6f * 0.6f;
+
+		D = B * B - A * C;
+
+		if (D < 0)
+			continue;
+
+		float t0, t1;
+
+		t0 = -(B + sqrt(D)) / A;
+		t1 = -(B - sqrt(D)) / A;
+		if (t0 < 0 && t1 < 0) continue;
+
+		//if (sphere->m_Click)
+		//	sphereOverlap = true;
+
+		return sphere.second;
+	}
+
+	return nullptr;
+}
+
 void VertexManager::Set_SphereColor(Engine::CSphere* Vtx, D3DCOLOR color)
 {
 	
@@ -271,7 +349,6 @@ bool VertexManager::TerrainHaveCheck() {
 
 void VertexManager::MouseLClick_NaviMesh()
 {
-	mouseLClick = true;
 	LockOnObject(VM_Obj::NONE, nullptr);
 
 	POINT		ptMouse{ 0 };
@@ -373,6 +450,44 @@ void VertexManager::MouseLClick_NaviMesh()
 	
 
 		//////////////////////////////////////////////
+	}
+}
+
+void VertexManager::MouseLClick_ObjectMesh()
+{
+	LockOnObject(VM_Obj::NONE, nullptr);
+
+	POINT		ptMouse{ 0 };
+	GetCursorPos(&ptMouse);
+	::ScreenToClient(g_hWnd, &ptMouse);
+	if (ptMouse.x < 0.f)
+		return;
+
+	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTerrainTransformCom);
+
+	Picking_ObjectMesh(g_hWnd, pTerrainTransformCom);
+}
+
+void VertexManager::MouseRClick_NaviMesh()
+{
+	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTerrainTransformCom);
+	CSphereMesh* pickUpSphere = Picking_Sphere(g_hWnd, pTerrainTransformCom);
+	CTerrainTri* pickUpTri = (CMFCToolView::GetInstance()->PickUp_Tri());
+
+	if (pickUpSphere != nullptr) {
+		//구체락온
+		LockOnObject(VM_Obj::SPHERE, pickUpSphere);
+
+		Set_SphereColor(pickUpSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
+	}
+	else if (pickUpTri != nullptr) {
+		//삼각형락온
+		LockOnObject(VM_Obj::TRI, pickUpTri);
+
+		//Set_TriColor(pickUpTri->m_pBufferCom,D3DCOLOR_ARGB(255, 0, 44, 145));
+		Set_TriColor(pickUpTri->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
 	}
 }
 

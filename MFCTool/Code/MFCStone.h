@@ -9,6 +9,7 @@ class CRenderer;
 class CCalculator;
 class CCollider;
 class COptimization;
+class CSphere;
 
 END
 
@@ -34,6 +35,7 @@ private:
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
+	Engine::CSphere*			m_pColSphereCom = nullptr;
 	Engine::CCollider*			m_pColliderCom = nullptr;
 	Engine::COptimization*		m_pOptimizationCom = nullptr;
 	Engine::_bool						m_bColl = false;
