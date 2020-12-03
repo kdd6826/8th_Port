@@ -649,6 +649,32 @@ CTerrainTri* CMFCToolView::Get_TriOfNumber(int number)
 	return nullptr;
 }
 
+vector<Engine::CCell*> CMFCToolView::Get_VectorTri(int* _triNumber)
+{
+	Sort_TriNumber();
+	vector<Engine::CCell*> vec_tri;
+
+	map<const Engine::_tchar*, Engine::CLayer*>* m_map = &CMFCToolView::GetInstance()->m_mapLayer;
+	auto& iter = find_if((*m_map).begin(), (*m_map).end(), Engine::CTag_Finder(L"Environment"));
+	if (iter == (*m_map).end())
+		return vec_tri;
+
+	for (auto& iter2 = iter->second->m_mapObject.begin(); iter2 != iter->second->m_mapObject.end();)
+	{
+		if (0 == lstrcmpW(L"TerrainTri", iter2->first))
+		{
+			//////
+			CTerrainTri* tri =  dynamic_cast<CTerrainTri*>(iter2->second);
+			vec_tri.emplace_back(tri->m_Cell);
+			*_triNumber++;
+			//////
+		}
+		iter2++;
+	}
+
+	return vec_tri;
+}
+
 void CMFCToolView::CreateTerrain(int _countX, int _countZ, int _interval, int _detail)
 {
 	

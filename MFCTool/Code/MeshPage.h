@@ -1,6 +1,6 @@
 #pragma once
 #include "afxwin.h"
-
+#include "NaviMesh.h"
 
 // MeshPage 대화 상자입니다.
 
@@ -68,6 +68,7 @@ public:
 	float m_fTransformRotY=0;
 	float m_fTransformRotZ=0;
 
+	
 
 	afx_msg void OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult);
@@ -80,4 +81,9 @@ public:
 	afx_msg void OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBnClickedRadio3();
 	afx_msg void OnBnClickedRadio5();
+
+	//SAVE
+	afx_msg void OnBnClickedButton7();
+	//LOAD
+	afx_msg void OnBnClickedButton8();
 };

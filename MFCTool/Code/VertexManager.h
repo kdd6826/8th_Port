@@ -32,7 +32,7 @@ public:
 	void Set_SphereColor(Engine::CSphere* Vtx, D3DCOLOR color);
 	//TerrainTri컬러값을 바꾼다. (Buffer컴포넌트, 컬러)
 	void Set_TriColor(Engine::CTerrainTriCol * Vtx, D3DCOLOR color);
-
+	list<CSphereMesh*> GetList_Sphere() { return list_Sphere; }
 	//Terrain 지형이 지금 존재하면 true 아니면 false
 	bool TerrainHaveCheck();
 	//좌클릭을 했을때 해당함수 실행
