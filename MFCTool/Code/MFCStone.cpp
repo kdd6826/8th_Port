@@ -2,7 +2,7 @@
 #include "MFCStone.h"
 #include "Export_Function.h"
 #include "MFCToolView.h"
-#include "Sphere.h"
+#include "ObjSphere.h"
 
 CMFCStone::CMFCStone(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -41,7 +41,7 @@ HRESULT CMFCStone::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
 	// Sphere
-	pComponent = m_pColSphereCom = dynamic_cast<Engine::CSphere*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Sphere"));
+	pComponent = m_pColSphereCom = dynamic_cast<Engine::CObjSphere*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_ObjSphere"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
@@ -112,9 +112,16 @@ void CMFCStone::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pColSphereCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pMeshCom->Render_Meshes();
+	if (CMFCToolView::GetInstance()->wireFrame) {
+		m_pMeshCom->Render_Meshes();
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	}
+	else {
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		m_pMeshCom->Render_Meshes();
+	}
 
 	//_matrix matWorld;
 		// m_pTransformCom->Get_WorldMatrix(&matWorld);

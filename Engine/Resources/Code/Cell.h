@@ -15,9 +15,10 @@ public:
 	enum NEIGHBOR {	NEIGHBOR_AB, NEIGHBOR_BC, NEIGHBOR_CA, NEIGHBOR_END };
 	enum MOVING { MOVE, STOP };
 
-private:
+	CCell();
 	explicit CCell(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CCell(void);
+private:
 
 public:
 	const _vec3*	Get_Point(POINT eType) const { return &m_vPoint[eType]; }

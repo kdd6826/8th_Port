@@ -431,6 +431,11 @@ HRESULT CMFCToolView::Loading()
 		L"Buffer_Sphere",
 		Engine::BUFFER_SPHERE),
 		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_ObjSphere",
+		Engine::BUFFER_OBJSPHERE),
+		E_FAIL);
 	//Cube
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
 		Engine::RESOURCE_STATIC,

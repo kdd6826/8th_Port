@@ -914,11 +914,12 @@ void MeshPage::OnBnClickedButton7()
 		int triTotalNumber=0;
 		vector<Engine::CCell*> vecTri=CMFCToolView::GetInstance()->Get_VectorTri(&triTotalNumber);
 
+
 		for (auto& rPair : vecTri)
 		{
 			
-			dwstrByte = sizeof(Engine::CCell) * (vecTri.size() + 1);
-			WriteFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
+			//dwstrByte = sizeof(Engine::CCell) * (vecTri.size() + 1);
+			//WriteFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_A), sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_B), sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_C), sizeof(_vec3), &dwByte, nullptr);
@@ -951,55 +952,99 @@ void MeshPage::OnBnClickedButton8()
 		DWORD dwstrByte = 0;
 		UNITINFO* pUnit = nullptr;
 		int triTotalNumber=0;
-		vector<Engine::CCell*> vecTri=CMFCToolView::GetInstance()->Get_VectorTri(&triTotalNumber);
 
-		for (auto& rPair : vecTri)
-		{
-			
-			dwstrByte = sizeof(Engine::CCell) * (vecTri.size() + 1);
-			WriteFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
-			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_A), sizeof(_vec3), &dwByte, nullptr);
-			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_B), sizeof(_vec3), &dwByte, nullptr);
-			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_C), sizeof(_vec3), &dwByte, nullptr);
-			
-		}
+		bool endCheck = false;
 		while (true)
 		{
-			ReadFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
-			TCHAR* szName = new TCHAR[dwstrByte];
-			pUnit = new UNITINFO;
-			ReadFile(hFile, szName, dwstrByte, &dwByte, nullptr);
-			pUnit->strName = szName;
-			Safe_Delete_Array(szName);
-
-			ReadFile(hFile, &pUnit->iAtt, sizeof(pUnit->iAtt), &dwByte, nullptr);
-			ReadFile(hFile, &pUnit->iDef, sizeof(pUnit->iDef), &dwByte, nullptr);
-			ReadFile(hFile, &pUnit->byJopIndex, sizeof(pUnit->byJopIndex), &dwByte, nullptr);
-			ReadFile(hFile, &pUnit->byItem, sizeof(pUnit->byItem), &dwByte, nullptr);
-			if (0 == dwByte)
+			bool sphereOverlap = false;
+			_vec3 vecPos[3];
+			for (int i = 0; i < 3; i++)
 			{
-				Safe_Delete(pUnit);
+				ReadFile(hFile, &vecPos[i], sizeof(_vec3), &dwByte, nullptr); //세모 꼭짓점 3개 벡터 가져와주고
+				
+				if (0 == dwByte)
+				{
+					//Safe_Delete(pUnit);
+					endCheck = true;
+					break;
+				}
+				Engine::_vec3	vPickPos = vecPos[i];
+				Engine::CGameObject* pGameObject = nullptr;
+				if (Engine::_vec3(0.f, 0.f, 0.f) != vPickPos) {
+					for (auto& obj : VertexManager::GetInstance()->list_TotalSphere)
+					{
+						if (vPickPos == obj->m_pTransformCom->m_vInfo[Engine::INFO_POS]) {
+							pGameObject = obj;
+							dynamic_cast<CSphereMesh*>(pGameObject)->m_Click = true;
+							sphereOverlap = true;
+							VertexManager::GetInstance()->list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
+							VertexManager::GetInstance()->list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
+							break;
+						}
+					}
+					if (pGameObject == nullptr) {
+						pGameObject = CSphereMesh::Create(CMFCToolView::GetInstance()->m_pGraphicDev);
+						dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = vPickPos;
+						CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", pGameObject);
+						//dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
+						dynamic_cast<CSphereMesh*>(pGameObject)->m_Click = true;
+						VertexManager::GetInstance()->list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
+						VertexManager::GetInstance()->list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
+					}
+					//pGameObject->AddRef();
+				}
+
+				//CMFCToolView::GetInstance()->LayerAddObject();
+				if (VertexManager::GetInstance()->list_Sphere.size() == 3) {
+					Engine::_vec3 vtxPos[3];
+					list<CSphereMesh*> TempSphereMesh;
+					int sphereCnt = 0;
+					Engine::_vec3 sphereVec[3];
+					for (int i = 0; i < 3; i++)
+					{
+						VertexManager::GetInstance()->Set_SphereColor(VertexManager::GetInstance()->list_Sphere.front()->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+						VertexManager::GetInstance()->list_Sphere.front()->m_Click = false;
+						vtxPos[i] = VertexManager::GetInstance()->list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+						TempSphereMesh.emplace_back(VertexManager::GetInstance()->list_Sphere.front());
+						sphereVec[sphereCnt] = VertexManager::GetInstance()->list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+						sphereCnt++;
+						VertexManager::GetInstance()->list_Sphere.pop_front();
+					}
+				CTerrainTri* pTerrainTri = CTerrainTri::Create(VertexManager::GetInstance()->m_pGraphicDev, vtxPos[0], vtxPos[1], vtxPos[2]);
+
+
+
+				CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"TerrainTri", pTerrainTri);
+
+				for (int i = 0; i < 3; i++)
+				{
+					pTerrainTri->list_SphereMesh.emplace_back(TempSphereMesh.front());
+					TempSphereMesh.front()->list_pTerrainTri.emplace_back(pTerrainTri);
+					TempSphereMesh.front()->list_pPoint.emplace_back(pTerrainTri->m_Cell->Get_pPoint((Engine::CCell::POINT)i));
+					TempSphereMesh.pop_front();
+				}
+				CMFCToolView::GetInstance()->Sort_TriNumber();
+				MeshPage* pMeshPage = MeshPage::GetInstance();
+
+				if (pMeshPage != nullptr)
+				{
+
+					pMeshPage->treeControl(*pTerrainTri->m_Cell->Get_Index());
+				}
+				if (0 == dwByte)
+				{
+					//Safe_Delete(pUnit);
+					break;
+				}
+				
+			}
+
+
+				//////////////////////////////////////////////
+			}
+			if (endCheck) {
 				break;
 			}
-			//m_mapUnitData.emplace(pUnit->strName, pUnit);
-			//for (int i = 0; i < 3; ++i)
-			//{
-			//	m_JopIndex[i].SetCheck(0);
-			//	m_CheckBox[i].SetCheck(0);
-			//}
-
-			//m_ListBox.AddString(pUnit->strName);
-			//m_iAtt = pUnit->iAtt;
-			//m_iDef = pUnit->iDef;
-			//m_JopIndex[pUnit->byJopIndex].SetCheck(1);
-
-			//if (pUnit->byItem & 강철검)
-			//	m_CheckBox[0].SetCheck(1);
-			//if (pUnit->byItem & 지팡이)
-			//	m_CheckBox[1].SetCheck(1);
-			//if (pUnit->byItem & 나이프)
-			//	m_CheckBox[2].SetCheck(1);
-
 		}
 		CloseHandle(hFile);
 	}
