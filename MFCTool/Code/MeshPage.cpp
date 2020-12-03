@@ -11,6 +11,7 @@
 #include "SphereMesh.h"
 #include "MainFrm.h"
 #include "Cell.h"
+#include "TriCol.h"
 // MeshPage 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(MeshPage, CDialogEx)
@@ -193,9 +194,31 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: 여기 버텍스 넣어야함
 
 	
-	//HTREEITEM hItem = treeNavi.GetSelectedItem();
-	//CStringW a =	treeNavi.GetItemText(hItem);
+	HTREEITEM hItem = treeNavi.GetSelectedItem();
+	CStringW a =	treeNavi.GetItemText(hItem);
+
+	int triNum = CMFCToolView::GetInstance()->Get_VectorTri(&triNum).size();
 	
+
+	//i = p.size();
+	//삼각형 색 복귀
+
+	
+	
+	//VertexManager::GetInstance()->Set_TriColor(CMFCToolView::GetInstance()->Get_TriOfNumber(triNum)->m_pBufferCom, D3DCOLOR_ARGB(255, 100, 255, 100));
+	
+	//원 색 복귀
+	for (int i = 0; i < triNum; ++i)
+	{
+		VertexManager::GetInstance()->Set_TriColor(CMFCToolView::GetInstance()->Get_TriOfNumber(i)->m_pBufferCom, D3DCOLOR_ARGB(255, 100, 255, 100));
+		for(int j = 0; j < 3;j++ )
+		{
+			VertexManager::GetInstance()->Set_SphereColor(CMFCToolView::GetInstance()->Get_TriOfNumber(i)->list_SphereMesh[j]->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+		}
+	}
+
+
+	///////////////////////
 	CPoint point; 
 	UINT nFlags = 0;
 
@@ -217,13 +240,20 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		//삼각형 셀이 선택
 		//VertexManager::GetInstance()->vertex[indexNum];
+
+		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(indexNum);
+		VertexManager::GetInstance()->Set_TriColor(tri->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
+
 		
 	}
 	else if (treeNavi.GetParentItem(selectItem) != 0)
 	{
 		
 		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+
 		int iParentIndex = _ttoi(parentIndex);
+		VertexManager::GetInstance()->Set_TriColor(CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex)->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
+
 		
 		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
 
@@ -235,6 +265,9 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 			Temp++;
 		}
 
+		lastSphereIndex = indexNum;
+		VertexManager::GetInstance()->Set_SphereColor(sphere[indexNum]->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
+		
 		int triIndex;
 		triIndex = _ttoi(parentIndex);
 		
@@ -246,6 +279,9 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
 		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
 		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
+
+		
+		
 		//float m_fTransformPosX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
 		//float m_fTransformPosY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
 		//float m_fTransformPosZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
@@ -913,7 +949,8 @@ void MeshPage::OnBnClickedButton7()
 
 		int triTotalNumber=0;
 		vector<Engine::CCell*> vecTri=CMFCToolView::GetInstance()->Get_VectorTri(&triTotalNumber);
-
+		indexCount = triTotalNumber;
+		vertexCount = triTotalNumber * 3;
 		for (auto& rPair : vecTri)
 		{
 			
@@ -922,8 +959,9 @@ void MeshPage::OnBnClickedButton7()
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_A), sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_B), sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_C), sizeof(_vec3), &dwByte, nullptr);
-			
 		}
+		WriteFile(hFile, &vertexCount, sizeof(int), &dwByte, nullptr);
+		WriteFile(hFile, &indexCount, sizeof(int), &dwByte, nullptr);
 		CloseHandle(hFile);
 	}
 }
@@ -950,19 +988,6 @@ void MeshPage::OnBnClickedButton8()
 		DWORD dwByte = 0;
 		DWORD dwstrByte = 0;
 		UNITINFO* pUnit = nullptr;
-		int triTotalNumber=0;
-		vector<Engine::CCell*> vecTri=CMFCToolView::GetInstance()->Get_VectorTri(&triTotalNumber);
-
-		for (auto& rPair : vecTri)
-		{
-			
-			dwstrByte = sizeof(Engine::CCell) * (vecTri.size() + 1);
-			WriteFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
-			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_A), sizeof(_vec3), &dwByte, nullptr);
-			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_B), sizeof(_vec3), &dwByte, nullptr);
-			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_C), sizeof(_vec3), &dwByte, nullptr);
-			
-		}
 		while (true)
 		{
 			ReadFile(hFile, &dwstrByte, sizeof(DWORD), &dwByte, nullptr);
@@ -981,24 +1006,7 @@ void MeshPage::OnBnClickedButton8()
 				Safe_Delete(pUnit);
 				break;
 			}
-			//m_mapUnitData.emplace(pUnit->strName, pUnit);
-			//for (int i = 0; i < 3; ++i)
-			//{
-			//	m_JopIndex[i].SetCheck(0);
-			//	m_CheckBox[i].SetCheck(0);
-			//}
 
-			//m_ListBox.AddString(pUnit->strName);
-			//m_iAtt = pUnit->iAtt;
-			//m_iDef = pUnit->iDef;
-			//m_JopIndex[pUnit->byJopIndex].SetCheck(1);
-
-			//if (pUnit->byItem & 강철검)
-			//	m_CheckBox[0].SetCheck(1);
-			//if (pUnit->byItem & 지팡이)
-			//	m_CheckBox[1].SetCheck(1);
-			//if (pUnit->byItem & 나이프)
-			//	m_CheckBox[2].SetCheck(1);
 
 		}
 		CloseHandle(hFile);

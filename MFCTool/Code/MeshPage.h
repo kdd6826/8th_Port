@@ -43,6 +43,7 @@ public:
 
 	CTreeCtrl treeNavi;
 	HTREEITEM selectItem;
+	int lastSphereIndex=-1;
 	afx_msg void OnBnClickedButton10();
 	afx_msg void OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult);
 	void CheckChildItems(HTREEITEM _hItem);
@@ -68,7 +69,8 @@ public:
 	float m_fTransformRotY=0;
 	float m_fTransformRotZ=0;
 
-	
+	int vertexCount = 0;
+	int indexCount = 0;
 
 	afx_msg void OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult);

@@ -9,6 +9,7 @@ class CSphereMesh;
 
 class VertexManager
 {
+public:
 	enum class VM_Obj{
 		NONE, SPHERE, TRI, _END
 	};
