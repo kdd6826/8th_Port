@@ -362,7 +362,7 @@ void VertexManager::MouseLClick_NaviMesh()
 
 		if (pMeshPage != nullptr)
 		{
-			pMeshPage->treeControl(pTerrainTri->m_indexNumber);
+			pMeshPage->treeControl(*pTerrainTri->m_Cell->Get_Index());
 			//pMeshPage->tri[triCount] = pMeshPage->treeNavi.InsertItem(L"1", 0, 0, TVI_ROOT, TVI_LAST);
 			//pMeshPage->vertex[triCount][0] = pMeshPage->treeNavi.InsertItem(L"a", 0, 0, pMeshPage->tri[triCount], TVI_LAST);
 			//pMeshPage->vertex[triCount][1] = pMeshPage->treeNavi.InsertItem(L"b", 0, 0, pMeshPage->tri[triCount], TVI_LAST);

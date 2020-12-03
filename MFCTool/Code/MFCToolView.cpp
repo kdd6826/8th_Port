@@ -31,6 +31,7 @@
 #include "NaviMesh.h"
 #include "VertexManager.h"
 #include "TerrainTri.h"
+#include "MFCStone.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -167,6 +168,10 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
 
+	pGameObject = CMFCStone::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
@@ -292,6 +297,7 @@ void CMFCToolView::OnInitialUpdate()
 	Engine::CComponent* pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
+
 
 
 	//m_Camera->m_vEye = { 0.f, 5.f, -10.f };
@@ -420,6 +426,13 @@ HRESULT CMFCToolView::Loading()
 		L"Buffer_TriCol",
 		Engine::BUFFER_TRICOL),
 		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Stone",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+		L"TombStone.X"),
+		E_FAIL);
 
 	//Component
 	Engine::CComponent* pComponent = nullptr;
@@ -431,6 +444,10 @@ HRESULT CMFCToolView::Loading()
 	pComponent = Engine::CCalculator::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Calculator", pComponent);
+
+	pComponent = Engine::COptimization::Create(m_pGraphicDev, true, VTXCNTX, VTXCNTZ);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
 	return S_OK;
 }
@@ -585,7 +602,7 @@ void CMFCToolView::Sort_TriNumber()
 	{
 		if (0 == lstrcmpW(L"TerrainTri", iter2->first))
 		{
-			dynamic_cast<CTerrainTri*>(iter2->second)->m_indexNumber = triCount;
+			dynamic_cast<CTerrainTri*>(iter2->second)->m_Cell->Set_Index(triCount);
 			triCount++;
 		}
 		iter2++;
@@ -605,7 +622,7 @@ CTerrainTri* CMFCToolView::Get_TriOfNumber(int number)
 	{
 		if (0 == lstrcmpW(L"TerrainTri", iter2->first))
 		{
-			if (dynamic_cast<CTerrainTri*>(iter2->second)->m_indexNumber == number)
+			if (*dynamic_cast<CTerrainTri*>(iter2->second)->m_Cell->Get_Index() == number)
 			{
 				return dynamic_cast<CTerrainTri*>(iter2->second);
 			}

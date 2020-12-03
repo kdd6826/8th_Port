@@ -203,6 +203,7 @@
     <ClInclude Include="..\Code\MainFrm.h" />
     <ClInclude Include="..\Code\MapTool.h" />
     <ClInclude Include="..\Code\MeshPage.h" />
+    <ClInclude Include="..\Code\MFCStone.h" />
     <ClInclude Include="..\Code\MFCToolDoc.h" />
     <ClInclude Include="..\Code\MFCToolView.h" />
     <ClInclude Include="..\Code\MFC_Terrain.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="..\Code\MainFrm.cpp" />
     <ClCompile Include="..\Code\MapTool.cpp" />
     <ClCompile Include="..\Code\MeshPage.cpp" />
+    <ClCompile Include="..\Code\MFCStone.cpp" />
     <ClCompile Include="..\Code\MFCToolDoc.cpp" />
     <ClCompile Include="..\Code\MFCToolView.cpp" />
     <ClCompile Include="..\Code\MFC_Terrain.cpp" />
