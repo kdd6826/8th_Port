@@ -56,6 +56,11 @@ public:
 	void Delete_LockObject();
 
 	void Erase_list_TotalSphere(CSphereMesh * sphere);
+
+	//첫번째 인자 삼각형 삭제, 두번째 삼각형으로 값들을 이동
+	void Together_Sphere(CSphereMesh * firstSphere, CSphereMesh * secondSphere);
+	//삼각형 나누기
+	void Only_Sphere(CSphereMesh * sphere);
 	
 	bool isNaviMesh = false;
 	bool isObjectMesh = false;

@@ -496,12 +496,18 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 	switch (lockOnObjName)
 	{
 	case VM_Obj::SPHERE: {
-		CSphereMesh* _sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
-		if (_sphere->m_Click)
-			Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
-		else
-			Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
-		break;
+		if ((Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80) && name == VM_Obj::SPHERE) {
+			Together_Sphere(dynamic_cast<CSphereMesh*>(lockOnObj), dynamic_cast<CSphereMesh*>(obj));
+			break;
+		}
+		else {
+			CSphereMesh* _sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
+			if (_sphere->m_Click)
+				Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+			else
+				Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+			break;
+		}
 	}
 	case VM_Obj::TRI: {
 		CTerrainTri* _tri = dynamic_cast<CTerrainTri*>(lockOnObj);
@@ -568,4 +574,50 @@ void VertexManager::Erase_list_TotalSphere(CSphereMesh* sphere)
 		}
 		iter++;
 	}
+}
+
+void VertexManager::Together_Sphere(CSphereMesh* firstSphere, CSphereMesh* secondSphere)
+{
+	for (auto& tri : firstSphere->list_pTerrainTri)
+	{
+		for (auto& tri2 : secondSphere->list_pTerrainTri)
+		{
+			if (tri == tri2)
+			{
+				//첫번째 원과 두번째원이 같은 삼각형을 참조하고 있을경우, 예외처리
+				if (firstSphere->m_Click)
+					Set_SphereColor(firstSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+				else
+					Set_SphereColor(firstSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+				return;
+			}
+		}
+	}
+
+	for (auto& pVec : firstSphere->list_pPoint)
+	{
+		*pVec  = *secondSphere->list_pPoint.front();
+		secondSphere->list_pPoint.emplace_back(pVec);
+	}
+	firstSphere->list_pPoint.clear();
+	for (auto& pTri : firstSphere->list_pTerrainTri)
+	{
+		for (auto& pSphere2 : pTri->list_SphereMesh)
+		{
+			if (pSphere2 == firstSphere) {
+				pSphere2 = secondSphere;
+				break;
+			}
+		}
+		secondSphere->list_pTerrainTri.emplace_back(pTri);
+	}
+	firstSphere->list_pTerrainTri.clear();
+	secondSphere->Set_InitPoint();
+	Erase_list_TotalSphere(firstSphere);
+	firstSphere->m_Dead = true;
+}
+
+void VertexManager::Only_Sphere(CSphereMesh* sphere)
+{
+
 }
