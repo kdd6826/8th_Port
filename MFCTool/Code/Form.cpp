@@ -77,6 +77,7 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		tab2->ShowWindow(SW_HIDE);
 		tab3->ShowWindow(SW_HIDE);
 		VertexManager::GetInstance()->isNaviMesh = false;
+		VertexManager::GetInstance()->isObjectMesh = false;
 			break;
 	case 1:
 		tab1->ShowWindow(SW_HIDE);
@@ -88,6 +89,7 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		tab2->ShowWindow(SW_HIDE);
 		tab3->ShowWindow(SW_SHOW);
 		VertexManager::GetInstance()->isNaviMesh = false;
+		VertexManager::GetInstance()->isObjectMesh = false;
 			break;
 	default:
 		break;

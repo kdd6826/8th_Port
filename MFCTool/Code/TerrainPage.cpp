@@ -42,7 +42,7 @@ BEGIN_MESSAGE_MAP(TerrainPage, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO1, &TerrainPage::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &TerrainPage::OnBnClickedRadio2)
 	
-	ON_BN_CLICKED(IDC_BUTTON1, &TerrainPage::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON1, &TerrainPage::OnBnClickedTerrainApply)
 	ON_BN_CLICKED(IDC_RADIO1, &TerrainPage::OnBnClickedRadio1)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN2, &TerrainPage::OnXCountSpin)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &TerrainPage::OnZCountSpin)

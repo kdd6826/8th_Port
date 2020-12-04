@@ -265,6 +265,7 @@ void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
 			Temp++;
 		}
 
+
 		lastSphereIndex = indexNum;
 		VertexManager::GetInstance()->Set_SphereColor(sphere[indexNum]->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
 		
@@ -917,12 +918,14 @@ void MeshPage::ObjectRadioBnClicked()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	VertexManager::GetInstance()->isNaviMesh = false;
+	VertexManager::GetInstance()->isObjectMesh = true;
 }
 
 void MeshPage::NaviRadioBnClicked()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	VertexManager::GetInstance()->isNaviMesh = true;
+	VertexManager::GetInstance()->isObjectMesh = false;
 }
 
 

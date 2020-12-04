@@ -57,7 +57,7 @@ void VertexManager::Key_Input(float deltaTime)
 		if (!mouseLClick) {
 			if(isNaviMesh)
 				MouseLClick_NaviMesh();
-			else
+			else if(isObjectMesh)
 				MouseLClick_ObjectMesh();
 			mouseLClick = true;
 		}

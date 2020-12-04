@@ -58,7 +58,7 @@ public:
 	void Erase_list_TotalSphere(CSphereMesh * sphere);
 	
 	bool isNaviMesh = false;
-
+	bool isObjectMesh = false;
 
 public:
 	bool mouseLClick = false;
