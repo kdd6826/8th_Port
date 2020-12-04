@@ -150,7 +150,7 @@
     <ClInclude Include="..\Code\PKH.h">
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\MFCStone.h">
+    <ClInclude Include="..\Code\StaticMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
   </ItemGroup>
@@ -221,7 +221,7 @@
     <ClCompile Include="..\Code\PKH.cpp">
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MFCStone.cpp">
+    <ClCompile Include="..\Code\StaticMesh.cpp">
       <Filter>95. GameObject</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "MFCStone.h"
+#include "StaticMesh.h"
 #include "Export_Function.h"
 #include "MFCToolView.h"
 #include "ObjSphere.h"
 
-CMFCStone::CMFCStone(LPDIRECT3DDEVICE9 pGraphicDev)
+CStaticMesh::CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 
 }
 
-CMFCStone::~CMFCStone(void)
+CStaticMesh::~CStaticMesh(void)
 {
 
 }
 
-HRESULT CMFCStone::Add_Component(void)
+HRESULT CStaticMesh::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 	
@@ -59,9 +59,9 @@ HRESULT CMFCStone::Add_Component(void)
 }
 
 
-CMFCStone* CMFCStone::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CStaticMesh* CStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CMFCStone*	pInstance = new CMFCStone(pGraphicDev);
+	CStaticMesh*	pInstance = new CStaticMesh(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Engine::Safe_Release(pInstance);
@@ -69,13 +69,13 @@ CMFCStone* CMFCStone::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CMFCStone::Free(void)
+void CStaticMesh::Free(void)
 {
 	Engine::CGameObject::Free();
 }
 
 
-HRESULT CMFCStone::Ready_Object(void)
+HRESULT CStaticMesh::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -84,7 +84,7 @@ HRESULT CMFCStone::Ready_Object(void)
 
 	return S_OK;
 }
-Engine::_int CMFCStone::Update_Object(const _float& fTimeDelta)
+Engine::_int CStaticMesh::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
@@ -102,7 +102,7 @@ Engine::_int CMFCStone::Update_Object(const _float& fTimeDelta)
 
 	return 0;
 }
-void CMFCStone::Render_Object(void)
+void CStaticMesh::Render_Object(void)
 {
 	if (false == m_bDraw)
 		return;
@@ -131,7 +131,7 @@ void CMFCStone::Render_Object(void)
 
 
 }
-void CMFCStone::SetUp_OnTerrain(void)
+void CStaticMesh::SetUp_OnTerrain(void)
 {
 	Engine::_vec3	vPosition;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPosition);
@@ -144,7 +144,7 @@ void CMFCStone::SetUp_OnTerrain(void)
 	m_pTransformCom->Move_Pos(vPosition.x, fHeight, vPosition.z);
 }
 
-_bool CMFCStone::Collision_ToObject(const Engine::_tchar * pLayerTag, const Engine::_tchar * pObjTag)
+_bool CStaticMesh::Collision_ToObject(const Engine::_tchar * pLayerTag, const Engine::_tchar * pObjTag)
 {
 	Engine::CCollider*	pPlayerColliderCom = dynamic_cast<Engine::CCollider*>(Engine::Get_Component(pLayerTag, pObjTag, L"Com_Collider", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pPlayerColliderCom, false);

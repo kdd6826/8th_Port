@@ -31,7 +31,7 @@
 #include "NaviMesh.h"
 #include "VertexManager.h"
 #include "TerrainTri.h"
-#include "MFCStone.h"
+#include "StaticMesh.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -180,7 +180,7 @@ HRESULT CMFCToolView::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-	pGameObject = CMFCStone::Create(m_pGraphicDev);
+	pGameObject = CStaticMesh::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
 

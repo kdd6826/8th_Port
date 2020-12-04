@@ -1,6 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "NaviMesh.h"
+#include "afxcmn.h"
 
 // MeshPage 대화 상자입니다.
 
@@ -33,8 +34,8 @@ public:
 	CButton vertexTogetther;
 	CButton vertexOnly;
 
-	HTREEITEM tri[128] , vertex[128][3];
-	
+	HTREEITEM tri[128] , vertex[128][3], objCreateItem, objCreateItemSon[3][128];
+	int objCreateItemSonCount=0;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio1();
 	afx_msg void OnBnClickedRadio2();
@@ -45,11 +46,18 @@ public:
 	HTREEITEM selectItem;
 	int lastSphereIndex = -1;
 	afx_msg void OnBnClickedButton10();
-	afx_msg void OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult);
+
+	void InitTreeCtrl();
+
+	afx_msg void OnNMClickNaviTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMClickObjStaticTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMClickObjDynamicTree(NMHDR *pNMHDR, LRESULT *pResult);
+
 	void CheckChildItems(HTREEITEM _hItem);
 	void UnCheckChildItems(HTREEITEM _hItem);
 
-	afx_msg void OnEnChangeEdit14();
+	
 	CEdit transformPosX;
 	CEdit transformPosY;
 	CEdit transformPosZ;
@@ -88,4 +96,7 @@ public:
 	afx_msg void OnBnClickedSave();
 	//LOAD
 	afx_msg void OnBnClickedLoad();
+	CTreeCtrl treeObjCreate;
+	CTreeCtrl treeObjStatic;
+	CTreeCtrl treeObjDynamic;
 };

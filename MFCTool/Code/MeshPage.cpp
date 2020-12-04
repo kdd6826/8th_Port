@@ -53,6 +53,9 @@ void MeshPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT10, transformRotX);
 	DDX_Control(pDX, IDC_EDIT12, transformRotY);
 	DDX_Control(pDX, IDC_EDIT13, transformRotZ);
+	DDX_Control(pDX, IDC_TREE1, treeObjCreate);
+	DDX_Control(pDX, IDC_TREE2, treeObjStatic);
+	DDX_Control(pDX, IDC_TREE3, treeObjDynamic);
 }
 
 
@@ -60,8 +63,7 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO1, &MeshPage::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &MeshPage::OnBnClickedRadio2)
 	ON_BN_CLICKED(IDC_BUTTON10, &MeshPage::OnBnClickedButton10)
-	ON_NOTIFY(NM_CLICK, IDC_TREE4, &MeshPage::OnNMClickTree4)
-	ON_EN_CHANGE(IDC_EDIT14, &MeshPage::OnEnChangeEdit14)
+	ON_NOTIFY(NM_CLICK, IDC_TREE4, &MeshPage::OnNMClickNaviTree)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN12, &MeshPage::TransformPosXSpin)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN14, &MeshPage::TransformPosYSpin)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN13, &MeshPage::TransformPosZSpin)
@@ -75,6 +77,9 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO3, &MeshPage::ObjectRadioBnClicked)
 	ON_BN_CLICKED(IDC_BUTTON7, &MeshPage::OnBnClickedSave)
 	ON_BN_CLICKED(IDC_BUTTON8, &MeshPage::OnBnClickedLoad)
+	ON_NOTIFY(NM_CLICK, IDC_TREE1, &MeshPage::OnNMClickObjCreateTree)
+	ON_NOTIFY(NM_CLICK, IDC_TREE2, &MeshPage::OnNMClickObjStaticTree)
+	ON_NOTIFY(NM_CLICK, IDC_TREE3, &MeshPage::OnNMClickObjDynamicTree)
 END_MESSAGE_MAP()
 
 
@@ -118,6 +123,8 @@ BOOL MeshPage::OnInitDialog()
 	mouseObject.SetCheck(BST_CHECKED);
 	typeStatic.SetCheck(BST_CHECKED);
 	vertexTogetther.SetCheck(BST_CHECKED);
+
+	InitTreeCtrl();
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -130,14 +137,11 @@ void MeshPage::OnBnClickedRadio1()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CMFCToolView::GetInstance()->wireFrame = false;
 }
-
-
 void MeshPage::OnBnClickedRadio2()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CMFCToolView::GetInstance()->wireFrame = true;
 }
-
 void MeshPage::treeControl(int triCount)
 {
 	WCHAR wstr[16] = {};
@@ -151,9 +155,6 @@ void MeshPage::treeControl(int triCount)
 
 	
 }
-
-
-
 void MeshPage::OnBnClickedButton10()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -187,9 +188,119 @@ void MeshPage::OnBnClickedButton10()
 
 }
 
+void MeshPage::InitTreeCtrl()
+{
+
+	objCreateItem = treeObjCreate.InsertItem(_T("Mesh"), objCreateItem);
+	CFileFind firstFinder, secondFinder,thirdFinder;
+	CString findFile = _T("../../Client/Bin/Resource/Mesh/");
+	CString PathEnd = _T("*.*");
+	CString PathEnd2 = _T("/*.*");
+	CString PathEnd3 = _T("/*.X");
+
+	CString MeshFind;
+	MeshFind += findFile + PathEnd;
+	bool bWorking = firstFinder.FindFile(MeshFind);
+
+	while (bWorking) {
+		bWorking = firstFinder.FindNextFileW();
+		if (firstFinder.IsDirectory())
+		{
+			if (firstFinder.GetFileName() != _T(".")&& firstFinder.GetFileName() != _T(".."))
+			{
+				///////////////////////Dynamic, Static
+				objCreateItemSon[0][objCreateItemSonCount]=treeObjCreate.InsertItem(firstFinder.GetFileName(), objCreateItem);
+				
+				CString temp;
+				temp += findFile + firstFinder.GetFileName() + PathEnd2;
+
+				bool bchildWorking = secondFinder.FindFile(temp);
+				while (bchildWorking) {
+					bchildWorking = secondFinder.FindNextFileW();
+					if (secondFinder.IsDirectory())
+					{
+						if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
+						{
+
+							///////Player
+							objCreateItemSon[1][objCreateItemSonCount] = treeObjCreate.InsertItem(secondFinder.GetFileName(), objCreateItemSon[0][objCreateItemSonCount]);
+							CString temp2;
+							temp2 += findFile + firstFinder.GetFileName() + _T("/")+ secondFinder.GetFileName() + PathEnd3;
+							bool bThirdWorking = thirdFinder.FindFile(temp2);
+							while (bThirdWorking) {
+								bThirdWorking = thirdFinder.FindNextFileW();
+								if (secondFinder.IsDirectory())
+								{
+									if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
+									{
+										
+										objCreateItemSon[2][objCreateItemSonCount] = treeObjCreate.InsertItem(thirdFinder.GetFileName(), objCreateItemSon[1][objCreateItemSonCount]);
+										CString finalPath;
+										finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
+									}
+								}
+							}
+
+							///////
+						}
+					}
+				}
+
+				objCreateItemSonCount++;
+				////////////////////////
+			}
+			
+		}
+	}
+}
+
+void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+
+	///////////////////////
+	CPoint point;
+	UINT nFlags = 0;
+
+	GetCursorPos(&point);
+	::ScreenToClient(treeObjCreate.m_hWnd, &point);
+
+	selectItem = treeObjCreate.HitTest(point, &nFlags);
+	//해당 셀에 담긴 Text
+	CString naviIndex = treeObjCreate.GetItemText(selectItem);
+
+	//Text를 int로 바꾸기
+	int indexNum;
+	indexNum = _ttoi(naviIndex);
+
+	if(naviIndex=)
 
 
-void MeshPage::OnNMClickTree4(NMHDR *pNMHDR, LRESULT *pResult)
+	if (treeObjCreate.GetParentItem(selectItem) == 0)
+	{
+		//삼각형 셀이 선택
+		//VertexManager::GetInstance()->vertex[indexNum];
+
+
+	}
+	else if (treeObjCreate.GetParentItem(selectItem) != 0)
+	{
+
+	}
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	*pResult = 0;
+}
+void MeshPage::OnNMClickObjStaticTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	*pResult = 0;
+}
+void MeshPage::OnNMClickObjDynamicTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	*pResult = 0;
+}
+void MeshPage::OnNMClickNaviTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 여기 버텍스 넣어야함
 
@@ -357,7 +468,6 @@ void MeshPage::CheckChildItems(HTREEITEM _hItem)
 	}
 
 }
-
 void MeshPage::UnCheckChildItems(HTREEITEM _hItem)
 {
 	HTREEITEM hChildItem = treeNavi.GetChildItem(_hItem);
@@ -372,22 +482,6 @@ void MeshPage::UnCheckChildItems(HTREEITEM _hItem)
 
 		hChildItem = treeNavi.GetNextItem(hChildItem, TVGN_NEXT);
 	}
-}
-
-
-void MeshPage::OnEnChangeEdit14()
-{
-	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// CDialogEx::OnInitDialog() 함수를 재지정 
-	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-	// 이 알림 메시지를 보내지 않습니다.
-
-	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	//CWnd *p = GetDlgItem(IDC_EDIT14);
-	//SetDlgItemText(IDC_EDIT14, L"하이");
-
-	
-	//VertexManager::GetInstance()->vertex[0][0].x;
 }
 
 
@@ -450,8 +544,6 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT14, cVertex);
 	}
 }
-
-
 void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -513,8 +605,6 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT15, cVertex);
 	}
 }
-
-
 void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -573,8 +663,6 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT16, cVertex);
 	}
 }
-
-
 void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -630,8 +718,6 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT10, cVertex);
 	}
 }
-
-
 void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -685,8 +771,6 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT12, cVertex);
 	}
 }
-
-
 void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -740,8 +824,6 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT13, cVertex);
 	}
 }
-
-
 void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -797,8 +879,6 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT5, cVertex);
 	}
 }
-
-
 void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -855,8 +935,6 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT7, cVertex);
 	}
 }
-
-
 void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
@@ -914,22 +992,19 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT8, cVertex);
 	}
 }
+
 void MeshPage::ObjectRadioBnClicked()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	VertexManager::GetInstance()->isNaviMesh = false;
 	VertexManager::GetInstance()->isObjectMesh = true;
 }
-
 void MeshPage::NaviRadioBnClicked()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	VertexManager::GetInstance()->isNaviMesh = true;
 	VertexManager::GetInstance()->isObjectMesh = false;
 }
-
-
-
 
 void MeshPage::OnBnClickedSave()
 {
@@ -965,8 +1040,6 @@ void MeshPage::OnBnClickedSave()
 		CloseHandle(hFile);
 	}
 }
-
-
 void MeshPage::OnBnClickedLoad()
 {
 	UpdateData(TRUE);
@@ -1087,3 +1160,5 @@ void MeshPage::OnBnClickedLoad()
 	}
 	UpdateData(FALSE);
 }
+
+
