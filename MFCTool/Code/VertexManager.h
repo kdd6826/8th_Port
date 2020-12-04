@@ -28,6 +28,7 @@ public:
 
 	//구체를 클릭했을때, 실패하면 nullptr 성공하면 해당 SphereMesh 포인터
 	CSphereMesh* Picking_Sphere(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
+	Engine::CGameObject* Picking_ObjectMesh(HWND hWnd, Engine::CTransform* pTerrainTransformCom);
 	//Sphere컬러값을 바꾼다. (Buffer컴포넌트, 컬러)
 	void Set_SphereColor(Engine::CSphere* Vtx, D3DCOLOR color);
 	//TerrainTri컬러값을 바꾼다. (Buffer컴포넌트, 컬러)
@@ -37,6 +38,8 @@ public:
 	bool TerrainHaveCheck();
 	//좌클릭을 했을때 해당함수 실행
 	void MouseLClick_NaviMesh();
+	void MouseLClick_ObjectMesh();
+	void MouseRClick_NaviMesh();
 	//락온 해제시 그전꺼 색상 바꿔주는등 Or 새로운 락온 객체 설정
 	void LockOnObject(VM_Obj name, Engine::CGameObject * obj);
 	
@@ -57,7 +60,7 @@ public:
 	bool isNaviMesh = false;
 
 
-private:
+public:
 	bool mouseLClick = false;
 	bool mouseRClick = false;
 	bool KeyC = false;

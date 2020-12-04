@@ -58,6 +58,9 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_SPHERE:
 		pResources = CSphere::Create(pGraphicDev);
 		break;
+	case BUFFER_OBJSPHERE:
+		pResources = CObjSphere::Create(pGraphicDev);
+		break;
 
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);

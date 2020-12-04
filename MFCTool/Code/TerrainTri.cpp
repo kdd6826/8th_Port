@@ -194,3 +194,36 @@ void CTerrainTri::DeleteWithSphere()
 
 	m_Dead = true;
 }
+
+CTerrainTri* CTerrainTri::CellToCreate(Engine::CCell* _cell)
+{
+	m_Cell = _cell;
+	CSphereMesh* sphereMesh[3];
+	_vec3 spherePos[3];
+	for (int i = 0; i < 3; i++)
+	{
+		Engine::CGameObject* pGameObject = nullptr;
+		Engine::_vec3* cellPos = _cell->Get_pPoint((Engine::CCell::POINT)i);
+		for (auto& sphere : VertexManager::GetInstance()->list_TotalSphere)
+		{
+			if (sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] != *cellPos)
+			{
+				pGameObject = CSphereMesh::Create(m_pGraphicDev);
+				spherePos[i] = dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = *cellPos;
+				CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", pGameObject);
+			}
+			sphere->list_pPoint.emplace_back(cellPos);
+			sphereMesh[i] = sphere;
+		}
+	}
+	CTerrainTri* pTerrainTri = CTerrainTri::Create(m_pGraphicDev, spherePos[0], spherePos[1], spherePos[2]);
+	CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"TerrainTri", pTerrainTri);
+
+	for (int i = 0; i < 3; i++)
+	{
+		pTerrainTri->list_SphereMesh.emplace_back(sphereMesh[i]);
+		sphereMesh[i]->list_pTerrainTri.emplace_back(pTerrainTri);
+		//sphereMesh[i]->list_pPoint.emplace_back(pTerrainTri->m_Cell->Get_pPoint((CCell::POINT)i));
+	}
+	return pTerrainTri;
+}

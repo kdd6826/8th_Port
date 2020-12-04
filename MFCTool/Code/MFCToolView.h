@@ -44,6 +44,8 @@ private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
 	HRESULT Ready_Environment_Layer(const _tchar * pLayerTag);
+	HRESULT Ready_GameLogic_Layer(const _tchar* pLayerTag);
+
 
 
 public:

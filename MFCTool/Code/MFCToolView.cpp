@@ -31,6 +31,7 @@
 #include "NaviMesh.h"
 #include "VertexManager.h"
 #include "TerrainTri.h"
+#include "MFCStone.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -172,6 +173,22 @@ HRESULT CMFCToolView::Ready_Environment_Layer(const _tchar * pLayerTag)
 	return S_OK;
 }
 
+HRESULT CMFCToolView::Ready_GameLogic_Layer(const _tchar* pLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CMFCStone::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+
+	m_mapLayer.emplace(pLayerTag, pLayer);
+
+	return S_OK;
+}
+
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
 {
 	CMFCToolDoc* pDoc = GetDocument();
@@ -288,10 +305,12 @@ void CMFCToolView::OnInitialUpdate()
 	}
 	////////
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"));
+	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"));
 	// Calculator
 	Engine::CComponent* pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
+
 
 
 	//m_Camera->m_vEye = { 0.f, 5.f, -10.f };
@@ -306,27 +325,30 @@ void CMFCToolView::Update(float deltaTime)
 	Key_Input(deltaTime);
 
 	///////////////// Update
-	auto&	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
-	if (iter == m_mapLayer.end())
-		return;
-	//iter->second->Get_mapObject();
-	for (auto iter2 = iter->second->m_mapObject.begin(); iter2 != iter->second->m_mapObject.end();)
+	//auto&	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(L"Environment"));
+	//if (iter == m_mapLayer.end())
+	//	return;
+	////iter->second->Get_mapObject();
+	for (auto& iter = m_mapLayer.begin(); iter != m_mapLayer.end(); iter++)
 	{
-		int dead = iter2->second->Update_Object(deltaTime);
-		if (dead == 1) {
-			Engine::Safe_Release(iter2->second);
-			if (0 == lstrcmpW(L"TerrainTri", iter2->first))
-			{
-				iter2 = iter->second->m_mapObject.erase(iter2);
-				Sort_TriNumber();
+		for (auto iter2 = iter->second->m_mapObject.begin(); iter2 != iter->second->m_mapObject.end();)
+		{
+			int dead = iter2->second->Update_Object(deltaTime);
+			if (dead == 1) {
+				Engine::Safe_Release(iter2->second);
+				if (0 == lstrcmpW(L"TerrainTri", iter2->first))
+				{
+					iter2 = iter->second->m_mapObject.erase(iter2);
+					Sort_TriNumber();
+				}
+				else
+				{
+					iter2 = iter->second->m_mapObject.erase(iter2);
+				}
 			}
-			else
-			{
-				iter2 = iter->second->m_mapObject.erase(iter2);
+			else {
+				iter2++;
 			}
-		}
-		else {
-			iter2++;
 		}
 	}
 	m_Camera->Update_Object(deltaTime);
@@ -409,6 +431,11 @@ HRESULT CMFCToolView::Loading()
 		L"Buffer_Sphere",
 		Engine::BUFFER_SPHERE),
 		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_ObjSphere",
+		Engine::BUFFER_OBJSPHERE),
+		E_FAIL);
 	//Cube
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
 		Engine::RESOURCE_STATIC,
@@ -419,6 +446,13 @@ HRESULT CMFCToolView::Loading()
 		Engine::RESOURCE_STATIC,
 		L"Buffer_TriCol",
 		Engine::BUFFER_TRICOL),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Stone",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+		L"TombStone.X"),
 		E_FAIL);
 
 	//Component
@@ -431,6 +465,10 @@ HRESULT CMFCToolView::Loading()
 	pComponent = Engine::CCalculator::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Calculator", pComponent);
+
+	pComponent = Engine::COptimization::Create(m_pGraphicDev, true, VTXCNTX, VTXCNTZ);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
 	return S_OK;
 }
@@ -585,7 +623,7 @@ void CMFCToolView::Sort_TriNumber()
 	{
 		if (0 == lstrcmpW(L"TerrainTri", iter2->first))
 		{
-			dynamic_cast<CTerrainTri*>(iter2->second)->m_indexNumber = triCount;
+			dynamic_cast<CTerrainTri*>(iter2->second)->m_Cell->Set_Index(triCount);
 			triCount++;
 		}
 		iter2++;
@@ -605,7 +643,7 @@ CTerrainTri* CMFCToolView::Get_TriOfNumber(int number)
 	{
 		if (0 == lstrcmpW(L"TerrainTri", iter2->first))
 		{
-			if (dynamic_cast<CTerrainTri*>(iter2->second)->m_indexNumber == number)
+			if (*dynamic_cast<CTerrainTri*>(iter2->second)->m_Cell->Get_Index() == number)
 			{
 				return dynamic_cast<CTerrainTri*>(iter2->second);
 			}

@@ -29,6 +29,7 @@ public:
 	void Set_InitBuffer();
 	// 삼각형 삭제하는 함수
 	void DeleteWithSphere();
+	CTerrainTri* CellToCreate(Engine::CCell* _cell);
 	//void Set_VtxPos();
 private:
 	HRESULT		Add_Component(_vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
@@ -45,7 +46,7 @@ public:
 	Engine::CCell* m_Cell;
 	vector <CSphereMesh*> list_SphereMesh; // 자기를 구성하는 SphereMesh 3개 / 꼭짓점
 	bool m_Dead = false;
-	int m_indexNumber = -1;
+	//int m_indexNumber = -1;
 public:
 	static CTerrainTri* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 	//list<Engine::VTXCOL*> list_pVtx;

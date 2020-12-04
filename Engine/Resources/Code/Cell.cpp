@@ -2,6 +2,10 @@
 
 USING(Engine)
 
+Engine::CCell::CCell()
+{
+}
+
 Engine::CCell::CCell(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pD3DXLine(nullptr)
 	, m_pGraphicDev(pGraphicDev)
