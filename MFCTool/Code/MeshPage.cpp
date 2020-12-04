@@ -62,19 +62,19 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON10, &MeshPage::OnBnClickedButton10)
 	ON_NOTIFY(NM_CLICK, IDC_TREE4, &MeshPage::OnNMClickTree4)
 	ON_EN_CHANGE(IDC_EDIT14, &MeshPage::OnEnChangeEdit14)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN12, &MeshPage::OnDeltaposSpin12)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN14, &MeshPage::OnDeltaposSpin14)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN13, &MeshPage::OnDeltaposSpin13)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN9, &MeshPage::OnDeltaposSpin9)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN11, &MeshPage::OnDeltaposSpin11)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN10, &MeshPage::OnDeltaposSpin10)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN6, &MeshPage::OnDeltaposSpin6)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN8, &MeshPage::OnDeltaposSpin8)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN7, &MeshPage::OnDeltaposSpin7)
-	ON_BN_CLICKED(IDC_RADIO5, &MeshPage::OnBnClickedRadio5)
-	ON_BN_CLICKED(IDC_RADIO3, &MeshPage::OnBnClickedRadio3)
-	ON_BN_CLICKED(IDC_BUTTON7, &MeshPage::OnBnClickedButton7)
-	ON_BN_CLICKED(IDC_BUTTON8, &MeshPage::OnBnClickedButton8)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN12, &MeshPage::TransformPosXSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN14, &MeshPage::TransformPosYSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN13, &MeshPage::TransformPosZSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN9, &MeshPage::TransformRotXSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN11, &MeshPage::TransformRotYSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN10, &MeshPage::TransformRotZSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN6, &MeshPage::TransformScalXSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN8, &MeshPage::TransformScalYSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN7, &MeshPage::TransformScalZSpin)
+	ON_BN_CLICKED(IDC_RADIO5, &MeshPage::NaviRadioBnClicked)
+	ON_BN_CLICKED(IDC_RADIO3, &MeshPage::ObjectRadioBnClicked)
+	ON_BN_CLICKED(IDC_BUTTON7, &MeshPage::OnBnClickedSave)
+	ON_BN_CLICKED(IDC_BUTTON8, &MeshPage::OnBnClickedLoad)
 END_MESSAGE_MAP()
 
 
@@ -390,7 +390,7 @@ void MeshPage::OnEnChangeEdit14()
 }
 
 
-void MeshPage::OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -451,7 +451,7 @@ void MeshPage::OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -514,7 +514,7 @@ void MeshPage::OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -574,7 +574,7 @@ void MeshPage::OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin9(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -631,7 +631,7 @@ void MeshPage::OnDeltaposSpin9(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin11(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -686,7 +686,7 @@ void MeshPage::OnDeltaposSpin11(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin10(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -741,7 +741,7 @@ void MeshPage::OnDeltaposSpin10(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin6(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -798,7 +798,7 @@ void MeshPage::OnDeltaposSpin6(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin8(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -856,7 +856,7 @@ void MeshPage::OnDeltaposSpin8(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void MeshPage::OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult)
+void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -913,13 +913,13 @@ void MeshPage::OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult)
 		SetDlgItemText(IDC_EDIT8, cVertex);
 	}
 }
-void MeshPage::OnBnClickedRadio3()
+void MeshPage::ObjectRadioBnClicked()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	VertexManager::GetInstance()->isNaviMesh = false;
 }
 
-void MeshPage::OnBnClickedRadio5()
+void MeshPage::NaviRadioBnClicked()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	VertexManager::GetInstance()->isNaviMesh = true;
@@ -928,7 +928,7 @@ void MeshPage::OnBnClickedRadio5()
 
 
 
-void MeshPage::OnBnClickedButton7()
+void MeshPage::OnBnClickedSave()
 {
 	CFileDialog Dlg(FALSE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
 	TCHAR szCurPath[MAX_PATH] = L"";
@@ -967,7 +967,7 @@ void MeshPage::OnBnClickedButton7()
 }
 
 
-void MeshPage::OnBnClickedButton8()
+void MeshPage::OnBnClickedLoad()
 {
 	UpdateData(TRUE);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.

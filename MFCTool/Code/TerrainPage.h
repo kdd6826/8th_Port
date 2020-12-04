@@ -32,15 +32,15 @@ public:
 	CButton Render_WireFrame;
 	virtual BOOL OnInitDialog();
 	
-	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedTerrainApply();
 	CEdit xCount;
 	CEdit zCount;
 	CEdit interval;
 	CEdit detail;
 	int iXCount=2, iZCount=2, iInterval, iDetail;
-	afx_msg void OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnXCountSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnZCountSpin(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin4(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin5(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnBnClickedButton8();
+	afx_msg void OnBnClickedLoad();
 };

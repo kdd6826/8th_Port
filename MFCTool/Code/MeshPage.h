@@ -72,20 +72,20 @@ public:
 	int vertexCount = 0;
 	int indexCount = 0;
 
-	afx_msg void OnDeltaposSpin12(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin14(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin9(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin11(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin10(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin6(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin8(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin7(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnBnClickedRadio3();
-	afx_msg void OnBnClickedRadio5();
+	afx_msg void TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void ObjectRadioBnClicked();
+	afx_msg void NaviRadioBnClicked();
 
 	//SAVE
-	afx_msg void OnBnClickedButton7();
+	afx_msg void OnBnClickedSave();
 	//LOAD
-	afx_msg void OnBnClickedButton8();
+	afx_msg void OnBnClickedLoad();
 };

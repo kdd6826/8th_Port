@@ -44,11 +44,11 @@ BEGIN_MESSAGE_MAP(TerrainPage, CDialogEx)
 	
 	ON_BN_CLICKED(IDC_BUTTON1, &TerrainPage::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_RADIO1, &TerrainPage::OnBnClickedRadio1)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN2, &TerrainPage::OnDeltaposSpin2)
-	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &TerrainPage::OnDeltaposSpin3)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN2, &TerrainPage::OnXCountSpin)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &TerrainPage::OnZCountSpin)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN4, &TerrainPage::OnDeltaposSpin4)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN5, &TerrainPage::OnDeltaposSpin5)
-	ON_BN_CLICKED(IDC_BUTTON8, &TerrainPage::OnBnClickedButton8)
+	ON_BN_CLICKED(IDC_BUTTON8, &TerrainPage::OnBnClickedLoad)
 END_MESSAGE_MAP()
 
 
@@ -106,7 +106,7 @@ BOOL TerrainPage::OnInitDialog()
 }
 
 
-void TerrainPage::OnBnClickedButton1()
+void TerrainPage::OnBnClickedTerrainApply()
 {
 
 	///////////////////
@@ -151,7 +151,7 @@ void TerrainPage::OnBnClickedButton1()
 
 
 
-void TerrainPage::OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult)
+void TerrainPage::OnXCountSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -174,7 +174,7 @@ void TerrainPage::OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void TerrainPage::OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult)
+void TerrainPage::OnZCountSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -243,7 +243,7 @@ void TerrainPage::OnDeltaposSpin5(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void TerrainPage::OnBnClickedButton8()
+void TerrainPage::OnBnClickedLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
