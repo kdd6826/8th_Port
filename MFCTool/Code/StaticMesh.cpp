@@ -72,7 +72,7 @@ HRESULT CStaticMesh::Add_Component(CString _mesh)
 	TCHAR* tMesh = nullptr;
 	tMesh = (TCHAR*)(LPCTSTR)_mesh;
 
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, tMesh/*L"Mesh_Stone"*//*_mesh*/));
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE,/* L"Sword"*//*L"Mesh_Stone"*/_mesh));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 

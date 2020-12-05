@@ -316,7 +316,7 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 	else if (treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)))) == 0)
 	{
 		meshText;
-		CMFCToolView::GetInstance()->CreateMesh(L"Sword");
+		CMFCToolView::GetInstance()->CreateMesh(L"Mesh_Sword");
 	}
 
 

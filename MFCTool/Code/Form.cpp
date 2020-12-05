@@ -86,7 +86,7 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		tab3->ShowWindow(SW_HIDE);
 		if(!isInitMeshPage)
 		{
-			CMFCToolView::GetInstance()->Mesh_Load();
+			//CMFCToolView::GetInstance()->Mesh_Load();
 		}
 		isInitMeshPage = true;
 

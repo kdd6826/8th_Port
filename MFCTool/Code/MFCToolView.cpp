@@ -246,9 +246,11 @@ HRESULT CMFCToolView::Mesh_Load()
 
 										if (check1 == L"StaticMesh")
 										{
+											CString ObjTag;
+											ObjTag += L"Mesh_" + secondFinder.GetFileName();
 											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
-												secondFinder.GetFileName(), //Sword,TombStone
+												ObjTag, //Sword,TombStone
 												Engine::TYPE_STATIC,
 												finalPath,					//../Bin/Resource/Mesh/......
 												thirdFinder.GetFileName()), //Sword.X
@@ -568,6 +570,8 @@ HRESULT CMFCToolView::Loading()
 		L"TombStone.X"),
 		E_FAIL);
 
+	Mesh_Load();
+
 	//Component
 	Engine::CComponent* pComponent = nullptr;
 
@@ -583,7 +587,7 @@ HRESULT CMFCToolView::Loading()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
-	//Mesh_Load();
+	
 
 	return S_OK;
 }
