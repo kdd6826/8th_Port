@@ -334,6 +334,12 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 
 
 		CMFCToolView::GetInstance()->CreateMesh(CMFCToolView::GetInstance()->staticMesh[iMeshNum]);
+
+
+		objStatic[0] = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+		
+
+
 	}
 
 
