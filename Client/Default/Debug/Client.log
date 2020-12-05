@@ -19,6 +19,5 @@ c:\users\gmh\desktop\8th2\client\header\macro.h(37): warning C4005: 'FAILED_CHEC
   Loading.cpp
   Effect.cpp
   DynamicCamera.cpp
-     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\GMH\Desktop\8th2\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

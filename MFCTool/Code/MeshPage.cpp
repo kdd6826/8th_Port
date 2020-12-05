@@ -12,6 +12,7 @@
 #include "MainFrm.h"
 #include "Cell.h"
 #include "TriCol.h"
+#include "MFCStaticMesh.h"
 // MeshPage 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(MeshPage, CDialogEx)
@@ -324,11 +325,13 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 	//XFile etc.
 	else if (treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)))) == 0)
 	{
-		CString text,MeshNum;
+		CString text,MeshNum,temp2, objStaticTreeText;
 		int iMeshNum;
 		//text += L"Mesh_" + treeObjCreate.GetItemText((treeObjCreate.GetParentItem(selectItem)));
+		
+		temp2.Format(_T("%d"), objStaticCreateCount);
 
-		text = treeObjCreate.GetItemText(selectItem);
+		text = treeObjCreate.GetItemText(selectItem)+ _T(" - ") +temp2;
 		MeshNum = text.Left(2);
 		iMeshNum = _ttoi(MeshNum);
 
@@ -336,10 +339,10 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 		CMFCToolView::GetInstance()->CreateMesh(CMFCToolView::GetInstance()->staticMesh[iMeshNum]);
 
 
-		objStatic[0] = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+		objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
 		
 
-
+		++objStaticCreateCount;
 	}
 
 
@@ -349,6 +352,51 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 void MeshPage::OnNMClickObjStaticTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	CPoint point;
+	UINT nFlags = 0;
+
+	GetCursorPos(&point);
+	::ScreenToClient(treeObjStatic.m_hWnd, &point);
+
+	selectItem = treeObjStatic.HitTest(point, &nFlags);
+
+	if (selectItem == nullptr)
+	{
+		return;
+	}
+	CString a = treeObjStatic.GetItemText(selectItem);
+	CString objStaticIndexNum = a.Right(1);
+	size_t temp = 0;
+	temp = _ttoi(objStaticIndexNum);
+
+	m_fTransformPosX = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x;
+	m_fTransformPosY = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y;
+	m_fTransformPosZ = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z;
+
+	m_fTransformScalX = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x;
+	m_fTransformScalY = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y;
+	m_fTransformScalZ = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z;
+	//Text를 int로 바꾸기
+
+	CString cVertexX, cVertexY, cVertexZ;
+
+	cVertexX.Format(_T("%9.1f\n"), m_fTransformPosX);
+	cVertexY.Format(_T("%9.1f\n"), m_fTransformPosY);
+	cVertexZ.Format(_T("%9.1f\n"), m_fTransformPosZ);
+
+	SetDlgItemText(IDC_EDIT14, cVertexX);
+	SetDlgItemText(IDC_EDIT15, cVertexY);
+	SetDlgItemText(IDC_EDIT16, cVertexZ);
+
+	cVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
+	cVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
+	cVertexZ.Format(_T("%9.1f\n"), m_fTransformScalZ);
+
+	SetDlgItemText(IDC_EDIT5, cVertexX);
+	SetDlgItemText(IDC_EDIT7, cVertexY);
+	SetDlgItemText(IDC_EDIT8, cVertexZ);
+
 	*pResult = 0;
 }
 void MeshPage::OnNMClickObjDynamicTree(NMHDR *pNMHDR, LRESULT *pResult)
@@ -541,124 +589,206 @@ void MeshPage::UnCheckChildItems(HTREEITEM _hItem)
 }
 
 
+////
+#pragma region Spin
+//
+
+
 void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	//////////////////////////
 
-
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
 
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+
+
+			m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+			m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+			m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+
+			////////////////////
+
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosX += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+			}
+			else
+			{
+				m_fTransformPosX -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+			}
+			*pResult = 0;
+			sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT14, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
+	
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+			
+			//해당 셀에 담긴 Text
+			CString a = treeObjStatic.GetItemText(selectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+	
 
-		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
+			//Text를 int로 바꾸기
 
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
+			
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosX += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+			}
+			else
+			{
+				m_fTransformPosX -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+			SetDlgItemText(IDC_EDIT14, cVertex);
 
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
-
-
-		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
-		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
-		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
-
-		////////////////////
-
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformPosX += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
-		}
-		else
-		{
-			m_fTransformPosX -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
-		}
-		*pResult = 0;
-		sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
-		sphere[indexNum]->Set_InitPoint();
-		SetDlgItemText(IDC_EDIT14, cVertex);
+			*pResult = 0;
+			
+			
+			
+		
 	}
 }
+
 void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 		//////////////////////////
 
-
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+
+
+			m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+			m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+			m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosY += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+			}
+			else
+			{
+				m_fTransformPosY -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+			}
+			*pResult = 0;
+
+			sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT15, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
-
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
-
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
 
 
-		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
-		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
-		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+		///////////////////
+		//CString cVertex;
+		//if (pNMUpDown->iDelta < 0)
+		//{
+		//	m_fTransformPosY += 0.1f;
+		//	cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+		//}
+		//else
+		//{
+		//	m_fTransformPosY -= 0.1f;
+		//	cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+		//}
+		//dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+		//SetDlgItemText(IDC_EDIT15, cVertex);
 
-		////////////////////
-		CString cVertex;
-
-
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformPosY += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
-		}
-		else
-		{
-			m_fTransformPosY -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
-		}
 		*pResult = 0;
 
-		sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
-		sphere[indexNum]->Set_InitPoint();
-		SetDlgItemText(IDC_EDIT15, cVertex);
+
+
+
 	}
 }
 void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
@@ -666,43 +796,78 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	///////////////
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+
+
+			m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+			m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+			m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosZ += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+			}
+			else
+			{
+				m_fTransformPosZ -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+			}
+			*pResult = 0;
+			sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT16, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
-
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
-
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
 
 
-		m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
-		m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
-		m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
-
-		////////////////////
+		///////////////////
 		CString cVertex;
-
-
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformPosZ += 0.1f;
@@ -713,10 +878,14 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformPosZ -= 0.1f;
 			cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
 		}
-		*pResult = 0;
-		sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
-		sphere[indexNum]->Set_InitPoint();
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
 		SetDlgItemText(IDC_EDIT16, cVertex);
+
+		*pResult = 0;
+
+
+
+
 	}
 }
 void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
@@ -724,40 +893,75 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	///////////////
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+
+
+
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotX += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+			}
+			else
+			{
+				m_fTransformRotX -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+			}
+			*pResult = 0;
+			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT10, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
-
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
-
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
 
 
-
-		////////////////////
+		///////////////////
 		CString cVertex;
-
-
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformRotX += 0.1f;
@@ -768,10 +972,14 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformRotX -= 0.1f;
 			cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
 		}
-		*pResult = 0;
-		sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
-		sphere[indexNum]->Set_InitPoint();
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);;
 		SetDlgItemText(IDC_EDIT10, cVertex);
+
+		*pResult = 0;
+
+
+
+
 	}
 }
 void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
@@ -779,38 +987,73 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	///////////////
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotY += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+			}
+			else
+			{
+				m_fTransformRotY -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+			}
+			*pResult = 0;
+			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT12, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
 
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
 
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
-
-		////////////////////
+		///////////////////
 		CString cVertex;
-
-
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformRotY += 0.1f;
@@ -821,10 +1064,14 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformRotY -= 0.1f;
 			cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
 		}
-		*pResult = 0;
-		sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
-		sphere[indexNum]->Set_InitPoint();
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
 		SetDlgItemText(IDC_EDIT12, cVertex);
+
+		*pResult = 0;
+
+
+
+
 	}
 }
 void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
@@ -832,38 +1079,73 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	///////////////
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotZ += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+			}
+			else
+			{
+				m_fTransformRotZ -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+			}
+			*pResult = 0;
+			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT13, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
 
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
 
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
-
-		////////////////////
+		///////////////////
 		CString cVertex;
-
-
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformRotZ += 0.1f;
@@ -874,10 +1156,14 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformRotZ -= 0.1f;
 			cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
 		}
-		*pResult = 0;
-		sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
-		sphere[indexNum]->Set_InitPoint();
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
 		SetDlgItemText(IDC_EDIT13, cVertex);
+
+		*pResult = 0;
+
+
+
+
 	}
 }
 void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
@@ -885,40 +1171,75 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 		///////////////
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+			m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
+			m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
+			m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalX += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+			}
+			else
+			{
+				m_fTransformScalX -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+			}
+			*pResult = 0;
+			sphere[indexNum]->m_pTransformCom->m_vScale.x = m_fTransformScalX;
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT5, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
 
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
 
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
-		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
-		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
-		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
-		////////////////////
+		///////////////////
 		CString cVertex;
-
-
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformScalX += 0.1f;
@@ -929,10 +1250,14 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformScalX -= 0.1f;
 			cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
 		}
-		*pResult = 0;
-		sphere[indexNum]->m_pTransformCom->m_vScale.x= m_fTransformScalX;
-		sphere[indexNum]->Set_InitPoint();
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
 		SetDlgItemText(IDC_EDIT5, cVertex);
+
+		*pResult = 0;
+
+
+
+
 	}
 }
 void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
@@ -940,40 +1265,76 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 		///////////////
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+			m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
+			m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
+			m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalY += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+			}
+			else
+			{
+				m_fTransformScalY -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+			}
+			*pResult = 0;
+
+			sphere[indexNum]->m_pTransformCom->m_vScale.y = m_fTransformScalY;
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT7, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
 
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
 
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
-		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
-		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
-		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
-		////////////////////
+		///////////////////
 		CString cVertex;
-
-
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformScalY += 0.1f;
@@ -984,11 +1345,14 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformScalY -= 0.1f;
 			cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
 		}
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
+		SetDlgItemText(IDC_EDIT7, cVertex);
+
 		*pResult = 0;
 
-		sphere[indexNum]->m_pTransformCom->m_vScale.y = m_fTransformScalY;
-		sphere[indexNum]->Set_InitPoint();
-		SetDlgItemText(IDC_EDIT7, cVertex);
+
+
+
 	}
 }
 void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
@@ -996,42 +1360,77 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 		///////////////
-	if (treeNavi.GetParentItem(selectItem) != 0)
+	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		//HTREEITEM hItem = treeNavi;
-		treeNavi.GetItemText(selectItem);
+		if (treeNavi.GetParentItem(selectItem) != 0)
+		{
+			//HTREEITEM hItem = treeNavi;
+			treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+			CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//Text를 int로 바꾸기
+			int indexNum;
+			indexNum = _ttoi(naviIndex);
+
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			int iParentIndex = _ttoi(parentIndex);
+
+			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+			CSphereMesh* sphere[3];
+			int Temp = 0;
+			for (auto& _sphere : tri->list_SphereMesh)
+			{
+				sphere[Temp] = _sphere;
+				Temp++;
+			}
+
+			int triIndex;
+			triIndex = _ttoi(parentIndex);
+
+			m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
+			m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
+			m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
+
+			////////////////////
+			CString cVertex;
+
+
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalZ += 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+			}
+			else
+			{
+				m_fTransformScalZ -= 0.1f;
+				cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+			}
+			*pResult = 0;
+			sphere[indexNum]->m_pTransformCom->m_vScale.z = m_fTransformScalZ;
+			sphere[indexNum]->Set_InitPoint();
+			SetDlgItemText(IDC_EDIT8, cVertex);
+		}
+	}
+	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	{
 
 		//해당 셀에 담긴 Text
-		CString naviIndex = treeNavi.GetItemText(selectItem);
+
+			//해당 셀에 담긴 Text
+		CString a = treeObjStatic.GetItemText(selectItem);
+		CString objStaticIndexNum = a.Right(1);
+		size_t temp = 0;
+		temp = _ttoi(objStaticIndexNum);
+
 
 		//Text를 int로 바꾸기
-		int indexNum;
-		indexNum = _ttoi(naviIndex);
 
-		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-		int iParentIndex = _ttoi(parentIndex);
 
-		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-		CSphereMesh* sphere[3];
-		int Temp = 0;
-		for (auto& _sphere : tri->list_SphereMesh)
-		{
-			sphere[Temp] = _sphere;
-			Temp++;
-		}
-
-		int triIndex;
-		triIndex = _ttoi(parentIndex);
-
-		m_fTransformScalX = sphere[indexNum]->m_pTransformCom->m_vScale.x;
-		m_fTransformScalY = sphere[indexNum]->m_pTransformCom->m_vScale.y;
-		m_fTransformScalZ = sphere[indexNum]->m_pTransformCom->m_vScale.z;
-
-		////////////////////
+		///////////////////
 		CString cVertex;
-
-
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformScalZ += 0.1f;
@@ -1042,13 +1441,17 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformScalZ -= 0.1f;
 			cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
 		}
-		*pResult = 0;
-		sphere[indexNum]->m_pTransformCom->m_vScale.z = m_fTransformScalZ;
-		sphere[indexNum]->Set_InitPoint();
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z = m_fTransformScalZ;
 		SetDlgItemText(IDC_EDIT8, cVertex);
+
+		*pResult = 0;
+
+
+
+
 	}
 }
-
+#pragma endregion
 void MeshPage::ObjectRadioBnClicked()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.

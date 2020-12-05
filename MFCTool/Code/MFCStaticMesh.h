@@ -26,6 +26,8 @@ public:
 	virtual Engine::_int Update_Object(const Engine::_float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 
+	Engine::CTransform* GetTransform() { return m_pTransformCom; }
+
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		Add_Component(CString _mesh);

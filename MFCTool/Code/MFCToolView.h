@@ -8,6 +8,8 @@
 #include "Base.h"
 #include "Engine_Define.h"
 #include "Export_Function.h"
+
+
 BEGIN(Engine)
 class CGraphicDev;
 
@@ -19,6 +21,7 @@ class CSingleTex;
 class CMFC_Terrain;
 class CDynamicCamera;
 class CSphereMesh;
+class CMFCStaticMesh;
 class CTerrainTri;
 class CMFCToolView : public CScrollView
 {
@@ -89,6 +92,8 @@ public:
 	_vec3 PickUp_OnTerrain(void);
 
 	void CreateMesh(CString _mesh);
+	vector<Engine::CGameObject*> vectorObjStatic;
+
 
 	CTerrainTri* PickUp_Tri(void);
 

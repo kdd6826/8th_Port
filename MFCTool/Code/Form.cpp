@@ -87,9 +87,10 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		if(!isInitMeshPage)
 		{
 			//CMFCToolView::GetInstance()->Mesh_Load();
+			VertexManager::GetInstance()->isObjectMesh = true;
 		}
 		isInitMeshPage = true;
-
+		
 			break;
 	case 2:
 		tab1->ShowWindow(SW_HIDE);

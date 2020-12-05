@@ -34,7 +34,8 @@ public:
 	CButton vertexTogetther;
 	CButton vertexOnly;
 
-	HTREEITEM objStatic[128], tri[128] , vertex[128][3], objCreateItem, objCreateItemSon[3][128];
+	HTREEITEM objStatic, tri[128] , vertex[128][3], objCreateItem, objCreateItemSon[3][128];
+	int objStaticCreateCount = 0;
 	int objCreateItemSonCount=0;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio1();

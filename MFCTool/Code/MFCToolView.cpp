@@ -33,6 +33,7 @@
 #include "TerrainTri.h"
 #include "MFCStaticMesh.h"
 
+
 #include "MeshPage.h"
 
 #ifdef _DEBUG
@@ -253,9 +254,6 @@ HRESULT CMFCToolView::Mesh_Load()
 											
 											ObjTag += L"Mesh_" + secondFinder.GetFileName();
 
-											
-
-											
 											TCHAR* tMesh = nullptr;
 											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
 											staticMesh[loadCount] = tMesh;
@@ -326,7 +324,8 @@ void CMFCToolView::CreateMesh(CString _mesh)
 
 	pGameObject = CMFCStaticMesh::Create(m_pGraphicDev,_mesh);
 	NULL_CHECK_RETURN(pGameObject, );
-	LayerAddObject(L"Environment", _mesh, pGameObject);
+	vectorObjStatic.emplace_back(dynamic_cast<CMFCStaticMesh*>(pGameObject));
+	//LayerAddObject(L"Environment", _mesh, pGameObject);
 }
 
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
@@ -493,6 +492,13 @@ void CMFCToolView::Update(float deltaTime)
 	}
 	m_Camera->Update_Object(deltaTime);
 
+	//½ºÅÂÆ½¸Å½¬
+	for (auto& iterator = vectorObjStatic.begin(); iterator != vectorObjStatic.end(); iterator++)
+	{
+		(*iterator)->Update_Object(deltaTime);
+		
+	}
+	/////
 
 	///////////////// Render
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));

@@ -126,6 +126,7 @@ CMFCStaticMesh* CMFCStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, CString _m
 {
 	CMFCStaticMesh* pInstance = new CMFCStaticMesh(pGraphicDev,_mesh);
 
+
 	if (FAILED(pInstance->Ready_Object(_mesh)))
 		Engine::Safe_Release(pInstance);
 
