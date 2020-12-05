@@ -31,7 +31,7 @@
 #include "NaviMesh.h"
 #include "VertexManager.h"
 #include "TerrainTri.h"
-#include "StaticMesh.h"
+#include "MFCStaticMesh.h"
 
 #include "MeshPage.h"
 
@@ -315,7 +315,7 @@ void CMFCToolView::CreateMesh(CString _mesh)
 {
 	Engine::CGameObject* pGameObject = nullptr;
 
-	pGameObject = CStaticMesh::Create(m_pGraphicDev,_mesh);
+	pGameObject = CMFCStaticMesh::Create(m_pGraphicDev,_mesh);
 	NULL_CHECK_RETURN(pGameObject, );
 	LayerAddObject(L"Environment", _mesh, pGameObject);
 }

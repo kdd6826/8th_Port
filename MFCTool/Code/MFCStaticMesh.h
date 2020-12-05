@@ -13,12 +13,12 @@ class CObjSphere;
 
 END
 
-class CStaticMesh : public Engine::CGameObject
+class CMFCStaticMesh : public Engine::CGameObject
 {
 private:
-	explicit CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev,CString _mesh);
-	virtual ~CStaticMesh(void);
+	explicit CMFCStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CMFCStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev,CString _mesh);
+	virtual ~CMFCStaticMesh(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -45,8 +45,8 @@ private:
 	Engine::_bool						m_bDraw = false;
 
 public:
-	static CStaticMesh*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	static CStaticMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev,CString _mesh);
+	static CMFCStaticMesh*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMFCStaticMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev,CString _mesh);
 	
 
 private:

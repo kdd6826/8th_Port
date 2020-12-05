@@ -1,28 +1,28 @@
 #include "stdafx.h"
-#include "StaticMesh.h"
+#include "MFCStaticMesh.h"
 #include "Export_Function.h"
 #include "MFCToolView.h"
 #include "ObjSphere.h"
 #include "ResourcesMgr.h"
 
-CStaticMesh::CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev)
+CMFCStaticMesh::CMFCStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 
 }
 
-CStaticMesh::CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
+CMFCStaticMesh::CMFCStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
 	: Engine::CGameObject(pGraphicDev)
 {
 
 }
 
-CStaticMesh::~CStaticMesh(void)
+CMFCStaticMesh::~CMFCStaticMesh(void)
 {
 
 }
 
-HRESULT CStaticMesh::Add_Component(void)
+HRESULT CMFCStaticMesh::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 	
@@ -65,7 +65,7 @@ HRESULT CStaticMesh::Add_Component(void)
 	return S_OK;
 }
 
-HRESULT CStaticMesh::Add_Component(CString _mesh)
+HRESULT CMFCStaticMesh::Add_Component(CString _mesh)
 {
 	Engine::CComponent* pComponent = nullptr;
 	Engine::CResourcesMgr::GetInstance();
@@ -112,9 +112,9 @@ HRESULT CStaticMesh::Add_Component(CString _mesh)
 }
 
 
-CStaticMesh* CStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMFCStaticMesh* CMFCStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CStaticMesh*	pInstance = new CStaticMesh(pGraphicDev);
+	CMFCStaticMesh*	pInstance = new CMFCStaticMesh(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Engine::Safe_Release(pInstance);
@@ -122,9 +122,9 @@ CStaticMesh* CStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CStaticMesh* CStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
+CMFCStaticMesh* CMFCStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
 {
-	CStaticMesh* pInstance = new CStaticMesh(pGraphicDev,_mesh);
+	CMFCStaticMesh* pInstance = new CMFCStaticMesh(pGraphicDev,_mesh);
 
 	if (FAILED(pInstance->Ready_Object(_mesh)))
 		Engine::Safe_Release(pInstance);
@@ -134,13 +134,13 @@ CStaticMesh* CStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
 
 
 
-void CStaticMesh::Free(void)
+void CMFCStaticMesh::Free(void)
 {
 	Engine::CGameObject::Free();
 }
 
 
-HRESULT CStaticMesh::Ready_Object(void)
+HRESULT CMFCStaticMesh::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -149,7 +149,7 @@ HRESULT CStaticMesh::Ready_Object(void)
 
 	return S_OK;
 }
-HRESULT CStaticMesh::Ready_Object(CString _mesh)
+HRESULT CMFCStaticMesh::Ready_Object(CString _mesh)
 {
 	FAILED_CHECK_RETURN(Add_Component(_mesh), E_FAIL);
 
@@ -158,7 +158,7 @@ HRESULT CStaticMesh::Ready_Object(CString _mesh)
 
 	return S_OK;
 }
-Engine::_int CStaticMesh::Update_Object(const _float& fTimeDelta)
+Engine::_int CMFCStaticMesh::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
@@ -177,7 +177,7 @@ Engine::_int CStaticMesh::Update_Object(const _float& fTimeDelta)
 	return 0;
 }
 
-void CStaticMesh::Render_Object(void)
+void CMFCStaticMesh::Render_Object(void)
 {
 	if (false == m_bDraw)
 		return;
@@ -206,7 +206,7 @@ void CStaticMesh::Render_Object(void)
 
 
 }
-void CStaticMesh::SetUp_OnTerrain(void)
+void CMFCStaticMesh::SetUp_OnTerrain(void)
 {
 	Engine::_vec3	vPosition;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPosition);
@@ -219,7 +219,7 @@ void CStaticMesh::SetUp_OnTerrain(void)
 	m_pTransformCom->Move_Pos(vPosition.x, fHeight, vPosition.z);
 }
 
-_bool CStaticMesh::Collision_ToObject(const Engine::_tchar * pLayerTag, const Engine::_tchar * pObjTag)
+_bool CMFCStaticMesh::Collision_ToObject(const Engine::_tchar * pLayerTag, const Engine::_tchar * pObjTag)
 {
 	Engine::CCollider*	pPlayerColliderCom = dynamic_cast<Engine::CCollider*>(Engine::Get_Component(pLayerTag, pObjTag, L"Com_Collider", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pPlayerColliderCom, false);
