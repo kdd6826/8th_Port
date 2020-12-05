@@ -41,7 +41,8 @@ public:
 	static CMFCToolView* m_pInstance;
 	// 작업입니다.
 	HRESULT Mesh_Load();
-	int loadCount;
+	int loadCount=0;
+	TCHAR* staticMesh[128];
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);

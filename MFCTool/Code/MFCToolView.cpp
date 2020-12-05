@@ -57,6 +57,7 @@ CMFCToolView* CMFCToolView::m_pInstance = nullptr;
 // CMFCToolView 생성/소멸
 CMFCToolView::CMFCToolView()
 {
+	loadCount = 0;
 	// TODO: 여기에 생성 코드를 추가합니다.
 	if (nullptr == m_pInstance) {
 		m_pInstance = this;
@@ -247,19 +248,27 @@ HRESULT CMFCToolView::Mesh_Load()
 
 										if (check1 == L"StaticMesh")
 										{
-											CString ObjTag;
+											CString ObjTag, temp,meshName;
+
+											
 											ObjTag += L"Mesh_" + secondFinder.GetFileName();
+
+											
+
 											
 											TCHAR* tMesh = nullptr;
 											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
+											staticMesh[loadCount] = tMesh;
 
 											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
-												tMesh, //Sword,TombStone
+												staticMesh[loadCount], //Sword,TombStone
 												Engine::TYPE_STATIC,
 												finalPath,					//../Bin/Resource/Mesh/......
 												thirdFinder.GetFileName()), //Sword.X
 												E_FAIL);
+
+											loadCount++;
 										}
 
 

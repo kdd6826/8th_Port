@@ -39,7 +39,7 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio1();
 	afx_msg void OnBnClickedRadio2();
-	
+	int loadCount = 0;
 	void treeControl(int triCount);
 
 	CTreeCtrl treeNavi;
