@@ -193,7 +193,7 @@ void MeshPage::InitTreeCtrl()
 
 	objCreateItem = treeObjCreate.InsertItem(_T("Mesh"), objCreateItem);
 	CFileFind firstFinder, secondFinder,thirdFinder;
-	CString findFile = _T("../../Client/Bin/Resource/Mesh/");
+	CString findFile = _T("../Bin/Resource/Mesh/");
 	CString PathEnd = _T("*.*");
 	CString PathEnd2 = _T("/*.*");
 	CString PathEnd3 = _T("/*.X");
@@ -315,8 +315,9 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 	//XFile etc.
 	else if (treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)))) == 0)
 	{
-		meshText;
-		CMFCToolView::GetInstance()->CreateMesh(L"Mesh_Sword");
+		CString text;
+		text += L"Mesh_" + treeObjCreate.GetItemText((treeObjCreate.GetParentItem(selectItem)));
+		CMFCToolView::GetInstance()->CreateMesh(L"Mesh_Stone");
 	}
 
 

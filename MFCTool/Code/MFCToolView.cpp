@@ -181,7 +181,7 @@ HRESULT CMFCToolView::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
-
+		
 	//pGameObject = CStaticMesh::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
@@ -195,8 +195,9 @@ HRESULT CMFCToolView::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 
 HRESULT CMFCToolView::Mesh_Load()
 {
+	
 	CFileFind firstFinder, secondFinder, thirdFinder;
-	CString findFile = _T("../../Client/Bin/Resource/Mesh/");
+	CString findFile = _T("..//Bin/Resource/Mesh/");
 	CString PathEnd = _T("*.*");
 	CString PathEnd2 = _T("/*.*");
 	CString PathEnd3 = _T("/*.X");
@@ -248,13 +249,14 @@ HRESULT CMFCToolView::Mesh_Load()
 										{
 											CString ObjTag;
 											ObjTag += L"Mesh_" + secondFinder.GetFileName();
+											
 											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												ObjTag, //Sword,TombStone
 												Engine::TYPE_STATIC,
 												finalPath,					//../Bin/Resource/Mesh/......
 												thirdFinder.GetFileName()), //Sword.X
-												);
+												E_FAIL);
 										}
 										//if (check1 == L"DynamicMesh")
 										//{
@@ -570,7 +572,6 @@ HRESULT CMFCToolView::Loading()
 		L"TombStone.X"),
 		E_FAIL);
 
-	Mesh_Load();
 
 	//Component
 	Engine::CComponent* pComponent = nullptr;
@@ -587,7 +588,9 @@ HRESULT CMFCToolView::Loading()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
-	
+
+	FAILED_CHECK_RETURN(Mesh_Load(),
+		E_FAIL);
 
 	return S_OK;
 }
