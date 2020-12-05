@@ -33,6 +33,8 @@
 #include "TerrainTri.h"
 #include "StaticMesh.h"
 
+#include "MeshPage.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -180,13 +182,124 @@ HRESULT CMFCToolView::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-	pGameObject = CStaticMesh::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+	//pGameObject = CStaticMesh::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+	
+
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
+}
+
+HRESULT CMFCToolView::Mesh_Load()
+{
+	CFileFind firstFinder, secondFinder, thirdFinder;
+	CString findFile = _T("../../Client/Bin/Resource/Mesh/");
+	CString PathEnd = _T("*.*");
+	CString PathEnd2 = _T("/*.*");
+	CString PathEnd3 = _T("/*.X");
+
+	CString MeshFind;
+	MeshFind += findFile + PathEnd;
+	bool bWorking = firstFinder.FindFile(MeshFind);
+
+	while (bWorking) {
+		bWorking = firstFinder.FindNextFileW();
+		if (firstFinder.IsDirectory())
+		{
+			if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
+			{
+				///////////////////////Dynamic, Static
+
+				CString temp;
+				temp += findFile + firstFinder.GetFileName() + PathEnd2;
+
+				bool bchildWorking = secondFinder.FindFile(temp);
+				while (bchildWorking) {
+					bchildWorking = secondFinder.FindNextFileW();
+					if (secondFinder.IsDirectory())
+					{
+						if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
+						{
+
+							///////Player
+							CString temp2;
+							temp2 += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + PathEnd3;
+							bool bThirdWorking = thirdFinder.FindFile(temp2);
+							while (bThirdWorking) {
+								bThirdWorking = thirdFinder.FindNextFileW();
+								if (secondFinder.IsDirectory())
+								{
+									if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
+									{
+
+										CString finalPath;
+										finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
+										CString check1, check2, check3;
+										check1 = firstFinder.GetFileName();
+										check2 = secondFinder.GetFileName(); 
+										check3 = thirdFinder.GetFileName();
+										///////////////////
+
+
+										if (check1 == L"StaticMesh")
+										{
+											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+												Engine::RESOURCE_STAGE,
+												secondFinder.GetFileName(), //Sword,TombStone
+												Engine::TYPE_STATIC,
+												finalPath,					//../Bin/Resource/Mesh/......
+												thirdFinder.GetFileName()), //Sword.X
+												);
+										}
+										//if (check1 == L"DynamicMesh")
+										//{
+										//	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+										//		Engine::RESOURCE_STAGE,
+										//		secondFinder.GetFileName(), //Sword,TombStone
+										//		Engine::TYPE_DYNAMIC,
+										//		finalPath,					//../Bin/Resource/Mesh/......
+										//		thirdFinder.GetFileName()), //Sword.X
+										//		);
+										//}
+
+
+
+										///////////////
+										/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											Engine::RESOURCE_STAGE,
+											L"Mesh_Stone",
+											Engine::TYPE_STATIC,
+											L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+											L"TombStone.X"),
+											E_FAIL);*/
+										///////////////
+									}
+								}
+							}
+
+							///////
+						}
+					}
+				}
+
+				
+				////////////////////////
+			}
+
+		}
+	}
+}
+
+void CMFCToolView::CreateMesh(CString _mesh)
+{
+	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CStaticMesh::Create(m_pGraphicDev,_mesh);
+	NULL_CHECK_RETURN(pGameObject, );
+	LayerAddObject(L"Environment", _mesh, pGameObject);
 }
 
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
@@ -470,6 +583,8 @@ HRESULT CMFCToolView::Loading()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
+	//Mesh_Load();
+
 	return S_OK;
 }
 
@@ -514,6 +629,7 @@ _vec3 CMFCToolView::PickUp_OnTerrain(void)
 	return Temp;
 	//return{ 0.f, 0.f, 0.f };
 }
+
 
 void CMFCToolView::LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag, Engine::CGameObject* pGameObject) {
 	auto	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), Engine::CTag_Finder(pLayerTag));

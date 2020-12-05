@@ -17,15 +17,18 @@ class CStaticMesh : public Engine::CGameObject
 {
 private:
 	explicit CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev,CString _mesh);
 	virtual ~CStaticMesh(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
+	virtual HRESULT Ready_Object(CString _mesh);
 	virtual Engine::_int Update_Object(const Engine::_float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 
 private:
 	HRESULT		Add_Component(void);
+	HRESULT		Add_Component(CString _mesh);
 	void		SetUp_OnTerrain(void);
 	Engine::_bool		Collision_ToObject(const Engine::_tchar* pLayerTag, const Engine::_tchar* pObjTag);
 
@@ -43,6 +46,8 @@ private:
 
 public:
 	static CStaticMesh*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CStaticMesh* Create(LPDIRECT3DDEVICE9 pGraphicDev,CString _mesh);
+	
 
 private:
 	virtual void Free(void) override;

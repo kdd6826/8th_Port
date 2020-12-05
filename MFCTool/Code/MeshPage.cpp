@@ -237,6 +237,29 @@ void MeshPage::InitTreeCtrl()
 										objCreateItemSon[2][objCreateItemSonCount] = treeObjCreate.InsertItem(thirdFinder.GetFileName(), objCreateItemSon[1][objCreateItemSonCount]);
 										CString finalPath;
 										finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
+										CString check,check2;
+										
+										check = thirdFinder.GetFileName();
+										check2 = secondFinder.GetFileName();
+										///////////////////
+
+										//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+										//	Engine::RESOURCE_STAGE,
+										//	secondFinder.GetFileName(), //Sword,TombStone
+										//	Engine::TYPE_STATIC,
+										//    finalPath,					//../Bin/Resource/Mesh/......
+										//	thirdFinder.GetFileName()), //Sword.X
+										//	);
+
+										//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+										//	Engine::RESOURCE_STAGE,
+										//	L"Mesh_Stone",
+										//	Engine::TYPE_STATIC,
+										//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+										//	L"TombStone.X"),
+										//	E_FAIL);
+
+										///////////////
 									}
 								}
 							}
@@ -266,26 +289,36 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 
 	selectItem = treeObjCreate.HitTest(point, &nFlags);
 	//해당 셀에 담긴 Text
-	CString naviIndex = treeObjCreate.GetItemText(selectItem);
+	CString meshText = treeObjCreate.GetItemText(selectItem);
 
 	//Text를 int로 바꾸기
 	int indexNum;
-	indexNum = _ttoi(naviIndex);
-
-	if(naviIndex=)
+	indexNum = _ttoi(meshText);
 
 
+	//Mesh
 	if (treeObjCreate.GetParentItem(selectItem) == 0)
 	{
 		//삼각형 셀이 선택
 		//VertexManager::GetInstance()->vertex[indexNum];
-
-
 	}
-	else if (treeObjCreate.GetParentItem(selectItem) != 0)
+	//Dynamic or Static
+	else if (treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)) == 0)
+	{
+		int i = 0;
+	}
+	//Player, Sword etc.
+	else if (treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem))) == 0)
 	{
 
 	}
+	//XFile etc.
+	else if (treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)))) == 0)
+	{
+		meshText;
+		CMFCToolView::GetInstance()->CreateMesh(L"Sword");
+	}
+
 
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	*pResult = 0;

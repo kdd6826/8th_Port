@@ -40,12 +40,13 @@ public:
 	}
 	static CMFCToolView* m_pInstance;
 	// 작업입니다.
+	HRESULT Mesh_Load();
+	int loadCount;
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
 	HRESULT Ready_Environment_Layer(const _tchar * pLayerTag);
 	HRESULT Ready_GameLogic_Layer(const _tchar* pLayerTag);
-
 
 
 public:
@@ -85,6 +86,8 @@ public:
 	void LayerAddObject(const _tchar* pLayerTag, const _tchar* pObjTag, Engine::CGameObject* pGameObject);
 	void Key_Input(float deltaTime);
 	_vec3 PickUp_OnTerrain(void);
+
+	void CreateMesh(CString _mesh);
 
 	CTerrainTri* PickUp_Tri(void);
 

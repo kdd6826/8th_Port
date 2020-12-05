@@ -47,6 +47,7 @@ public:
 
 
 	CTabCtrl m_Tab;
+	bool isInitMeshPage = false;
 	virtual void OnInitialUpdate();
 };
 

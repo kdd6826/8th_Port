@@ -8,6 +8,7 @@
 #include"TerrainPage.h"
 #include "MeshPage.h"
 #include "PKH.h"
+#include "MFCToolView.h"
 #include "VertexManager.h"
 USING(Client)
 // CForm
@@ -83,6 +84,12 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		tab1->ShowWindow(SW_HIDE);
 		tab2->ShowWindow(SW_SHOW);
 		tab3->ShowWindow(SW_HIDE);
+		if(!isInitMeshPage)
+		{
+			CMFCToolView::GetInstance()->Mesh_Load();
+		}
+		isInitMeshPage = true;
+
 			break;
 	case 2:
 		tab1->ShowWindow(SW_HIDE);
