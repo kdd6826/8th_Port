@@ -317,7 +317,7 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		CString text;
 		text += L"Mesh_" + treeObjCreate.GetItemText((treeObjCreate.GetParentItem(selectItem)));
-		CMFCToolView::GetInstance()->CreateMesh(L"Mesh_Stone");
+		CMFCToolView::GetInstance()->CreateMesh(L"Mesh_Sword");
 	}
 
 

@@ -3,6 +3,7 @@
 #include "Export_Function.h"
 #include "MFCToolView.h"
 #include "ObjSphere.h"
+#include "ResourcesMgr.h"
 
 CStaticMesh::CStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -67,7 +68,7 @@ HRESULT CStaticMesh::Add_Component(void)
 HRESULT CStaticMesh::Add_Component(CString _mesh)
 {
 	Engine::CComponent* pComponent = nullptr;
-
+	Engine::CResourcesMgr::GetInstance();
 	// Mesh
 	TCHAR* tMesh = nullptr;
 	tMesh = (TCHAR*)(LPCTSTR)_mesh;

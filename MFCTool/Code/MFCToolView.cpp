@@ -197,7 +197,7 @@ HRESULT CMFCToolView::Mesh_Load()
 {
 	
 	CFileFind firstFinder, secondFinder, thirdFinder;
-	CString findFile = _T("..//Bin/Resource/Mesh/");
+	CString findFile = _T("../Bin/Resource/Mesh/");
 	CString PathEnd = _T("*.*");
 	CString PathEnd2 = _T("/*.*");
 	CString PathEnd3 = _T("/*.X");
@@ -250,14 +250,28 @@ HRESULT CMFCToolView::Mesh_Load()
 											CString ObjTag;
 											ObjTag += L"Mesh_" + secondFinder.GetFileName();
 											
+											TCHAR* tMesh = nullptr;
+											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
+
 											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
-												ObjTag, //Sword,TombStone
+												tMesh, //Sword,TombStone
 												Engine::TYPE_STATIC,
 												finalPath,					//../Bin/Resource/Mesh/......
 												thirdFinder.GetFileName()), //Sword.X
 												E_FAIL);
 										}
+
+
+										//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+										//	Engine::RESOURCE_STAGE,
+										//	L"Mesh_Stone",
+										//	Engine::TYPE_STATIC,
+										//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+										//	L"TombStone.X"),
+										//	E_FAIL);
+
+
 										//if (check1 == L"DynamicMesh")
 										//{
 										//	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
