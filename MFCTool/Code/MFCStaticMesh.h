@@ -27,13 +27,13 @@ public:
 	virtual void Render_Object(void) override;
 
 	Engine::CTransform* GetTransform() { return m_pTransformCom; }
-
+	bool isDead = false;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		Add_Component(CString _mesh);
 	void		SetUp_OnTerrain(void);
 	Engine::_bool		Collision_ToObject(const Engine::_tchar* pLayerTag, const Engine::_tchar* pObjTag);
-
+	
 private:
 
 	Engine::CStaticMesh*		m_pMeshCom = nullptr;

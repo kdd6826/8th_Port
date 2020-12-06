@@ -339,7 +339,7 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 		iMeshNum = _ttoi(MeshNum);
 
 
-		CMFCToolView::GetInstance()->CreateMesh((CMFCToolView::GetInstance()->staticMesh[iMeshNum]));
+		CMFCToolView::GetInstance()->CreateMesh((*CMFCToolView::GetInstance()->vecStaticMesh[iMeshNum]));
 
 
 		objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
@@ -773,19 +773,19 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 
 
 		///////////////////
-		//CString cVertex;
-		//if (pNMUpDown->iDelta < 0)
-		//{
-		//	m_fTransformPosY += 0.1f;
-		//	cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
-		//}
-		//else
-		//{
-		//	m_fTransformPosY -= 0.1f;
-		//	cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
-		//}
-		//dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
-		//SetDlgItemText(IDC_EDIT15, cVertex);
+		CString cVertex;
+		if (pNMUpDown->iDelta < 0)
+		{
+			m_fTransformPosY += 0.1f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
+		}
+		else
+		{
+			m_fTransformPosY -= 0.1f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
+		}
+		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+		SetDlgItemText(IDC_EDIT15, cVertex);
 
 		*pResult = 0;
 
@@ -1497,17 +1497,7 @@ void MeshPage::OnBnClickedSave()
 
 		}
 
-		//vector<Engine::CGameObject*> vecObj = CMFCToolView::GetInstance()->vectorObjStatic;
 
-		//for (auto& rPair : vecObj)
-		//{
-		//	
-		//	rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_STATIC);
-
-		//	WriteFile(hFile, rPair->Get_Component(L"Com_Mesh", Engine::COMPONENTID::ID_STATIC), sizeof(Engine::CComponent), &dwByte, nullptr);
-		//	WriteFile(hFile, rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_STATIC), sizeof(Engine::CComponent), &dwByte, nullptr);
-		//	
-		//}
 
 		CloseHandle(hFile);
 	}
@@ -1644,11 +1634,17 @@ void MeshPage::OnBnClickedObjStaticDelete()
 	temp = _ttoi(objStaticIndexNum);
 
 
-	//Text를 int로 바꾸기
+	
 
-
+	treeObjStatic.DeleteItem(selectItem);
 	///////////////////
 	vector<Engine::CGameObject*> vecObj = CMFCToolView::GetInstance()->vectorObjStatic;
-	vecObj.erase(vecObj.begin()+temp);
+
+	dynamic_cast<CMFCStaticMesh*>(*(vecObj.begin() + temp))->isDead = true;
+	
+	
+	//vecObj.erase(vecObj.begin()+temp);
+	
 	int i = vecObj.size();
+	
 }

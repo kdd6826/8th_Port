@@ -19,7 +19,7 @@ CMFCStaticMesh::CMFCStaticMesh(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
 
 CMFCStaticMesh::~CMFCStaticMesh(void)
 {
-
+	Free();
 }
 
 HRESULT CMFCStaticMesh::Add_Component(void)
@@ -164,9 +164,9 @@ Engine::_int CMFCStaticMesh::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	SetUp_OnTerrain();
+	//SetUp_OnTerrain();
 
-	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
+
 
 	Engine::_vec3	vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);

@@ -273,22 +273,23 @@ HRESULT CMFCToolView::Mesh_Text_Load()
 											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
 											staticMesh[loadCount] = tMesh;
 
-											TCHAR* tFinal = nullptr;
-											tFinal = (TCHAR*)(LPCTSTR)finalPath;
-											tfinalPath[loadCount] = tFinal;
+											CString* meshTag = new CString;
 
-											TCHAR* tXFile = nullptr;
-											tXFile = (TCHAR*)(LPCTSTR)check3;
-											xFileName[loadCount] = tXFile;
+											*meshTag = tMesh;
+
+											vecStaticMesh.emplace_back(meshTag);
 
 
-											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											if (FAILED(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
-												staticMesh[loadCount], //Sword,TombStone
+												*meshTag, //Sword,TombStone
 												Engine::TYPE_STATIC,
-												tfinalPath[loadCount],					//../Bin/Resource/Mesh/......
-												xFileName[loadCount]), //Sword.X
-												E_FAIL);
+												finalPath,					//../Bin/Resource/Mesh/......
+												check3)))
+											{
+												MessageBox(L"Fail to ready mesh");
+											}
+											
 
 											loadCount++;
 										}
@@ -528,10 +529,18 @@ void CMFCToolView::Update(float deltaTime)
 	m_Camera->Update_Object(deltaTime);
 
 	//½ºÅÂÆ½¸Å½¬
-	for (auto& iterator = vectorObjStatic.begin(); iterator != vectorObjStatic.end(); iterator++)
+	for (auto& iterator = vectorObjStatic.begin(); iterator != vectorObjStatic.end();)
 	{
-		(*iterator)->Update_Object(deltaTime);
-		
+		if (dynamic_cast<CMFCStaticMesh*>(*iterator)->isDead == true)
+		{
+			//Engine::Safe_Release(*iterator);
+			iterator = vectorObjStatic.erase(iterator);
+		}
+		else
+		{
+			(*iterator)->Update_Object(deltaTime);
+			iterator++;
+		}
 	}
 	/////
 
