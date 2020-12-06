@@ -145,7 +145,7 @@ HRESULT CMFCStaticMesh::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Pos(&_vec3(5.f, 0.f, 5.f));
+	
 	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(45.f));
 
 	return S_OK;
@@ -154,6 +154,7 @@ HRESULT CMFCStaticMesh::Ready_Object(CString _mesh)
 {
 	FAILED_CHECK_RETURN(Add_Component(_mesh), E_FAIL);
 
+	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pTransformCom->Set_Pos(&_vec3(5.f, 0.f, 5.f));
 	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(45.f));
 

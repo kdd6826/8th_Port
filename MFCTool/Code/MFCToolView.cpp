@@ -197,7 +197,22 @@ HRESULT CMFCToolView::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 
 HRESULT CMFCToolView::Mesh_Load()
 {
-	
+	for (int i = 0; i < loadCount + 1; i++)
+{
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		staticMesh[i], //Sword,TombStone
+		Engine::TYPE_STATIC,
+		tfinalPath[i],					//../Bin/Resource/Mesh/......
+		xFileName[i]), //Sword.X
+		E_FAIL);
+}
+
+	return S_OK;
+}
+
+HRESULT CMFCToolView::Mesh_Text_Load()
+{
 	CFileFind firstFinder, secondFinder, thirdFinder;
 	CString findFile = _T("../Bin/Resource/Mesh/");
 	CString PathEnd = _T("*.*");
@@ -242,28 +257,36 @@ HRESULT CMFCToolView::Mesh_Load()
 										finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
 										CString check1, check2, check3;
 										check1 = firstFinder.GetFileName();
-										check2 = secondFinder.GetFileName(); 
+										check2 = secondFinder.GetFileName();
 										check3 = thirdFinder.GetFileName();
 										///////////////////
 
 
 										if (check1 == L"StaticMesh")
 										{
-											CString ObjTag, temp,meshName;
+											CString ObjTag, temp, meshName;
 
-											
+
 											ObjTag += L"Mesh_" + secondFinder.GetFileName();
 
 											TCHAR* tMesh = nullptr;
 											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
 											staticMesh[loadCount] = tMesh;
 
+											TCHAR* tFinal = nullptr;
+											tFinal = (TCHAR*)(LPCTSTR)finalPath;
+											tfinalPath[loadCount] = tFinal;
+
+											TCHAR* tXFile = nullptr;
+											tXFile = (TCHAR*)(LPCTSTR)check3;
+											xFileName[loadCount] = tXFile;
+
 											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												staticMesh[loadCount], //Sword,TombStone
 												Engine::TYPE_STATIC,
-												finalPath,					//../Bin/Resource/Mesh/......
-												thirdFinder.GetFileName()), //Sword.X
+												tfinalPath[loadCount],					//../Bin/Resource/Mesh/......
+												xFileName[loadCount]), //Sword.X
 												E_FAIL);
 
 											loadCount++;
@@ -300,7 +323,7 @@ HRESULT CMFCToolView::Mesh_Load()
 											L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
 											L"TombStone.X"),
 											E_FAIL);*/
-										///////////////
+											///////////////
 									}
 								}
 							}
@@ -310,12 +333,13 @@ HRESULT CMFCToolView::Mesh_Load()
 					}
 				}
 
-				
+
 				////////////////////////
 			}
 
 		}
 	}
+	return S_OK;
 }
 
 void CMFCToolView::CreateMesh(CString _mesh)
@@ -602,6 +626,10 @@ HRESULT CMFCToolView::Loading()
 		E_FAIL);
 
 
+	FAILED_CHECK_RETURN(Mesh_Text_Load(),
+		E_FAIL);
+
+
 	//Component
 	Engine::CComponent* pComponent = nullptr;
 
@@ -618,8 +646,7 @@ HRESULT CMFCToolView::Loading()
 	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
 
-	FAILED_CHECK_RETURN(Mesh_Load(),
-		E_FAIL);
+
 
 	return S_OK;
 }

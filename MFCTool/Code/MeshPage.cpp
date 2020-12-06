@@ -9,6 +9,7 @@
 #include "VertexManager.h"
 #include "TerrainTri.h"
 #include "SphereMesh.h"
+#include "GameObject.h"
 #include "MainFrm.h"
 #include "Cell.h"
 #include "TriCol.h"
@@ -81,7 +82,8 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_NOTIFY(NM_CLICK, IDC_TREE1, &MeshPage::OnNMClickObjCreateTree)
 	ON_NOTIFY(NM_CLICK, IDC_TREE2, &MeshPage::OnNMClickObjStaticTree)
 	ON_NOTIFY(NM_CLICK, IDC_TREE3, &MeshPage::OnNMClickObjDynamicTree)
-	ON_EN_CHANGE(IDC_EDIT5, &MeshPage::OnEnChangeEdit5)
+	
+	ON_BN_CLICKED(IDC_BUTTON9, &MeshPage::OnBnClickedObjStaticDelete)
 END_MESSAGE_MAP()
 
 
@@ -95,9 +97,9 @@ BOOL MeshPage::OnInitDialog()
 	CMFCToolView::GetInstance()->wireFrame = false;
 	//Pos X,Y,Z
 	CString cPosVertexX, cPosVertexY, cPosVertexZ;
-	cPosVertexX.Format(_T("%9.1f\n"), m_fTransformPosX);
-	cPosVertexY.Format(_T("%9.1f\n"), m_fTransformPosY);
-	cPosVertexZ.Format(_T("%9.1f\n"), m_fTransformPosZ);
+	cPosVertexX.Format(_T("%9.2f\n"), m_fTransformPosX);
+	cPosVertexY.Format(_T("%9.2f\n"), m_fTransformPosY);
+	cPosVertexZ.Format(_T("%9.2f\n"), m_fTransformPosZ);
 	SetDlgItemText(IDC_EDIT14, cPosVertexX);
 	SetDlgItemText(IDC_EDIT15, cPosVertexY);
 	SetDlgItemText(IDC_EDIT16, cPosVertexZ);
@@ -105,18 +107,18 @@ BOOL MeshPage::OnInitDialog()
 	//Scale X,Y,Z
 	
 	CString cScalVertexX, cScalVertexY, cScalVertexZ;
-	cScalVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
-	cScalVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
-	cScalVertexZ.Format(_T("%9.1f\n"), m_fTransformScalZ);
+	cScalVertexX.Format(_T("%9.2f\n"), m_fTransformScalX);
+	cScalVertexY.Format(_T("%9.2f\n"), m_fTransformScalY);
+	cScalVertexZ.Format(_T("%9.2f\n"), m_fTransformScalZ);
 	SetDlgItemText(IDC_EDIT5, cScalVertexX);
 	SetDlgItemText(IDC_EDIT7, cScalVertexY);
 	SetDlgItemText(IDC_EDIT8, cScalVertexZ);
 	//
 	//Rotation X,Y,Z
 	CString cRotVertexX, cRotVertexY, cRotVertexZ;
-	cRotVertexX.Format(_T("%9.1f\n"), m_fTransformRotX);
-	cRotVertexY.Format(_T("%9.1f\n"), m_fTransformRotY);
-	cRotVertexZ.Format(_T("%9.1f\n"), m_fTransformRotZ);
+	cRotVertexX.Format(_T("%9.2f\n"), m_fTransformRotX);
+	cRotVertexY.Format(_T("%9.2f\n"), m_fTransformRotY);
+	cRotVertexZ.Format(_T("%9.2f\n"), m_fTransformRotZ);
 	SetDlgItemText(IDC_EDIT10, cRotVertexX);
 	SetDlgItemText(IDC_EDIT12, cRotVertexY);
 	SetDlgItemText(IDC_EDIT13, cRotVertexZ);
@@ -382,17 +384,17 @@ void MeshPage::OnNMClickObjStaticTree(NMHDR *pNMHDR, LRESULT *pResult)
 
 	CString cVertexX, cVertexY, cVertexZ;
 
-	cVertexX.Format(_T("%9.1f\n"), m_fTransformPosX);
-	cVertexY.Format(_T("%9.1f\n"), m_fTransformPosY);
-	cVertexZ.Format(_T("%9.1f\n"), m_fTransformPosZ);
+	cVertexX.Format(_T("%9.2f\n"), m_fTransformPosX);
+	cVertexY.Format(_T("%9.2f\n"), m_fTransformPosY);
+	cVertexZ.Format(_T("%9.2f\n"), m_fTransformPosZ);
 
 	SetDlgItemText(IDC_EDIT14, cVertexX);
 	SetDlgItemText(IDC_EDIT15, cVertexY);
 	SetDlgItemText(IDC_EDIT16, cVertexZ);
 
-	cVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
-	cVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
-	cVertexZ.Format(_T("%9.1f\n"), m_fTransformScalZ);
+	cVertexX.Format(_T("%9.2f\n"), m_fTransformScalX);
+	cVertexY.Format(_T("%9.2f\n"), m_fTransformScalY);
+	cVertexZ.Format(_T("%9.2f\n"), m_fTransformScalZ);
 
 	SetDlgItemText(IDC_EDIT5, cVertexX);
 	SetDlgItemText(IDC_EDIT7, cVertexY);
@@ -505,17 +507,17 @@ void MeshPage::OnNMClickNaviTree(NMHDR *pNMHDR, LRESULT *pResult)
 		
 		CString cVertexX, cVertexY, cVertexZ;
 
-		cVertexX.Format(_T("%9.1f\n"), m_fTransformPosX);
-		cVertexY.Format(_T("%9.1f\n"), m_fTransformPosY);
-		cVertexZ.Format(_T("%9.1f\n"), m_fTransformPosZ);
+		cVertexX.Format(_T("%9.2f\n"), m_fTransformPosX);
+		cVertexY.Format(_T("%9.2f\n"), m_fTransformPosY);
+		cVertexZ.Format(_T("%9.2f\n"), m_fTransformPosZ);
 
 		SetDlgItemText(IDC_EDIT14, cVertexX);
 		SetDlgItemText(IDC_EDIT15, cVertexY);
 		SetDlgItemText(IDC_EDIT16, cVertexZ);
 
-		cVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
-		cVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
-		cVertexZ.Format(_T("%9.1f\n"), m_fTransformScalZ);
+		cVertexX.Format(_T("%9.2f\n"), m_fTransformScalX);
+		cVertexY.Format(_T("%9.2f\n"), m_fTransformScalY);
+		cVertexZ.Format(_T("%9.2f\n"), m_fTransformScalZ);
 
 		SetDlgItemText(IDC_EDIT5, cVertexX);
 		SetDlgItemText(IDC_EDIT7, cVertexY);
@@ -642,12 +644,12 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformPosX += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
 			}
 			else
 			{
 				m_fTransformPosX -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
 			}
 			*pResult = 0;
 			sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
@@ -675,12 +677,12 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformPosX += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
 			}
 			else
 			{
 				m_fTransformPosX -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
 			}
 			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
 			SetDlgItemText(IDC_EDIT14, cVertex);
@@ -741,12 +743,12 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformPosY += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
 			}
 			else
 			{
 				m_fTransformPosY -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
 			}
 			*pResult = 0;
 
@@ -775,12 +777,12 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//if (pNMUpDown->iDelta < 0)
 		//{
 		//	m_fTransformPosY += 0.1f;
-		//	cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+		//	cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
 		//}
 		//else
 		//{
 		//	m_fTransformPosY -= 0.1f;
-		//	cVertex.Format(_T("%9.1f\n"), m_fTransformPosY);
+		//	cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
 		//}
 		//dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
 		//SetDlgItemText(IDC_EDIT15, cVertex);
@@ -839,12 +841,12 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformPosZ += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
 			}
 			else
 			{
 				m_fTransformPosZ -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
 			}
 			*pResult = 0;
 			sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
@@ -872,12 +874,12 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformPosZ += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
 		}
 		else
 		{
 			m_fTransformPosZ -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformPosZ);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
 		}
 		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
 		SetDlgItemText(IDC_EDIT16, cVertex);
@@ -933,12 +935,12 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformRotX += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
 			}
 			else
 			{
 				m_fTransformRotX -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
 			}
 			*pResult = 0;
 			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
@@ -966,12 +968,12 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformRotX += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
 		}
 		else
 		{
 			m_fTransformRotX -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformRotX);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
 		}
 		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);;
 		SetDlgItemText(IDC_EDIT10, cVertex);
@@ -1025,12 +1027,12 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformRotY += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
 			}
 			else
 			{
 				m_fTransformRotY -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
 			}
 			*pResult = 0;
 			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
@@ -1058,12 +1060,12 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformRotY += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
 		}
 		else
 		{
 			m_fTransformRotY -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformRotY);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
 		}
 		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
 		SetDlgItemText(IDC_EDIT12, cVertex);
@@ -1117,12 +1119,12 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformRotZ += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
 			}
 			else
 			{
 				m_fTransformRotZ -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
 			}
 			*pResult = 0;
 			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
@@ -1150,12 +1152,12 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		if (pNMUpDown->iDelta < 0)
 		{
 			m_fTransformRotZ += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
 		}
 		else
 		{
 			m_fTransformRotZ -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformRotZ);
+			cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
 		}
 		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
 		SetDlgItemText(IDC_EDIT13, cVertex);
@@ -1211,12 +1213,12 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformScalX += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
 			}
 			else
 			{
 				m_fTransformScalX -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
 			}
 			*pResult = 0;
 			sphere[indexNum]->m_pTransformCom->m_vScale.x = m_fTransformScalX;
@@ -1243,13 +1245,13 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		CString cVertex;
 		if (pNMUpDown->iDelta < 0)
 		{
-			m_fTransformScalX += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+			m_fTransformScalX += 0.01f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
 		}
 		else
 		{
-			m_fTransformScalX -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformScalX);
+			m_fTransformScalX -= 0.01f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
 		}
 		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
 		SetDlgItemText(IDC_EDIT5, cVertex);
@@ -1305,12 +1307,12 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformScalY += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
 			}
 			else
 			{
 				m_fTransformScalY -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
 			}
 			*pResult = 0;
 
@@ -1338,13 +1340,13 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		CString cVertex;
 		if (pNMUpDown->iDelta < 0)
 		{
-			m_fTransformScalY += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+			m_fTransformScalY += 0.01f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
 		}
 		else
 		{
-			m_fTransformScalY -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformScalY);
+			m_fTransformScalY -= 0.01f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
 		}
 		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
 		SetDlgItemText(IDC_EDIT7, cVertex);
@@ -1402,12 +1404,12 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			if (pNMUpDown->iDelta < 0)
 			{
 				m_fTransformScalZ += 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
 			}
 			else
 			{
 				m_fTransformScalZ -= 0.1f;
-				cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
 			}
 			*pResult = 0;
 			sphere[indexNum]->m_pTransformCom->m_vScale.z = m_fTransformScalZ;
@@ -1434,13 +1436,13 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		CString cVertex;
 		if (pNMUpDown->iDelta < 0)
 		{
-			m_fTransformScalZ += 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+			m_fTransformScalZ += 0.01f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
 		}
 		else
 		{
-			m_fTransformScalZ -= 0.1f;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformScalZ);
+			m_fTransformScalZ -= 0.01f;
+			cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
 		}
 		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z = m_fTransformScalZ;
 		SetDlgItemText(IDC_EDIT8, cVertex);
@@ -1489,12 +1491,23 @@ void MeshPage::OnBnClickedSave()
 
 		for (auto& rPair : vecTri)
 		{
-			
-
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_A), sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_B), sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, rPair->Get_pPoint(Engine::CCell::POINT_C), sizeof(_vec3), &dwByte, nullptr);
+
 		}
+
+		//vector<Engine::CGameObject*> vecObj = CMFCToolView::GetInstance()->vectorObjStatic;
+
+		//for (auto& rPair : vecObj)
+		//{
+		//	
+		//	rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_STATIC);
+
+		//	WriteFile(hFile, rPair->Get_Component(L"Com_Mesh", Engine::COMPONENTID::ID_STATIC), sizeof(Engine::CComponent), &dwByte, nullptr);
+		//	WriteFile(hFile, rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_STATIC), sizeof(Engine::CComponent), &dwByte, nullptr);
+		//	
+		//}
 
 		CloseHandle(hFile);
 	}
@@ -1620,58 +1633,22 @@ void MeshPage::OnBnClickedLoad()
 	UpdateData(FALSE);
 }
 
-void MeshPage::OnEnChangeEdit5()
+
+
+void MeshPage::OnBnClickedObjStaticDelete()
 {
-	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// CDialogEx::OnInitDialog() 함수를 재지정 
-	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-	// 이 알림 메시지를 보내지 않습니다.
-
-	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString str;
-	transformPosX.GetWindowTextW(str);
-	float f = _ttoi(str);
-	m_fTransformPosX = f;
-	if (VertexManager::GetInstance()->isNaviMesh == true)
-	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
-		{
-			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
-
-			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
-
-			//Text를 int로 바꾸기
-			int indexNum;
-			indexNum = _ttoi(naviIndex);
-
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-			int iParentIndex = _ttoi(parentIndex);
-
-			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-
-			CSphereMesh* sphere[3];
-			int Temp = 0;
-			for (auto& _sphere : tri->list_SphereMesh)
-			{
-				sphere[Temp] = _sphere;
-				Temp++;
-			}
-			m_fTransformPosX = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
-			m_fTransformPosY = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
-			m_fTransformPosZ = sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
-
-			////////////////////
-
-			CString cVertex;
-			cVertex.Format(_T("%9.1f\n"), m_fTransformPosX);
-
-			sphere[indexNum]->m_pTransformCom->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
-			sphere[indexNum]->Set_InitPoint();
-			SetDlgItemText(IDC_EDIT14, cVertex);
-		}
-	}
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString a = treeObjStatic.GetItemText(selectItem);
+	CString objStaticIndexNum = a.Right(1);
+	int temp = 0;
+	temp = _ttoi(objStaticIndexNum);
 
 
+	//Text를 int로 바꾸기
+
+
+	///////////////////
+	vector<Engine::CGameObject*> vecObj = CMFCToolView::GetInstance()->vectorObjStatic;
+	vecObj.erase(vecObj.begin()+temp);
+	int i = vecObj.size();
 }

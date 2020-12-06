@@ -71,7 +71,7 @@ public:
 	float m_fTransformPosX=0;
 	float m_fTransformPosY=0;
 	float m_fTransformPosZ=0;
-	float m_fTransformScalX=0;
+	float m_fTransformScalX = 0;
 	float m_fTransformScalY=0;
 	float m_fTransformScalZ=0;
 	float m_fTransformRotX=0;
@@ -100,5 +100,7 @@ public:
 	CTreeCtrl treeObjCreate;
 	CTreeCtrl treeObjStatic;
 	CTreeCtrl treeObjDynamic;
-	afx_msg void OnEnChangeEdit5();
+	
+
+	afx_msg void OnBnClickedObjStaticDelete();
 };
