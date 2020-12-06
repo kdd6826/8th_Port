@@ -510,6 +510,9 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 		}
 	}
 	case VM_Obj::TRI: {
+		if ((Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80) && name == VM_Obj::SPHERE) {
+			Only_Sphere(dynamic_cast<CTerrainTri*>(lockOnObj), dynamic_cast<CSphereMesh*>(obj));
+		}
 		CTerrainTri* _tri = dynamic_cast<CTerrainTri*>(lockOnObj);
 		Set_TriColor(_tri->m_pBufferCom, D3DCOLOR_ARGB(255, 100, 255, 100));
 		break;
@@ -617,7 +620,52 @@ void VertexManager::Together_Sphere(CSphereMesh* firstSphere, CSphereMesh* secon
 	firstSphere->m_Dead = true;
 }
 
-void VertexManager::Only_Sphere(CSphereMesh* sphere)
+CSphereMesh* VertexManager::Only_Sphere(CTerrainTri* tri, CSphereMesh* sphere)
 {
+	if (sphere->list_pTerrainTri.size() == 1)
+		return nullptr;
 
+	CSphereMesh* newSphere = CSphereMesh::Create(m_pGraphicDev);
+	dynamic_cast<Engine::CTransform*>(newSphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = dynamic_cast<Engine::CTransform*>(sphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS];
+	CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", newSphere);
+	//dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
+	newSphere->m_Click = true;
+
+	for (auto& iter = sphere->list_pTerrainTri.begin(); iter != sphere->list_pTerrainTri.end();)
+	{
+		if (*iter == tri) {
+			sphere->list_pTerrainTri.erase(iter);
+			break;
+		}
+		iter++;
+	}
+
+	Engine::_vec3* pilferPoint = nullptr;
+	for (auto& iter = sphere->list_pPoint.begin(); iter != sphere->list_pPoint.end();)
+	{
+		bool check = false;
+		for (int i = 0; i < 3; i++)
+		{
+			if (*iter == tri->m_Cell->Get_pPoint((Engine::CCell::POINT)i)) {
+				pilferPoint = *iter;
+				sphere->list_pPoint.erase(iter);
+				check = true;
+				break;
+			}
+		}
+		if (check)
+			break;
+		iter++;
+	}
+
+	newSphere->list_pPoint.emplace_back(pilferPoint);
+	newSphere->list_pTerrainTri.emplace_back(tri);
+	for (auto& iter = tri->list_SphereMesh.begin(); iter != tri->list_SphereMesh.end();)
+	{
+		if (*iter == sphere) {
+			*iter = newSphere;
+		}
+		iter++;
+	}
+	return newSphere;
 }
