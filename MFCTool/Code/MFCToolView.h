@@ -46,6 +46,8 @@ public:
 	HRESULT Mesh_Load();
 	HRESULT Mesh_Text_Load();
 	int loadCount=0;
+	vector<CString*> vecStaticMesh;
+
 	TCHAR* staticMesh[128]; 
 	TCHAR* tfinalPath[128];
 	TCHAR* xFileName[128];

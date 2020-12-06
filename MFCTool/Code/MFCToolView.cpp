@@ -281,13 +281,14 @@ HRESULT CMFCToolView::Mesh_Text_Load()
 											tXFile = (TCHAR*)(LPCTSTR)check3;
 											xFileName[loadCount] = tXFile;
 
-											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												staticMesh[loadCount], //Sword,TombStone
-												Engine::TYPE_STATIC,
-												tfinalPath[loadCount],					//../Bin/Resource/Mesh/......
-												xFileName[loadCount]), //Sword.X
-												E_FAIL);
+
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	staticMesh[loadCount], //Sword,TombStone
+											//	Engine::TYPE_STATIC,
+											//	tfinalPath[loadCount],					//../Bin/Resource/Mesh/......
+											//	xFileName[loadCount]), //Sword.X
+											//	E_FAIL);
 
 											loadCount++;
 										}
@@ -338,6 +339,16 @@ HRESULT CMFCToolView::Mesh_Text_Load()
 			}
 
 		}
+	}
+	for (int i = 0; i < loadCount + 1; i++)
+	{
+		//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		//	Engine::RESOURCE_STAGE,
+		//	staticMesh[i], //Sword,TombStone
+		//	Engine::TYPE_STATIC,
+		//	tfinalPath[i],					//../Bin/Resource/Mesh/......
+		//	xFileName[i]), //Sword.X
+		//	E_FAIL);
 	}
 	return S_OK;
 }
@@ -625,9 +636,13 @@ HRESULT CMFCToolView::Loading()
 		L"TombStone.X"),
 		E_FAIL);
 
-
 	FAILED_CHECK_RETURN(Mesh_Text_Load(),
 		E_FAIL);
+
+
+
+
+
 
 
 	//Component
