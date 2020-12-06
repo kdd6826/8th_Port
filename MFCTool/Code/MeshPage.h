@@ -100,4 +100,5 @@ public:
 	CTreeCtrl treeObjCreate;
 	CTreeCtrl treeObjStatic;
 	CTreeCtrl treeObjDynamic;
+	afx_msg void OnEnChangeEdit5();
 };
