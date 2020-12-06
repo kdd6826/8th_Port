@@ -282,13 +282,13 @@ HRESULT CMFCToolView::Mesh_Text_Load()
 											xFileName[loadCount] = tXFile;
 
 
-											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-											//	Engine::RESOURCE_STAGE,
-											//	staticMesh[loadCount], //Sword,TombStone
-											//	Engine::TYPE_STATIC,
-											//	tfinalPath[loadCount],					//../Bin/Resource/Mesh/......
-											//	xFileName[loadCount]), //Sword.X
-											//	E_FAIL);
+											FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+												Engine::RESOURCE_STAGE,
+												staticMesh[loadCount], //Sword,TombStone
+												Engine::TYPE_STATIC,
+												tfinalPath[loadCount],					//../Bin/Resource/Mesh/......
+												xFileName[loadCount]), //Sword.X
+												E_FAIL);
 
 											loadCount++;
 										}

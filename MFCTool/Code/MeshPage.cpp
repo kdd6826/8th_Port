@@ -250,25 +250,29 @@ void MeshPage::InitTreeCtrl()
 											finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
 											CString check, check2;
 
-											
-
 											check = thirdFinder.GetFileName();
 											check2 = secondFinder.GetFileName();
-
-
-											CMFCToolView::GetInstance()->vecStaticMesh.emplace_back(check2);
 
 											loadCount++;
 											///////////////////
 
-											FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												check2, //Sword,TombStone
-												Engine::TYPE_STATIC,
-											    finalPath,					//../Bin/Resource/Mesh/......
-												check), //Sword.X
-												);
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	check2, //Sword,TombStone
+											//	Engine::TYPE_STATIC,
+											//    finalPath,					//../Bin/Resource/Mesh/......
+											//	check), //Sword.X
+											//	);
 
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	L"Mesh_Stone",
+											//	Engine::TYPE_STATIC,
+											//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+											//	L"TombStone.X"),
+											//	E_FAIL);
+
+											///////////////
 										}
 									}
 								}
@@ -335,7 +339,7 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 		iMeshNum = _ttoi(MeshNum);
 
 
-		CMFCToolView::GetInstance()->CreateMesh(_T("BallistaBolt"));
+		CMFCToolView::GetInstance()->CreateMesh((CMFCToolView::GetInstance()->staticMesh[iMeshNum]));
 
 
 		objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
