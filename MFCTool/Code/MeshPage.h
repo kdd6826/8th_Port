@@ -88,4 +88,7 @@ public:
 	afx_msg void OnBnClickedSave();
 	//LOAD
 	afx_msg void OnBnClickedLoad();
+
+	void LockOnTree();
+	bool lockOnCheck = false;
 };

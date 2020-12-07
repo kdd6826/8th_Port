@@ -523,6 +523,7 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 	lockOnObjName = name;
 	if(obj != nullptr)
 		lockOnObj = obj;
+	MeshPage::GetInstance()->LockOnTree();
 }
 
 
@@ -628,6 +629,8 @@ CSphereMesh* VertexManager::Only_Sphere(CTerrainTri* tri, CSphereMesh* sphere)
 	CSphereMesh* newSphere = CSphereMesh::Create(m_pGraphicDev);
 	dynamic_cast<Engine::CTransform*>(newSphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = dynamic_cast<Engine::CTransform*>(sphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS];
 	CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", newSphere);
+	list_TotalSphere.emplace_back(newSphere);
+	LockOnObject(VM_Obj::SPHERE, newSphere);
 	//dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
 	newSphere->m_Click = true;
 
