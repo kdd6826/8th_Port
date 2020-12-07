@@ -32,6 +32,7 @@
 #include "VertexManager.h"
 #include "TerrainTri.h"
 #include "MFCStaticMesh.h"
+#include "MFCDynamicMesh.h"
 
 
 #include "MeshPage.h"
@@ -58,7 +59,6 @@ CMFCToolView* CMFCToolView::m_pInstance = nullptr;
 // CMFCToolView 생성/소멸
 CMFCToolView::CMFCToolView()
 {
-	loadCount = 0;
 	// TODO: 여기에 생성 코드를 추가합니다.
 	if (nullptr == m_pInstance) {
 		m_pInstance = this;
@@ -195,172 +195,26 @@ HRESULT CMFCToolView::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	return S_OK;
 }
 
-HRESULT CMFCToolView::Mesh_Load()
-{
-	for (int i = 0; i < loadCount + 1; i++)
-{
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		staticMesh[i], //Sword,TombStone
-		Engine::TYPE_STATIC,
-		tfinalPath[i],					//../Bin/Resource/Mesh/......
-		xFileName[i]), //Sword.X
-		E_FAIL);
-}
-
-	return S_OK;
-}
-
-HRESULT CMFCToolView::Mesh_Text_Load()
-{
-	CFileFind firstFinder, secondFinder, thirdFinder;
-	CString findFile = _T("../Bin/Resource/Mesh/");
-	CString PathEnd = _T("*.*");
-	CString PathEnd2 = _T("/*.*");
-	CString PathEnd3 = _T("/*.X");
-
-	CString MeshFind;
-	MeshFind += findFile + PathEnd;
-	bool bWorking = firstFinder.FindFile(MeshFind);
-
-	while (bWorking) {
-		bWorking = firstFinder.FindNextFileW();
-		if (firstFinder.IsDirectory())
-		{
-			if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
-			{
-				///////////////////////Dynamic, Static
-
-				CString temp;
-				temp += findFile + firstFinder.GetFileName() + PathEnd2;
-
-				bool bchildWorking = secondFinder.FindFile(temp);
-				while (bchildWorking) {
-					bchildWorking = secondFinder.FindNextFileW();
-					if (secondFinder.IsDirectory())
-					{
-						if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
-						{
-
-							///////Player
-							CString temp2;
-							temp2 += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + PathEnd3;
-							bool bThirdWorking = thirdFinder.FindFile(temp2);
-							while (bThirdWorking) {
-								bThirdWorking = thirdFinder.FindNextFileW();
-								if (secondFinder.IsDirectory())
-								{
-									if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
-									{
-
-										CString finalPath;
-										finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
-										CString check1, check2, check3;
-										check1 = firstFinder.GetFileName();
-										check2 = secondFinder.GetFileName();
-										check3 = thirdFinder.GetFileName();
-										///////////////////
-
-
-										if (check1 == L"StaticMesh")
-										{
-											CString ObjTag, temp, meshName;
-
-
-											ObjTag += L"Mesh_" + secondFinder.GetFileName();
-
-											TCHAR* tMesh = nullptr;
-											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
-											staticMesh[loadCount] = tMesh;
-
-											CString* meshTag = new CString;
-
-											*meshTag = tMesh;
-
-											vecStaticMesh.emplace_back(meshTag);
-
-
-											if (FAILED(Engine::Ready_Meshes(m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												*meshTag, //Sword,TombStone
-												Engine::TYPE_STATIC,
-												finalPath,					//../Bin/Resource/Mesh/......
-												check3)))
-											{
-												MessageBox(L"Fail to ready mesh");
-											}
-											
-
-											loadCount++;
-										}
-
-
-										//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-										//	Engine::RESOURCE_STAGE,
-										//	L"Mesh_Stone",
-										//	Engine::TYPE_STATIC,
-										//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-										//	L"TombStone.X"),
-										//	E_FAIL);
-
-
-										//if (check1 == L"DynamicMesh")
-										//{
-										//	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-										//		Engine::RESOURCE_STAGE,
-										//		secondFinder.GetFileName(), //Sword,TombStone
-										//		Engine::TYPE_DYNAMIC,
-										//		finalPath,					//../Bin/Resource/Mesh/......
-										//		thirdFinder.GetFileName()), //Sword.X
-										//		);
-										//}
 
 
 
-										///////////////
-										/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-											Engine::RESOURCE_STAGE,
-											L"Mesh_Stone",
-											Engine::TYPE_STATIC,
-											L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-											L"TombStone.X"),
-											E_FAIL);*/
-											///////////////
-									}
-								}
-							}
-
-							///////
-						}
-					}
-				}
-
-
-				////////////////////////
-			}
-
-		}
-	}
-	for (int i = 0; i < loadCount + 1; i++)
-	{
-		//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		//	Engine::RESOURCE_STAGE,
-		//	staticMesh[i], //Sword,TombStone
-		//	Engine::TYPE_STATIC,
-		//	tfinalPath[i],					//../Bin/Resource/Mesh/......
-		//	xFileName[i]), //Sword.X
-		//	E_FAIL);
-	}
-	return S_OK;
-}
-
-void CMFCToolView::CreateMesh(CString _mesh)
+void CMFCToolView::CreateStaticMesh(CString _mesh)
 {
 	Engine::CGameObject* pGameObject = nullptr;
 
 	pGameObject = CMFCStaticMesh::Create(m_pGraphicDev,_mesh);
 	NULL_CHECK_RETURN(pGameObject, );
 	vectorObjStatic.emplace_back(dynamic_cast<CMFCStaticMesh*>(pGameObject));
+	//LayerAddObject(L"Environment", _mesh, pGameObject);
+}
+
+void CMFCToolView::CreateDynamicMesh(CString _mesh)
+{
+	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CMFCDynamicMesh::Create(m_pGraphicDev, _mesh);
+	NULL_CHECK_RETURN(pGameObject, );
+	vectorObjDynamic.emplace_back(dynamic_cast<CMFCDynamicMesh*>(pGameObject));
 	//LayerAddObject(L"Environment", _mesh, pGameObject);
 }
 
@@ -542,6 +396,20 @@ void CMFCToolView::Update(float deltaTime)
 			iterator++;
 		}
 	}
+	//다이나믹매쉬
+	for (auto& iterator = vectorObjDynamic.begin(); iterator != vectorObjDynamic.end();)
+	{
+		if (dynamic_cast<CMFCDynamicMesh*>(*iterator)->isDead == true)
+		{
+			//Engine::Safe_Release(*iterator);
+			iterator = vectorObjDynamic.erase(iterator);
+		}
+		else
+		{
+			(*iterator)->Update_Object(deltaTime);
+			iterator++;
+		}
+	}
 	/////
 
 	///////////////// Render
@@ -644,9 +512,14 @@ HRESULT CMFCToolView::Loading()
 		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
 		L"TombStone.X"),
 		E_FAIL);
-
-	FAILED_CHECK_RETURN(Mesh_Text_Load(),
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Navi",
+		Engine::TYPE_NAVI,
+		NULL,
+		NULL),
 		E_FAIL);
+
 
 
 

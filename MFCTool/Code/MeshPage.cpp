@@ -84,6 +84,7 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_NOTIFY(NM_CLICK, IDC_TREE3, &MeshPage::OnNMClickObjDynamicTree)
 	
 	ON_BN_CLICKED(IDC_BUTTON9, &MeshPage::OnBnClickedObjStaticDelete)
+	ON_EN_CHANGE(IDC_EDIT5, &MeshPage::OnEnChangeEdit5)
 END_MESSAGE_MAP()
 
 
@@ -210,6 +211,10 @@ void MeshPage::InitTreeCtrl()
 		bWorking = firstFinder.FindNextFileW();
 		if (firstFinder.IsDirectory())
 		{
+		#pragma region Static
+
+
+
 			if (firstFinder.GetFileName() == _T("StaticMesh"))
 			{
 				if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
@@ -242,18 +247,45 @@ void MeshPage::InitTreeCtrl()
 										if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
 										{
 											CString temp, numFileName;
-											temp.Format(_T("%d"), loadCount);
+											temp.Format(_T("%d"), staticLoadCount);
 											numFileName += temp + _T(") ") + thirdFinder.GetFileName();
 
 											objCreateItemSon[2][objCreateItemSonCount] = treeObjCreate.InsertItem(numFileName, objCreateItemSon[1][objCreateItemSonCount]);
 											CString finalPath;
 											finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
-											CString check, check2;
+											CString check, check2,check3;
 
-											check = thirdFinder.GetFileName();
+											check = firstFinder.GetFileName();
 											check2 = secondFinder.GetFileName();
+											check3 = thirdFinder.GetFileName();
+											CString ObjTag, meshName;
 
-											loadCount++;
+
+											ObjTag += L"Mesh_" + secondFinder.GetFileName();
+
+											TCHAR* tMesh = nullptr;
+											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
+											
+
+											CString* meshTag = new CString;
+
+											*meshTag = tMesh;
+
+											CMFCToolView::GetInstance()->vecStaticMesh.emplace_back(meshTag);
+
+
+											if (FAILED(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+												Engine::RESOURCE_STAGE,
+												*meshTag, //Sword,TombStone
+												Engine::TYPE_STATIC,
+												finalPath,					//../Bin/Resource/Mesh/......
+												check3)))
+											{
+												MessageBox(L"Fail to ready mesh");
+											}
+
+											staticLoadCount++;
+
 											///////////////////
 
 											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
@@ -286,6 +318,115 @@ void MeshPage::InitTreeCtrl()
 					////////////////////////
 				}
 			}
+#pragma endregion
+		#pragma region Dynamic
+
+
+
+			if (firstFinder.GetFileName() == _T("DynamicMesh"))
+			{
+				if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
+				{
+					///////////////////////Dynamic, Static
+
+
+					objCreateItemSon[0][objCreateItemSonCount] = treeObjCreate.InsertItem(firstFinder.GetFileName(), objCreateItem);
+
+					CString temp;
+					temp += findFile + firstFinder.GetFileName() + PathEnd2;
+
+					bool bchildWorking = secondFinder.FindFile(temp);
+					while (bchildWorking) {
+						bchildWorking = secondFinder.FindNextFileW();
+						if (secondFinder.IsDirectory())
+						{
+							if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
+							{
+
+								///////Player
+								objCreateItemSon[1][objCreateItemSonCount] = treeObjCreate.InsertItem(secondFinder.GetFileName(), objCreateItemSon[0][objCreateItemSonCount]);
+								CString temp2;
+								temp2 += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + PathEnd3;
+								bool bThirdWorking = thirdFinder.FindFile(temp2);
+								while (bThirdWorking) {
+									bThirdWorking = thirdFinder.FindNextFileW();
+									if (secondFinder.IsDirectory())
+									{
+										if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
+										{
+											CString temp, numFileName;
+											temp.Format(_T("%d"), dynamicLoadCount);
+											numFileName += temp + _T(") ") + thirdFinder.GetFileName();
+
+											objCreateItemSon[2][objCreateItemSonCount] = treeObjCreate.InsertItem(numFileName, objCreateItemSon[1][objCreateItemSonCount]);
+											CString finalPath;
+											finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
+											CString check, check2, check3;
+
+											check = firstFinder.GetFileName();
+											check2 = secondFinder.GetFileName();
+											check3 = thirdFinder.GetFileName();
+											CString ObjTag, meshName;
+
+
+											ObjTag += L"Mesh_" + secondFinder.GetFileName();
+
+											TCHAR* tMesh = nullptr;
+											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
+											
+
+											CString* meshTag = new CString;
+
+											*meshTag = tMesh;
+
+											CMFCToolView::GetInstance()->vecDynamicMesh.emplace_back(meshTag);
+
+
+											if (FAILED(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+												Engine::RESOURCE_STAGE,
+												*meshTag, //Sword,TombStone
+												Engine::TYPE_DYNAMIC,
+												finalPath,					//../Bin/Resource/Mesh/......
+												check3)))
+											{
+												MessageBox(L"Fail to ready mesh");
+											}
+
+											dynamicLoadCount++;
+
+											///////////////////
+
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	check2, //Sword,TombStone
+											//	Engine::TYPE_STATIC,
+											//    finalPath,					//../Bin/Resource/Mesh/......
+											//	check), //Sword.X
+											//	);
+
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	L"Mesh_Stone",
+											//	Engine::TYPE_STATIC,
+											//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+											//	L"TombStone.X"),
+											//	E_FAIL);
+
+											///////////////
+										}
+									}
+								}
+
+								///////
+							}
+						}
+					}
+
+					objCreateItemSonCount++;
+					////////////////////////
+				}
+			}
+#pragma endregion
 		}
 	}
 }
@@ -328,24 +469,51 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR *pNMHDR, LRESULT *pResult)
 	//XFile etc.
 	else if (treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)))) == 0)
 	{
-		CString text,MeshNum,temp2, objStaticTreeText;
+		CString checkState,text,MeshNum,temp2, objStaticTreeText;
 		int iMeshNum;
+
+		checkState = treeObjCreate.GetItemText(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)));
+		if(checkState == _T("StaticMesh"))
+		{
+			temp2.Format(_T("%d"), objStaticCreateCount);
+
+			text = treeObjCreate.GetItemText((selectItem)) + _T(" - ") + temp2;
+
+
+			MeshNum = text.Left(1);
+			iMeshNum = _ttoi(MeshNum);
+
+
+			CMFCToolView::GetInstance()->CreateStaticMesh((*CMFCToolView::GetInstance()->vecStaticMesh[iMeshNum]));
+
+
+			objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+
+
+			++objStaticCreateCount;
+		}
+		else if (checkState == _T("DynamicMesh"))
+		{
+			temp2.Format(_T("%d"), objDynamricCreateCount);
+
+			text = treeObjCreate.GetItemText((selectItem)) + _T(" - ") + temp2;
+
+
+			MeshNum = text.Left(1);
+			iMeshNum = _ttoi(MeshNum);
+
+
+			CMFCToolView::GetInstance()->CreateDynamicMesh((*CMFCToolView::GetInstance()->vecDynamicMesh[iMeshNum]));
+
+
+			objDynamic = treeObjDynamic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+
+
+			++objDynamricCreateCount;
+		}
 		//text += L"Mesh_" + treeObjCreate.GetItemText((treeObjCreate.GetParentItem(selectItem)));
 		
-		temp2.Format(_T("%d"), objStaticCreateCount);
-
-		text = treeObjCreate.GetItemText(selectItem)+ _T(" - ") +temp2;
-		MeshNum = text.Left(2);
-		iMeshNum = _ttoi(MeshNum);
-
-
-		CMFCToolView::GetInstance()->CreateMesh((*CMFCToolView::GetInstance()->vecStaticMesh[iMeshNum]));
-
-
-		objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
 		
-
-		++objStaticCreateCount;
 	}
 
 
@@ -1647,4 +1815,15 @@ void MeshPage::OnBnClickedObjStaticDelete()
 	
 	int i = vecObj.size();
 	
+}
+
+
+void MeshPage::OnEnChangeEdit5()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

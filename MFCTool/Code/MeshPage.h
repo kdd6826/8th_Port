@@ -34,13 +34,15 @@ public:
 	CButton vertexTogetther;
 	CButton vertexOnly;
 
-	HTREEITEM objStatic, tri[128] , vertex[128][3], objCreateItem, objCreateItemSon[3][128];
+	HTREEITEM objDynamic,objStatic, tri[128] , vertex[128][3], objCreateItem, objCreateItemSon[3][128];
 	int objStaticCreateCount = 0;
+	int objDynamricCreateCount = 0;
 	int objCreateItemSonCount=0;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio1();
 	afx_msg void OnBnClickedRadio2();
-	int loadCount = 0;
+	int staticLoadCount = 0;
+	int dynamicLoadCount = 0;
 	void treeControl(int triCount);
 
 	CTreeCtrl treeNavi;
@@ -103,4 +105,6 @@ public:
 	
 
 	afx_msg void OnBnClickedObjStaticDelete();
+	//transformScalX
+	afx_msg void OnEnChangeEdit5();
 };

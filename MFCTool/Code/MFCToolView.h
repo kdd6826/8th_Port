@@ -43,14 +43,9 @@ public:
 	}
 	static CMFCToolView* m_pInstance;
 	// 작업입니다.
-	HRESULT Mesh_Load();
-	HRESULT Mesh_Text_Load();
-	int loadCount=0;
 	vector<CString*> vecStaticMesh;
-
-	TCHAR* staticMesh[128]; 
-	TCHAR* tfinalPath[128];
-	TCHAR* xFileName[128];
+	vector<CString*> vecDynamicMesh;
+	
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
@@ -96,8 +91,10 @@ public:
 	void Key_Input(float deltaTime);
 	_vec3 PickUp_OnTerrain(void);
 
-	void CreateMesh(CString _mesh);
+	void CreateStaticMesh(CString _mesh);
+	void CreateDynamicMesh(CString _mesh);
 	vector<Engine::CGameObject*> vectorObjStatic;
+	vector<Engine::CGameObject*> vectorObjDynamic;
 
 
 	CTerrainTri* PickUp_Tri(void);

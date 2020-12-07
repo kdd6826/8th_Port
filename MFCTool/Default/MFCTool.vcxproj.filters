@@ -153,6 +153,9 @@
     <ClInclude Include="..\Code\MFCStaticMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\MFCDynamicMesh.h">
+      <Filter>95. GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -222,6 +225,9 @@
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MFCStaticMesh.cpp">
+      <Filter>95. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MFCDynamicMesh.cpp">
       <Filter>95. GameObject</Filter>
     </ClCompile>
   </ItemGroup>
