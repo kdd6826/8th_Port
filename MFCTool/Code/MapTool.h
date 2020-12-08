@@ -28,5 +28,5 @@ public:
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	void HorizontalScroll(); 
 	afx_msg void OnLbnSelchangePicture();
-	afx_msg void OnBnClickedSave();
+	afx_msg void OnBnClickedNaviSave();
 };

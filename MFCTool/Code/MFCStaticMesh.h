@@ -25,7 +25,7 @@ public:
 	virtual HRESULT Ready_Object(CString _mesh);
 	virtual Engine::_int Update_Object(const Engine::_float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-
+	CString meshKey;
 	Engine::CTransform* GetTransform() { return m_pTransformCom; }
 	bool isDead = false;
 private:

@@ -43,8 +43,7 @@ public:
 	}
 	static CMFCToolView* m_pInstance;
 	// 작업입니다.
-	vector<CString*> vecStaticMesh;
-	vector<CString*> vecDynamicMesh;
+
 	
 private:
 	HRESULT		SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
@@ -91,11 +90,13 @@ public:
 	void Key_Input(float deltaTime);
 	_vec3 PickUp_OnTerrain(void);
 
+	void LoadStaticMesh(CString _mesh,_vec3 pos, _vec3 scal, _vec3 angle);
 	void CreateStaticMesh(CString _mesh);
 	void CreateDynamicMesh(CString _mesh);
 	vector<Engine::CGameObject*> vectorObjStatic;
 	vector<Engine::CGameObject*> vectorObjDynamic;
-
+	vector<CString*> vecStaticMesh;
+	vector<CString*> vecDynamicMesh;
 
 	CTerrainTri* PickUp_Tri(void);
 

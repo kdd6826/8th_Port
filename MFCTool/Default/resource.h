@@ -74,6 +74,10 @@
 #define IDC_TREE2                       1039
 #define IDC_TREE3                       1040
 #define IDC_TREE4                       1041
+#define IDC_BUTTON13                    1043
+#define IDC_BUTTON14                    1044
+#define IDC_BUTTON15                    1045
+#define IDC_BUTTON16                    1046
 
 // Next default values for new objects
 // 

@@ -42,5 +42,5 @@ public:
 	afx_msg void OnZCountSpin(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin4(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin5(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnBnClickedLoad();
+	afx_msg void OnBnClickedNaviLoad();
 };

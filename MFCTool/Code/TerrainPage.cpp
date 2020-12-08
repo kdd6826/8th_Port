@@ -48,7 +48,7 @@ BEGIN_MESSAGE_MAP(TerrainPage, CDialogEx)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN3, &TerrainPage::OnZCountSpin)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN4, &TerrainPage::OnDeltaposSpin4)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN5, &TerrainPage::OnDeltaposSpin5)
-	ON_BN_CLICKED(IDC_BUTTON8, &TerrainPage::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_BUTTON8, &TerrainPage::OnBnClickedNaviLoad)
 END_MESSAGE_MAP()
 
 
@@ -243,7 +243,7 @@ void TerrainPage::OnDeltaposSpin5(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void TerrainPage::OnBnClickedLoad()
+void TerrainPage::OnBnClickedNaviLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

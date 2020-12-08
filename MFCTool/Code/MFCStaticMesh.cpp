@@ -26,6 +26,7 @@ HRESULT CMFCStaticMesh::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 	
+	Engine::_vec3 g = m_pTransformCom->m_vInfo[Engine::INFO_POS];
 	// Mesh
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Stone"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -69,6 +70,7 @@ HRESULT CMFCStaticMesh::Add_Component(CString _mesh)
 {
 	Engine::CComponent* pComponent = nullptr;
 	Engine::CResourcesMgr::GetInstance();
+	meshKey = _mesh;
 	// Mesh
 	TCHAR* tMesh = nullptr;
 	tMesh = (TCHAR*)(LPCTSTR)_mesh;

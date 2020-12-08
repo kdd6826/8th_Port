@@ -38,7 +38,7 @@ void CMapTool::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_WM_DROPFILES()
 	ON_LBN_SELCHANGE(IDC_LIST1, &CMapTool::OnLbnSelchangePicture)
-	ON_BN_CLICKED(IDC_BUTTON1, &CMapTool::OnBnClickedSave)
+	ON_BN_CLICKED(IDC_BUTTON1, &CMapTool::OnBnClickedNaviSave)
 END_MESSAGE_MAP()
 
 
@@ -126,7 +126,7 @@ void CMapTool::OnLbnSelchangePicture()
 }
 
 
-void CMapTool::OnBnClickedSave()
+void CMapTool::OnBnClickedNaviSave()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CFileDialog Dlg(FALSE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);

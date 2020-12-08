@@ -95,10 +95,14 @@ public:
 	afx_msg void ObjectRadioBnClicked();
 	afx_msg void NaviRadioBnClicked();
 
+	afx_msg void OnBnClickedStaticSave();
+	afx_msg void OnBnClickedStaticLoad();
+	afx_msg void OnBnClickedDynamicSave();
+	afx_msg void OnBnClickedDynamicLoad();
 	//SAVE
-	afx_msg void OnBnClickedSave();
+	afx_msg void OnBnClickedNaviSave();
 	//LOAD
-	afx_msg void OnBnClickedLoad();
+	afx_msg void OnBnClickedNaviLoad();
 	CTreeCtrl treeObjCreate;
 	CTreeCtrl treeObjStatic;
 	CTreeCtrl treeObjDynamic;
@@ -106,5 +110,13 @@ public:
 
 	afx_msg void OnBnClickedObjStaticDelete();
 	//transformScalX
-	afx_msg void OnEnChangeEdit5();
+	afx_msg void OnEnChangeTransformScalX();
+	afx_msg void OnEnChangeTransformScalY();
+	afx_msg void OnEnChangeTransformScalZ();
+	afx_msg void OnEnChangeTransformRotX();
+	afx_msg void OnEnChangeTransformRotY();
+	afx_msg void OnEnChangeTransformRotZ();
+	afx_msg void OnEnChangeTransformPosX();
+	afx_msg void OnEnChangeTransformPosY();
+	afx_msg void OnEnChangeTransformPosZ();
 };
