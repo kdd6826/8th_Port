@@ -68,12 +68,20 @@ void VertexManager::Key_Input(float deltaTime)
 
 	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
 	{
-		
 		if (!mouseRClick) {
-			if (isNaviMesh)
+			if (Engine::Get_DIKeyState(DIK_LALT) & 0x80)
+			{
+				if (lockOnObjName == VM_Obj::SPHERE) {
+					Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
+					dynamic_cast<CSphereMesh*>(lockOnObj)->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vPickPos;
+					dynamic_cast<CSphereMesh*>(lockOnObj)->Set_InitPoint();
+					MeshPage::GetInstance()->LockOnTree();
+				}
+			}
+			else if (isNaviMesh) {
 				MouseRClick_NaviMesh();
-			
-			mouseRClick = true;
+				mouseRClick = true;
+			}
 		}
 	}
 	else {
@@ -83,31 +91,7 @@ void VertexManager::Key_Input(float deltaTime)
 	if (Engine::Get_DIKeyState(DIK_C) & 0x80)
 	{
 		Delete_LockObject();
-		/*if (!KeyC) {
-			KeyC = true;
 
-			  
-			for (auto sphere : list_Sphere)
-			{
-				auto iter = list_TotalSphere.begin();
-				for (; iter != list_TotalSphere.end();)
-				{
-					if (*iter == sphere) {
-						Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 0, 255, 0));
-						sphere->m_Click = false;
-						sphere->Release_pPoint(sphere->list_pPoint.back());
-						if (sphere->m_Dead) {
-							iter = list_TotalSphere.erase(iter);
-						}
-						break;
-
-					}
-					else
-						iter++;
-				}
-			}
-			list_Sphere.clear();
-		}*/
 	}
 	else {
 		KeyC = false;
