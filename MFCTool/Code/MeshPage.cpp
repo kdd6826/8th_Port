@@ -1677,16 +1677,19 @@ void MeshPage::OnBnClickedStaticSave()
 		DWORD dwByte = 0;
 		DWORD dwstrByte = 0;
 
-		int triTotalNumber = 0;
+		TCHAR meshKey[MAX_PATH] = L"";
+		
 		vector<Engine::CGameObject*> vecStatic = CMFCToolView::GetInstance()->vectorObjStatic;
 
 		for (auto& rPair : vecStatic)
 		{
-			WriteFile(hFile, dynamic_cast<CMFCStaticMesh*>(rPair)->meshKey, sizeof(CString), &dwByte, nullptr);
+			lstrcpy(meshKey, dynamic_cast<CMFCStaticMesh*>(rPair)->meshKey);
+			_int len = lstrlen(meshKey)*2;
+			WriteFile(hFile, &len,sizeof(_int),&dwByte,nullptr);
+			WriteFile(hFile, lstrcpyW(meshKey, dynamic_cast<CMFCStaticMesh*>(rPair)->meshKey), len, &dwByte, nullptr);
 			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS], sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vScale, sizeof(_vec3), &dwByte, nullptr);
-			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle, sizeof(_vec3), &dwByte, nullptr)
-
+			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle, sizeof(_vec3), &dwByte, nullptr);
 		}
 
 
@@ -1722,9 +1725,12 @@ void MeshPage::OnBnClickedStaticLoad()
 		while (true)
 		{
 			bool sphereOverlap = false;
-			CString meshName;
+			
 			_vec3 vecPos, vecAng, vecScal;
-			ReadFile(hFile, &meshName, sizeof(CString), &dwByte, nullptr);
+			TCHAR meshName[MAX_PATH]= L"";
+			_int meshNameSize;
+			ReadFile(hFile, &meshNameSize, sizeof(_int), &dwByte, nullptr);
+			ReadFile(hFile, &meshName, meshNameSize, &dwByte, nullptr);
 			ReadFile(hFile, &vecPos, sizeof(_vec3), &dwByte, nullptr);
 			ReadFile(hFile, &vecScal, sizeof(_vec3), &dwByte, nullptr);
 			ReadFile(hFile, &vecAng, sizeof(_vec3), &dwByte, nullptr);
@@ -1734,9 +1740,29 @@ void MeshPage::OnBnClickedStaticLoad()
 				endCheck = true;
 				break;
 			}
+			CString text, temp2,num;
+			text = meshName;
 
-			CMFCToolView::GetInstance()->CreateStaticMesh(meshName);
+			int idx = -1;
+			int size = CMFCToolView::GetInstance()->vecStaticMesh.size();
+			for (int i = 0; i < size; i++)
+			{
+				CString* pStr = CMFCToolView::GetInstance()->vecStaticMesh[i];
+				if (*pStr == text.GetString())
+				{
+					idx = i;
+					break;
+				}
+			}
+			num.Format(_T("%d"), idx);
 			
+			temp2.Format(_T("%d"), objStaticCreateCount);
+			text = num + _T(")")+ text.Mid(5) +_T(".X - ") +temp2;
+			CMFCToolView::GetInstance()->LoadStaticMesh(meshName,vecPos,vecScal,vecAng);
+			objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+
+
+			++objStaticCreateCount;
 			//for (int i = 0; i < 3; i++)
 			//{
 
@@ -1796,17 +1822,17 @@ void MeshPage::OnBnClickedStaticLoad()
 					//}
 					//CMFCToolView::GetInstance()->Sort_TriNumber();
 					//MeshPage* pMeshPage = MeshPage::GetInstance();
-					if (pMeshPage != nullptr)
-					{
-						pMeshPage->treeControl(*pTerrainTri->m_Cell->Get_Index());
-					}
+					//if (pMeshPage != nullptr)
+					//{
+					//	pMeshPage->treeControl(*pTerrainTri->m_Cell->Get_Index());
+					//}
 					if (0 == dwByte)
 					{
 						//Safe_Delete(pUnit);
 						break;
 					}
 
-				}
+				
 
 			if (endCheck) {
 				break;
@@ -1994,10 +2020,10 @@ void MeshPage::OnBnClickedObjStaticDelete()
 	CString objStaticIndexNum = a.Right(1);
 	int temp = 0;
 	temp = _ttoi(objStaticIndexNum);
-
+	objStaticCreateCount--;
 
 	
-
+	
 	treeObjStatic.DeleteItem(selectItem);
 	///////////////////
 	vector<Engine::CGameObject*> vecObj = CMFCToolView::GetInstance()->vectorObjStatic;
@@ -2006,8 +2032,8 @@ void MeshPage::OnBnClickedObjStaticDelete()
 	
 	
 	//vecObj.erase(vecObj.begin()+temp);
-	
 	int i = vecObj.size();
+	
 	
 }
 

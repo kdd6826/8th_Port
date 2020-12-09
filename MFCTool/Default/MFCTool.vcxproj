@@ -209,7 +209,7 @@
     <ClInclude Include="..\Code\MFCToolView.h" />
     <ClInclude Include="..\Code\MFC_Terrain.h" />
     <ClInclude Include="..\Code\MultiTex.h" />
-    <ClInclude Include="..\Code\PKH.h" />
+    <ClInclude Include="..\Code\ColliderPage.h" />
     <ClInclude Include="..\Code\SingleTex.h" />
     <ClInclude Include="..\Code\SphereMesh.h" />
     <ClInclude Include="..\Code\Stage.h" />
@@ -243,7 +243,7 @@
     <ClCompile Include="..\Code\MFCToolView.cpp" />
     <ClCompile Include="..\Code\MFC_Terrain.cpp" />
     <ClCompile Include="..\Code\MultiTex.cpp" />
-    <ClCompile Include="..\Code\PKH.cpp" />
+    <ClCompile Include="..\Code\ColliderPage.cpp" />
     <ClCompile Include="..\Code\SingleTex.cpp" />
     <ClCompile Include="..\Code\SphereMesh.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />

@@ -7,7 +7,7 @@
 
 #include"TerrainPage.h"
 #include "MeshPage.h"
-#include "PKH.h"
+#include "ColliderPage.h"
 #include "MFCToolView.h"
 #include "VertexManager.h"
 USING(Client)
@@ -113,7 +113,7 @@ void CForm::OnInitialUpdate()
 
 	m_Tab.InsertItem(0, L"Terrain");
 	m_Tab.InsertItem(1, L"Mesh");
-	m_Tab.InsertItem(2, L"Temp");
+	m_Tab.InsertItem(2, L"Collider");
 
 	m_Tab.SetCurSel(0);
 	
@@ -130,7 +130,7 @@ void CForm::OnInitialUpdate()
 	tab2->MoveWindow(0, 25, rect.Width(), rect.Height());
 	tab2->ShowWindow(SW_HIDE);
 
-	tab3 = new PKH;
+	tab3 = new ColliderPage;
 	tab3->Create(IDD_DIALOG3, &m_Tab);
 	tab3->MoveWindow(0, 25, rect.Width(), rect.Height());
 	tab3->ShowWindow(SW_HIDE);

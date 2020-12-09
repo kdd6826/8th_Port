@@ -1,15 +1,15 @@
 #pragma once
 
 
-// PKH 대화 상자입니다.
+// ColliderPage 대화 상자입니다.
 
-class PKH : public CDialogEx
+class ColliderPage : public CDialogEx
 {
-	DECLARE_DYNAMIC(PKH)
+	DECLARE_DYNAMIC(ColliderPage)
 
 public:
-	PKH(CWnd* pParent = NULL);   // 표준 생성자입니다.
-	virtual ~PKH();
+	ColliderPage(CWnd* pParent = NULL);   // 표준 생성자입니다.
+	virtual ~ColliderPage();
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME

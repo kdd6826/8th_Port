@@ -9,7 +9,7 @@
 
 class TerrainPage;
 class MeshPage;
-class PKH;
+class ColliderPage;
 class CForm : public CFormView
 {
 	DECLARE_DYNCREATE(CForm)
@@ -43,7 +43,7 @@ public:
 
 	TerrainPage	 *tab1;
 	MeshPage	 *tab2;
-	PKH	  		 *tab3;
+	ColliderPage	  		 *tab3;
 
 
 	CTabCtrl m_Tab;

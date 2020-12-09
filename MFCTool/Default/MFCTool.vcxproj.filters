@@ -147,14 +147,14 @@
     <ClInclude Include="..\Code\DynamicCamera.h">
       <Filter>96.DynamicCamera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\PKH.h">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\MFCStaticMesh.h">
       <Filter>95. GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\MFCDynamicMesh.h">
       <Filter>95. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderPage.h">
+      <Filter>00.View\MyFormView\Pages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,14 +221,14 @@
     <ClCompile Include="..\Code\DynamicCamera.cpp">
       <Filter>96.DynamicCamera</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PKH.cpp">
-      <Filter>00.View\MyFormView\Pages</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MFCStaticMesh.cpp">
       <Filter>95. GameObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MFCDynamicMesh.cpp">
       <Filter>95. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderPage.cpp">
+      <Filter>00.View\MyFormView\Pages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
