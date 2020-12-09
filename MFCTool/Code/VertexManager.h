@@ -41,6 +41,7 @@ public:
 	void MouseLClick_NaviMesh();
 	void MouseLClick_ObjectMesh();
 	void MouseRClick_NaviMesh();
+	void MouseRClickOfAlt_NaviMesh();
 	//락온 해제시 그전꺼 색상 바꿔주는등 Or 새로운 락온 객체 설정
 	void LockOnObject(VM_Obj name, Engine::CGameObject * obj);
 	
@@ -70,6 +71,7 @@ public:
 	bool mouseLClick = false;
 	bool mouseRClick = false;
 	bool KeyC = false;
+	bool KeyLShift = false;
 	
 
 	//CSphereMesh 전부 모아논 리스트

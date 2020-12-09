@@ -72,10 +72,7 @@ void VertexManager::Key_Input(float deltaTime)
 			if (Engine::Get_DIKeyState(DIK_LALT) & 0x80)
 			{
 				if (lockOnObjName == VM_Obj::SPHERE) {
-					Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
-					dynamic_cast<CSphereMesh*>(lockOnObj)->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vPickPos;
-					dynamic_cast<CSphereMesh*>(lockOnObj)->Set_InitPoint();
-					MeshPage::GetInstance()->LockOnTree();
+					MouseRClickOfAlt_NaviMesh();
 				}
 			}
 			else if (isNaviMesh) {
@@ -168,7 +165,7 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 			continue;
 
 		float t0, t1;
-
+		
 		t0 = -(B + sqrt(D)) / A;
 		t1 = -(B - sqrt(D)) / A;
 		if (t0 < 0 && t1 < 0) continue;
@@ -333,13 +330,13 @@ bool VertexManager::TerrainHaveCheck() {
 
 void VertexManager::MouseLClick_NaviMesh()
 {
-	LockOnObject(VM_Obj::NONE, nullptr);
-
 	POINT		ptMouse{ 0 };
 	GetCursorPos(&ptMouse);
 	::ScreenToClient(g_hWnd, &ptMouse);
 	if (ptMouse.x < 0.f)
 		return;
+
+	LockOnObject(VM_Obj::NONE, nullptr);
 
 	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom);
@@ -472,6 +469,33 @@ void VertexManager::MouseRClick_NaviMesh()
 
 		//Set_TriColor(pickUpTri->m_pBufferCom,D3DCOLOR_ARGB(255, 0, 44, 145));
 		Set_TriColor(pickUpTri->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
+	}
+}
+
+void VertexManager::MouseRClickOfAlt_NaviMesh()
+{
+	CSphereMesh* sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
+	bool	checkCCW = true;
+	Engine::_vec3	vBeforePos = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
+	sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vPickPos;
+	for (auto& tri : sphere->list_pTerrainTri)
+	{
+		Engine::_vec3 vTempPos[3];
+		for (int i = 0; i < 3; i++)
+		{
+			vTempPos[i] = tri->list_SphereMesh[i]->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+		}
+		if (CCW2(vTempPos[0], vTempPos[1], vTempPos[2]) == 1) {
+			checkCCW = false;
+		}
+	}
+	if (checkCCW) {
+		dynamic_cast<CSphereMesh*>(lockOnObj)->Set_InitPoint();
+		MeshPage::GetInstance()->LockOnTree();
+	}
+	else {
+		sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vBeforePos;
 	}
 }
 
@@ -614,9 +638,9 @@ CSphereMesh* VertexManager::Only_Sphere(CTerrainTri* tri, CSphereMesh* sphere)
 	dynamic_cast<Engine::CTransform*>(newSphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = dynamic_cast<Engine::CTransform*>(sphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS];
 	CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", newSphere);
 	list_TotalSphere.emplace_back(newSphere);
-	LockOnObject(VM_Obj::SPHERE, newSphere);
+	//LockOnObject(VM_Obj::SPHERE, newSphere);
 	//dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
-	newSphere->m_Click = true;
+	//newSphere->m_Click = true;
 
 	for (auto& iter = sphere->list_pTerrainTri.begin(); iter != sphere->list_pTerrainTri.end();)
 	{
