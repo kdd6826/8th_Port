@@ -31,8 +31,6 @@ public:
 //	CButton typeDynamic;
 	CButton typeStatic;
 	CButton typeDynamic;
-	CButton vertexTogetther;
-	CButton vertexOnly;
 
 	HTREEITEM objDynamic,objStatic, tri[128] , vertex[128][3], objCreateItem, objCreateItemSon[3][128];
 	int objStaticCreateCount = 0;

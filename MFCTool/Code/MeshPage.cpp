@@ -43,8 +43,6 @@ void MeshPage::DoDataExchange(CDataExchange* pDX)
 	//  DDX_Control(pDX, IDC_RADIO7, typeDynamic);
 	DDX_Control(pDX, IDC_RADIO7, typeStatic);
 	DDX_Control(pDX, IDC_RADIO8, typeDynamic);
-	DDX_Control(pDX, IDC_RADIO9, vertexTogetther);
-	DDX_Control(pDX, IDC_RADIO10, vertexOnly);
 	DDX_Control(pDX, IDC_TREE4, treeNavi);
 	DDX_Control(pDX, IDC_EDIT14, transformPosX);
 	DDX_Control(pDX, IDC_EDIT15, transformPosY);
@@ -149,7 +147,6 @@ BOOL MeshPage::OnInitDialog()
 
 	mouseObject.SetCheck(BST_CHECKED);
 	typeStatic.SetCheck(BST_CHECKED);
-	vertexTogetther.SetCheck(BST_CHECKED);
 
 	InitTreeCtrl();
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
@@ -603,9 +600,8 @@ void MeshPage::OnNMClickObjDynamicTree(NMHDR* pNMHDR, LRESULT* pResult)
 }
 void MeshPage::OnNMClickNaviTree(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	// TODO: 여기 버텍스 넣어야함
-	if (selectItem == nullptr)
-		return;
+
+
 	if (VertexManager::GetInstance()->isNaviMesh == false)
 		return;
 
@@ -641,6 +637,8 @@ void MeshPage::OnNMClickNaviTree(NMHDR* pNMHDR, LRESULT* pResult)
 	::ScreenToClient(treeNavi.m_hWnd, &point);
 
 	selectItem = treeNavi.HitTest(point, &nFlags);
+	if (selectItem == nullptr)
+		return;
 	//해당 셀에 담긴 Text
 	CString naviIndex = treeNavi.GetItemText(selectItem);
 
