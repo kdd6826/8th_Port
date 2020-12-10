@@ -456,6 +456,8 @@ void MeshPage::InitTreeCtrl()
 void MeshPage::OnNMClickObjCreateTree(NMHDR* pNMHDR, LRESULT* pResult)
 {
 
+	if (VertexManager::GetInstance()->isNaviMesh == true)
+		return;
 	///////////////////////
 	CPoint point;
 	UINT nFlags = 0;
@@ -603,6 +605,8 @@ void MeshPage::OnNMClickNaviTree(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// TODO: 여기 버텍스 넣어야함
 	if (selectItem == nullptr)
+		return;
+	if (VertexManager::GetInstance()->isNaviMesh == false)
 		return;
 
 	HTREEITEM hItem = treeNavi.GetSelectedItem();
@@ -850,7 +854,7 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT14, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -950,7 +954,7 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT15, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1047,7 +1051,7 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT16, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1141,7 +1145,7 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT10, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1233,7 +1237,7 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT12, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1325,7 +1329,7 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT13, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1419,7 +1423,7 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			*pResult = 0;
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1514,7 +1518,7 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT7, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1610,7 +1614,7 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT8, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -2078,7 +2082,7 @@ void MeshPage::OnEnChangeTransformScalX()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2131,7 +2135,7 @@ void MeshPage::OnEnChangeTransformScalY()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2184,7 +2188,7 @@ void MeshPage::OnEnChangeTransformScalZ()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2234,7 +2238,7 @@ void MeshPage::OnEnChangeTransformRotX()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2284,7 +2288,7 @@ void MeshPage::OnEnChangeTransformRotY()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2334,7 +2338,7 @@ void MeshPage::OnEnChangeTransformRotZ()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2384,7 +2388,7 @@ void MeshPage::OnEnChangeTransformPosX()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2434,7 +2438,7 @@ void MeshPage::OnEnChangeTransformPosY()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
@@ -2484,7 +2488,7 @@ void MeshPage::OnEnChangeTransformPosZ()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 		CString a = treeObjStatic.GetItemText(selectItem);
 		CString objStaticIndexNum = a.Right(1);
