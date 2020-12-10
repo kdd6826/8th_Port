@@ -492,7 +492,7 @@ void VertexManager::MouseRClickOfAlt_NaviMesh()
 	}
 	if (checkCCW) {
 		dynamic_cast<CSphereMesh*>(lockOnObj)->Set_InitPoint();
-		MeshPage::GetInstance()->LockOnTree();
+		//MeshPage::GetInstance()->LockOnTree();
 	}
 	else {
 		sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vBeforePos;
@@ -531,7 +531,7 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 	lockOnObjName = name;
 	if(obj != nullptr)
 		lockOnObj = obj;
-	MeshPage::GetInstance()->LockOnTree();
+	//MeshPage::GetInstance()->LockOnTree();
 }
 
 
