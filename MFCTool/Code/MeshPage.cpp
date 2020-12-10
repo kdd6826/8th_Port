@@ -2503,3 +2503,155 @@ void MeshPage::OnEnChangeTransformPosZ()
 }
 
 
+void MeshPage::LockOnTree()
+{
+	lockOnCheck = true;
+	// TODO: 여기 버텍스 넣어야함
+
+	//HTREEITEM hItem = treeNavi.GetSelectedItem();
+	//CStringW a = treeNavi.GetItemText(hItem);
+
+	//int triNum = CMFCToolView::GetInstance()->Get_VectorTri(&triNum).size();
+
+
+	//i = p.size();
+	//삼각형 색 복귀
+
+
+
+	//VertexManager::GetInstance()->Set_TriColor(CMFCToolView::GetInstance()->Get_TriOfNumber(triNum)->m_pBufferCom, D3DCOLOR_ARGB(255, 100, 255, 100));
+
+	//원 색 복귀
+	//for (int i = 0; i < triNum; ++i)
+	//{
+	//	VertexManager::GetInstance()->Set_TriColor(CMFCToolView::GetInstance()->Get_TriOfNumber(i)->m_pBufferCom, D3DCOLOR_ARGB(255, 100, 255, 100));
+	//	for (int j = 0; j < 3; j++)
+	//	{
+	//		VertexManager::GetInstance()->Set_SphereColor(CMFCToolView::GetInstance()->Get_TriOfNumber(i)->list_SphereMesh[j]->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+	//	}
+	//}
+
+
+	///////////////////////
+	CPoint point;
+	UINT nFlags = 0;
+
+	GetCursorPos(&point);
+	::ScreenToClient(treeNavi.m_hWnd, &point);
+
+	selectItem = treeNavi.HitTest(point, &nFlags);
+	//해당 셀에 담긴 Text
+	CString naviIndex = treeNavi.GetItemText(selectItem);
+
+	//Text를 int로 바꾸기
+	int indexNum;
+	indexNum = _ttoi(naviIndex);
+
+
+
+
+	if (VertexManager::GetInstance()->lockOnObjName == VertexManager::VM_Obj::TRI)//treeNavi.GetParentItem(selectItem) == 0)
+	{
+		//삼각형 셀이 선택
+		//VertexManager::GetInstance()->vertex[indexNum];
+
+		CTerrainTri* tri = dynamic_cast<CTerrainTri*>(VertexManager::GetInstance()->lockOnObj);//CMFCToolView::GetInstance()->Get_TriOfNumber(indexNum);
+		//VertexManager::GetInstance()->Set_TriColor(tri->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
+
+
+	}
+	else if (VertexManager::GetInstance()->lockOnObjName == VertexManager::VM_Obj::SPHERE)
+	{
+
+		//CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+
+		//int iParentIndex = _ttoi(parentIndex);
+		//VertexManager::GetInstance()->Set_TriColor(CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex)->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
+
+
+		//CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+
+		//CSphereMesh* sphere[3];
+		//int Temp = 0;
+		//for (auto& _sphere : tri->list_SphereMesh)
+		//{
+		//	sphere[Temp] = _sphere;
+		//	Temp++;
+		//}
+
+
+		//lastSphereIndex = indexNum;
+		//VertexManager::GetInstance()->Set_SphereColor(sphere[indexNum]->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
+
+		//int triIndex;
+		//triIndex = _ttoi(parentIndex);
+
+		CSphereMesh* sphere = dynamic_cast<CSphereMesh*>(VertexManager::GetInstance()->lockOnObj);
+
+		m_fTransformPosX = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].x;
+		m_fTransformPosY = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].y;
+		m_fTransformPosZ = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS].z;
+
+		m_fTransformScalX = sphere->m_pTransformCom->m_vScale.x;
+		m_fTransformScalY = sphere->m_pTransformCom->m_vScale.y;
+		m_fTransformScalZ = sphere->m_pTransformCom->m_vScale.z;
+
+
+
+		//float m_fTransformPosX = VertexManager::GetInstance()->vertex[triIndex][indexNum].x;
+		//float m_fTransformPosY = VertexManager::GetInstance()->vertex[triIndex][indexNum].y;
+		//float m_fTransformPosZ = VertexManager::GetInstance()->vertex[triIndex][indexNum].z;
+
+		CString cVertexX, cVertexY, cVertexZ;
+
+		cVertexX.Format(_T("%9.1f\n"), m_fTransformPosX);
+		cVertexY.Format(_T("%9.1f\n"), m_fTransformPosY);
+		cVertexZ.Format(_T("%9.1f\n"), m_fTransformPosZ);
+
+		SetDlgItemText(IDC_EDIT14, cVertexX);
+		SetDlgItemText(IDC_EDIT15, cVertexY);
+		SetDlgItemText(IDC_EDIT16, cVertexZ);
+
+		cVertexX.Format(_T("%9.1f\n"), m_fTransformScalX);
+		cVertexY.Format(_T("%9.1f\n"), m_fTransformScalY);
+		cVertexZ.Format(_T("%9.1f\n"), m_fTransformScalZ);
+
+		SetDlgItemText(IDC_EDIT5, cVertexX);
+		SetDlgItemText(IDC_EDIT7, cVertexY);
+		SetDlgItemText(IDC_EDIT8, cVertexZ);
+
+
+	}
+
+
+
+
+
+
+	if (selectItem != NULL && (nFlags & TVHT_ONITEMSTATEICON) != 0)
+	{
+		if (treeNavi.GetCheck(selectItem))
+		{
+			UnCheckChildItems(selectItem);
+		}
+		else
+		{
+			CheckChildItems(selectItem);
+		}
+	}
+
+
+	wchar_t text[16];
+
+
+	TVITEMW item;
+	item.mask = TVIF_TEXT;
+	item.hItem = selectItem;
+	item.pszText = text;
+	item.cchTextMax = 16;
+	treeNavi.GetItem(&item);
+
+	OutputDebugString(text);
+
+	//*pResult = 0;
+}

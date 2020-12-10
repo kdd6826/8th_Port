@@ -120,5 +120,6 @@ public:
 	afx_msg void OnEnChangeTransformPosY();
 	afx_msg void OnEnChangeTransformPosZ();
 
+	void LockOnTree();
 	bool lockOnCheck = false;
 };
