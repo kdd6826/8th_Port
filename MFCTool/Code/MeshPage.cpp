@@ -677,6 +677,7 @@ void MeshPage::OnNMClickNaviTree(NMHDR *pNMHDR, LRESULT *pResult)
 
 		lastSphereIndex = indexNum;
 		VertexManager::GetInstance()->Set_SphereColor(sphere[indexNum]->m_pBufferCom, D3DCOLOR_ARGB(255, 200, 0, 0));
+		VertexManager::GetInstance()->Set_SphereColor(dynamic_cast<CSphereMesh*>(VertexManager::GetInstance()->lockOnObj)->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
 		
 		int triIndex;
 		triIndex = _ttoi(parentIndex);
@@ -885,6 +886,7 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		
 	}
 }
+
 
 void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 {

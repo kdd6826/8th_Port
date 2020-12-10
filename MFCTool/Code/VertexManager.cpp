@@ -68,12 +68,17 @@ void VertexManager::Key_Input(float deltaTime)
 
 	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
 	{
-		
 		if (!mouseRClick) {
-			if (isNaviMesh)
+			if (Engine::Get_DIKeyState(DIK_LALT) & 0x80)
+			{
+				if (lockOnObjName == VM_Obj::SPHERE) {
+					MouseRClickOfAlt_NaviMesh();
+				}
+			}
+			else if (isNaviMesh) {
 				MouseRClick_NaviMesh();
-			
-			mouseRClick = true;
+				mouseRClick = true;
+			}
 		}
 	}
 	else {
@@ -83,31 +88,7 @@ void VertexManager::Key_Input(float deltaTime)
 	if (Engine::Get_DIKeyState(DIK_C) & 0x80)
 	{
 		Delete_LockObject();
-		/*if (!KeyC) {
-			KeyC = true;
 
-			  
-			for (auto sphere : list_Sphere)
-			{
-				auto iter = list_TotalSphere.begin();
-				for (; iter != list_TotalSphere.end();)
-				{
-					if (*iter == sphere) {
-						Set_VtxColor(sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 0, 255, 0));
-						sphere->m_Click = false;
-						sphere->Release_pPoint(sphere->list_pPoint.back());
-						if (sphere->m_Dead) {
-							iter = list_TotalSphere.erase(iter);
-						}
-						break;
-
-					}
-					else
-						iter++;
-				}
-			}
-			list_Sphere.clear();
-		}*/
 	}
 	else {
 		KeyC = false;
@@ -184,7 +165,7 @@ CSphereMesh* VertexManager::Picking_Sphere(HWND hWnd, Engine::CTransform* pTerra
 			continue;
 
 		float t0, t1;
-
+		
 		t0 = -(B + sqrt(D)) / A;
 		t1 = -(B - sqrt(D)) / A;
 		if (t0 < 0 && t1 < 0) continue;
@@ -349,13 +330,13 @@ bool VertexManager::TerrainHaveCheck() {
 
 void VertexManager::MouseLClick_NaviMesh()
 {
-	LockOnObject(VM_Obj::NONE, nullptr);
-
 	POINT		ptMouse{ 0 };
 	GetCursorPos(&ptMouse);
 	::ScreenToClient(g_hWnd, &ptMouse);
 	if (ptMouse.x < 0.f)
 		return;
+
+	LockOnObject(VM_Obj::NONE, nullptr);
 
 	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(CMFCToolView::GetInstance()->Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom);
@@ -491,19 +472,55 @@ void VertexManager::MouseRClick_NaviMesh()
 	}
 }
 
+void VertexManager::MouseRClickOfAlt_NaviMesh()
+{
+	CSphereMesh* sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
+	bool	checkCCW = true;
+	Engine::_vec3	vBeforePos = sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	Engine::_vec3	vPickPos = CMFCToolView::GetInstance()->PickUp_OnTerrain();
+	sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vPickPos;
+	for (auto& tri : sphere->list_pTerrainTri)
+	{
+		Engine::_vec3 vTempPos[3];
+		for (int i = 0; i < 3; i++)
+		{
+			vTempPos[i] = tri->list_SphereMesh[i]->m_pTransformCom->m_vInfo[Engine::INFO_POS];
+		}
+		if (CCW2(vTempPos[0], vTempPos[1], vTempPos[2]) == 1) {
+			checkCCW = false;
+		}
+	}
+	if (checkCCW) {
+		dynamic_cast<CSphereMesh*>(lockOnObj)->Set_InitPoint();
+		MeshPage::GetInstance()->LockOnTree();
+	}
+	else {
+		sphere->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vBeforePos;
+	}
+}
+
 void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 {
 	switch (lockOnObjName)
 	{
 	case VM_Obj::SPHERE: {
-		CSphereMesh* _sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
-		if (_sphere->m_Click)
-			Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
-		else
-			Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
-		break;
+		if ((Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80) && name == VM_Obj::SPHERE) {
+			Together_Sphere(dynamic_cast<CSphereMesh*>(lockOnObj), dynamic_cast<CSphereMesh*>(obj));
+			break;
+		}
+		else {
+			CSphereMesh* _sphere = dynamic_cast<CSphereMesh*>(lockOnObj);
+			if (_sphere->m_Click)
+				Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+			else
+				Set_SphereColor(_sphere->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+			break;
+		}
 	}
 	case VM_Obj::TRI: {
+		if ((Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80) && name == VM_Obj::SPHERE) {
+			Only_Sphere(dynamic_cast<CTerrainTri*>(lockOnObj), dynamic_cast<CSphereMesh*>(obj));
+		}
 		CTerrainTri* _tri = dynamic_cast<CTerrainTri*>(lockOnObj);
 		Set_TriColor(_tri->m_pBufferCom, D3DCOLOR_ARGB(255, 100, 255, 100));
 		break;
@@ -514,6 +531,7 @@ void VertexManager::LockOnObject(VM_Obj name, Engine::CGameObject* obj)
 	lockOnObjName = name;
 	if(obj != nullptr)
 		lockOnObj = obj;
+	MeshPage::GetInstance()->LockOnTree();
 }
 
 
@@ -568,4 +586,97 @@ void VertexManager::Erase_list_TotalSphere(CSphereMesh* sphere)
 		}
 		iter++;
 	}
+}
+
+void VertexManager::Together_Sphere(CSphereMesh* firstSphere, CSphereMesh* secondSphere)
+{
+	for (auto& tri : firstSphere->list_pTerrainTri)
+	{
+		for (auto& tri2 : secondSphere->list_pTerrainTri)
+		{
+			if (tri == tri2)
+			{
+				//첫번째 원과 두번째원이 같은 삼각형을 참조하고 있을경우, 예외처리
+				if (firstSphere->m_Click)
+					Set_SphereColor(firstSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 5, 0, 153));
+				else
+					Set_SphereColor(firstSphere->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
+				return;
+			}
+		}
+	}
+
+	for (auto& pVec : firstSphere->list_pPoint)
+	{
+		*pVec  = *secondSphere->list_pPoint.front();
+		secondSphere->list_pPoint.emplace_back(pVec);
+	}
+	firstSphere->list_pPoint.clear();
+	for (auto& pTri : firstSphere->list_pTerrainTri)
+	{
+		for (auto& pSphere2 : pTri->list_SphereMesh)
+		{
+			if (pSphere2 == firstSphere) {
+				pSphere2 = secondSphere;
+				break;
+			}
+		}
+		secondSphere->list_pTerrainTri.emplace_back(pTri);
+	}
+	firstSphere->list_pTerrainTri.clear();
+	secondSphere->Set_InitPoint();
+	Erase_list_TotalSphere(firstSphere);
+	firstSphere->m_Dead = true;
+}
+
+CSphereMesh* VertexManager::Only_Sphere(CTerrainTri* tri, CSphereMesh* sphere)
+{
+	if (sphere->list_pTerrainTri.size() == 1)
+		return nullptr;
+
+	CSphereMesh* newSphere = CSphereMesh::Create(m_pGraphicDev);
+	dynamic_cast<Engine::CTransform*>(newSphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = dynamic_cast<Engine::CTransform*>(sphere->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS];
+	CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", newSphere);
+	list_TotalSphere.emplace_back(newSphere);
+	//LockOnObject(VM_Obj::SPHERE, newSphere);
+	//dynamic_cast<CSphereMesh*>(pGameObject)->Set_VtxPos();
+	//newSphere->m_Click = true;
+
+	for (auto& iter = sphere->list_pTerrainTri.begin(); iter != sphere->list_pTerrainTri.end();)
+	{
+		if (*iter == tri) {
+			sphere->list_pTerrainTri.erase(iter);
+			break;
+		}
+		iter++;
+	}
+
+	Engine::_vec3* pilferPoint = nullptr;
+	for (auto& iter = sphere->list_pPoint.begin(); iter != sphere->list_pPoint.end();)
+	{
+		bool check = false;
+		for (int i = 0; i < 3; i++)
+		{
+			if (*iter == tri->m_Cell->Get_pPoint((Engine::CCell::POINT)i)) {
+				pilferPoint = *iter;
+				sphere->list_pPoint.erase(iter);
+				check = true;
+				break;
+			}
+		}
+		if (check)
+			break;
+		iter++;
+	}
+
+	newSphere->list_pPoint.emplace_back(pilferPoint);
+	newSphere->list_pTerrainTri.emplace_back(tri);
+	for (auto& iter = tri->list_SphereMesh.begin(); iter != tri->list_SphereMesh.end();)
+	{
+		if (*iter == sphere) {
+			*iter = newSphere;
+		}
+		iter++;
+	}
+	return newSphere;
 }

@@ -6,6 +6,7 @@
 #include "Export_Function.h"
 
 class CSphereMesh;
+class CTerrainTri;
 
 class VertexManager
 {
@@ -40,6 +41,7 @@ public:
 	void MouseLClick_NaviMesh();
 	void MouseLClick_ObjectMesh();
 	void MouseRClick_NaviMesh();
+	void MouseRClickOfAlt_NaviMesh();
 	//락온 해제시 그전꺼 색상 바꿔주는등 Or 새로운 락온 객체 설정
 	void LockOnObject(VM_Obj name, Engine::CGameObject * obj);
 	
@@ -56,6 +58,11 @@ public:
 	void Delete_LockObject();
 
 	void Erase_list_TotalSphere(CSphereMesh * sphere);
+
+	//첫번째 인자 삼각형 삭제, 두번째 삼각형으로 값들을 이동
+	void Together_Sphere(CSphereMesh * firstSphere, CSphereMesh * secondSphere);
+	//삼각형 나누기
+	CSphereMesh* Only_Sphere(CTerrainTri* tri, CSphereMesh* sphere);
 	
 	bool isNaviMesh = false;
 	bool isObjectMesh = false;
@@ -64,6 +71,7 @@ public:
 	bool mouseLClick = false;
 	bool mouseRClick = false;
 	bool KeyC = false;
+	bool KeyLShift = false;
 	
 
 	//CSphereMesh 전부 모아논 리스트
