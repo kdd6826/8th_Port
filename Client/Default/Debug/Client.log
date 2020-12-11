@@ -1,3 +1,24 @@
-﻿  Loading.cpp
+﻿  Player.cpp
+  DynamicCamera.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Monster.cpp
+  코드를 생성하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  Client.cpp
+  UI.cpp
+  Tree.cpp
+  TestPlayer.cpp
+  TestMonster.cpp
+  Terrain.cpp
+  Sword.cpp
+  Stone.cpp
+  Stage.cpp
+  SkyBox.cpp
+  MainApp.cpp
+  Logo.cpp
+  Loading.cpp
+  Effect.cpp
+  BackGround.cpp
   Client.vcxproj -> C:\Users\GMH\Desktop\8th2\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

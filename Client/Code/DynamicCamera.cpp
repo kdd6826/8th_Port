@@ -24,7 +24,8 @@ HRESULT Client::CDynamicCamera::Ready_Object(const _vec3* pEye, const _vec3* pAt
 	m_fFar = fFar;
 
 	FAILED_CHECK_RETURN(Engine::CCamera::Ready_Object(), E_FAIL);
-	
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
 	return S_OK;
 }
 
@@ -40,10 +41,76 @@ Client::CDynamicCamera* Client::CDynamicCamera::Create(LPDIRECT3DDEVICE9 pGraphi
 	return pInstance;
 }
 
+HRESULT CDynamicCamera::Add_Component(void)
+{
+	Engine::CComponent* pComponent = nullptr;
+	// Transform
+	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
+
+	return S_OK;
+}
+
 void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 {
 	_matrix			matCamWorld;
 	D3DXMatrixInverse(&matCamWorld, NULL, &m_matView);
+
+	
+	/// ///////////////
+	
+	
+	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+	_vec3 playerLook, playerPos, playerScale, dst, dir;
+
+	pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook);
+	pPlayerTransCom->Get_Info(Engine::INFO_POS, &playerPos);
+	playerScale = pPlayerTransCom->m_vScale;
+
+
+	if (isSlowChase)
+	{
+
+		dst = playerPos - (playerLook * playerScale.y * 6.f);
+		dst.y += playerScale.y * 5.f;
+
+		dir = dst - m_vEye;
+
+		float distance = D3DXVec3Length(&dir);
+		if (0.1f > distance)
+		{
+			int i = 0;
+		}
+		else
+		{
+
+			D3DXVec3Normalize(&dir, &dir);
+
+			float speed = 10.f;
+
+			m_vEye += dir * fTimeDelta * (speed + slowTime);
+
+			slowTime += fTimeDelta;
+
+			//transform->look = target->GetTransform()->position;
+			m_vAt = playerPos + (playerLook * 10.f);
+		}
+
+	}
+	else
+	{
+	
+		m_vEye = playerPos - (playerLook * playerScale.y * 20000.f);
+	//transform->position.y += 1.f;
+		m_vEye.y += playerScale.y * 100.f;
+
+		m_vAt = playerPos + (playerLook * 1000.f);
+	}
+	//m_pTransformCom->Chase_Target(&playerPos,2.f,fTimeDelta);
+
+	//m_vAt = playerLook;
+	//m_vEye = playerPos;
 
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
@@ -56,38 +123,38 @@ void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 		m_vAt += vLength;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
-	{
-		_vec3		vLook;
-		memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
+	//if (Engine::Get_DIKeyState(DIK_S) & 0x80)
+	//{
+	//	_vec3		vLook;
+	//	memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
 
-		_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
+	//	_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
 
-		m_vEye -= vLength;
-		m_vAt -= vLength;
-	}
+	//	m_vEye -= vLength;
+	//	m_vAt -= vLength;
+	//}
 
-	if (Engine::Get_DIKeyState(DIK_A) & 0x80)
-	{
-		_vec3		vRight;
-		memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+	//if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+	//{
+	//	_vec3		vRight;
+	//	memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
 
-		_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+	//	_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
 
-		m_vEye -= vLength;
-		m_vAt -= vLength;
-	}
+	//	m_vEye -= vLength;
+	//	m_vAt -= vLength;
+	//}
 
-	if (Engine::Get_DIKeyState(DIK_D) & 0x80)
-	{
-		_vec3		vRight;
-		memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+	//if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+	//{
+	//	_vec3		vRight;
+	//	memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
 
-		_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+	//	_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
 
-		m_vEye += vLength;
-		m_vAt += vLength;
-	}
+	//	m_vEye += vLength;
+	//	m_vAt += vLength;
+	//}
 	
 	if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80)
 	{

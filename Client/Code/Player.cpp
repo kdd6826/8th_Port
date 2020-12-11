@@ -65,8 +65,9 @@ HRESULT Client::CPlayer::Add_Component(void)
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &m_vDir);
+	_vec3 vLook, vUp, vRight, vLeft;
 
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
+	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
 		_vec3	vPos, vDir;
 		m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -79,16 +80,21 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
 		D3DXVec3Normalize(&m_vDir, &m_vDir);
 		m_pTransformCom->Move_Pos(&(m_vDir * -m_fSpeed * fTimeDelta));
 	}
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-		m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta));
-
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+	{
+		
+		m_pTransformCom->Get_Info(Engine::INFO::INFO_LOOK,&vLook);
+		m_pTransformCom->Get_Info(Engine::INFO::INFO_UP, &vUp);
+		vLeft = D3DXVec3Dot(&vLook, &vUp);
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta));
+	}
+	if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 		m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-90.f * fTimeDelta));
 
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)

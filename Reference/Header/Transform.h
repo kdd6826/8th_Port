@@ -42,6 +42,7 @@ public:
 	_vec3			m_vInfo[INFO_END];
 	_vec3			m_vScale;
 	_vec3			m_vAngle;
+	_vec3			m_vDirection;
 	_matrix			m_matWorld;
 	_matrix			m_matNRotWorld;
 

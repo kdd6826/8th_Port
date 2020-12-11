@@ -3,7 +3,11 @@
 
 #include "Camera.h"
 #include "Define.h"
+BEGIN(Engine)
 
+
+class CTransform;
+END
 BEGIN(Client)
 class CDynamicCamera : public Engine::CCamera
 {
@@ -18,11 +22,14 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 
 private:
+
+	HRESULT		Add_Component(void);
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(void);
 	void		Mouse_Fix(void);
 
 private:
+	Engine::CTransform* m_pTransformCom = nullptr;
 	_bool		m_bClick = false;
 	_bool		m_bFix = true;
 
@@ -37,7 +44,8 @@ public:
 									const _float& fFar = 1000.f);
 private:
 	virtual void Free(void) override;
-
+	bool isSlowChase = false;
+	float slowTime = 0.f;
 };
 
 END
