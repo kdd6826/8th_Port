@@ -11,6 +11,7 @@ class CTexture;
 class CRenderer;
 class CTransform;
 class COptimization;
+class CShader;
 
 END
 
@@ -28,7 +29,7 @@ public:
 
 private:
 	HRESULT		Add_Component(void);
-	HRESULT		SetUp_Material(void);
+	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 
 private:
 	Engine::CTerrainTex*		m_pBufferCom = nullptr;
@@ -36,6 +37,7 @@ private:
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::COptimization*		m_pOptimizationCom = nullptr;
+	Engine::CShader*			m_pShaderCom = nullptr;
 
 	Engine::INDEX32*			m_pIndex = nullptr;
 	_ulong						m_dwTriCnt = 0;

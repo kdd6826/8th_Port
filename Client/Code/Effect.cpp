@@ -63,7 +63,7 @@ HRESULT Client::CEffect::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Pos(&_vec3(rand() % 20 + 1.f, 0.f, rand() % 20 + 1.f));
+	m_pTransformCom->Set_Pos(rand() % 40, 0.f, rand() % 40);
 
 	return S_OK;
 }
@@ -76,6 +76,26 @@ Client::_int Client::CEffect::Update_Object(const _float& fTimeDelta)
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	CGameObject::Compute_ViewZ(&vPos);
+
+	_matrix		matWorld, matView, matBill;
+
+	D3DXMatrixIdentity(&matBill);
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+
+	D3DXMatrixInverse(&matBill, NULL, &matBill);
+
+	// 행렬의 곱셈순서를 주의할 것
+	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	return 0;
@@ -83,13 +103,7 @@ Client::_int Client::CEffect::Update_Object(const _float& fTimeDelta)
 void Client::CEffect::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
+	
 	m_pTextureCom->Render_Texture((_uint)m_fFrame);
 	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
 }

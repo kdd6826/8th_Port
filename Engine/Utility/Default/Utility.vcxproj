@@ -182,6 +182,7 @@ Call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\QuadTree.cpp" />
     <ClCompile Include="..\Code\Renderer.cpp" />
     <ClCompile Include="..\Code\Scene.cpp" />
+    <ClCompile Include="..\Code\Shader.cpp" />
     <ClCompile Include="..\Code\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +203,9 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\QuadTree.h" />
     <ClInclude Include="..\Code\Renderer.h" />
     <ClInclude Include="..\Code\Scene.h" />
+    <ClInclude Include="..\Code\Shader.h" />
+    <ClInclude Include="..\Code\Shader_Sample.hpp" />
+    <ClInclude Include="..\Code\Shader_Terrain.hpp" />
     <ClInclude Include="..\Code\Transform.h" />
   </ItemGroup>
   <ItemGroup>

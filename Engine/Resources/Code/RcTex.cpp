@@ -35,16 +35,16 @@ HRESULT Engine::CRcTex::Ready_Buffer(void)
 	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
 	
 	// 오른쪽 위
-	pVertex[0].vPos = _vec3(-1.f, 1.f, 0.f);
+	pVertex[0].vPos = _vec3(-0.5f, 0.5f, 0.f);
 	pVertex[0].vTexUV = _vec2(0.f, 0.f);
 
-	pVertex[1].vPos = _vec3(1.f, 1.f, 0.f);
+	pVertex[1].vPos = _vec3(0.5f, 0.5f, 0.f);
 	pVertex[1].vTexUV = _vec2(1.f, 0.f);
 
-	pVertex[2].vPos = _vec3(1.f, -1.f, 0.f);
+	pVertex[2].vPos = _vec3(0.5f, -0.5f, 0.f);
 	pVertex[2].vTexUV = _vec2(1.f, 1.f);
 
-	pVertex[3].vPos = _vec3(-1.f, -1.f, 0.f);
+	pVertex[3].vPos = _vec3(-0.5f, -0.5f, 0.f);
 	pVertex[3].vTexUV = _vec2(0.f, 1.f);
 
 	m_pVB->Unlock();

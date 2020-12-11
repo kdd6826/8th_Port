@@ -149,9 +149,22 @@ void CTransform::Set_Pos(const _vec3* pPos)
 	m_vInfo[INFO_POS] = *pPos;
 }
 
+void CTransform::Set_Pos(const _float & fX, const _float & fY, const _float & fZ)
+{
+	m_vInfo[INFO_POS].x = fX;
+	m_vInfo[INFO_POS].y = fY;
+	m_vInfo[INFO_POS].z = fZ;
+
+}
+
 void CTransform::Rotation(ROTATION eType, const _float & fAngle)
 {
 	*(((_float*)&m_vAngle) + eType) += fAngle;
+}
+
+void CTransform::Set_WorldMatrix(const _matrix * pMatrix)
+{
+	m_matWorld = *pMatrix;
 }
 
 void CTransform::Set_ParentMatrix(const _matrix * pParent)

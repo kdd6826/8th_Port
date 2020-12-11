@@ -77,10 +77,13 @@
       <UniqueIdentifier>{f1cd01c4-b0c1-4441-8e88-75857e621480}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. Stage\05. Tree">
-      <UniqueIdentifier>{2f3094b5-b57d-4610-bfbf-d92554bb16ec}</UniqueIdentifier>
+      <UniqueIdentifier>{ca7f7dbb-adc0-4cc2-a447-888acecde2b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. Stage\06. Effect">
-      <UniqueIdentifier>{1026821e-213a-454c-a6a1-edd29cc14ee9}</UniqueIdentifier>
+      <UniqueIdentifier>{c8b12635-96a8-428c-a754-144bfeb9a9ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI">
+      <UniqueIdentifier>{05bc395a-b034-4f5e-8b39-a3469d92ae66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +159,9 @@
     <ClInclude Include="..\Code\Effect.h">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\UI.h">
+      <Filter>02. GameObject\01. Stage\07. UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -211,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

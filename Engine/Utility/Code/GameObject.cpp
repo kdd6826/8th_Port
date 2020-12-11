@@ -53,6 +53,19 @@ CComponent * CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTI
 	return pComponent;
 }
 
+void CGameObject::Compute_ViewZ(const _vec3 * pPos)
+{
+	_matrix		matCamWorld;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+
+	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
+
+	_vec3	vCamPos;
+	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
+
+	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
+}
+
 void Engine::CGameObject::Free(void)
 {
 	for (_uint i = 0; i < ID_END; ++i)

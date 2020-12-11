@@ -15,6 +15,9 @@ private:
 	virtual ~CLightMgr(void);
 
 public:
+	const D3DLIGHT9*		Get_Light(const _uint& iIndex);
+
+public:
 	HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
 
 private:

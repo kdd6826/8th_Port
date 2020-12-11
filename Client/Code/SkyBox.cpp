@@ -83,15 +83,12 @@ Client::_int Client::CSkyBox::Update_Object(const _float& fTimeDelta)
 void Client::CSkyBox::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE,FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	
+		
 	m_pTextureCom->Render_Texture(3);
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 }

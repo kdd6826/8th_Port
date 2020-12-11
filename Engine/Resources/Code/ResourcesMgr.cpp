@@ -55,12 +55,6 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_CUBETEX:
 		pResources = CCubeTex::Create(pGraphicDev);
 		break;
-	case BUFFER_SPHERE:
-		pResources = CSphere::Create(pGraphicDev);
-		break;
-	case BUFFER_OBJSPHERE:
-		pResources = CObjSphere::Create(pGraphicDev);
-		break;
 
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);
@@ -183,9 +177,3 @@ Engine::CComponent* Engine::CResourcesMgr::Clone(const _ushort& wContainerIdx, c
 	return pProto->Clone();
 }
 
-Engine::CComponent* Engine::CResourcesMgr::Create_TerrainCol(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
-{
-
-	CResources* pProto = CTerrainTriCol::Create(pGraphicDev, vtxPos1, vtxPos2, vtxPos3);
-	return pProto;
-}

@@ -11,6 +11,9 @@ class ENGINE_DLL CLight : public CBase
 private:
 	explicit CLight(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CLight(void);
+
+public:
+	const D3DLIGHT9*		Get_Light(void)  { return &m_tLightInfo; }
 	
 public:
 	HRESULT		Ready_Light(const D3DLIGHT9* pLightInfo, const _uint& iIndex);

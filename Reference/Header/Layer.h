@@ -19,7 +19,7 @@ public:
 	HRESULT		Ready_Layer(void);
 	_int		Update_Layer(const _float& fTimeDelta);
 
-public:
+private:
 	multimap<const _tchar*, CGameObject*>			m_mapObject;
 
 public:

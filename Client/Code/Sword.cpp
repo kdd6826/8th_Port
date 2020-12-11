@@ -79,22 +79,22 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 		NULL_CHECK_RETURN(pPlayerMeshCom, 0);
 
 		//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger31"); //-90
-		//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger01");
-		//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger1");
-		//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger12"); //X -100
+//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger01");
+//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger1");
+//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger12"); //X -100
 		const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger22"); //X -100
 		m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
+		
 
 		Engine::CTransform*		pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 		NULL_CHECK_RETURN(pPlayerTransCom, 0);
 		m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
-		//m_pTransformCom->m_vInfo[Engine::INFO_RIGHT].x + 10.f;
 	}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 		
 	m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
-
+	
 
 	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
 

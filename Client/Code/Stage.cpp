@@ -69,13 +69,13 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	Engine::CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CPlayer::Create(m_pGraphicDev);
+	/*pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
 	pGameObject = CSword::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);*/
 
 	/*for (_uint i = 0; i < 50; ++i)
 	{
@@ -99,6 +99,11 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Effect", pGameObject), E_FAIL);
 	}
 
+	pGameObject = CUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+
+
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
@@ -120,7 +125,7 @@ HRESULT CStage::Ready_LightInfo(void)
 
 	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 

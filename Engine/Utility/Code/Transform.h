@@ -22,9 +22,11 @@ public:
 	void			Move_Pos(const _vec3* const pDir);
 	void			Pick_Pos(const _vec3* pPos, const _float & fSpeed, const _float& fTimeDelta);
 	void			Set_Pos(const _vec3* pPos);
+	void			Set_Pos(const _float& fX, const _float& fY, const _float& fZ);
 	void			Move_Pos(const float& fX, const float& fY, const float& fZ);
 	void			Rotation(ROTATION eType, const _float& fAngle);
 	
+	void			Set_WorldMatrix(const _matrix* pMatrix);
 	void			Set_ParentMatrix(const _matrix* pParent);
 
 	void			Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);

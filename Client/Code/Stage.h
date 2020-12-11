@@ -14,6 +14,7 @@
 #include "Sword.h"
 #include "Tree.h"
 #include "Effect.h"
+#include "UI.h"
 
 BEGIN(Client)
 

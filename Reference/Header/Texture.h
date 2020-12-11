@@ -16,6 +16,7 @@ private:
 public:
 	HRESULT		Ready_Texture(const _tchar* pPath, TEXTURETYPE eType, const _uint& iCnt);
 	void		Render_Texture(const _uint& iIndex = 0);
+	void		Set_Texture(LPD3DXEFFECT& pEffect, const char* pConstantName, const _uint& iIndex = 0);
 
 private:
 	vector<IDirect3DBaseTexture9*>			m_vecTexture;

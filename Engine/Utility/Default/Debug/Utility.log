@@ -1,4 +1,5 @@
-﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\8th2\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Management.cpp
+  Utility.vcxproj -> C:\Users\GMH\Desktop\8th2\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -6,25 +7,22 @@
   .\Engine\Utility\Code\Component.h
   .\Engine\Utility\Code\Frustum.h
   .\Engine\Utility\Code\GameObject.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Utility\Code\Layer.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Utility\Code\Light.h
   .\Engine\Utility\Code\LightMgr.h
   .\Engine\Utility\Code\Management.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Utility\Code\Optimization.h
   .\Engine\Utility\Code\Pipeline.h
   .\Engine\Utility\Code\ProtoMgr.h
   .\Engine\Utility\Code\QuadTree.h
   .\Engine\Utility\Code\Renderer.h
   .\Engine\Utility\Code\Scene.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
+  .\Engine\Utility\Code\Shader.h
   .\Engine\Utility\Code\Transform.h
-         13개 파일이 복사되었습니다.
-  .\Engine\Utility\Code\*.hpp 
-  지정된 파일을 찾을 수 없습니다.
-          0개 파일이 복사되었습니다.
+         18개 파일이 복사되었습니다.
+  .\Engine\Utility\Code\Shader_Sample.hpp
+  .\Engine\Utility\Code\Shader_Terrain.hpp
+          2개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h
@@ -32,14 +30,12 @@
   .\Engine\Header\Engine_Function.h
   .\Engine\Header\Engine_Macro.h
   .\Engine\Header\Engine_Struct.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Header\Engine_Typedef.h
   .\Engine\Header\Export_Function.h
   .\Engine\Header\Export_Resouces.h
   .\Engine\Header\Export_System.h
   .\Engine\Header\Export_Utility.h
-          8개 파일이 복사되었습니다.
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
+         10개 파일이 복사되었습니다.
   .\Engine\Header\Export_Resouces.inl
   .\Engine\Header\Export_System.inl
   .\Engine\Header\Export_Utility.inl

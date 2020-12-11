@@ -1,7 +1,10 @@
-HRESULT Create_Management(CManagement** ppManagement)
+HRESULT Create_Management(CManagement** ppManagement, LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	CManagement*		pManagement = CManagement::GetInstance();
 	NULL_CHECK_RETURN(pManagement, E_FAIL);
+
+	if (FAILED(pManagement->Ready_Shader(pGraphicDev)))
+		return E_FAIL;
 
 	*ppManagement = pManagement;
 
@@ -39,6 +42,13 @@ CComponent*		Clone(const _tchar* pProtoTag)
 CRenderer*		Get_Renderer(void)
 {
 	return CRenderer::GetInstance();
+}
+
+// LightMgr
+
+const D3DLIGHT9*		Get_Light(const _uint& iIndex)
+{
+	return CLightMgr::GetInstance()->Get_Light(iIndex);
 }
 
 HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex)

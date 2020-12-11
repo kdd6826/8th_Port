@@ -36,7 +36,7 @@ Engine::CStaticMesh::CStaticMesh(const CStaticMesh& rhs)
 
 Engine::CStaticMesh::~CStaticMesh(void)
 {
-	
+
 }
 
 HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName)

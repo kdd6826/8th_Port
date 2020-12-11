@@ -66,8 +66,8 @@ void CMainApp::Render_MainApp(void)
 		m_dwRenderCnt = 0;
 	}
 
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		
 	Engine::Render_Begin(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.f));
 	
@@ -94,7 +94,7 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement
 {
 	Engine::CScene*		pScene = nullptr;
 
-	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement, pGraphicDev), E_FAIL);
 	Safe_AddRef(*ppManagement);
 
 	pScene = CLogo::Create(pGraphicDev);

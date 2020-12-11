@@ -14,6 +14,24 @@ Engine::CManagement::~CManagement(void)
 	Free();
 }
 
+HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	CShader*		pShader = nullptr;
+
+	// Sample
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Sample.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Sample", pShader), E_FAIL);
+
+	// Terrain
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), E_FAIL);
+
+
+	return S_OK;
+}
+
 HRESULT Engine::CManagement::SetUp_Scene(CScene* pScene)
 {
 	Safe_Release(m_pScene); // 

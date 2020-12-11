@@ -53,7 +53,13 @@
       <UniqueIdentifier>{fa79828a-fbd2-4cfc-ac1a-9253c94a9340}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Component\03. Optimization\01. QuadTree">
-      <UniqueIdentifier>{c748033e-09c5-4dff-97e3-2d6d7448a242}</UniqueIdentifier>
+      <UniqueIdentifier>{c983dd37-b12f-464a-af41-d0cfc62f7fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Shader">
+      <UniqueIdentifier>{9796a411-abb4-4b4c-8d0d-206ba5baad1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Shader\hpp">
+      <UniqueIdentifier>{a6d54341-9357-4e62-99d6-24beef44974a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\QuadTree.cpp">
       <Filter>04. Component\03. Optimization\01. QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shader.cpp">
+      <Filter>09. Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +172,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\QuadTree.h">
       <Filter>04. Component\03. Optimization\01. QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Sample.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader.h">
+      <Filter>09. Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Terrain.hpp">
+      <Filter>09. Shader\hpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
