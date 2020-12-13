@@ -551,9 +551,14 @@ void MeshPage::OnNMClickObjStaticTree(NMHDR* pNMHDR, LRESULT* pResult)
 
 	selectItem = treeObjStatic.HitTest(point, &nFlags);
 
+
 	if (selectItem == nullptr)
 	{
 		return;
+	}
+	else if (selectItem != nullptr)
+	{
+		lastStaticObjSelectItem = selectItem;
 	}
 	CString a = treeObjStatic.GetItemText(selectItem);
 	CString objStaticIndexNum = a.Right(1);
@@ -599,7 +604,10 @@ void MeshPage::OnNMClickNaviTree(NMHDR* pNMHDR, LRESULT* pResult)
 	// TODO: 여기 버텍스 넣어야함
 	if (selectItem == nullptr)
 		return;
-
+	else if (selectItem != nullptr)
+	{
+		lastStaticObjSelectItem = selectItem;
+	}
 	HTREEITEM hItem = treeNavi.GetSelectedItem();
 	CStringW a = treeNavi.GetItemText(hItem);
 
@@ -793,19 +801,19 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -851,7 +859,9 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -891,19 +901,19 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -951,7 +961,9 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -989,19 +1001,19 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	///////////////
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -1048,7 +1060,9 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -1086,19 +1100,19 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	///////////////
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -1142,7 +1156,9 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -1180,19 +1196,21 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	///////////////
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			if (lastNaviMeshSelectItem == nullptr)
+				return;
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastStaticObjSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -1234,7 +1252,9 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -1272,19 +1292,21 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	///////////////
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			if (lastNaviMeshSelectItem == nullptr)
+				return;
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -1326,7 +1348,9 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -1364,19 +1388,21 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		///////////////
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			if (lastNaviMeshSelectItem == nullptr)
+				return;
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -1420,7 +1446,9 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -1458,19 +1486,19 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		///////////////
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -1515,7 +1543,9 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -1553,19 +1583,19 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		///////////////
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
 		{
 			//HTREEITEM hItem = treeNavi;
-			treeNavi.GetItemText(selectItem);
+			treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
+			CString naviIndex = treeNavi.GetItemText(lastNaviMeshSelectItem);
 
 			//Text를 int로 바꾸기
 			int indexNum;
 			indexNum = _ttoi(naviIndex);
 
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(lastNaviMeshSelectItem));
 			int iParentIndex = _ttoi(parentIndex);
 
 			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
@@ -1611,7 +1641,9 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 		//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		CString a = treeObjStatic.GetItemText(selectItem);
+		if (lastStaticObjSelectItem == nullptr)
+			return;
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2074,7 +2106,7 @@ void MeshPage::OnEnChangeTransformScalX()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2128,7 +2160,7 @@ void MeshPage::OnEnChangeTransformScalY()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2182,7 +2214,7 @@ void MeshPage::OnEnChangeTransformScalZ()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2233,7 +2265,7 @@ void MeshPage::OnEnChangeTransformRotX()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2284,7 +2316,7 @@ void MeshPage::OnEnChangeTransformRotY()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2335,7 +2367,7 @@ void MeshPage::OnEnChangeTransformRotZ()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2386,7 +2418,7 @@ void MeshPage::OnEnChangeTransformPosX()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2437,7 +2469,7 @@ void MeshPage::OnEnChangeTransformPosY()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
@@ -2488,7 +2520,7 @@ void MeshPage::OnEnChangeTransformPosZ()
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh = true)
 	{
-		CString a = treeObjStatic.GetItemText(selectItem);
+		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
 		CString objStaticIndexNum = a.Right(1);
 		size_t temp = 0;
 		temp = _ttoi(objStaticIndexNum);
