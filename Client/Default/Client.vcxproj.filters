@@ -82,6 +82,9 @@
     <Filter Include="02. GameObject\01. Stage\06. Effect">
       <UniqueIdentifier>{1026821e-213a-454c-a6a1-edd29cc14ee9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. StaticObject">
+      <UniqueIdentifier>{7c632b66-f3d2-4b32-9759-b3bdae5f38c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="..\Code\Effect.h">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\StaticObject.h">
+      <Filter>02. GameObject\01. Stage\07. StaticObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -211,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticObject.cpp">
+      <Filter>02. GameObject\01. Stage\07. StaticObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1765,7 +1765,6 @@ void MeshPage::OnBnClickedStaticLoad()
 			CMFCToolView::GetInstance()->LoadStaticMesh(meshName, vecPos, vecScal, vecAng);
 			objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
 
-
 			++objStaticCreateCount;
 			//for (int i = 0; i < 3; i++)
 			//{

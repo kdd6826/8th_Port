@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Loading.h"
+//#include "atlstr.h"
 
 #include "Export_Function.h"
 
@@ -176,8 +177,245 @@ _uint CLoading::Loading_ForStage(void)
 
 	m_bFinish = true;
 
-
+	
 	return 0;
+}
+
+void CLoading::Load_StaticObject()
+{
+//	
+
+//	CFileFind firstFinder, secondFinder, thirdFinder;
+//	CString findFile = _T("../Bin/Resource/Mesh/");
+//	CString PathEnd = _T("*.*");
+//	CString PathEnd2 = _T("/*.*");
+//	CString PathEnd3 = _T("/*.X");
+//
+//	CString MeshFind;
+//	MeshFind += findFile + PathEnd;
+//	bool bWorking = firstFinder.FindFile(MeshFind);
+//
+//	while (bWorking) {
+//		bWorking = firstFinder.FindNextFileW();
+//		if (firstFinder.IsDirectory())
+//		{
+//#pragma region Static
+//
+//
+//
+//			if (firstFinder.GetFileName() == _T("StaticMesh"))
+//			{
+//				if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
+//				{
+//					///////////////////////Dynamic, Static
+//
+//
+//					
+//
+//					CString temp;
+//					temp += findFile + firstFinder.GetFileName() + PathEnd2;
+//
+//					bool bchildWorking = secondFinder.FindFile(temp);
+//					while (bchildWorking) {
+//						bchildWorking = secondFinder.FindNextFileW();
+//						if (secondFinder.IsDirectory())
+//						{
+//							if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
+//							{
+//
+//								///////Player
+//								
+//								CString temp2;
+//								temp2 += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + PathEnd3;
+//								bool bThirdWorking = thirdFinder.FindFile(temp2);
+//								while (bThirdWorking) {
+//									bThirdWorking = thirdFinder.FindNextFileW();
+//									if (secondFinder.IsDirectory())
+//									{
+//										if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
+//										{
+//											CString temp, numFileName;
+//											temp.Format(_T("%d"), staticLoadCount);
+//											numFileName += temp + _T(") ") + thirdFinder.GetFileName();
+//
+//											
+//											CString finalPath;
+//											finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
+//											CString check, check2, check3;
+//
+//											check = firstFinder.GetFileName();
+//											check2 = secondFinder.GetFileName();
+//											check3 = thirdFinder.GetFileName();
+//											CString ObjTag, meshName;
+//
+//
+//											ObjTag += L"Mesh_" + secondFinder.GetFileName();
+//
+//											TCHAR* tMesh = nullptr;
+//											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
+//
+//
+//											CString* meshTag = new CString;
+//
+//											*meshTag = tMesh;
+//
+//											
+//
+//
+//											if (FAILED(Engine::Ready_Meshes(m_pGraphicDev,
+//												Engine::RESOURCE_STAGE,
+//												*meshTag, //Sword,TombStone
+//												Engine::TYPE_STATIC,
+//												finalPath,					//../Bin/Resource/Mesh/......
+//												check3)))
+//											{
+//												int i = 0;
+//											}
+//
+//											staticLoadCount++;
+
+											///////////////////
+
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	check2, //Sword,TombStone
+											//	Engine::TYPE_STATIC,
+											//    finalPath,					//../Bin/Resource/Mesh/......
+											//	check), //Sword.X
+											//	);
+
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	L"Mesh_Stone",
+											//	Engine::TYPE_STATIC,
+											//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+											//	L"TombStone.X"),
+											//	E_FAIL);
+
+											///////////////
+			//							}
+			//						}
+			//					}
+
+			//					///////
+			//				}
+			//			}
+			//		}
+
+			//		////////////////////////
+			//	}
+			//}
+#pragma endregion
+#pragma region Dynamic
+
+
+
+			//if (firstFinder.GetFileName() == _T("DynamicMesh"))
+			//{
+			//	if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
+			//	{
+			//		///////////////////////Dynamic, Static
+
+
+			//		objCreateItemSon[0][objCreateItemSonCount] = treeObjCreate.InsertItem(firstFinder.GetFileName(), objCreateItem);
+
+			//		CString temp;
+			//		temp += findFile + firstFinder.GetFileName() + PathEnd2;
+
+			//		bool bchildWorking = secondFinder.FindFile(temp);
+			//		while (bchildWorking) {
+			//			bchildWorking = secondFinder.FindNextFileW();
+			//			if (secondFinder.IsDirectory())
+			//			{
+			//				if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
+			//				{
+
+			//					///////Player
+			//					objCreateItemSon[1][objCreateItemSonCount] = treeObjCreate.InsertItem(secondFinder.GetFileName(), objCreateItemSon[0][objCreateItemSonCount]);
+			//					CString temp2;
+			//					temp2 += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + PathEnd3;
+			//					bool bThirdWorking = thirdFinder.FindFile(temp2);
+			//					while (bThirdWorking) {
+			//						bThirdWorking = thirdFinder.FindNextFileW();
+			//						if (secondFinder.IsDirectory())
+			//						{
+			//							if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
+			//							{
+			//								CString temp, numFileName;
+			//								temp.Format(_T("%d"), dynamicLoadCount);
+			//								numFileName += temp + _T(") ") + thirdFinder.GetFileName();
+
+			//								objCreateItemSon[2][objCreateItemSonCount] = treeObjCreate.InsertItem(numFileName, objCreateItemSon[1][objCreateItemSonCount]);
+			//								CString finalPath;
+			//								finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
+			//								CString check, check2, check3;
+
+			//								check = firstFinder.GetFileName();
+			//								check2 = secondFinder.GetFileName();
+			//								check3 = thirdFinder.GetFileName();
+			//								CString ObjTag, meshName;
+
+
+			//								ObjTag += L"Mesh_" + secondFinder.GetFileName();
+
+			//								TCHAR* tMesh = nullptr;
+			//								tMesh = (TCHAR*)(LPCTSTR)ObjTag;
+			//								
+
+			//								CString* meshTag = new CString;
+
+			//								*meshTag = tMesh;
+
+			//								CMFCToolView::GetInstance()->vecDynamicMesh.emplace_back(meshTag);
+
+
+			//								if (FAILED(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+			//									Engine::RESOURCE_STAGE,
+			//									*meshTag, //Sword,TombStone
+			//									Engine::TYPE_DYNAMIC,
+			//									finalPath,					//../Bin/Resource/Mesh/......
+			//									check3)))
+			//								{
+			//									MessageBox(L"Fail to ready mesh");
+			//								}
+
+			//								dynamicLoadCount++;
+
+			//								///////////////////
+
+			//								//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+			//								//	Engine::RESOURCE_STAGE,
+			//								//	check2, //Sword,TombStone
+			//								//	Engine::TYPE_STATIC,
+			//								//    finalPath,					//../Bin/Resource/Mesh/......
+			//								//	check), //Sword.X
+			//								//	);
+
+			//								//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			//								//	Engine::RESOURCE_STAGE,
+			//								//	L"Mesh_Stone",
+			//								//	Engine::TYPE_STATIC,
+			//								//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+			//								//	L"TombStone.X"),
+			//								//	E_FAIL);
+
+			//								///////////////
+			//							}
+			//						}
+			//					}
+
+			//					///////
+			//				}
+			//			}
+			//		}
+
+			//		objCreateItemSonCount++;
+			//		////////////////////////
+			//	}
+			//}
+	//	}
+	//}
+
 }
 
 CLoading* CLoading::Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eLoading)

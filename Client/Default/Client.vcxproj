@@ -181,6 +181,7 @@
     <ClInclude Include="..\Code\Player.h" />
     <ClInclude Include="..\Code\SkyBox.h" />
     <ClInclude Include="..\Code\Stage.h" />
+    <ClInclude Include="..\Code\StaticObject.h" />
     <ClInclude Include="..\Code\Stone.h" />
     <ClInclude Include="..\Code\Sword.h" />
     <ClInclude Include="..\Code\Terrain.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
+    <ClCompile Include="..\Code\StaticObject.cpp" />
     <ClCompile Include="..\Code\Stone.cpp" />
     <ClCompile Include="..\Code\Sword.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
