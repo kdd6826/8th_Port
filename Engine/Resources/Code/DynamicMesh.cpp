@@ -53,7 +53,8 @@ HRESULT Engine::CDynamicMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar
 	Safe_Release(pAniCtrl);
 
 	_matrix		matTemp;
-
+	/*D3DXMatrixIdentity(&matTemp);*/
+	
 	Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f)));
 
 	SetUp_FrameMatrixPointer((D3DXFRAME_DERIVED*)m_pRootFrame);
@@ -63,6 +64,8 @@ HRESULT Engine::CDynamicMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar
 
 void Engine::CDynamicMesh::Render_Meshes(void)
 {
+	
+	//Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, &matrix);
 	for (auto& iter : m_MeshContainerList)
 	{
 		D3DXMESHCONTAINER_DERIVED*			pMeshContainer = iter;
@@ -118,6 +121,13 @@ void CDynamicMesh::Play_Animation(const _float & fTimeDelta)
 
 	_matrix		matTemp;
 	Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f)));
+}
+
+void CDynamicMesh::Play_Animation(const _float& fTimeDelta, const _matrix& _matrix)
+{
+	m_pAniCtrl->Play_Animation(fTimeDelta);
+	matrix = _matrix;
+	//Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, &_matrix);
 }
 
 void Engine::CDynamicMesh::Update_FrameMatrices(D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix)

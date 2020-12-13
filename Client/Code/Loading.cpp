@@ -93,38 +93,45 @@ _uint CLoading::Loading_ForStage(void)
 	lstrcpy(m_szLoading, L"Texture Loading.............................");
 	// ÅØ½ºÃÄ
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Monster", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Monster%d.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/HeroesLogo.jpg"), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Monster", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Monster%d.png"), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												L"Texture_Terrain",
 												Engine::TEX_NORMAL,
-												L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2),
+												L"../Bin/Resource/Texture/Terrain/Terrain_%d.png", 2),
 												E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Texture_SkyBox",
 		Engine::TEX_CUBE,
-		L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4),
+		L"../Bin/Resource/Texture/SkyBox/SkyBox%d.dds", 1),
 		E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);*/
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_UI", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/hpbar.png") , E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_UI", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/hpbar.png") , E_FAIL);*/
 	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	// Stone
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//											Engine::RESOURCE_STAGE,
+	//											L"Mesh_Stone", 
+	//											Engine::TYPE_STATIC, 
+	//											L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+	//											L"TombStone.X"),
+	//											E_FAIL);
+		 //MAP1
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												L"Mesh_Stone", 
 												Engine::TYPE_STATIC, 
-												L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-												L"TombStone.X"),
+												L"../Bin/Resource/Mesh/Stage0/",
+												L"FistMap.X"),
 												E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
 												L"Mesh_Navi",
@@ -165,13 +172,13 @@ _uint CLoading::Loading_ForStage(void)
 												L"Sword.X"),
 												E_FAIL);*/
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-											Engine::RESOURCE_STAGE,
-											L"Mesh_Tree",
-											Engine::TYPE_STATIC,
-											L"../Bin/Resource/Mesh/StaticMesh/Tree/",
-											L"Tree01.X"),
-											E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//										Engine::RESOURCE_STAGE,
+	//										L"Mesh_Tree",
+	//										Engine::TYPE_STATIC,
+	//										L"../Bin/Resource/Mesh/StaticMesh/Tree/",
+	//										L"Tree01.X"),
+	//										E_FAIL);
 	
 	
 	lstrcpy(m_szLoading, L"Loading Complete!!!");

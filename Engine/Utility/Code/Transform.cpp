@@ -5,6 +5,7 @@ USING(Engine)
 Engine::CTransform::CTransform(void)
 	: m_vScale(1.f, 1.f, 1.f)
 	, m_vAngle(0.f, 0.f, 0.f)
+	, m_vDirection(0.f,0.f,1.f)
 {
 	ZeroMemory(m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
@@ -13,6 +14,7 @@ Engine::CTransform::CTransform(void)
 Engine::CTransform::CTransform(const CTransform& rhs)
 	: m_vScale(rhs.m_vScale)
 	, m_vAngle(rhs.m_vAngle)
+	, m_vDirection(rhs.m_vDirection)
 {
 	for (_uint i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
@@ -149,6 +151,18 @@ void CTransform::Set_Pos(const _vec3* pPos)
 	m_vInfo[INFO_POS] = *pPos;
 }
 
+_vec3 CTransform::Get_Dir()
+{
+	return m_vDirection;
+
+}
+void CTransform::Set_Dir(const _vec3* pDir)
+{
+	D3DXVec3Normalize(&m_vDirection, pDir);
+}
+
+
+
 void CTransform::Set_Pos(const _float & fX, const _float & fY, const _float & fZ)
 {
 	m_vInfo[INFO_POS].x = fX;
@@ -160,6 +174,16 @@ void CTransform::Set_Pos(const _float & fX, const _float & fY, const _float & fZ
 void CTransform::Rotation(ROTATION eType, const _float & fAngle)
 {
 	*(((_float*)&m_vAngle) + eType) += fAngle;
+}
+
+void CTransform::Set_Rotation(ROTATION eType, const _float& fAngle)
+{
+	*(((_float*)&m_vAngle) + eType) = fAngle;
+}
+
+_vec3 CTransform::Get_Rotation()
+{
+	return m_vAngle;
 }
 
 void CTransform::Set_WorldMatrix(const _matrix * pMatrix)

@@ -29,10 +29,11 @@ private:
 	void		Mouse_Fix(void);
 
 private:
+
 	Engine::CTransform* m_pTransformCom = nullptr;
 	_bool		m_bClick = false;
 	_bool		m_bFix = true;
-
+	_float eyeOffSet = 0.f;
 public:
 	static CDynamicCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev, 
 									const _vec3* pEye, 

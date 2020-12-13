@@ -1,12 +1,10 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Export_Function.h"
-
+#include "DynamicCamera.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
-	, m_vDir(0.f, 0.f, 0.f)
 {
-
 }
 
 CPlayer::~CPlayer(void)
@@ -64,59 +62,257 @@ HRESULT Client::CPlayer::Add_Component(void)
 
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &m_vDir);
-	_vec3 vLook, vUp, vRight, vLeft;
-
-	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
+	if (delay > 0)
 	{
-		_vec3	vPos, vDir;
-		m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
-		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
-		D3DXVec3Normalize(&vDir, &vDir);
-
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
-		
-		m_pMeshCom->Set_AnimationSet(6);
-
+		delay -= fTimeDelta;
 	}
-
-	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
+	if (delay <=0)
 	{
-		D3DXVec3Normalize(&m_vDir, &m_vDir);
-		m_pTransformCom->Move_Pos(&(m_vDir * -m_fSpeed * fTimeDelta));
-	}
+		m_fAniSpeed = 1.f;
+		m_state = playerState::STATE_IDLE;
+		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80)
+		{
+			if (isRunning = true)
+			{
+				isRunning = false;
+			}
+			else if (isRunning = false)
+			{
+				isRunning = true;
+			}
+		}
 
-	if (Engine::Get_DIKeyState(DIK_A) & 0x80)
-	{
-		
-		m_pTransformCom->Get_Info(Engine::INFO::INFO_LOOK,&vLook);
-		m_pTransformCom->Get_Info(Engine::INFO::INFO_UP, &vUp);
-		vLeft = D3DXVec3Dot(&vLook, &vUp);
-			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta));
+		MovePlayer(fTimeDelta);
+
+		if (Engine::Get_DIKeyState(DIK_TAB) & 0x80)
+		{
+
+			if (isManaBlade == true)
+			{
+				isManaBlade = false;
+				m_state = STATE_NORMAlBLADE;
+				delay += 0.8f;
+				
+			}
+			else if (isManaBlade == false)
+			{
+					isManaBlade = true;
+				m_state = STATE_MANABLADE;
+				delay += 2.f;
+				m_fAniSpeed = 1.1f;
+			}
+		}
 	}
-	if (Engine::Get_DIKeyState(DIK_D) & 0x80)
-		m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-90.f * fTimeDelta));
+	
 
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
-		_vec3	vPickPos = PickUp_OnTerrain();
-		m_pTransformCom->Pick_Pos(&vPickPos, m_fSpeed, fTimeDelta);
+#pragma region NormalBladeAttack
+		if (isManaBlade == false)
+		{
+			if (delay <= 0.3f)
+			{
+				if (m_state == playerState::STATE_ATT4)
+				{
+					m_state = playerState::STATE_ATT5;
+				}
+				else if (m_state == playerState::STATE_ATT3)
+				{
+					m_state = playerState::STATE_ATT4;
+				}
+				else if (m_state == playerState::STATE_ATT2)
+				{
+					m_state = playerState::STATE_ATT3;
+				}
+				else if (m_state == playerState::STATE_ATT1)
+				{
+					m_state = playerState::STATE_ATT2;
+				}
+				else
+				{
+					m_state = playerState::STATE_ATT1;
+				}
+				delay += 0.5f;
+			}
+		}
+#pragma endregion
+#pragma region ManaBladeAttack
+		else if (isManaBlade == true)
+		{
+			if (delay <= 0.3f)
+			{
+				if (m_state == playerState::STATE_MB_ATT5)
+				{
+					m_state = playerState::STATE_MB_ATT6;
+				}
+				else if (m_state == playerState::STATE_MB_ATT4)
+				{
+					m_state = playerState::STATE_MB_ATT5;
+				}
+				else if (m_state == playerState::STATE_MB_ATT3)
+				{
+					m_state = playerState::STATE_MB_ATT4;
+				}
+				else if (m_state == playerState::STATE_MB_ATT2)
+				{
+					m_state = playerState::STATE_MB_ATT3;
+				}
+				else if (m_state == playerState::STATE_MB_ATT1)
+				{
+					m_state = playerState::STATE_MB_ATT2;
+				}
+				else
+				{
+					m_state = playerState::STATE_MB_ATT1;
+				}
+				delay += 0.4f;
+				
+			}
+		}
+#pragma endregion
 	}
+	
 
-	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
-	{
-		m_pMeshCom->Set_AnimationSet(1);
-	}
-
-	if(true == m_pMeshCom->Is_AnimationSetEnd())
-		m_pMeshCom->Set_AnimationSet(39);
+	m_pMeshCom->Set_AnimationSet(m_state);
+	/*if(true == m_pMeshCom->Is_AnimationSetEnd())
+		m_pMeshCom->Set_AnimationSet(39);*/
 
 
 }
 
+void CPlayer::MovePlayer(const _float& fTimeDelta)
+{
+	
+	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+	_float fCamAngle;
+	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+
+	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
+	NULL_CHECK(pTerrainBufferCom);
+
+	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"Environment", L"DynamicCamera"));
+	vCamPos = pCamera->Get_Eye();
+	fCamAngle = pCamera->Get_Angle();
+
+
+	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
+	{
+		if (isRunning)
+		{
+			m_state == playerState::STATE_FIELD_SPRINT;
+			m_fSpeed = 5.f;
+		}
+		else if (!isRunning)
+		{
+			m_state = playerState::STATE_FIELD_RUN;
+			m_fSpeed = 3.f;
+		}
+		vDir = (vMyPos - vCamPos);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
+
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			vDir = (vCamPos - vMyPos);
+			_vec3 up;
+			up = { 0.f,1.f,0.f };
+			D3DXVec3Cross(&vDir, &up, &vDir);
+			D3DXVec3Normalize(&vDir, &vDir);
+
+			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+
+			vDir = (vCamPos - vMyPos);
+			_vec3 up;
+			up = { 0.f,1.f,0.f };
+			D3DXVec3Cross(&vDir, &vDir, &up);
+			D3DXVec3Normalize(&vDir, &vDir);
+
+			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
+		}
+
+		//m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+	}
+
+	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
+	{
+		m_state = playerState::STATE_FIELD_RUN;
+		vDir = (vCamPos - vMyPos);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(180));
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			vDir = (vCamPos - vMyPos);
+			_vec3 up;
+			up = { 0.f,1.f,0.f };
+			D3DXVec3Cross(&vDir, &up, &vDir);
+			D3DXVec3Normalize(&vDir, &vDir);
+
+			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-135));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+
+			vDir = (vCamPos - vMyPos);
+			_vec3 up;
+			up = { 0.f,1.f,0.f };
+			D3DXVec3Cross(&vDir, &vDir, &up);
+			D3DXVec3Normalize(&vDir, &vDir);
+
+			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(135));
+		}
+	}
+
+	else if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+	{
+		m_state = playerState::STATE_FIELD_RUN;
+		vDir = (vCamPos - vMyPos);
+		_vec3 up;
+		up = { 0.f,1.f,0.f };
+		D3DXVec3Cross(&vDir, &up, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90));
+	}
+	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+	{
+		m_state = playerState::STATE_FIELD_RUN;
+		vDir = (vCamPos - vMyPos);
+		_vec3 up;
+		up = { 0.f,1.f,0.f };
+		D3DXVec3Cross(&vDir, &vDir, &up);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
+	}
+}
+
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayer*	pInstance = new CPlayer(pGraphicDev);
+	CPlayer*	pInstance = new CPlayer(pGraphicDev);	
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -136,8 +332,8 @@ HRESULT Client::CPlayer::Ready_Object(void)
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pMeshCom->Set_AnimationSet(39);
-
 	m_pNaviMeshCom->Set_NaviIndex(0);
+	m_pTransformCom->Set_Pos(&_vec3{ 5.f,5.f,5.f });
 
 	return S_OK;
 }
@@ -148,8 +344,29 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	Key_Input(fTimeDelta);
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
+	_float fCamAngle;
+	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"Environment", L"DynamicCamera"));
+	fCamAngle = D3DXToDegree(pCamera->Get_Angle());
+	//vCamPos = pCamera->Get_Eye();
 
-	m_pMeshCom->Play_Animation(fTimeDelta);
+	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale,vRot, vMyPos;
+	
+	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+
+
+	//_matrix ani, rot;
+
+	//vRot = m_pTransformCom->Get_Rotation();
+
+	//D3DXMatrixRotationY(&rot, vRot.y);
+
+
+
+
+	m_pMeshCom->Play_Animation(fTimeDelta*m_fAniSpeed*1.5f);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -174,7 +391,7 @@ void Client::CPlayer::SetUp_OnTerrain(void)
 
 	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
-
+	
 	_float fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPosition, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ, VTXITV);
 
 	m_pTransformCom->Move_Pos(vPosition.x, fHeight, vPosition.z);

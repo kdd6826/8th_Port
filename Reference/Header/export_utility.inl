@@ -1,3 +1,4 @@
+#include "Export_Utility.h"
 HRESULT Create_Management(CManagement** ppManagement, LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	CManagement*		pManagement = CManagement::GetInstance();
@@ -13,6 +14,11 @@ HRESULT Create_Management(CManagement** ppManagement, LPDIRECT3DDEVICE9& pGraphi
 CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID)
 {
 	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
+}
+
+CGameObject* Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+	return CManagement::GetInstance()->Get_GameObject(pLayerTag, pObjTag);
 }
 
 HRESULT	SetUp_Scene(CScene* pScene)
