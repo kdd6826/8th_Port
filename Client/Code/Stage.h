@@ -14,7 +14,7 @@
 #include "Sword.h"
 #include "Tree.h"
 #include "Effect.h"
-
+#include "StaticObject.h"
 BEGIN(Client)
 
 class CStage : public Engine::CScene

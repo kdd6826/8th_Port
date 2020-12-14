@@ -24,11 +24,13 @@ private:
 
 public:
 	virtual HRESULT Ready_Object(void) override;
+	virtual HRESULT Ready_Object(wstring _wstring);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 
 private:
 	HRESULT		Add_Component(void);
+	HRESULT		Add_Component(wstring _wstring);
 	void		SetUp_OnTerrain(void);
 	_bool		Collision_ToObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
@@ -45,7 +47,7 @@ private:
 
 public:
 	static CStaticObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
+	static CStaticObject* Create(LPDIRECT3DDEVICE9 pGraphicDev,wstring _wstring);
 private:
 	virtual void Free(void) override;
 

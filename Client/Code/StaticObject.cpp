@@ -51,6 +51,44 @@ HRESULT Client::CStaticObject::Add_Component(void)
 	return S_OK;
 }
 
+HRESULT CStaticObject::Add_Component(wstring _wstring)
+{
+	Engine::CComponent* pComponent = nullptr;
+
+	// Mesh
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, _wstring.c_str()));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+
+	// Transform
+	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
+
+	// Renderer
+	pComponent = m_pRendererCom = Engine::Get_Renderer();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Safe_AddRef(pComponent);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
+
+	// Calculator
+	pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
+
+	// Collider 
+	pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
+
+	// Optimization
+	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+
+	return S_OK;
+}
+
 
 CStaticObject* CStaticObject::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -62,6 +100,17 @@ CStaticObject* CStaticObject::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+CStaticObject* CStaticObject::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _wstring)
+{
+	CStaticObject* pInstance = new CStaticObject(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_Object(_wstring)))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
+
 void CStaticObject::Free(void)
 {
 	Engine::CGameObject::Free();
@@ -71,6 +120,15 @@ void CStaticObject::Free(void)
 HRESULT Client::CStaticObject::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	m_pTransformCom->Set_Pos(&_vec3(5.f, 0.f, 5.f));
+	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(45.f));
+
+	return S_OK;
+}
+HRESULT CStaticObject::Ready_Object(wstring _wstring)
+{
+	FAILED_CHECK_RETURN(Add_Component(_wstring), E_FAIL);
 
 	m_pTransformCom->Set_Pos(&_vec3(5.f, 0.f, 5.f));
 	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(45.f));
