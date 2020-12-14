@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <io.h>
 #include "Loading.h"
 //#include "atlstr.h"
 
@@ -115,6 +116,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
 	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
+
+	Load_StaticObject();
+
 	// Stone
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
@@ -140,13 +144,13 @@ _uint CLoading::Loading_ForStage(void)
 	L"NewArisha.X"),
 	E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Sword",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Arisha/Weapon/",
-		L"WeaponArisha.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Sword",
+	//	Engine::TYPE_STATIC,
+	//	L"../Bin/Resource/Arisha/Weapon/",
+	//	L"WeaponArisha.X"),
+	//	E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//											Engine::RESOURCE_STAGE,
@@ -164,13 +168,13 @@ _uint CLoading::Loading_ForStage(void)
 	//											L"Sword.X"),
 	//											E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-											Engine::RESOURCE_STAGE,
-											L"Mesh_Tree",
-											Engine::TYPE_STATIC,
-											L"../Bin/Resource/Mesh/StaticMesh/Tree/",
-											L"Tree01.X"),
-											E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//										Engine::RESOURCE_STAGE,
+	//										L"Mesh_Tree",
+	//										Engine::TYPE_STATIC,
+	//										L"../Bin/Resource/Mesh/StaticMesh/Tree/",
+	//										L"Tree01.X"),
+	//										E_FAIL);
 	
 	
 	lstrcpy(m_szLoading, L"Loading Complete!!!");
@@ -183,6 +187,83 @@ _uint CLoading::Loading_ForStage(void)
 
 void CLoading::Load_StaticObject()
 {
+
+	_finddata_t fd,fd2;
+
+	long handle = _findfirst("../Bin/Resource/Mesh/StaticMesh/*.*", &fd);
+
+	if (handle == 0)
+		return;
+
+	int iResult = 0;
+	char szCurPath[128] = "../Bin/Resource/Mesh/StaticMesh/";
+	char szFilePath[128] = "";
+	char szSlash[128] = "/";
+	char szStar[128] = "*.X";
+	char szFullPath[128] = "";
+	char meshName[128] = "";
+	char meshTag[128] = "Mesh_";
+	
+
+
+	//fd2 = fd.name 
+	while (iResult != -1)
+	{
+		//while (iResult != -1)
+		//{
+			strcpy_s(szFilePath, szCurPath);//"../Bin/Resource/Mesh/StaticMesh/";
+			strcat_s(szFilePath, fd.name);//"../Bin/Resource/Mesh/StaticMesh/fd.name";
+			strcat_s(szFilePath, szSlash);//"../Bin/Resource/Mesh/StaticMesh/fd.name/";
+
+			strcpy_s(szFullPath, szFilePath);//"../Bin/Resource/Mesh/StaticMesh/fd.name/";
+			strcat_s(szFullPath, szStar);//"../Bin/Resource/Mesh/StaticMesh/fd.name/";
+
+			strcpy_s(meshName, meshTag);//"Mesh_"
+			strcat_s(meshName, fd.name);//"Mesh_File"
+
+
+			if (strcmp(fd.name, ".") != 0 && strcmp(fd.name, "..") != 0)
+			{
+				int iResult2 = 0;
+				long handle2 = _findfirst(szFullPath, &fd2);//fd2  = file.X
+
+				while (iResult2 != -1)
+				{
+					strcpy_s(szFullPath, szCurPath);
+					strcat_s(szFullPath, fd.name);
+					strcat_s(szFullPath, szSlash);
+					strcat_s(szFullPath, fd2.name);//"../Bin/Resource/Mesh/StaticMesh/fd.name/";
+					
+
+					wstring firstmeshName(meshName, &meshName[128]);
+					wstring firstszFilePath(szFilePath, &szFilePath[128]);
+					wstring firstfd2Name(fd2.name, &fd2.name[128]);
+
+					wstring* secondMeshName = new wstring;
+					*secondMeshName = firstmeshName;
+
+					vecStaticMesh.emplace_back(secondMeshName);
+					
+								FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+													Engine::RESOURCE_STAGE,
+													secondMeshName->c_str(),
+													Engine::TYPE_STATIC,
+													firstszFilePath.c_str(),
+													firstfd2Name.c_str()),
+													);
+								iResult2 = _findnext(handle2, &fd2);
+				}
+			}
+			
+
+			
+		iResult = _findnext(handle, &fd);
+	}
+	
+	_findclose(handle);
+
+
+
 //	
 
 //	CFileFind firstFinder, secondFinder, thirdFinder;
@@ -284,13 +365,6 @@ void CLoading::Load_StaticObject()
 											//	check), //Sword.X
 											//	);
 
-											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-											//	Engine::RESOURCE_STAGE,
-											//	L"Mesh_Stone",
-											//	Engine::TYPE_STATIC,
-											//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-											//	L"TombStone.X"),
-											//	E_FAIL);
 
 											///////////////
 			//							}
