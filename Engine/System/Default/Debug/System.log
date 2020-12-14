@@ -8,7 +8,7 @@
   Font.cpp
   코드를 생성하고 있습니다...
      ../Bin\System.lib 라이브러리 및 ../Bin\System.exp 개체를 생성하고 있습니다.
-  System.vcxproj -> C:\Users\GMH\Desktop\newClone\8th_Port\Engine\System\Default\../Bin\System.dll
+  System.vcxproj -> C:\Users\GMH\Desktop\Tool\8th_Port\Engine\System\Default\../Bin\System.dll
   System.vcxproj -> ../Bin\System.pdb (Full PDB)
   .\Engine\System\Code\Font.h
   .\Engine\System\Code\FontMgr.h
