@@ -52,6 +52,9 @@ HRESULT Client::CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
+	float timeDelta=Engine::Get_TimeDelta(L"Timer_Immediate");
+	m_pTransformCom->Set_Pos(&_vec3{ 5.f,0.f,5.f });
+	Engine::CGameObject::Update_Object(timeDelta);
 	// Collider 
 	//pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -213,8 +216,8 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		vDir = (vMyPos - vCamPos);
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
-
+		//m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
 
 		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
@@ -225,8 +228,8 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			D3DXVec3Cross(&vDir, &up, &vDir);
 			D3DXVec3Normalize(&vDir, &vDir);
 
-			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
-
+			//m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
 		}
 		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
@@ -238,12 +241,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			D3DXVec3Cross(&vDir, &vDir, &up);
 			D3DXVec3Normalize(&vDir, &vDir);
 
-			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
-
+			//m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
 		}
 
-		//m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+
 	}
 
 	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
@@ -252,7 +255,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		vDir = (vCamPos - vMyPos);
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(180));
 		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
@@ -263,7 +266,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			D3DXVec3Cross(&vDir, &up, &vDir);
 			D3DXVec3Normalize(&vDir, &vDir);
 
-			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-135));
 		}
@@ -276,7 +279,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			D3DXVec3Cross(&vDir, &vDir, &up);
 			D3DXVec3Normalize(&vDir, &vDir);
 
-			m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(135));
 		}
@@ -291,7 +294,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		D3DXVec3Cross(&vDir, &up, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90));
 	}
@@ -304,7 +307,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		D3DXVec3Cross(&vDir, &vDir, &up);
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir* fTimeDelta* m_fSpeed)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
 	}
@@ -340,7 +343,7 @@ HRESULT Client::CPlayer::Ready_Object(void)
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
 
-	SetUp_OnTerrain();
+	//SetUp_OnTerrain();
 	Key_Input(fTimeDelta);
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
