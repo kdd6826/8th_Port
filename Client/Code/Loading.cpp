@@ -492,6 +492,8 @@ void CLoading::Load_StaticObject()
 
 }
 
+
+
 CLoading* CLoading::Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eLoading)
 {
 	CLoading*	pInstance = new CLoading(pGraphicDev);
