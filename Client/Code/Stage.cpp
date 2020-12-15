@@ -35,6 +35,70 @@ void CStage::Render_Scene(void)
 
 }
 
+HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
+{
+	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject.dat";
+
+	HANDLE hFile = CreateFile(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+	DWORD dwByte = 0;
+	DWORD dwstrByte = 0;
+
+	bool endCheck = false;
+	while (true)
+	{
+		bool sphereOverlap = false;
+
+		_vec3 vecPos, vecAng, vecScal;
+		TCHAR meshName[MAX_PATH] = L"";
+		_int meshNameSize;
+
+		ReadFile(hFile, &meshNameSize, sizeof(_int), &dwByte, nullptr);
+		ReadFile(hFile, &meshName, meshNameSize, &dwByte, nullptr);
+		ReadFile(hFile, &vecPos, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vecScal, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vecAng, sizeof(_vec3), &dwByte, nullptr);
+
+
+		if (0 == dwByte)
+		{
+			endCheck = true;
+			break;
+		}
+
+		wstring text, temp2, num;
+		text = meshName;
+
+
+
+		Engine::CGameObject* pGameObject = nullptr;
+		pGameObject = CStaticObject::Create(m_pGraphicDev, text);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(_layer->Add_GameObject(L"StaticObject", pGameObject), E_FAIL);
+		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&vecPos);
+		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Scale(vecScal.x, vecScal.y, vecScal.z);
+		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_X, vecAng.x);
+		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_Y, vecAng.y);
+		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_Z, vecAng.z);
+		m_mapLayer.emplace(pLayerTag, _layer);
+
+		if (0 == dwByte)
+		{
+			//Safe_Delete(pUnit);
+			break;
+		}
+
+
+
+		if (endCheck) {
+			break;
+		}
+	}
+	CloseHandle(hFile);
+}
+
 HRESULT CStage::Ready_Environment_Layer(const _tchar * pLayerTag)
 {
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
@@ -73,12 +137,11 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
-
-
 	pGameObject = CSword::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 
+	Load_StaticObjectFromTool(pLayer, pLayerTag);
 	/*for (_uint i = 0; i < 50; ++i)
 	{
 		pGameObject = CMonster::Create(m_pGraphicDev);
@@ -86,13 +149,14 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	}*/
 
-	pGameObject = CStone::Create(m_pGraphicDev);
+	/*pGameObject = CStone::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);*/
 
-	//pGameObject = CTree::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
+
+	/*pGameObject = CTree::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);*/
 
 	//for (_uint i = 0; i < 100; ++i)
 	//{
@@ -101,7 +165,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Effect", pGameObject), E_FAIL);
 	//}
 
-	//pGameObject = CUI::Create(m_pGraphicDev);
+		//pGameObject = CUI::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 

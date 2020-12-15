@@ -23,10 +23,14 @@ public:
 
 public:
 	static _uint	CALLBACK Thread_Main(void* pArg);
-
+	vector<wstring*> vecStaticMesh;
 public:
 	HRESULT		Ready_Loading(LOADINGID eLoading);
 	_uint		Loading_ForStage(void);
+	void		Load_StaticObject();
+
+
+	int staticLoadCount = 0;
 
 private:
 	HANDLE				m_hThread;
