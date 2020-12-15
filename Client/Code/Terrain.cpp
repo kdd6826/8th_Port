@@ -27,6 +27,16 @@ HRESULT Client::CTerrain::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
+	// filtertexture
+	pComponent = m_pFilterCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Filter"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Filter", pComponent);
+
+	// Auratexture
+	pComponent = m_pAuraCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Aura"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Aura", pComponent);
+
 	// Renderer
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -129,6 +139,10 @@ HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture");
+	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture1", 1);
+	m_pFilterCom->Set_Texture(pEffect, "g_FilterTexture");
+
+	m_pAuraCom->Set_Texture(pEffect, "g_AuraTexture");
 
 	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
 
@@ -160,5 +174,23 @@ HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetVector("g_vCamPos", &vCamPos);
 
+	_float	fDetail = 20.f;
+
+	pEffect->SetFloat("g_fDetail", fDetail);
+	
+#pragma region Aura
+	/*
+	Engine::CTransform*	pPlayerTransform = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerTransform, E_FAIL);
+	
+	_vec3		vPlayerPos;
+	pPlayerTransform->Get_Info(Engine::INFO_POS, &vPlayerPos);
+
+	pEffect->SetVector("g_vPlayerPos", &_vec4(vPlayerPos, 1.f));
+
+	_float	fRange = 3.f;
+	pEffect->SetFloat("g_fRange", fRange);*/
+#pragma endregion Aura
+	
 	return S_OK;
 }

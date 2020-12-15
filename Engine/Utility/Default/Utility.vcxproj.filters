@@ -61,6 +61,9 @@
     <Filter Include="09. Shader\hpp">
       <UniqueIdentifier>{a6d54341-9357-4e62-99d6-24beef44974a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10. RenderTarget">
+      <UniqueIdentifier>{f25c7262-520f-4a1e-86f1-dc0b4d0c61f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Component.cpp">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Shader.cpp">
       <Filter>09. Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderTarget.cpp">
+      <Filter>10. RenderTarget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\Shader_Terrain.hpp">
       <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Mesh.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RenderTarget.h">
+      <Filter>10. RenderTarget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

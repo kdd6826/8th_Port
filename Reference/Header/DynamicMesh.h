@@ -17,6 +17,7 @@ private:
 public:
 	HRESULT			Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName);
 	void			Render_Meshes(void);
+	void			Render_Meshes(LPD3DXEFFECT& pEffect);
 	const  D3DXFRAME_DERIVED*		Get_FrameByName(const char* pFrameName);
 	_bool							Is_AnimationSetEnd(void);
 public:
@@ -33,7 +34,6 @@ private:
 
 private:
 	_matrix matrix;
-	
 	D3DXFRAME*				m_pRootFrame;
 	CHierarchyLoader*		m_pLoader;
 	CAniCtrl*				m_pAniCtrl;

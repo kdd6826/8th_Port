@@ -28,6 +28,10 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain", pShader), E_FAIL);
 
+	// Terrain
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Mesh.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Mesh", pShader), E_FAIL);
 
 	return S_OK;
 }
@@ -81,4 +85,5 @@ Engine::CGameObject* Engine::CManagement::Get_GameObject(const _tchar* pLayerTag
 
 	return m_pScene->Get_GameObject(pLayerTag, pObjTag);
 }
+
 

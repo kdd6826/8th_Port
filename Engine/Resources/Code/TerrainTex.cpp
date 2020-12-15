@@ -109,8 +109,8 @@ HRESULT Engine::CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dw
 			
 			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
 			
-			pVertex[dwIndex].vTexUV = _vec2(_float(j) / (dwCntX - 1) * 20.f,  
-											_float(i) / (dwCntZ - 1) * 20.f);
+			pVertex[dwIndex].vTexUV = _vec2(_float(j) / (dwCntX - 1) ,  
+											_float(i) / (dwCntZ - 1));
 		}
 	}
 		

@@ -38,6 +38,11 @@ HRESULT Client::CTree::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
+	// Shader
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+
 	return S_OK;
 }
 
@@ -81,19 +86,22 @@ Client::_int Client::CTree::Update_Object(const _float& fTimeDelta)
 }
 void Client::CTree::Render_Object(void)
 {
-	
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
+	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
+	NULL_CHECK(pEffect);
+	Engine::Safe_AddRef(pEffect);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	_uint	iMaxPass = 0;
 
-	m_pMeshCom->Render_Meshes();
+	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-		
+	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	m_pMeshCom->Render_Meshes(pEffect);
+
+	pEffect->End();
+
+	Engine::Safe_Release(pEffect);
+
 
 }
 void Client::CTree::SetUp_OnTerrain(void)
@@ -107,5 +115,50 @@ void Client::CTree::SetUp_OnTerrain(void)
 	_float fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPosition, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ, VTXITV);
 
 	m_pTransformCom->Move_Pos(vPosition.x, fHeight, vPosition.z);
+}
+
+HRESULT CTree::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+{
+	_matrix		matWorld, matView, matProj;
+
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	pEffect->SetMatrix("g_matWorld", &matWorld);
+	pEffect->SetMatrix("g_matView", &matView);
+	pEffect->SetMatrix("g_matProj", &matProj);
+
+	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+
+	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+
+	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
+	pEffect->SetVector("g_LightSpecular", (_vec4*)&pLightInfo->Specular);
+	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
+
+	D3DMATERIAL9			tMtrlInfo;
+	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
+
+	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	tMtrlInfo.Power = 20.f;
+
+	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
+	pEffect->SetVector("g_MtrlSpecular", (_vec4*)&tMtrlInfo.Specular);
+	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
+
+	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
+
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	_vec4	vCamPos;
+	memcpy(&vCamPos, &matView.m[3][0], sizeof(_vec4));
+
+	pEffect->SetVector("g_vCamPos", &vCamPos);
+
+	return S_OK;
 }
 

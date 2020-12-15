@@ -132,6 +132,43 @@ void Engine::CStaticMesh::Render_Meshes(void)
 	}
 }
 
+void CStaticMesh::Render_Meshes(LPD3DXEFFECT & pEffect)
+{
+	for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
+	{
+		_bool	bAlpha = false;
+		_uint	iPassNum = 0;
+
+		if (bAlpha = Find_Alpha(m_pMtrl[i].pTextureFilename))
+			iPassNum = 1;
+
+		pEffect->SetTexture("g_BaseTexture", m_ppTextures[i]);
+		pEffect->CommitChanges();	// 텍스쳐 출력 이후에 쉐이더 객체가 참고 있는 텍스쳐 정보를 갱신시켜주는 함수
+		
+		pEffect->BeginPass(iPassNum);
+
+		m_pMesh->DrawSubset(i);
+
+		pEffect->EndPass();
+	}
+}
+
+_bool CStaticMesh::Find_Alpha(const char * pFileName)
+{
+	_uint	iLength = strlen(pFileName);
+
+	for (_uint i = 0; i < iLength + 1; ++i)
+	{
+		if (pFileName[i] == '.')
+		{
+			if (pFileName[i - 1] == 'A')
+				return true;
+		}
+	}
+	
+	return false;
+}
+
 
 Engine::CStaticMesh* Engine::CStaticMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath, const _tchar* pFileName)
 {

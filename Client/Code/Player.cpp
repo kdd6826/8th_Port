@@ -4,7 +4,9 @@
 #include "DynamicCamera.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
+	, m_vDir(0.f, 0.f, 0.f)
 {
+
 }
 
 CPlayer::~CPlayer(void)
@@ -52,13 +54,63 @@ HRESULT Client::CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
-	float timeDelta=Engine::Get_TimeDelta(L"Timer_Immediate");
+	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&_vec3{ 5.f,0.f,5.f });
 	Engine::CGameObject::Update_Object(timeDelta);
 	// Collider 
 	//pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
+
+	// Shader
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+
+	return S_OK;
+}
+
+HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+{
+	_matrix		matWorld, matView, matProj;
+
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	pEffect->SetMatrix("g_matWorld", &matWorld);
+	pEffect->SetMatrix("g_matView", &matView);
+	pEffect->SetMatrix("g_matProj", &matProj);
+
+	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+
+	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+
+	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
+	pEffect->SetVector("g_LightSpecular", (_vec4*)&pLightInfo->Specular);
+	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
+
+	D3DMATERIAL9			tMtrlInfo;
+	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
+
+	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	tMtrlInfo.Power = 20.f;
+
+	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
+	pEffect->SetVector("g_MtrlSpecular", (_vec4*)&tMtrlInfo.Specular);
+	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
+
+	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
+
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	_vec4	vCamPos;
+	memcpy(&vCamPos, &matView.m[3][0], sizeof(_vec4));
+
+	pEffect->SetVector("g_vCamPos", &vCamPos);
 
 	return S_OK;
 }
@@ -69,7 +121,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		delay -= fTimeDelta;
 	}
-	if (delay <=0)
+	if (delay <= 0)
 	{
 		m_fAniSpeed = 1.f;
 		m_state = playerState::STATE_IDLE;
@@ -95,18 +147,18 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				isManaBlade = false;
 				m_state = STATE_NORMAlBLADE;
 				delay += 0.8f;
-				
+
 			}
 			else if (isManaBlade == false)
 			{
-					isManaBlade = true;
+				isManaBlade = true;
 				m_state = STATE_MANABLADE;
 				delay += 2.f;
 				m_fAniSpeed = 1.1f;
 			}
 		}
 	}
-	
+
 
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
@@ -169,12 +221,12 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 					m_state = playerState::STATE_MB_ATT1;
 				}
 				delay += 0.4f;
-				
+
 			}
 		}
 #pragma endregion
 	}
-	
+
 
 	m_pMeshCom->Set_AnimationSet(m_state);
 	/*if(true == m_pMeshCom->Is_AnimationSetEnd())
@@ -185,7 +237,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 void CPlayer::MovePlayer(const _float& fTimeDelta)
 {
-	
+
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 	_float fCamAngle;
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
@@ -307,7 +359,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		D3DXVec3Cross(&vDir, &vDir, &up);
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir* fTimeDelta* m_fSpeed)));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
 	}
@@ -315,7 +367,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayer*	pInstance = new CPlayer(pGraphicDev);	
+	CPlayer*	pInstance = new CPlayer(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -335,6 +387,7 @@ HRESULT Client::CPlayer::Ready_Object(void)
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pMeshCom->Set_AnimationSet(39);
+
 	m_pNaviMeshCom->Set_NaviIndex(0);
 	m_pTransformCom->Set_Pos(&_vec3{ 5.f,5.f,5.f });
 
@@ -343,7 +396,7 @@ HRESULT Client::CPlayer::Ready_Object(void)
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
 
-	//SetUp_OnTerrain();
+	SetUp_OnTerrain();
 	Key_Input(fTimeDelta);
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
@@ -352,24 +405,14 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	fCamAngle = D3DXToDegree(pCamera->Get_Angle());
 	//vCamPos = pCamera->Get_Eye();
 
-	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale,vRot, vMyPos;
-	
+	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;
+
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
 	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
 	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 
-
-	//_matrix ani, rot;
-
-	//vRot = m_pTransformCom->Get_Rotation();
-
-	//D3DXMatrixRotationY(&rot, vRot.y);
-
-
-
-
-	m_pMeshCom->Play_Animation(fTimeDelta*m_fAniSpeed*1.5f);
+	m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -377,15 +420,26 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 }
 void Client::CPlayer::Render_Object(void)
 {
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
+	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
+	NULL_CHECK(pEffect);
+	Engine::Safe_AddRef(pEffect);
+
+	_uint	iMaxPass = 0;
+
+	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
+	pEffect->BeginPass(0);
+
+	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+		
+	m_pMeshCom->Render_Meshes(pEffect);
 	
+	pEffect->EndPass();
+	pEffect->End();
+
 	m_pNaviMeshCom->Render_NaviMeshes();
 
-	m_pMeshCom->Render_Meshes();
-	/*_matrix matWorld;
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
 
-	m_pColliderCom->Render_Collider(Engine::COL_TRUE, &matWorld);*/
+	Engine::Safe_Release(pEffect);
 }
 void Client::CPlayer::SetUp_OnTerrain(void)
 {
@@ -394,7 +448,7 @@ void Client::CPlayer::SetUp_OnTerrain(void)
 
 	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
-	
+
 	_float fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPosition, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ, VTXITV);
 
 	m_pTransformCom->Move_Pos(vPosition.x, fHeight, vPosition.z);

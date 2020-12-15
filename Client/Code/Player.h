@@ -12,12 +12,14 @@ class CRenderer;
 class CCalculator;
 class CCollider;
 class CNaviMesh;
+class CShader;
 
 END
 
 BEGIN(Client)
 class CPlayer : public Engine::CGameObject
 {
+
 	enum playerState
 	{
 		STATE_IDLE,
@@ -74,7 +76,6 @@ class CPlayer : public Engine::CGameObject
 		STATE_BOMB_ING,
 		STATE_BOMB_END,
 	};
-
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CPlayer(void);
@@ -86,14 +87,16 @@ public:
 
 private:
 	HRESULT		Add_Component(void);
+	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
+	void		MovePlayer(const _float& fTimeDelta);
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
-	void		MovePlayer(const _float& fTimeDelta);
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	playerState m_state = playerState::STATE_IDLE;
 	bool		isManaBlade = false;
 	bool		isRunning = false;
+
 private:
 	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
 	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr; 
@@ -101,10 +104,13 @@ private:
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	Engine::CCollider*			m_pColliderCom = nullptr;
+	Engine::CShader*			m_pShaderCom = nullptr;
+	_vec3						m_vDir;
 	bool						isAnimating;
 	_float						delay = 0.f;
 	_float						m_fSpeed = 5.f;
 	_float						m_fAniSpeed = 1.f;
+
 public:
 	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

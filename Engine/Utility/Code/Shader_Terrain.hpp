@@ -14,7 +14,11 @@ float4			g_MtrlSpecular;
 float4			g_MtrlAmbient;
 
 vector			g_vCamPos;
+vector			g_vPlayerPos;
 float			g_fPower;
+
+float			g_fDetail;
+float			g_fRange;
 
 
 
@@ -23,6 +27,39 @@ texture			g_BaseTexture;
 sampler BaseSampler = sampler_state
 {
 	texture = g_BaseTexture;
+
+	minfilter = linear;
+	magfilter = linear;
+};
+
+texture			g_BaseTexture1;
+
+sampler BaseSampler1 = sampler_state
+{
+	texture = g_BaseTexture1;
+
+	minfilter = linear;
+	magfilter = linear;
+	
+	addressU = mirror;
+	addressV = mirror;
+};
+
+texture			g_FilterTexture;
+
+sampler FilterSampler = sampler_state
+{
+	texture = g_FilterTexture;
+
+	minfilter = linear;
+	magfilter = linear;
+};
+
+texture			g_AuraTexture;
+
+sampler AuraSampler = sampler_state
+{
+	texture = g_AuraTexture;
 
 	minfilter = linear;
 	magfilter = linear;
@@ -41,6 +78,7 @@ struct	VS_OUT
 	vector		vShade		: COLOR0;
 	vector		vSpecular	: COLOR1;
 	float2		vTexUV		: TEXCOORD0;
+	vector		vAuraPixelPos	: TEXCOORD1;
 };
 
 // 버텍스 쉐이더
@@ -78,6 +116,8 @@ VS_OUT VS_MAIN(VS_IN In)
 
 	Out.vTexUV = In.vTexUV;
 
+	Out.vAuraPixelPos = vWorldPos;
+
 	return Out;
 }
 
@@ -87,6 +127,7 @@ struct	PS_IN
 	vector		vShade : COLOR0;
 	vector		vSpecular : COLOR1;
 	float2		vTexUV : TEXCOORD0;
+	vector		vAuraPixelPos : TEXCOORD1;
 };
 
 struct	PS_OUT
@@ -98,15 +139,32 @@ PS_OUT		PS_MAIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
 
-	vector vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	vector vColor = tex2D(BaseSampler, In.vTexUV * g_fDetail);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+	vector vColor1 = tex2D(BaseSampler1, In.vTexUV * g_fDetail);	
 
-	Out.vColor = In.vShade * (vColor * (g_LightDiffuse * g_MtrlDiffuse)) + (g_LightAmbient * g_MtrlAmbient);// +(In.vSpecular * (g_LightSpecular * g_MtrlSpecular));
+	vector vFilter = tex2D(FilterSampler, In.vTexUV);
 
-	// Out.vColor = (In.vShade * vColor) * (g_LightDiffuse * g_MtrlDiffuse) + (g_LightAmbient * g_MtrlAmbient);
+	Out.vColor = vColor * vFilter + vColor1 * (1.f - vFilter);
+	
+	Out.vColor = In.vShade * (Out.vColor * (g_LightDiffuse * g_MtrlDiffuse)) + (g_LightAmbient * g_MtrlAmbient);// +(In.vSpecular * (g_LightSpecular * g_MtrlSpecular));
+	
+	vector		vAuraColor = (vector)0.f;
 
-	// Out.vColor = (vColor) * (g_LightDiffuse * g_MtrlDiffuse) + (In.vShade * (g_LightAmbient * g_MtrlAmbient));
+	if (g_vPlayerPos.x - g_fRange < In.vAuraPixelPos.x &&
+		g_vPlayerPos.x + g_fRange > In.vAuraPixelPos.x &&
+		g_vPlayerPos.z - g_fRange < In.vAuraPixelPos.z &&
+		g_vPlayerPos.z + g_fRange > In.vAuraPixelPos.z)
+	{
+		float2 vTexUV;
+		
+		// 0 ~ 1로 만들기 위한 공식
+		vTexUV.x = (In.vAuraPixelPos.x - (g_vPlayerPos.x - g_fRange)) / (g_fRange * 2.f);
+		vTexUV.y = ((g_vPlayerPos.z + g_fRange) - In.vAuraPixelPos.z) / (g_fRange * 2.f);
 
-	// Out.vColor = ((vColor) * (g_LightDiffuse * g_MtrlDiffuse)) * (In.vShade + (g_LightAmbient * g_MtrlAmbient));
+		vAuraColor = tex2D(AuraSampler, vTexUV);
+	}
+	
+	Out.vColor += vAuraColor;
 
 	return Out;
 }

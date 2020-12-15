@@ -35,6 +35,7 @@ void CStage::Render_Scene(void)
 
 }
 
+
 HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
 {
 	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject.dat";
@@ -98,7 +99,6 @@ HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* 
 	}
 	CloseHandle(hFile);
 }
-
 HRESULT CStage::Ready_Environment_Layer(const _tchar * pLayerTag)
 {
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
@@ -136,11 +136,10 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
-	
+
 	pGameObject = CSword::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
-
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
 	/*for (_uint i = 0; i < 50; ++i)
 	{
@@ -149,14 +148,13 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	}*/
 
-	/*pGameObject = CStone::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);*/
+	//pGameObject = CStone::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
 
-
-	/*pGameObject = CTree::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);*/
+	//pGameObject = CTree::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
 
 	//for (_uint i = 0; i < 100; ++i)
 	//{
@@ -165,7 +163,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Effect", pGameObject), E_FAIL);
 	//}
 
-		//pGameObject = CUI::Create(m_pGraphicDev);
+	//pGameObject = CUI::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
