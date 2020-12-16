@@ -1,18 +1,20 @@
 #include "stdafx.h"
 #include "MFCDynamicMesh.h"
 #include "Export_Function.h"
+#include "SphereCollider.h"
+#include "../../Engine/Header/Engine_Struct.h"
 
 CMFCDynamicMesh::CMFCDynamicMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
-
 }
 
 CMFCDynamicMesh::CMFCDynamicMesh(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
 	: Engine::CGameObject(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
+	m_AniClip = 54;
 }
 
 CMFCDynamicMesh::~CMFCDynamicMesh(void)
@@ -71,15 +73,15 @@ HRESULT CMFCDynamicMesh::Add_Component(void)
 HRESULT CMFCDynamicMesh::Add_Component(CString _mesh)
 {
 	Engine::CComponent*		pComponent = nullptr;
-
+	meshKey = _mesh;
 	// Mesh
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, _mesh));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
+	//pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
 
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
@@ -102,6 +104,10 @@ HRESULT CMFCDynamicMesh::Add_Component(CString _mesh)
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
+	_matrix		matTemp;
+	Ready_VecFrameNameGet((Engine::D3DXFRAME_DERIVED*)m_pMeshCom->Get_RootFrame(), D3DXMatrixRotationY(&matTemp, D3DXToRadian(0.f)));
+
+	m_pTransformCom->m_vInfo[Engine::INFO_POS] = { -0.5f, 3.f, -0.5f };
 	return S_OK;
 }
 
@@ -174,6 +180,11 @@ CMFCDynamicMesh * CMFCDynamicMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, CString
 void CMFCDynamicMesh::Free(void)
 {
 	Engine::CGameObject::Free();
+	for (auto& sphereCol : m_VecSphereCollider)
+	{
+		Engine::Safe_Release(sphereCol);
+	}
+	m_VecSphereCollider.clear();
 }
 
 
@@ -183,10 +194,10 @@ HRESULT CMFCDynamicMesh::Ready_Object(void)
 
 	
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
-	m_pMeshCom->Set_AnimationSet(0);
+	m_pMeshCom->Set_AnimationSet(m_AniClip);
 
 	m_pNaviMeshCom->Set_NaviIndex(0);
-
+	
 	return S_OK;
 }
 HRESULT CMFCDynamicMesh::Ready_Object(CString _mesh)
@@ -195,12 +206,40 @@ HRESULT CMFCDynamicMesh::Ready_Object(CString _mesh)
 
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
-	m_pMeshCom->Set_AnimationSet(0);
+	m_pMeshCom->Set_AnimationSet(m_AniClip);
 
-	m_pNaviMeshCom->Set_NaviIndex(0);
+	//m_pNaviMeshCom->Set_NaviIndex(0);
 
 	return S_OK;
 }
+
+void CMFCDynamicMesh::Create_BoneOfSphereCollier(CString boneName)
+{
+	CT2CA Cont(boneName);
+	string str = string(Cont);
+	CSphereCollider* sphereCol = CSphereCollider::Create(m_pGraphicDev);
+	sphereCol->m_pDynamicMesh = this;
+	sphereCol->m_FrameName = str;
+	sphereCol->m_FrameNameCheck = true;
+	m_VecSphereCollider.emplace_back(sphereCol);
+	return;
+}
+
+void CMFCDynamicMesh::Ready_VecFrameNameGet(Engine::D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix)
+{
+	if (nullptr == pFrame)
+		return;
+
+	pFrame->CombinedTransformationMatrix = pFrame->TransformationMatrix * (*pParentMatrix);
+	m_VecFrameName.emplace_back(pFrame->Name);
+	if (nullptr != pFrame->pFrameSibling)
+		Ready_VecFrameNameGet((Engine::D3DXFRAME_DERIVED*)pFrame->pFrameSibling, pParentMatrix);
+
+	if (nullptr != pFrame->pFrameFirstChild)
+		Ready_VecFrameNameGet((Engine::D3DXFRAME_DERIVED*)pFrame->pFrameFirstChild, &pFrame->CombinedTransformationMatrix);
+
+}
+
 _int CMFCDynamicMesh::Update_Object(const _float& fTimeDelta)
 {
 
@@ -213,19 +252,24 @@ _int CMFCDynamicMesh::Update_Object(const _float& fTimeDelta)
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
+	for (auto& sphereCol : m_VecSphereCollider)
+	{
+		sphereCol->Update_Object(fTimeDelta);
+	}
 	return 0;
 }
 void CMFCDynamicMesh::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 	
-	m_pNaviMeshCom->Render_NaviMeshes();
+	//m_pNaviMeshCom->Render_NaviMeshes();
 
 	m_pMeshCom->Render_Meshes();
 	/*_matrix matWorld;
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 
 	m_pColliderCom->Render_Collider(Engine::COL_TRUE, &matWorld);*/
+
 }
 void CMFCDynamicMesh::SetUp_OnTerrain(void)
 {

@@ -235,6 +235,16 @@ void CMFCToolView::CreateDynamicMesh(CString _mesh)
 	//LayerAddObject(L"Environment", _mesh, pGameObject);
 }
 
+void CMFCToolView::CreateDynamicMesh_OfCollider(CString _mesh)
+{
+	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CMFCDynamicMesh::Create(m_pGraphicDev, _mesh);
+	NULL_CHECK_RETURN(pGameObject, );
+	vectorObjDynamic_Collider.emplace_back(dynamic_cast<CMFCDynamicMesh*>(pGameObject));
+	//LayerAddObject(L"Environment", _mesh, pGameObject);
+}
+
 void CMFCToolView::OnDraw(CDC* /*pDC*/)
 {
 	CMFCToolDoc* pDoc = GetDocument();
@@ -427,7 +437,21 @@ void CMFCToolView::Update(float deltaTime)
 			iterator++;
 		}
 	}
-	/////
+	/////다이나믹매쉬 콜라이더
+	for (auto& iterator = vectorObjDynamic_Collider.begin(); iterator != vectorObjDynamic_Collider.end();)
+	{
+		if (dynamic_cast<CMFCDynamicMesh*>(*iterator)->isDead == true)
+		{
+			Engine::Safe_Release(*iterator);
+			iterator = vectorObjDynamic_Collider.erase(iterator);
+		}
+		else
+		{
+			(*iterator)->Update_Object(deltaTime);
+			iterator++;
+		}
+	}
+	//
 
 	///////////////// Render
 	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.7f, 0.7f, 1.f));
@@ -529,13 +553,13 @@ HRESULT CMFCToolView::Loading()
 		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
 		L"TombStone.X"),
 		E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Navi",
-		Engine::TYPE_NAVI,
-		NULL,
-		NULL),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Navi",
+	//	Engine::TYPE_NAVI,
+	//	NULL,
+	//	NULL),
+	//	E_FAIL);
 
 
 

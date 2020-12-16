@@ -15,6 +15,8 @@ class CNaviMesh;
 
 END
 
+class CSphereCollider;
+
 class CMFCDynamicMesh : public Engine::CGameObject
 {
 private:
@@ -25,6 +27,9 @@ private:
 public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual HRESULT Ready_Object(CString _mesh);
+	//뼈이름으로 인자를 받아서 그 뼈한테 원 콜라이더 생성
+	void			Create_BoneOfSphereCollier(CString boneName);
+	void			Ready_VecFrameNameGet(Engine::D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 	bool isDead = false;
@@ -35,7 +40,7 @@ private:
 	void		Key_Input(const _float& fTimeDelta);
 	_vec3		PickUp_OnTerrain(void);
 
-private:
+public:
 	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
 	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
@@ -45,6 +50,11 @@ private:
 	_vec3						m_vDir;
 	_float						m_fSpeed = 5.f;
 
+public:
+	vector<CSphereCollider*>		m_VecSphereCollider;
+	vector<LPSTR>					m_VecFrameName;
+	CString							meshKey;
+	int								m_AniClip;
 public:
 	static CMFCDynamicMesh*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CMFCDynamicMesh*	Create(LPDIRECT3DDEVICE9 pGraphicDev,CString _mesh);

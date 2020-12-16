@@ -22,6 +22,7 @@ public:
 public:
 	void			Set_AnimationSet(const _uint& iIndex);
 	void			Play_Animation(const _float& fTimeDelta);
+	D3DXFRAME*		Get_RootFrame() { return m_pRootFrame; }
 
 private:
 
@@ -30,7 +31,6 @@ private:
 
 	// CombinedTransformationMatrix의 주소값을 얻어와서 채워주는 함수
 	void			SetUp_FrameMatrixPointer(D3DXFRAME_DERIVED* pFrame);
-
 private:
 	D3DXFRAME*				m_pRootFrame;
 	CHierarchyLoader*		m_pLoader;

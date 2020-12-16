@@ -342,109 +342,109 @@ void MeshPage::InitTreeCtrl()
 
 
 
-			//if (firstFinder.GetFileName() == _T("DynamicMesh"))
-			//{
-			//	if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
-			//	{
-			//		///////////////////////Dynamic, Static
+			if (firstFinder.GetFileName() == _T("DynamicMesh"))
+			{
+				if (firstFinder.GetFileName() != _T(".") && firstFinder.GetFileName() != _T(".."))
+				{
+					///////////////////////Dynamic, Static
 
 
-			//		objCreateItemSon[0][objCreateItemSonCount] = treeObjCreate.InsertItem(firstFinder.GetFileName(), objCreateItem);
+					objCreateItemSon[0][objCreateItemSonCount] = treeObjCreate.InsertItem(firstFinder.GetFileName(), objCreateItem);
 
-			//		CString temp;
-			//		temp += findFile + firstFinder.GetFileName() + PathEnd2;
+					CString temp;
+					temp += findFile + firstFinder.GetFileName() + PathEnd2;
 
-			//		bool bchildWorking = secondFinder.FindFile(temp);
-			//		while (bchildWorking) {
-			//			bchildWorking = secondFinder.FindNextFileW();
-			//			if (secondFinder.IsDirectory())
-			//			{
-			//				if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
-			//				{
+					bool bchildWorking = secondFinder.FindFile(temp);
+					while (bchildWorking) {
+						bchildWorking = secondFinder.FindNextFileW();
+						if (secondFinder.IsDirectory())
+						{
+							if (secondFinder.GetFileName() != _T(".") && secondFinder.GetFileName() != _T(".."))
+							{
 
-			//					///////Player
-			//					objCreateItemSon[1][objCreateItemSonCount] = treeObjCreate.InsertItem(secondFinder.GetFileName(), objCreateItemSon[0][objCreateItemSonCount]);
-			//					CString temp2;
-			//					temp2 += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + PathEnd3;
-			//					bool bThirdWorking = thirdFinder.FindFile(temp2);
-			//					while (bThirdWorking) {
-			//						bThirdWorking = thirdFinder.FindNextFileW();
-			//						if (secondFinder.IsDirectory())
-			//						{
-			//							if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
-			//							{
-			//								CString temp, numFileName;
-			//								temp.Format(_T("%d"), dynamicLoadCount);
-			//								numFileName += temp + _T(") ") + thirdFinder.GetFileName();
+								///////Player
+								objCreateItemSon[1][objCreateItemSonCount] = treeObjCreate.InsertItem(secondFinder.GetFileName(), objCreateItemSon[0][objCreateItemSonCount]);
+								CString temp2;
+								temp2 += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + PathEnd3;
+								bool bThirdWorking = thirdFinder.FindFile(temp2);
+								while (bThirdWorking) {
+									bThirdWorking = thirdFinder.FindNextFileW();
+									if (secondFinder.IsDirectory())
+									{
+										if (thirdFinder.GetFileName() != _T(".") && thirdFinder.GetFileName() != _T(".."))
+										{
+											CString temp, numFileName;
+											temp.Format(_T("%d"), dynamicLoadCount);
+											numFileName += temp + _T(") ") + thirdFinder.GetFileName();
 
-			//								objCreateItemSon[2][objCreateItemSonCount] = treeObjCreate.InsertItem(numFileName, objCreateItemSon[1][objCreateItemSonCount]);
-			//								CString finalPath;
-			//								finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
-			//								CString check, check2, check3;
+											objCreateItemSon[2][objCreateItemSonCount] = treeObjCreate.InsertItem(numFileName, objCreateItemSon[1][objCreateItemSonCount]);
+											CString finalPath;
+											finalPath += findFile + firstFinder.GetFileName() + _T("/") + secondFinder.GetFileName() + _T("/");
+											CString check, check2, check3;
 
-			//								check = firstFinder.GetFileName();
-			//								check2 = secondFinder.GetFileName();
-			//								check3 = thirdFinder.GetFileName();
-			//								CString ObjTag, meshName;
-
-
-			//								ObjTag += L"Mesh_" + secondFinder.GetFileName();
-
-			//								TCHAR* tMesh = nullptr;
-			//								tMesh = (TCHAR*)(LPCTSTR)ObjTag;
-			//								
-
-			//								CString* meshTag = new CString;
-
-			//								*meshTag = tMesh;
-
-			//								CMFCToolView::GetInstance()->vecDynamicMesh.emplace_back(meshTag);
+											check = firstFinder.GetFileName();
+											check2 = secondFinder.GetFileName();
+											check3 = thirdFinder.GetFileName();
+											CString ObjTag, meshName;
 
 
-			//								if (FAILED(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
-			//									Engine::RESOURCE_STAGE,
-			//									*meshTag, //Sword,TombStone
-			//									Engine::TYPE_DYNAMIC,
-			//									finalPath,					//../Bin/Resource/Mesh/......
-			//									check3)))
-			//								{
-			//									MessageBox(L"Fail to ready mesh");
-			//								}
+											ObjTag += L"Mesh_" + secondFinder.GetFileName();
 
-			//								dynamicLoadCount++;
+											TCHAR* tMesh = nullptr;
+											tMesh = (TCHAR*)(LPCTSTR)ObjTag;
+											
 
-			//								///////////////////
+											CString* meshTag = new CString;
 
-			//								//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
-			//								//	Engine::RESOURCE_STAGE,
-			//								//	check2, //Sword,TombStone
-			//								//	Engine::TYPE_STATIC,
-			//								//    finalPath,					//../Bin/Resource/Mesh/......
-			//								//	check), //Sword.X
-			//								//	);
+											*meshTag = tMesh;
 
-			//								//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-			//								//	Engine::RESOURCE_STAGE,
-			//								//	L"Mesh_Stone",
-			//								//	Engine::TYPE_STATIC,
-			//								//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-			//								//	L"TombStone.X"),
-			//								//	E_FAIL);
+											CMFCToolView::GetInstance()->vecDynamicMesh.emplace_back(meshTag);
 
-			//								///////////////
-			//							}
-			//						}
-			//					}
 
-			//					///////
-			//				}
-			//			}
-			//		}
+											if (FAILED(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+												Engine::RESOURCE_STAGE,
+												*meshTag, //Sword,TombStone
+												Engine::TYPE_DYNAMIC,
+												finalPath,					//../Bin/Resource/Mesh/......
+												check3)))
+											{
+												MessageBox(L"Fail to ready mesh");
+											}
 
-			//		objCreateItemSonCount++;
-			//		////////////////////////
-			//	}
-			//}
+											dynamicLoadCount++;
+
+											///////////////////
+
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(CMFCToolView::GetInstance()->m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	check2, //Sword,TombStone
+											//	Engine::TYPE_STATIC,
+											//    finalPath,					//../Bin/Resource/Mesh/......
+											//	check), //Sword.X
+											//	);
+
+											//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+											//	Engine::RESOURCE_STAGE,
+											//	L"Mesh_Stone",
+											//	Engine::TYPE_STATIC,
+											//	L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+											//	L"TombStone.X"),
+											//	E_FAIL);
+
+											///////////////
+										}
+									}
+								}
+
+								///////
+							}
+						}
+					}
+
+					objCreateItemSonCount++;
+					////////////////////////
+				}
+			}
 #pragma endregion
 		}
 	}
