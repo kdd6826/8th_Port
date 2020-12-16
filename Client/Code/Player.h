@@ -46,7 +46,7 @@ class CPlayer : public Engine::CGameObject
 		STATE_MB_ATT4,
 		STATE_MB_ATT5,
 		STATE_MB_ATT6,
-		STATE_THROW_BALL,
+		STATE_THROW_BALL,//마나리전, 디멘션홀
 		STATE_RUINBLADE,
 		STATE_LORDOFMANA,
 		STATE_CONFUSIONHOLE,
@@ -56,6 +56,7 @@ class CPlayer : public Engine::CGameObject
 		STATE_DIFUSION,//회피
 		STATE_MANABLADE,//TAB
 		STATE_NORMAlBLADE,//TAB2
+		STATE_MANA_IMAGE,//마나스톤 회수
 		STATE_TIRED_START,
 		STATE_TIRED_ING,
 		STATE_TIRED_END,
@@ -89,12 +90,14 @@ private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 	void		MovePlayer(const _float& fTimeDelta);
+	void		Attack(const _float& fTimeDelta);
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	playerState m_state = playerState::STATE_IDLE;
 	bool		isManaBlade = false;
+	bool		isBattle = false;
 	bool		isRunning = false;
 
 private:
@@ -110,7 +113,7 @@ private:
 	_float						delay = 0.f;
 	_float						m_fSpeed = 5.f;
 	_float						m_fAniSpeed = 1.f;
-
+	_float						m_fBattleCount=0.f;
 public:
 	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

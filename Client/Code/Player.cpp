@@ -121,22 +121,45 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		delay -= fTimeDelta;
 	}
+	
+
+	
+	if (m_fBattleCount > 0.f)
+	{
+		isBattle = true;
+		m_fBattleCount -= fTimeDelta;
+	}
+	else
+		isBattle = false;
+	
 	if (delay <= 0)
 	{
 		m_fAniSpeed = 1.f;
-		m_state = playerState::STATE_IDLE;
-		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80)
+		if (isBattle == false)
 		{
-			if (isRunning = true)
+			m_state = playerState::STATE_IDLE;
+		}
+		else if (isBattle == true)
+		{
+			if (isManaBlade == true)
 			{
-				isRunning = false;
+				m_state = playerState::STATE_MANA_IDLE;
+				
 			}
-			else if (isRunning = false)
+			else if (isManaBlade == false)
 			{
-				isRunning = true;
+				m_state = playerState::STATE_BATTLE_IDLE;
 			}
 		}
 
+		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80)
+		{
+				isRunning = true;
+		}
+		else
+		{
+			isRunning = false;
+		}
 		MovePlayer(fTimeDelta);
 
 		if (Engine::Get_DIKeyState(DIK_TAB) & 0x80)
@@ -146,13 +169,14 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			{
 				isManaBlade = false;
 				m_state = STATE_NORMAlBLADE;
-				delay += 0.8f;
-
+				delay += 1.1f;
+				m_fBattleCount = 5.f;
 			}
 			else if (isManaBlade == false)
 			{
 				isManaBlade = true;
 				m_state = STATE_MANABLADE;
+				m_fBattleCount = 5.f;
 				delay += 2.f;
 				m_fAniSpeed = 1.1f;
 			}
@@ -160,73 +184,19 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	}
 
 
-	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
-	{
-#pragma region NormalBladeAttack
-		if (isManaBlade == false)
-		{
-			if (delay <= 0.3f)
-			{
-				if (m_state == playerState::STATE_ATT4)
-				{
-					m_state = playerState::STATE_ATT5;
-				}
-				else if (m_state == playerState::STATE_ATT3)
-				{
-					m_state = playerState::STATE_ATT4;
-				}
-				else if (m_state == playerState::STATE_ATT2)
-				{
-					m_state = playerState::STATE_ATT3;
-				}
-				else if (m_state == playerState::STATE_ATT1)
-				{
-					m_state = playerState::STATE_ATT2;
-				}
-				else
-				{
-					m_state = playerState::STATE_ATT1;
-				}
-				delay += 0.5f;
-			}
-		}
-#pragma endregion
-#pragma region ManaBladeAttack
-		else if (isManaBlade == true)
-		{
-			if (delay <= 0.3f)
-			{
-				if (m_state == playerState::STATE_MB_ATT5)
-				{
-					m_state = playerState::STATE_MB_ATT6;
-				}
-				else if (m_state == playerState::STATE_MB_ATT4)
-				{
-					m_state = playerState::STATE_MB_ATT5;
-				}
-				else if (m_state == playerState::STATE_MB_ATT3)
-				{
-					m_state = playerState::STATE_MB_ATT4;
-				}
-				else if (m_state == playerState::STATE_MB_ATT2)
-				{
-					m_state = playerState::STATE_MB_ATT3;
-				}
-				else if (m_state == playerState::STATE_MB_ATT1)
-				{
-					m_state = playerState::STATE_MB_ATT2;
-				}
-				else
-				{
-					m_state = playerState::STATE_MB_ATT1;
-				}
-				delay += 0.4f;
 
-			}
+	//°¡µå
+	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+			m_state = playerState::STATE_CONFUSIONHOLE;
+			delay += 1.f;
+			m_fBattleCount = 5.f;
 		}
-#pragma endregion
 	}
 
+	Attack(fTimeDelta);
 
 	m_pMeshCom->Set_AnimationSet(m_state);
 	/*if(true == m_pMeshCom->Is_AnimationSetEnd())
@@ -253,17 +223,29 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	fCamAngle = pCamera->Get_Angle();
 
 
+
+
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
 		if (isRunning)
 		{
-			m_state == playerState::STATE_FIELD_SPRINT;
+			m_state = playerState::STATE_FIELD_SPRINT;
 			m_fSpeed = 5.f;
 		}
 		else if (!isRunning)
 		{
 			m_state = playerState::STATE_FIELD_RUN;
 			m_fSpeed = 3.f;
+		}
+		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_DIFUSION;
+				delay += 1.2f;
+				m_fBattleCount = 6.2f;
+				m_fAniSpeed = 1.2f;
+			}
 		}
 		vDir = (vMyPos - vCamPos);
 		D3DXVec3Normalize(&vDir, &vDir);
@@ -303,7 +285,26 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
-		m_state = playerState::STATE_FIELD_RUN;
+		if (isRunning)
+		{
+			m_state = playerState::STATE_FIELD_SPRINT;
+			m_fSpeed = 5.f;
+		}
+		else if (!isRunning)
+		{
+			m_state = playerState::STATE_FIELD_RUN;
+			m_fSpeed = 3.f;
+		}
+		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_DIFUSION;
+				delay += 1.2f;
+				m_fBattleCount = 6.2f;
+				m_fAniSpeed = 1.2f;
+			}
+		}
 		vDir = (vCamPos - vMyPos);
 		D3DXVec3Normalize(&vDir, &vDir);
 
@@ -339,7 +340,27 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 	else if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 	{
-		m_state = playerState::STATE_FIELD_RUN;
+		if (isRunning)
+		{
+			m_state = playerState::STATE_FIELD_SPRINT;
+			m_fSpeed = 5.f;
+		}
+		else if (!isRunning)
+		{
+			m_state = playerState::STATE_FIELD_RUN;
+			m_fSpeed = 3.f;
+		}
+		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_DIFUSION;
+				delay += 1.2f;
+				m_fBattleCount = 6.2f;
+				m_fAniSpeed = 1.2f;
+			}
+		}
+
 		vDir = (vCamPos - vMyPos);
 		_vec3 up;
 		up = { 0.f,1.f,0.f };
@@ -352,7 +373,26 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	}
 	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
+	if (isRunning)
+	{
+		m_state = playerState::STATE_FIELD_SPRINT;
+		m_fSpeed = 5.f;
+	}
+	else if (!isRunning)
+	{
 		m_state = playerState::STATE_FIELD_RUN;
+		m_fSpeed = 3.f;
+	}
+	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+			m_state = playerState::STATE_DIFUSION;
+			delay += 1.2f;
+			m_fBattleCount = 6.2f;
+			m_fAniSpeed = 1.2f;
+		}
+	}
 		vDir = (vCamPos - vMyPos);
 		_vec3 up;
 		up = { 0.f,1.f,0.f };
@@ -362,6 +402,138 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_fSpeed)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
+	}
+}
+
+void CPlayer::Attack(const _float& fTimeDelta)
+{
+	
+	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
+	{
+	#pragma region NormalBladeAttack
+		if (isManaBlade == false)
+		{
+			if (delay <= 0.8f)
+			{
+				if (m_state == playerState::STATE_ATT4)
+				{
+					m_state = playerState::STATE_ATT5;
+					delay = 2.5f;
+				}
+				else if (m_state == playerState::STATE_ATT3)
+				{
+					m_state = playerState::STATE_ATT4;
+					delay = 2.6f;
+				}
+			}
+			if (delay <= 0.8f)
+			{
+				if (m_state == playerState::STATE_ATT2)
+				{
+					m_state = playerState::STATE_ATT3;
+					delay = 1.2f;
+				}
+				else if (m_state == playerState::STATE_ATT1)
+				{
+					m_state = playerState::STATE_ATT2;
+					delay = 1.1f;
+				}
+				else
+				{
+					m_state = playerState::STATE_ATT1;
+					delay += 1.2f;
+				}
+				
+				m_fAniSpeed = 1.3f;
+				m_fBattleCount = 5.f;
+			}
+		}
+#pragma endregion
+#pragma region ManaBladeAttack
+		else if (isManaBlade == true)
+		{
+			if (delay <= 0.2f)
+			{
+				if (m_state == playerState::STATE_MB_ATT5)
+				{
+					m_state = playerState::STATE_MB_ATT6;
+				}
+				else if (m_state == playerState::STATE_MB_ATT4)
+				{
+					m_state = playerState::STATE_MB_ATT5;
+				}
+				else if (m_state == playerState::STATE_MB_ATT3)
+				{
+					m_state = playerState::STATE_MB_ATT4;
+				}
+				else if (m_state == playerState::STATE_MB_ATT2)
+				{
+					m_state = playerState::STATE_MB_ATT3;
+				}
+				else if (m_state == playerState::STATE_MB_ATT1)
+				{
+					m_state = playerState::STATE_MB_ATT2;
+				}
+				else
+				{
+					m_state = playerState::STATE_MB_ATT1;
+				}
+				delay += 0.3f;
+				m_fBattleCount = 5.f;
+			}
+		}
+#pragma endregion
+	}
+
+
+	if (Engine::Get_DIKeyState(DIK_2) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+			m_state = playerState::STATE_DOOMSAYER;
+			delay += 3.7f;
+			m_fBattleCount = 8.8f;
+		}
+	}
+	if (Engine::Get_DIKeyState(DIK_3) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+			m_state = playerState::STATE_RUINBLADE;
+			delay += 8.1f;//4.f
+			m_fBattleCount = 13.1f;
+		}
+	}
+	if (Engine::Get_DIKeyState(DIK_4) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+			m_state = playerState::STATE_MANA_IMAGE;
+			//OK
+			delay += 1.f;
+			m_fBattleCount = 6.f;
+		}
+	}
+	if (Engine::Get_DIKeyState(DIK_5) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+			m_state = playerState::STATE_LORDOFMANA;
+			
+			delay += 14.2f;
+			m_fBattleCount = 19.f;
+		}
+	}
+	if (Engine::Get_DIKeyState(DIK_6) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+		
+			m_state = playerState::STATE_DARKKNIGHT_TRANS1;
+			//OK
+			delay += 8.1f;
+			m_fBattleCount = 13.1f;
+		}
 	}
 }
 
