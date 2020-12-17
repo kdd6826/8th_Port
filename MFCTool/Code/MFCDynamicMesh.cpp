@@ -245,7 +245,7 @@ _int CMFCDynamicMesh::Update_Object(const _float& fTimeDelta)
 
 	SetUp_OnTerrain();
 	Key_Input(fTimeDelta);
-
+	m_pMeshCom->Set_AnimationSet(m_AniClip);
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	m_pMeshCom->Play_Animation(fTimeDelta);
@@ -282,4 +282,45 @@ void CMFCDynamicMesh::SetUp_OnTerrain(void)
 	//_float fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPosition, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ, VTXITV);
 
 	//m_pTransformCom->Move_Pos(vPosition.x, fHeight, vPosition.z);
+}
+
+CSphereCollider* CMFCDynamicMesh::Find_SphereCollider(string boneName)
+{
+	CSphereCollider* psphere = nullptr;
+	for (auto& sphere : m_VecSphereCollider)
+	{
+		if (false == sphere->m_FrameName.compare(boneName))
+		{
+			psphere = sphere;
+			sphere->m_pBufferCom->Set_Color(D3DCOLOR_ARGB(255, 255, 0, 0));
+		}
+		else {
+			sphere->m_pBufferCom->Set_Color(D3DCOLOR_ARGB(255, 255, 228, 0));
+		}
+	}
+	return psphere;
+}
+
+void CMFCDynamicMesh::Delete_SphereCollider(string boneName)
+{
+	for (auto& iter = m_VecSphereCollider.begin(); iter != m_VecSphereCollider.end();)
+	{
+		if (false == (*iter)->m_FrameName.compare(boneName))
+		{
+			Engine::Safe_Release(*iter);
+			/*iter = */m_VecSphereCollider.erase(iter);
+			return;
+		}
+		iter++;
+	}
+	return;
+}
+
+void CMFCDynamicMesh::Delete_All_SphereCollider()
+{
+	for (auto& iter : m_VecSphereCollider)
+	{
+		Engine::Safe_Release(iter);
+	}
+	m_VecSphereCollider.clear();
 }

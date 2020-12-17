@@ -32,6 +32,10 @@ public:
 	void			Ready_VecFrameNameGet(Engine::D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
+	//해당 뼈 이름에 부착되어있는 CSPhereCollider* 반환
+	CSphereCollider* Find_SphereCollider(string boneName);
+	void Delete_SphereCollider(string boneName);
+	void Delete_All_SphereCollider();
 	bool isDead = false;
 private:
 	HRESULT		Add_Component(void);

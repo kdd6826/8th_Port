@@ -36,4 +36,18 @@ public:
 	//뼈 이름 리스트
 	CListBox m_BoneList;
 	afx_msg void OnLbnSelchangeList1();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton3();
+	void BoneColliderList_Renewal();
+	int m_AniClip;
+	CListBox m_BoneColliderList;
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButton5();
+	float m_Radius;
+	afx_msg void OnLbnSelchangeList2();
+	
+	float m_PosX;
+	float m_PosY;
+	float m_PosZ;
+	afx_msg void OnBnClickedButton2();
 };

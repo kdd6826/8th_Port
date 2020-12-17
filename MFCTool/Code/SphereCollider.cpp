@@ -5,6 +5,8 @@
 #include "TerrainTri.h"
 #include "MFCDynamicMesh.h"
 
+
+
 CSphereCollider::CSphereCollider(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -20,7 +22,7 @@ HRESULT CSphereCollider::Add_Component(void)
 	Engine::CComponent* pComponent = nullptr;
 
 	// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CSphere*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Sphere"));
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CCollSphere*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_CollSphere"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 

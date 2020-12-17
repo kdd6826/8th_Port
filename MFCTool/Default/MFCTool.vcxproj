@@ -211,6 +211,7 @@
     <ClInclude Include="..\Code\MultiTex.h" />
     <ClInclude Include="..\Code\ColliderPage.h" />
     <ClInclude Include="..\Code\SingleTex.h" />
+    <ClInclude Include="..\Code\SphereCollider.h" />
     <ClInclude Include="..\Code\SphereMesh.h" />
     <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\Terrain.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="..\Code\MultiTex.cpp" />
     <ClCompile Include="..\Code\ColliderPage.cpp" />
     <ClCompile Include="..\Code\SingleTex.cpp" />
+    <ClCompile Include="..\Code\SphereCollider.cpp" />
     <ClCompile Include="..\Code\SphereMesh.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />

@@ -156,6 +156,9 @@
     <ClInclude Include="..\Code\ColliderPage.h">
       <Filter>00.View\MyFormView\Pages</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SphereCollider.h">
+      <Filter>95. GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -229,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ColliderPage.cpp">
       <Filter>00.View\MyFormView\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SphereCollider.cpp">
+      <Filter>95. GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
