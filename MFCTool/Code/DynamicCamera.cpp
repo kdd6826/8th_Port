@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DynamicCamera.h"
 #include "Export_Function.h"
-
+#include "MFCToolView.h"
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CCamera(pGraphicDev)
 {
@@ -42,71 +42,135 @@ CDynamicCamera* CDynamicCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev,
 
 void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 {
-	_matrix			matCamWorld;
-	D3DXMatrixInverse(&matCamWorld, NULL, &m_matView);
-
-	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
+	if (!CMFCToolView::GetInstance()->colliderView)
 	{
-		_vec3		vLook;
-		memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
+		_matrix			matCamWorld;
+		D3DXMatrixInverse(&matCamWorld, NULL, &m_matView);
 
-		_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
+		if (Engine::Get_DIKeyState(DIK_W) & 0x80)
+		{
+			_vec3		vLook;
+			memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
 
-		m_vEye += vLength;
-		m_vAt += vLength;
-	}
+			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
 
-	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
-	{
-		_vec3		vLook;
-		memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
+			m_vEye += vLength;
+			m_vAt += vLength;
+		}
 
-		_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
+		if (Engine::Get_DIKeyState(DIK_S) & 0x80)
+		{
+			_vec3		vLook;
+			memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
 
-		m_vEye -= vLength;
-		m_vAt -= vLength;
-	}
+			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
 
-	if (Engine::Get_DIKeyState(DIK_A) & 0x80)
-	{
-		_vec3		vRight;
-		memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+			m_vEye -= vLength;
+			m_vAt -= vLength;
+		}
 
-		_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			_vec3		vRight;
+			memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
 
-		m_vEye -= vLength;
-		m_vAt -= vLength;
-	}
+			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
 
-	if (Engine::Get_DIKeyState(DIK_D) & 0x80)
-	{
-		_vec3		vRight;
-		memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+			m_vEye -= vLength;
+			m_vAt -= vLength;
+		}
 
-		_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+		if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			_vec3		vRight;
+			memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
 
-		m_vEye += vLength;
-		m_vAt += vLength;
-	}
+			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
 
-	if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80)
-	{
-		if (true == m_bClick)
-			return;
+			m_vEye += vLength;
+			m_vAt += vLength;
+		}
 
-		m_bClick = true;
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80)
+		{
+			if (true == m_bClick)
+				return;
 
-		if (true == m_bFix)
-			m_bFix = false;
+			m_bClick = true;
 
+			if (true == m_bFix)
+				m_bFix = false;
+
+			else
+				m_bFix = true;
+		}
 		else
-			m_bFix = true;
-	}
-	else
-		m_bClick = false;
+			m_bClick = false;
 
-	if (false == m_bFix)
-		return;
+		if (false == m_bFix)
+			return;
+	}
+	else {
+		_matrix			matCamWorld;
+		D3DXMatrixInverse(&matCamWorld, NULL, &m_matView);
+
+		if (Engine::Get_DIKeyState(DIK_W) & 0x80)
+		{
+			_vec3		vLook;
+			memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
+
+			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
+
+			m_vEye += vLength;
+			m_vAt += vLength;
+		}
+
+		if (Engine::Get_DIKeyState(DIK_S) & 0x80)
+		{
+			_vec3		vLook;
+			memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
+
+			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
+
+			m_vEye -= vLength;
+			m_vAt -= vLength;
+		}
+
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			_vec3		vRight;
+			memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+
+			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+
+			m_vEye -= vLength;
+			m_vAt -= vLength;
+		}
+
+		if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			_vec3		vRight;
+			memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+
+			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+
+			m_vEye += vLength;
+			m_vAt += vLength;
+		}
+		if (Engine::Get_DIKeyState(DIK_UP) & 0x80)
+		{
+	
+
+			m_vEye.y += 5.f*fTimeDelta;
+			m_vAt.y += 5.f * fTimeDelta;
+		}
+		if (Engine::Get_DIKeyState(DIK_DOWN) & 0x80)
+		{
+
+			m_vEye.y -= 5.f * fTimeDelta;
+			m_vAt.y -= 5.f * fTimeDelta;
+		}
+	}
 }
 
 void CDynamicCamera::Mouse_Move(void)
@@ -161,14 +225,15 @@ void CDynamicCamera::Free(void)
 
 _int CDynamicCamera::Update_Object(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-
-	if (true == m_bFix)
+		Key_Input(fTimeDelta);
+	if (!CMFCToolView::GetInstance()->colliderView)
 	{
-		Mouse_Fix();
-		Mouse_Move();
+		if (true == m_bFix)
+		{
+			Mouse_Fix();
+			Mouse_Move();
+		}
 	}
-
 	_int iExit = Engine::CCamera::Update_Object(fTimeDelta);
 
 	return iExit;

@@ -10,6 +10,7 @@
 #include "ColliderPage.h"
 #include "MFCToolView.h"
 #include "VertexManager.h"
+#include "DynamicCamera.h"
 USING(Client)
 // CForm
 
@@ -79,25 +80,45 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		tab3->ShowWindow(SW_HIDE);
 		VertexManager::GetInstance()->isNaviMesh = false;
 		VertexManager::GetInstance()->isObjectMesh = false;
-			break;
+		
+
+		if (CMFCToolView::GetInstance()->colliderView == false)
+		{
+			meshPageCamPos = CMFCToolView::GetInstance()->m_Camera->m_vEye;
+			meshPageCamAt = CMFCToolView::GetInstance()->m_Camera->m_vAt;
+		}
+
+		CMFCToolView::GetInstance()->colliderView = false;
+		CMFCToolView::GetInstance()->m_Camera->m_vEye = meshPageCamPos;
+		CMFCToolView::GetInstance()->m_Camera->m_vAt = meshPageCamAt;
+		break;
 	case 1:
 		tab1->ShowWindow(SW_HIDE);
 		tab2->ShowWindow(SW_SHOW);
 		tab3->ShowWindow(SW_HIDE);
-		if(!isInitMeshPage)
+		if (!isInitMeshPage)
 		{
 			//CMFCToolView::GetInstance()->Mesh_Load();
 			VertexManager::GetInstance()->isObjectMesh = true;
 		}
+		CMFCToolView::GetInstance()->colliderView = false;
 		isInitMeshPage = true;
+		CMFCToolView::GetInstance()->m_Camera->m_vEye = meshPageCamPos;
+		CMFCToolView::GetInstance()->m_Camera->m_vAt = meshPageCamAt;
 		
 			break;
 	case 2:
 		tab1->ShowWindow(SW_HIDE);
 		tab2->ShowWindow(SW_HIDE);
 		tab3->ShowWindow(SW_SHOW);
+		CMFCToolView::GetInstance()->colliderView = true;
 		VertexManager::GetInstance()->isNaviMesh = false;
 		VertexManager::GetInstance()->isObjectMesh = false;
+		
+		meshPageCamPos = CMFCToolView::GetInstance()->m_Camera->m_vEye;
+		meshPageCamAt = CMFCToolView::GetInstance()->m_Camera->m_vAt;
+		CMFCToolView::GetInstance()->m_Camera->m_vEye = _vec3{ -98.f,-98.5f,-98.f };
+		CMFCToolView::GetInstance()->m_Camera->m_vAt = _vec3{ -100.f,-98.5f,-100.f };
 			break;
 	default:
 		break;
@@ -110,6 +131,9 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 void CForm::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
+
+	meshPageCamPos = CMFCToolView::GetInstance()->m_Camera->m_vEye;
+	meshPageCamAt = CMFCToolView::GetInstance()->m_Camera->m_vAt;
 
 	m_Tab.InsertItem(0, L"Terrain");
 	m_Tab.InsertItem(1, L"Mesh");

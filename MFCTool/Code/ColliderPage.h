@@ -50,4 +50,6 @@ public:
 	float m_PosY;
 	float m_PosZ;
 	afx_msg void OnBnClickedButton2();
+	afx_msg void OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult);
+	int meshRotY;
 };

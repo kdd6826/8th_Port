@@ -378,6 +378,8 @@ void CMFCToolView::OnInitialUpdate()
 
 void CMFCToolView::Update(float deltaTime)
 {	
+	
+
 	Key_Input(deltaTime);
 
 	///////////////// Update

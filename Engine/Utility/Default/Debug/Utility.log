@@ -1,5 +1,23 @@
-﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\sneg7\Desktop\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Transform.cpp
+  Scene.cpp
+  Renderer.cpp
+  QuadTree.cpp
+  ProtoMgr.cpp
+  Pipeline.cpp
+  Optimization.cpp
+  Management.cpp
+  LightMgr.cpp
+  Light.cpp
+  Layer.cpp
+  GameObject.cpp
+  Frustum.cpp
+  Component.cpp
+  Collider.cpp
+  Camera.cpp
+  Calculator.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+  Utility.vcxproj -> C:\Users\GMH\Desktop\Tool\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -32,11 +50,9 @@
   .\Engine\Header\Engine_Typedef.h
   .\Engine\Header\Export_Function.h
   .\Engine\Header\Export_Resouces.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Header\Export_System.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Header\Export_Utility.h
-          8개 파일이 복사되었습니다.
+         10개 파일이 복사되었습니다.
   .\Engine\Header\Export_Resouces.inl
   .\Engine\Header\Export_System.inl
   .\Engine\Header\Export_Utility.inl

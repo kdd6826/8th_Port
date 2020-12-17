@@ -47,53 +47,55 @@ void VertexManager::Update(float deltaTime)
 
 void VertexManager::Key_Input(float deltaTime)
 {
-	if (!TerrainHaveCheck())
-		return;
-
-	
-	
-	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
+	if (!CMFCToolView::GetInstance()->colliderView)
 	{
-		if (!mouseLClick) {
-			if(isNaviMesh)
-				MouseLClick_NaviMesh();
-			else if(isObjectMesh)
-				MouseLClick_ObjectMesh();
-			mouseLClick = true;
+		if (!TerrainHaveCheck())
+			return;
+
+
+
+		if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
+		{
+			if (!mouseLClick) {
+				if (isNaviMesh)
+					MouseLClick_NaviMesh();
+				else if (isObjectMesh)
+					MouseLClick_ObjectMesh();
+				mouseLClick = true;
+			}
 		}
-	}
-	else {
-		mouseLClick = false;
-	}
+		else {
+			mouseLClick = false;
+		}
 
-	if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
-	{
-		if (!mouseRClick) {
-			if (Engine::Get_DIKeyState(DIK_LALT) & 0x80)
-			{
-				if (lockOnObjName == VM_Obj::SPHERE) {
-					MouseRClickOfAlt_NaviMesh();
+		if (Engine::Get_DIMouseState(Engine::DIM_RB) & 0x80)
+		{
+			if (!mouseRClick) {
+				if (Engine::Get_DIKeyState(DIK_LALT) & 0x80)
+				{
+					if (lockOnObjName == VM_Obj::SPHERE) {
+						MouseRClickOfAlt_NaviMesh();
+					}
+				}
+				else if (isNaviMesh) {
+					MouseRClick_NaviMesh();
+					mouseRClick = true;
 				}
 			}
-			else if (isNaviMesh) {
-				MouseRClick_NaviMesh();
-				mouseRClick = true;
-			}
+		}
+		else {
+			mouseRClick = false;
+		}
+
+		if (Engine::Get_DIKeyState(DIK_C) & 0x80)
+		{
+			Delete_LockObject();
+
+		}
+		else {
+			KeyC = false;
 		}
 	}
-	else {
-		mouseRClick = false;
-	}
-
-	if (Engine::Get_DIKeyState(DIK_C) & 0x80)
-	{
-		Delete_LockObject();
-
-	}
-	else {
-		KeyC = false;
-	}
-
 }
 
 

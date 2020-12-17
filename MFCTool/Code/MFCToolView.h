@@ -99,7 +99,7 @@ public:
 	vector<Engine::CGameObject*> vectorObjDynamic_Collider;
 	vector<CString*> vecStaticMesh;
 	vector<CString*> vecDynamicMesh;
-
+	bool colliderView = false;
 	CTerrainTri* PickUp_Tri(void);
 
 	void Sort_TriNumber();

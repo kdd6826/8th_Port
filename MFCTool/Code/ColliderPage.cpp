@@ -22,6 +22,7 @@ ColliderPage::ColliderPage(CWnd* pParent /*=NULL*/)
 	, m_PosX(0)
 	, m_PosY(0)
 	, m_PosZ(0)
+	, meshRotY(0)
 {
 	
 }
@@ -41,6 +42,7 @@ void ColliderPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT9, m_PosX);
 	DDX_Text(pDX, IDC_EDIT10, m_PosY);
 	DDX_Text(pDX, IDC_EDIT17, m_PosZ);
+	DDX_Text(pDX, IDC_EDIT11, meshRotY);
 }
 
 
@@ -53,6 +55,7 @@ BEGIN_MESSAGE_MAP(ColliderPage, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON5, &ColliderPage::OnBnClickedButton5)
 	ON_LBN_SELCHANGE(IDC_LIST2, &ColliderPage::OnLbnSelchangeList2)
 	ON_BN_CLICKED(IDC_BUTTON2, &ColliderPage::OnBnClickedButton2)
+	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN13, &ColliderPage::OnDeltaposSpin13)
 END_MESSAGE_MAP()
 
 
@@ -383,6 +386,8 @@ void ColliderPage::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 
 			CMFCToolView::GetInstance()->CreateDynamicMesh_OfCollider((*CMFCToolView::GetInstance()->vecDynamicMesh[iMeshNum]));
 			CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic_Collider.front());
+			dMesh->m_pTransformCom->Set_Pos(&_vec3{ -100.f,-100.f,-100.f });
+			
 			m_BoneList.ResetContent();
 			m_BoneColliderList.ResetContent();
 
@@ -502,7 +507,7 @@ void ColliderPage::OnBnClickedButton4()
 	CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(vecGameObject->front());
 	if (dMesh == nullptr)
 		return;
-
+	
 	dMesh->Delete_All_SphereCollider();
 	m_BoneColliderList.ResetContent();
 }
@@ -588,4 +593,31 @@ void ColliderPage::OnBnClickedButton2()
 
 
 	sphereColl->m_pTransformCom->m_vInfo[Engine::INFO_POS] = {posX, posY, posZ};
+}
+
+
+void ColliderPage::OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
+	
+	if (pNMUpDown->iDelta < 0)
+	{
+		
+		meshRotY += 10.f;
+		CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic_Collider.front());
+		dMesh->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, D3DXToRadian(10));
+		
+		
+	}
+	else
+	{
+		meshRotY -= 10.f;
+		CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic_Collider.front());
+		dMesh->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, D3DXToRadian(-10));
+	}
+	
+	SetDlgItemInt(IDC_EDIT11, meshRotY);
+	*pResult = 0;
+
+	
 }

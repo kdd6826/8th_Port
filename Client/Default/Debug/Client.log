@@ -1,3 +1,61 @@
-﻿     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\sneg7\Desktop\8th_Port\Client\Default\../Bin\Client.exe
+﻿  stdafx.cpp
+  Client.cpp
+c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Tree.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  TestPlayer.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  TestMonster.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Terrain.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Sword.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Stone.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  StaticObject.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Stage.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  SkyBox.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Player.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Monster.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  MainApp.cpp
+c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Logo.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Loading.cpp
+c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  Effect.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  DynamicCamera.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  BackGround.cpp
+c:\users\gmh\desktop\tool\8th_port\client\header\macro.h(37): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
+  c:\users\gmh\desktop\tool\8th_port\reference\header\engine_macro.h(38): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
+  코드를 생성하고 있습니다...
+c:\users\gmh\desktop\tool\8th_port\client\code\stage.cpp(100): warning C4715: 'Client::CStage::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  LINK : ../Bin\Client.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  Client.vcxproj -> C:\Users\GMH\Desktop\Tool\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

@@ -45,9 +45,11 @@ public:
 	MeshPage	 *tab2;
 	ColliderPage	  		 *tab3;
 
+	_vec3 meshPageCamPos, meshPageCamAt, ColliderPageCamPos;
 
 	CTabCtrl m_Tab;
 	bool isInitMeshPage = false;
+	
 	virtual void OnInitialUpdate();
 };
 
