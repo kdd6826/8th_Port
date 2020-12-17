@@ -44,7 +44,7 @@ public:
 	void treeControl(int triCount);
 
 	CTreeCtrl treeNavi;
-	HTREEITEM selectItem;
+	HTREEITEM selectItem,lastStaticObjSelectItem, lastNaviMeshSelectItem;
 	int lastSphereIndex = -1;
 	afx_msg void OnBnClickedButton10();
 
