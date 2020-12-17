@@ -70,9 +70,9 @@ void CNaviMesh::Render_NaviMeshes(void)
 
 _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir)
 {
-	_vec3		vEndPos = *pTargetPos + *pTargetDir;
+  	_vec3		vEndPos = *pTargetPos + *pTargetDir;
 
-	if (CCell::MOVE == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
+ 	if (CCell::MOVE == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
 		return vEndPos;
 
 	else if (CCell::STOP == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))

@@ -98,8 +98,10 @@ private:
 	playerState m_state = playerState::STATE_IDLE;
 	bool		isManaBlade = false;
 	bool		isBattle = false;
+	bool		isAttack = false;
+	bool		isMove = false;
 	bool		isRunning = false;
-
+	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 private:
 	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
 	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr; 
