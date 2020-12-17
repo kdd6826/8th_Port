@@ -42,7 +42,7 @@ HRESULT CSphereCollider::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
-	m_pBufferCom->Set_Color(D3DCOLOR_ARGB(255, 255, 228, 0));
+	m_pBufferCom->Set_Color(D3DCOLOR_ARGB(255, 148, 155, 0));
 	m_pTransformCom->m_vScale = { 30.f, 30.f, 30.f };
 	return S_OK;
 }
