@@ -85,6 +85,9 @@
     <Filter Include="02. GameObject\01. Stage\07. StaticObject">
       <UniqueIdentifier>{7c632b66-f3d2-4b32-9759-b3bdae5f38c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\08. Dog">
+      <UniqueIdentifier>{b8bf0fb9-6c6e-4973-9262-255531c4d9b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -162,6 +165,9 @@
     <ClInclude Include="..\Code\StaticObject.h">
       <Filter>02. GameObject\01. Stage\07. StaticObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Dog.h">
+      <Filter>02. GameObject\01. Stage\08. Dog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -220,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticObject.cpp">
       <Filter>02. GameObject\01. Stage\07. StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Dog.cpp">
+      <Filter>02. GameObject\01. Stage\08. Dog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

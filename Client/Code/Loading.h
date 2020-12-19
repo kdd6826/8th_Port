@@ -28,6 +28,7 @@ public:
 	HRESULT		Ready_Loading(LOADINGID eLoading);
 	_uint		Loading_ForStage(void);
 	void		Load_StaticObject();
+	void		Load_DynamicObject();
 
 
 	int staticLoadCount = 0;

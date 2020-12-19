@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
 #include "Export_Function.h"
+#include "Dog.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -142,6 +143,9 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
+	pGameObject = CDog::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 	/*for (_uint i = 0; i < 50; ++i)
 	{
 		pGameObject = CMonster::Create(m_pGraphicDev);
