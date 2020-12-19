@@ -1,4 +1,9 @@
-﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Renderer.cpp
+  RenderTarget.cpp
+  Light.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -16,14 +21,17 @@
   .\Engine\Utility\Code\QuadTree.h
   .\Engine\Utility\Code\Renderer.h
   .\Engine\Utility\Code\RenderTarget.h
+  .\Engine\Utility\Code\RenderTargetMgr.h
   .\Engine\Utility\Code\Scene.h
   .\Engine\Utility\Code\Shader.h
   .\Engine\Utility\Code\Transform.h
-         19개 파일이 복사되었습니다.
+         20개 파일이 복사되었습니다.
+  .\Engine\Utility\Code\Shader_Blend.hpp
   .\Engine\Utility\Code\Shader_Mesh.hpp
   .\Engine\Utility\Code\Shader_Sample.hpp
+  .\Engine\Utility\Code\Shader_Shade.hpp
   .\Engine\Utility\Code\Shader_Terrain.hpp
-          3개 파일이 복사되었습니다.
+          5개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

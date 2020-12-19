@@ -64,6 +64,9 @@
     <Filter Include="10. RenderTarget">
       <UniqueIdentifier>{f25c7262-520f-4a1e-86f1-dc0b4d0c61f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10. RenderTarget\Manager">
+      <UniqueIdentifier>{9c4150a9-62d8-4ded-b70c-a64fb0471430}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Component.cpp">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\RenderTarget.cpp">
       <Filter>10. RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderTargetMgr.cpp">
+      <Filter>10. RenderTarget\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\RenderTarget.h">
       <Filter>10. RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RenderTargetMgr.h">
+      <Filter>10. RenderTarget\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

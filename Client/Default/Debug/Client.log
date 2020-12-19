@@ -1,4 +1,26 @@
-﻿  Player.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(258): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+﻿  Client.cpp
+  UI.cpp
+  Tree.cpp
+  TestPlayer.cpp
+  TestMonster.cpp
+  Terrain.cpp
+  Sword.cpp
+  Stone.cpp
+  StaticObject.cpp
+  Stage.cpp
+  SkyBox.cpp
+  Player.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(228): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+  Monster.cpp
+  MainApp.cpp
+  Logo.cpp
+  Loading.cpp
+  Effect.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\effect.cpp(66): warning C4244: '인수': 'int'에서 'const Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  DynamicCamera.cpp
+  BackGround.cpp
+  코드를 생성하고 있습니다...
+c:\users\gmh\desktop\client\8th_port\client\code\stage.cpp(101): warning C4715: 'Client::CStage::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

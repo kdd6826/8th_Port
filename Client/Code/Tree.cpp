@@ -129,36 +129,6 @@ HRESULT CTree::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
 
-	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
-
-	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
-
-	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
-	pEffect->SetVector("g_LightSpecular", (_vec4*)&pLightInfo->Specular);
-	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
-
-	D3DMATERIAL9			tMtrlInfo;
-	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
-
-	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	tMtrlInfo.Power = 20.f;
-
-	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
-	pEffect->SetVector("g_MtrlSpecular", (_vec4*)&tMtrlInfo.Specular);
-	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
-
-	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
-
-	D3DXMatrixInverse(&matView, NULL, &matView);
-
-	_vec4	vCamPos;
-	memcpy(&vCamPos, &matView.m[3][0], sizeof(_vec4));
-
-	pEffect->SetVector("g_vCamPos", &vCamPos);
-
 	return S_OK;
 }
 

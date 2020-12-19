@@ -15,6 +15,9 @@ CMainApp::~CMainApp(void)
 HRESULT CMainApp::Ready_MainApp(void)
 {
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Get_Renderer()->Ready_Renderer(m_pGraphicDev), E_FAIL)
+
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
 	Client::Safe_Release(m_pDeviceClass);
@@ -72,7 +75,7 @@ void CMainApp::Render_MainApp(void)
 	Engine::Render_Begin(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.f));
 	
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
-	Engine::Render_Font(L"Font_Jinji", m_szFPS, &_vec2(500.f, 10.f), D3DXCOLOR(0.f, 0.f,0.f, 1.f));
+	Engine::Render_Font(L"Font_Jinji", m_szFPS, &_vec2(500.f, 10.f), D3DXCOLOR(1.f, 1.f,0.f, 1.f));
 
 	Engine::Render_End();
 }

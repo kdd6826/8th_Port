@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Export_Function.h"
 #include "DynamicCamera.h"
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -80,44 +81,13 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
-	pEffect->SetMatrix("g_matProj", &matProj);
-
-	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
-
-	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
-
-	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
-	pEffect->SetVector("g_LightSpecular", (_vec4*)&pLightInfo->Specular);
-	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
-
-	D3DMATERIAL9			tMtrlInfo;
-	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
-
-	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	tMtrlInfo.Power = 20.f;
-
-	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
-	pEffect->SetVector("g_MtrlSpecular", (_vec4*)&tMtrlInfo.Specular);
-	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
-
-	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
-
-	D3DXMatrixInverse(&matView, NULL, &matView);
-
-	_vec4	vCamPos;
-	memcpy(&vCamPos, &matView.m[3][0], sizeof(_vec4));
-
-	pEffect->SetVector("g_vCamPos", &vCamPos);
+	pEffect->SetMatrix("g_matProj", &matProj);	
 
 	return S_OK;
 }
 
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	
 
 	if (delay > 0)
 	{
@@ -139,7 +109,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_state == playerState::STATE_RUINBLADE ||
 		m_state == playerState::STATE_LORDOFMANA ||
 		m_state == playerState::STATE_DOOMSAYER ||
-		m_state == playerState::STATE_DIFUSION 
+		m_state == playerState::STATE_DIFUSION
 		)
 	{
 		isAttack = true;
@@ -153,7 +123,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	if (m_state == playerState::STATE_FIELD_RUN ||
 		m_state == playerState::STATE_FIELD_SPRINT ||
 		m_state == playerState::STATE_FIELD_SPRINTSTOP ||
-		m_state == playerState::STATE_TIRED_RUN||
+		m_state == playerState::STATE_TIRED_RUN ||
 		m_state == playerState::STATE_DASH
 		)
 	{
@@ -172,7 +142,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		isBattle = false;
 	}
-	
+
 	if (delay <= 0)
 	{
 		m_fAniSpeed = 1.f;
@@ -195,7 +165,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80)
 		{
-				isRunning = true;
+			isRunning = true;
 		}
 		else
 		{
@@ -204,7 +174,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		if (isSkill == false)
 		{
 			MovePlayer(fTimeDelta);
-		
+
 			if (Engine::Get_DIKeyState(DIK_TAB) & 0x80)
 			{
 
@@ -252,7 +222,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			Attack(fTimeDelta);
 	}
 	//대쉬상태
-	if (m_state == playerState::STATE_DIFUSION&&delay>0.75f)
+	if (m_state == playerState::STATE_DIFUSION && delay > 0.75f)
 	{
 		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 		_float fCamAngle;
@@ -266,16 +236,16 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed)));
 
 	}
-	if (m_state == playerState::STATE_DIFUSION&& delay <= 0.8f)
+	if (m_state == playerState::STATE_DIFUSION && delay <= 0.8f)
 	{
 		//대쉬가드
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
-			
-				m_state = playerState::STATE_CONFUSIONHOLE;
-				delay = 1.f;
-				m_fBattleCount = 5.f;
-			
+
+			m_state = playerState::STATE_CONFUSIONHOLE;
+			delay = 1.f;
+			m_fBattleCount = 5.f;
+
 		}
 	}
 	if (isSkill == false)
@@ -314,7 +284,6 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	/*if(true == m_pMeshCom->Is_AnimationSetEnd())
 		m_pMeshCom->Set_AnimationSet(39);*/
 
-
 }
 
 void CPlayer::MovePlayer(const _float& fTimeDelta)
@@ -336,7 +305,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 
 
-	
+
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
 		if (isRunning)
@@ -352,13 +321,13 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		}
 
 		//m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed*100.f)));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed * 100.f)));
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
 
 		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 		{
 
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed*100.f)));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed * 100.f)));
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
 		}
 		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
@@ -366,7 +335,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 
 			//m_pTransformCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed*100.f)));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed * 100.f)));
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
 		}
 
@@ -377,7 +346,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				m_state = playerState::STATE_DIFUSION;
 				delay = 1.2f;
 				m_fBattleCount = 6.2f;
-				
+
 				m_fAniSpeed = 1.2f;
 			}
 		}
@@ -407,7 +376,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				m_fAniSpeed = 1.2f;
 			}
 		}
-		
+
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_fSpeed * 100.f)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(180));
@@ -460,26 +429,26 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	}
 	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
-	if (isRunning)
-	{
-		m_state = playerState::STATE_FIELD_SPRINT;
-		m_fSpeed = 5.f;
-	}
-	else if (!isRunning)
-	{
-		m_state = playerState::STATE_FIELD_RUN;
-		m_fSpeed = 3.f;
-	}
-	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
-	{
-		if (delay <= 0.f)
+		if (isRunning)
 		{
-			m_state = playerState::STATE_DIFUSION;
-			delay = 1.2f;
-			m_fBattleCount = 6.2f;
-			m_fAniSpeed = 1.2f;
+			m_state = playerState::STATE_FIELD_SPRINT;
+			m_fSpeed = 5.f;
 		}
-	}
+		else if (!isRunning)
+		{
+			m_state = playerState::STATE_FIELD_RUN;
+			m_fSpeed = 3.f;
+		}
+		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_DIFUSION;
+				delay = 1.2f;
+				m_fBattleCount = 6.2f;
+				m_fAniSpeed = 1.2f;
+			}
+		}
 		vDir = (vCamPos - vMyPos);
 		_vec3 up;
 		up = { 0.f,1.f,0.f };
@@ -496,13 +465,13 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 void CPlayer::Attack(const _float& fTimeDelta)
 {
-	
+
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
-	#pragma region NormalBladeAttack
+#pragma region NormalBladeAttack
 		if (isManaBlade == false)
 		{
-			
+
 			if (delay <= 1.2f)
 			{
 				if (m_state == playerState::STATE_ATT4)
@@ -544,7 +513,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						delay = 1.2f;
 					}
 				}
-				
+
 				m_fAniSpeed = 1.3f;
 				m_fBattleCount = 5.f;
 			}
@@ -560,7 +529,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					m_state = playerState::STATE_MB_ATT6;
 					delay = 1.15f;
 				}
-				else if (m_state == playerState::STATE_MB_ATT4&&delay<=0.8)
+				else if (m_state == playerState::STATE_MB_ATT4 && delay <= 0.8)
 				{
 					m_state = playerState::STATE_MB_ATT5;
 					delay = 1.3f;
@@ -582,15 +551,15 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else
 				{
-					if (m_state == playerState::STATE_MB_ATT6&&delay<=0.8)
+					if (m_state == playerState::STATE_MB_ATT6 && delay <= 0.8)
 					{
 						m_state = playerState::STATE_MB_ATT1;
 						delay = 1.3f;
 					}
-					else if(m_state != playerState::STATE_MB_ATT2&&
-						m_state != playerState::STATE_MB_ATT3&&
-						m_state != playerState::STATE_MB_ATT4&&
-						m_state != playerState::STATE_MB_ATT5&&
+					else if (m_state != playerState::STATE_MB_ATT2 &&
+						m_state != playerState::STATE_MB_ATT3 &&
+						m_state != playerState::STATE_MB_ATT4 &&
+						m_state != playerState::STATE_MB_ATT5 &&
 						m_state != playerState::STATE_MB_ATT6
 						)
 					{
@@ -633,7 +602,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			//OK
 			delay = 1.f;
 			m_fBattleCount = 6.f;
-			
+
 		}
 	}
 	if (Engine::Get_DIKeyState(DIK_5) & 0x80)
@@ -641,7 +610,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 		if (delay <= 0.f)
 		{
 			m_state = playerState::STATE_LORDOFMANA;
-			
+
 			delay = 14.2f;
 			m_fBattleCount = 19.f;
 			isSkill = true;
@@ -651,7 +620,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 	{
 		if (delay <= 0.f)
 		{
-		
+
 			m_state = playerState::STATE_DARKKNIGHT_TRANS1;
 			//OK
 			delay = 8.1f;
@@ -685,7 +654,6 @@ HRESULT Client::CPlayer::Ready_Object(void)
 	m_pMeshCom->Set_AnimationSet(39);
 
 	m_pNaviMeshCom->Set_NaviIndex(0);
-	m_pTransformCom->Set_Pos(&_vec3{ 5.f,5.f,5.f });
 
 	return S_OK;
 }
@@ -695,7 +663,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	SetUp_OnTerrain();
 	Key_Input(fTimeDelta);
 
-	Engine::CGameObject::Update_Object(fTimeDelta);
+	Engine::CGameObject::Update_Object(fTimeDelta);	
 	_float fCamAngle;
 	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"Environment", L"DynamicCamera"));
 	fCamAngle = D3DXToDegree(pCamera->Get_Angle());

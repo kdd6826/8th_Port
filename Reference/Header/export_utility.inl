@@ -61,9 +61,53 @@ HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo,
 {
 	return CLightMgr::GetInstance()->Ready_Light(pGraphicDev, pLightInfo, iIndex);
 }
+void		Render_Light(LPD3DXEFFECT& pEffect)
+{
+	CLightMgr::GetInstance()->Render_Light(pEffect);
+}
+
+// RenderTargetMgr
+HRESULT		Ready_RenderTarget(LPDIRECT3DDEVICE9 pGraphicDev,
+	const _tchar* pTargetTag, const _uint& iWidth,
+	const _uint& iHeight,
+	D3DFORMAT Format,
+	D3DXCOLOR Color)
+{
+	return CRenderTargetMgr::GetInstance()->Ready_RenderTarget(pGraphicDev, pTargetTag, iWidth, iHeight, Format, Color);
+}
+
+HRESULT		Ready_MRT(const _tchar* pMRTTag, const _tchar* pTargetTag)
+{
+	return CRenderTargetMgr::GetInstance()->Ready_MRT(pMRTTag, pTargetTag);
+}
+
+HRESULT		Begin_MRT(const _tchar* pMRTTag)
+{
+	return CRenderTargetMgr::GetInstance()->Begin_MRT(pMRTTag);
+}
+HRESULT		End_MRT(const _tchar* pMRTTag)
+{
+	return CRenderTargetMgr::GetInstance()->End_MRT(pMRTTag);
+}
+
+HRESULT		Ready_DebugBuffer(const _tchar* pTargetTag, const _float& fX, const _float& fY, const _float& fSizeX, const _float& fSizeY)
+{
+	return CRenderTargetMgr::GetInstance()->Ready_DebugBuffer(pTargetTag, fX, fY, fSizeX, fSizeY);
+}
+
+void		Render_DebugBuffer(const _tchar* pMRTTag)
+{
+	CRenderTargetMgr::GetInstance()->Render_DebugBuffer(pMRTTag);
+}
+
+inline void Throw_RenderTargetTexture(LPD3DXEFFECT & pEffect, const _tchar * pTargetTag, const char * pConstantName)
+{
+	CRenderTargetMgr::GetInstance()->Throw_RenderTargetTexture(pEffect, pTargetTag, pConstantName);
+}
 
 void Release_Utility(void)
 {
+	CRenderTargetMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
