@@ -224,6 +224,20 @@ void CMFCDynamicMesh::Create_BoneOfSphereCollier(CString boneName)
 	return;
 }
 
+void CMFCDynamicMesh::Load_BoneOfSphereCollier(_vec3 pos, _vec3 scale, CString boneName)
+{
+	CT2CA Cont(boneName);
+	string str = string(Cont);
+	CSphereCollider* sphereCol = CSphereCollider::Create(m_pGraphicDev);
+	sphereCol->m_pDynamicMesh = this;
+	sphereCol->m_FrameName = str;
+	sphereCol->m_FrameNameCheck = true;
+	m_VecSphereCollider.emplace_back(sphereCol);
+	sphereCol->m_pTransformCom->m_vInfo[Engine::INFO_POS] = pos;
+	sphereCol->m_pTransformCom->m_vScale = scale;
+	return;
+}
+
 void CMFCDynamicMesh::Ready_VecFrameNameGet(Engine::D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix)
 {
 	if (nullptr == pFrame)

@@ -52,4 +52,6 @@ public:
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult);
 	int meshRotY;
+	afx_msg void OnBnClickedButton13();
+	afx_msg void OnBnClickedButton14();
 };
