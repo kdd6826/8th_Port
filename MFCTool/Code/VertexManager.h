@@ -66,6 +66,8 @@ public:
 	
 	bool isNaviMesh = false;
 	bool isObjectMesh = false;
+	bool isStaticMesh = false ;
+
 
 public:
 	bool mouseLClick = false;

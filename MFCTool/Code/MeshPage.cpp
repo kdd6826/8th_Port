@@ -14,6 +14,8 @@
 #include "Cell.h"
 #include "TriCol.h"
 #include "MFCStaticMesh.h"
+#include "MFCDynamicMesh.h"
+
 // MeshPage 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(MeshPage, CDialogEx)
@@ -105,6 +107,8 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON16, &MeshPage::OnBnClickedStaticLoad)
 	ON_BN_CLICKED(IDC_BUTTON13, &MeshPage::OnBnClickedDynamicSave)
 	ON_BN_CLICKED(IDC_BUTTON14, &MeshPage::OnBnClickedDynamicLoad)
+	ON_BN_CLICKED(IDC_RADIO7, &MeshPage::OnBnClickedRadio7)
+	ON_BN_CLICKED(IDC_RADIO8, &MeshPage::OnBnClickedRadio8)
 END_MESSAGE_MAP()
 
 
@@ -513,7 +517,7 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR* pNMHDR, LRESULT* pResult)
 		}
 		else if (checkState == _T("DynamicMesh"))
 		{
-			temp2.Format(_T("%d"), objDynamricCreateCount);
+			temp2.Format(_T("%d"), objDynamicCreateCount);
 
 			text = treeObjCreate.GetItemText((selectItem)) + _T(" - ") + temp2;
 
@@ -528,7 +532,7 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR* pNMHDR, LRESULT* pResult)
 			objDynamic = treeObjDynamic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
 
 
-			++objDynamricCreateCount;
+			++objDynamicCreateCount;
 		}
 		//text += L"Mesh_" + treeObjCreate.GetItemText((treeObjCreate.GetParentItem(selectItem)));
 
@@ -596,18 +600,62 @@ void MeshPage::OnNMClickObjStaticTree(NMHDR* pNMHDR, LRESULT* pResult)
 }
 void MeshPage::OnNMClickObjDynamicTree(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	CPoint point;
+	UINT nFlags = 0;
+
+	GetCursorPos(&point);
+	::ScreenToClient(treeObjDynamic.m_hWnd, &point);
+
+	selectItem = treeObjDynamic.HitTest(point, &nFlags);
+
+
+	if (selectItem == nullptr)
+	{
+		return;
+	}
+	else if (selectItem != nullptr)
+	{
+		lastDynamicObjSelectItem = selectItem;
+	}
+	CString a = treeObjDynamic.GetItemText(selectItem);
+	CString objDynamicIndexNum = a.Right(1);
+	size_t temp = 0;
+	temp = _ttoi(objDynamicIndexNum);
+
+	m_fTransformPosX = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x;
+	m_fTransformPosY = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y;
+	m_fTransformPosZ = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z;
+
+	m_fTransformScalX = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.x;
+	m_fTransformScalY = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.y;
+	m_fTransformScalZ = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.z;
+	//Text를 int로 바꾸기
+
+	CString cVertexX, cVertexY, cVertexZ;
+
+	cVertexX.Format(_T("%9.2f\n"), m_fTransformPosX);
+	cVertexY.Format(_T("%9.2f\n"), m_fTransformPosY);
+	cVertexZ.Format(_T("%9.2f\n"), m_fTransformPosZ);
+
+	SetDlgItemText(IDC_EDIT14, cVertexX);
+	SetDlgItemText(IDC_EDIT15, cVertexY);
+	SetDlgItemText(IDC_EDIT16, cVertexZ);
+
+	cVertexX.Format(_T("%9.4f\n"), m_fTransformScalX);
+	cVertexY.Format(_T("%9.4f\n"), m_fTransformScalY);
+	cVertexZ.Format(_T("%9.4f\n"), m_fTransformScalZ);
+
+	SetDlgItemText(IDC_EDIT5, cVertexX);
+	SetDlgItemText(IDC_EDIT7, cVertexY);
+	SetDlgItemText(IDC_EDIT8, cVertexZ);
+
 	*pResult = 0;
 }
 void MeshPage::OnNMClickNaviTree(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// TODO: 여기 버텍스 넣어야함
-	if (selectItem == nullptr)
-		return;
-	else if (selectItem != nullptr)
-	{
-		lastStaticObjSelectItem = selectItem;
-	}
+	
 	HTREEITEM hItem = treeNavi.GetSelectedItem();
 	CStringW a = treeNavi.GetItemText(hItem);
 
@@ -640,6 +688,15 @@ void MeshPage::OnNMClickNaviTree(NMHDR* pNMHDR, LRESULT* pResult)
 	::ScreenToClient(treeNavi.m_hWnd, &point);
 
 	selectItem = treeNavi.HitTest(point, &nFlags);
+	if (selectItem == nullptr)
+	{
+		
+	}
+	else
+	{
+		lastNaviMeshSelectItem = selectItem;
+	}
+	
 	//해당 셀에 담긴 Text
 	CString naviIndex = treeNavi.GetItemText(selectItem);
 
@@ -647,15 +704,15 @@ void MeshPage::OnNMClickNaviTree(NMHDR* pNMHDR, LRESULT* pResult)
 	int indexNum;
 	indexNum = _ttoi(naviIndex);
 
-
-
-
 	if (treeNavi.GetParentItem(selectItem) == 0)
 	{
 		//삼각형 셀이 선택
 		//VertexManager::GetInstance()->vertex[indexNum];
 
+		
 		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(indexNum);
+		if (tri == nullptr)
+			return;
 		VertexManager::GetInstance()->Set_TriColor(tri->m_pBufferCom, D3DCOLOR_ARGB(255, 255, 0, 0));
 
 
@@ -801,7 +858,7 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (VertexManager::GetInstance()->isNaviMesh == true)
 	{
-		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != 0)
+		if (treeNavi.GetParentItem(lastNaviMeshSelectItem) != nullptr)
 		{
 			//HTREEITEM hItem = treeNavi;
 			treeNavi.GetItemText(lastNaviMeshSelectItem);
@@ -853,7 +910,7 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT14, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -882,7 +939,7 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			m_fTransformPosX -= 0.1f;
 			cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
 		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+		dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
 		SetDlgItemText(IDC_EDIT14, cVertex);
 
 		*pResult = 0;
@@ -955,7 +1012,7 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT15, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1054,7 +1111,7 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT16, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1150,7 +1207,7 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT10, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1246,7 +1303,7 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT12, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1342,7 +1399,7 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT13, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1440,7 +1497,7 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			*pResult = 0;
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1537,7 +1594,7 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT7, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1635,7 +1692,7 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			SetDlgItemText(IDC_EDIT8, cVertex);
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
 		//해당 셀에 담긴 Text
@@ -1686,6 +1743,15 @@ void MeshPage::NaviRadioBnClicked()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	VertexManager::GetInstance()->isNaviMesh = true;
 	VertexManager::GetInstance()->isObjectMesh = false;
+}
+void MeshPage::OnBnClickedRadio7()
+{
+	VertexManager::GetInstance()->isStaticMesh = true;
+	
+}
+void MeshPage::OnBnClickedRadio8()
+{
+	VertexManager::GetInstance()->isStaticMesh = false;
 }
 void MeshPage::OnBnClickedStaticSave()
 {
@@ -1791,69 +1857,6 @@ void MeshPage::OnBnClickedStaticLoad()
 			objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
 
 			++objStaticCreateCount;
-			//for (int i = 0; i < 3; i++)
-			//{
-
-			//	ReadFile(hFile, &vecPos[i], sizeof(_vec3), &dwByte, nullptr); //세모 꼭짓점 3개 벡터 가져와주고
-			//	
-			/*	Engine::_vec3	vPickPos = vecPos[i];
-				Engine::CGameObject* pGameObject = nullptr;
-				if (Engine::_vec3(0.f, 0.f, 0.f) != vPickPos) {
-					for (auto& obj : VertexManager::GetInstance()->list_TotalSphere)
-					{
-						if (vPickPos == obj->m_pTransformCom->m_vInfo[Engine::INFO_POS]) {
-							pGameObject = obj;
-							dynamic_cast<CSphereMesh*>(pGameObject)->m_Click = true;
-							sphereOverlap = true;
-							VertexManager::GetInstance()->list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
-							VertexManager::GetInstance()->list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
-							break;
-						}
-					}
-					if (pGameObject == nullptr) {
-						pGameObject = CSphereMesh::Create(CMFCToolView::GetInstance()->m_pGraphicDev);
-						dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS] = vPickPos;
-						CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"Sphere", pGameObject);
-						dynamic_cast<CSphereMesh*>(pGameObject)->m_Click = true;
-						VertexManager::GetInstance()->list_TotalSphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
-						VertexManager::GetInstance()->list_Sphere.emplace_back(dynamic_cast<CSphereMesh*>(pGameObject));
-					}
-				}
-
-				if (VertexManager::GetInstance()->list_Sphere.size() == 3) {
-					Engine::_vec3 vtxPos[3];
-					list<CSphereMesh*> TempSphereMesh;
-					int sphereCnt = 0;
-					Engine::_vec3 sphereVec[3];
-					for (int i = 0; i < 3; i++)
-					{
-						VertexManager::GetInstance()->Set_SphereColor(VertexManager::GetInstance()->list_Sphere.front()->m_pBufferCom, D3DCOLOR_ARGB(255, 8, 103, 1));
-						VertexManager::GetInstance()->list_Sphere.front()->m_Click = false;
-						vtxPos[i] = VertexManager::GetInstance()->list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
-						TempSphereMesh.emplace_back(VertexManager::GetInstance()->list_Sphere.front());
-						sphereVec[sphereCnt] = VertexManager::GetInstance()->list_Sphere.front()->m_pTransformCom->m_vInfo[Engine::INFO_POS];
-						sphereCnt++;
-						VertexManager::GetInstance()->list_Sphere.pop_front();
-					}
-					CTerrainTri* pTerrainTri = CTerrainTri::Create(VertexManager::GetInstance()->m_pGraphicDev, vtxPos[0], vtxPos[1], vtxPos[2]);
-
-
-
-					CMFCToolView::GetInstance()->LayerAddObject(L"Environment", L"TerrainTri", pTerrainTri);*/
-
-					//for (int i = 0; i < 3; i++)
-					//{
-					//	pTerrainTri->list_SphereMesh.emplace_back(TempSphereMesh.front());
-					//	TempSphereMesh.front()->list_pTerrainTri.emplace_back(pTerrainTri);
-					//	TempSphereMesh.front()->list_pPoint.emplace_back(pTerrainTri->m_Cell->Get_pPoint((Engine::CCell::POINT)i));
-					//	TempSphereMesh.pop_front();
-					//}
-					//CMFCToolView::GetInstance()->Sort_TriNumber();
-					//MeshPage* pMeshPage = MeshPage::GetInstance();
-					//if (pMeshPage != nullptr)
-					//{
-					//	pMeshPage->treeControl(*pTerrainTri->m_Cell->Get_Index());
-					//}
 			if (0 == dwByte)
 			{
 				//Safe_Delete(pUnit);
@@ -1875,12 +1878,124 @@ void MeshPage::OnBnClickedStaticLoad()
 void MeshPage::OnBnClickedDynamicSave()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog Dlg(FALSE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Data");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+		DWORD dwByte = 0;
+		DWORD dwstrByte = 0;
+
+		TCHAR meshKey[MAX_PATH] = L"";
+
+		vector<Engine::CGameObject*> vecStatic = CMFCToolView::GetInstance()->vectorObjDynamic;
+
+		for (auto& rPair : vecStatic)
+		{
+			lstrcpy(meshKey, dynamic_cast<CMFCDynamicMesh*>(rPair)->meshKey);
+			_int len = lstrlen(meshKey) * 2;
+			WriteFile(hFile, &len, sizeof(_int), &dwByte, nullptr);
+			WriteFile(hFile, lstrcpyW(meshKey, dynamic_cast<CMFCDynamicMesh*>(rPair)->meshKey), len, &dwByte, nullptr);
+			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS], sizeof(_vec3), &dwByte, nullptr);
+			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vScale, sizeof(_vec3), &dwByte, nullptr);
+			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle, sizeof(_vec3), &dwByte, nullptr);
+		}
+
+
+
+		CloseHandle(hFile);
+	}
 }
 
 
 void MeshPage::OnBnClickedDynamicLoad()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog Dlg(TRUE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Data");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+		DWORD dwByte = 0;
+		DWORD dwstrByte = 0;
+		int triTotalNumber = 0;
+
+		bool endCheck = false;
+		while (true)
+		{
+			bool sphereOverlap = false;
+
+			_vec3 vecPos, vecAng, vecScal;
+			TCHAR meshName[MAX_PATH] = L"";
+			_int meshNameSize;
+			ReadFile(hFile, &meshNameSize, sizeof(_int), &dwByte, nullptr);
+			ReadFile(hFile, &meshName, meshNameSize, &dwByte, nullptr);
+			ReadFile(hFile, &vecPos, sizeof(_vec3), &dwByte, nullptr);
+			ReadFile(hFile, &vecScal, sizeof(_vec3), &dwByte, nullptr);
+			ReadFile(hFile, &vecAng, sizeof(_vec3), &dwByte, nullptr);
+
+			if (0 == dwByte)
+			{
+				endCheck = true;
+				break;
+			}
+			CString text, temp2, num;
+			text = meshName;
+
+			int idx = -1;
+			int size = CMFCToolView::GetInstance()->vecDynamicMesh.size();
+			for (int i = 0; i < size; i++)
+			{
+				CString* pStr = CMFCToolView::GetInstance()->vecDynamicMesh[i];
+				if (*pStr == text.GetString())
+				{
+					idx = i;
+					break;
+				}
+			}
+			num.Format(_T("%d"), idx);
+
+			temp2.Format(_T("%d"), objDynamicCreateCount);
+			text = num + _T(")") + text.Mid(5) + _T(".X - ") + temp2;
+			CMFCToolView::GetInstance()->LoadDynamicMesh(meshName, vecPos, vecScal, vecAng);
+			objDynamic = treeObjDynamic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+
+			++objDynamicCreateCount;
+			if (0 == dwByte)
+			{
+				//Safe_Delete(pUnit);
+				break;
+			}
+
+
+
+			if (endCheck) {
+				break;
+			}
+		}
+		CloseHandle(hFile);
+	}
+	UpdateData(FALSE);
 }
 
 void MeshPage::OnBnClickedNaviSave()
@@ -2104,19 +2219,38 @@ void MeshPage::OnEnChangeTransformScalX()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT5, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformScalX = n;
-		if(0==CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT5, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformScalX = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT5, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformScalX = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
+		}
 	}
 }
 
@@ -2158,19 +2292,38 @@ void MeshPage::OnEnChangeTransformScalY()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT7, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformScalY = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT7, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformScalY = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT7, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformScalY = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
+		}
 	}
 }
 
@@ -2212,19 +2365,38 @@ void MeshPage::OnEnChangeTransformScalZ()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT8, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformScalZ = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z = m_fTransformScalZ;
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT8, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformScalZ = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z = m_fTransformScalZ;
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT8, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformScalZ = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.z = m_fTransformScalZ;
+		}
 	}
 }
 
@@ -2263,19 +2435,38 @@ void MeshPage::OnEnChangeTransformRotX()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT10, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformRotX = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT10, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformRotX = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT10, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformRotX = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
+		}
 	}
 }
 
@@ -2314,19 +2505,38 @@ void MeshPage::OnEnChangeTransformRotY()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT12, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformRotY = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT12, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformRotY = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT12, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformRotY = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+		}
 	}
 }
 
@@ -2365,19 +2575,38 @@ void MeshPage::OnEnChangeTransformRotZ()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT13, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformRotZ = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotZ);
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT13, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformRotZ = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotZ);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT13, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformRotZ = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
+		}
 	}
 }
 
@@ -2416,19 +2645,38 @@ void MeshPage::OnEnChangeTransformPosX()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT14, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformPosX = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT14, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformPosX = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT14, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformPosX = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+		}
 	}
 }
 
@@ -2467,19 +2715,38 @@ void MeshPage::OnEnChangeTransformPosY()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT15, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformPosY = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT15, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformPosY = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT15, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformPosY = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+		}
 	}
 }
 
@@ -2518,19 +2785,38 @@ void MeshPage::OnEnChangeTransformPosZ()
 
 		}
 	}
-	else if (VertexManager::GetInstance()->isObjectMesh = true)
+	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
-		CString cVertex;
-		GetDlgItemText(IDC_EDIT16, cVertex);
-		float n = _ttof(cVertex);
-		m_fTransformPosZ = n;
-		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-			return;
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT16, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformPosZ = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+				return;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+			CString cVertex;
+			GetDlgItemText(IDC_EDIT16, cVertex);
+			float n = _ttof(cVertex);
+			m_fTransformPosZ = n;
+			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+				return;
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
+		}
 	}
 }
 

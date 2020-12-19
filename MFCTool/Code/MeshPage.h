@@ -34,7 +34,7 @@ public:
 
 	HTREEITEM objDynamic,objStatic, tri[128] , vertex[128][3], objCreateItem, objCreateItemSon[3][128];
 	int objStaticCreateCount = 0;
-	int objDynamricCreateCount = 0;
+	int objDynamicCreateCount = 0;
 	int objCreateItemSonCount=0;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio1();
@@ -44,7 +44,7 @@ public:
 	void treeControl(int triCount);
 
 	CTreeCtrl treeNavi;
-	HTREEITEM selectItem,lastStaticObjSelectItem, lastNaviMeshSelectItem;
+	HTREEITEM selectItem,lastStaticObjSelectItem, lastDynamicObjSelectItem, lastNaviMeshSelectItem;
 	int lastSphereIndex = -1;
 	afx_msg void OnBnClickedButton10();
 
@@ -92,6 +92,10 @@ public:
 	afx_msg void TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void ObjectRadioBnClicked();
 	afx_msg void NaviRadioBnClicked();
+	//½ºÅÂÆ½
+	afx_msg void OnBnClickedRadio7();
+	//´ÙÀÌ³ª¹Í
+	afx_msg void OnBnClickedRadio8();
 
 	afx_msg void OnBnClickedStaticSave();
 	afx_msg void OnBnClickedStaticLoad();

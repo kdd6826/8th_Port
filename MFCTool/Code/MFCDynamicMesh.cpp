@@ -14,7 +14,7 @@ CMFCDynamicMesh::CMFCDynamicMesh(LPDIRECT3DDEVICE9 pGraphicDev, CString _mesh)
 	: Engine::CGameObject(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
-	m_AniClip = 54;
+	m_AniClip = 0;
 }
 
 CMFCDynamicMesh::~CMFCDynamicMesh(void)
@@ -107,7 +107,6 @@ HRESULT CMFCDynamicMesh::Add_Component(CString _mesh)
 	_matrix		matTemp;
 	Ready_VecFrameNameGet((Engine::D3DXFRAME_DERIVED*)m_pMeshCom->Get_RootFrame(), D3DXMatrixRotationY(&matTemp, D3DXToRadian(0.f)));
 
-	m_pTransformCom->m_vInfo[Engine::INFO_POS] = { -0.5f, 3.f, -0.5f };
 	return S_OK;
 }
 
