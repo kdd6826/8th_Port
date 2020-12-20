@@ -109,10 +109,11 @@ void CRenderTargetMgr::Render_DebugBuffer(const _tchar * pMRTTag)
 
 	if (nullptr == pMRTList)
 		return;
-
-	for (auto& iter : *pMRTList)
-		iter->Render_DebugBuffer();
-
+	if (GetAsyncKeyState(VK_F1) & 0x8000)
+	{
+		for (auto& iter : *pMRTList)
+			iter->Render_DebugBuffer();
+	}
 }
 
 void Engine::CRenderTargetMgr::Throw_RenderTargetTexture(LPD3DXEFFECT & pEffect, const _tchar * pTargetTag, const char * pConstantName)

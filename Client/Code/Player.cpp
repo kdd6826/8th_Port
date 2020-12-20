@@ -56,7 +56,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	m_pTransformCom->Set_Pos(&_vec3{ 5.f,0.f,5.f });
+	m_pTransformCom->Set_Pos(&PlayerSpawnPosition);
 	Engine::CGameObject::Update_Object(timeDelta);
 	// Collider 
 	//pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
@@ -660,7 +660,7 @@ HRESULT Client::CPlayer::Ready_Object(void)
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
 
-	SetUp_OnTerrain();
+	//SetUp_OnTerrain();
 	Key_Input(fTimeDelta);
 
 	Engine::CGameObject::Update_Object(fTimeDelta);	

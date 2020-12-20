@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "DynamicCamera.h"
 #include "Monster.h"
+#include "Dog.h"
 
 #include "Stone.h"
 #include "Sword.h"
