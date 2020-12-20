@@ -100,6 +100,7 @@ void CForm::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		{
 			//CMFCToolView::GetInstance()->Mesh_Load();
 			VertexManager::GetInstance()->isObjectMesh = true;
+			VertexManager::GetInstance()->isStaticMesh = true;
 		}
 		CMFCToolView::GetInstance()->colliderView = false;
 		isInitMeshPage = true;

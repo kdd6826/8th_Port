@@ -457,6 +457,8 @@ void MeshPage::InitTreeCtrl()
 void MeshPage::OnNMClickObjCreateTree(NMHDR* pNMHDR, LRESULT* pResult)
 {
 
+	if (VertexManager::GetInstance()->isObjectMesh == false)
+		return;
 	///////////////////////
 	CPoint point;
 	UINT nFlags = 0;
@@ -498,41 +500,47 @@ void MeshPage::OnNMClickObjCreateTree(NMHDR* pNMHDR, LRESULT* pResult)
 		checkState = treeObjCreate.GetItemText(treeObjCreate.GetParentItem(treeObjCreate.GetParentItem(selectItem)));
 		if (checkState == _T("StaticMesh"))
 		{
-			temp2.Format(_T("%d"), objStaticCreateCount);
+			if (VertexManager::GetInstance()->isObjectMesh == true && VertexManager::GetInstance()->isStaticMesh == true)
+			{
+				temp2.Format(_T("%d"), objStaticCreateCount);
 
-			text = treeObjCreate.GetItemText((selectItem)) + _T(" - ") + temp2;
-
-
-			MeshNum = text.Left(1);
-			iMeshNum = _ttoi(MeshNum);
+				text = treeObjCreate.GetItemText((selectItem)) + _T(" - ") + temp2;
 
 
-			CMFCToolView::GetInstance()->CreateStaticMesh((*CMFCToolView::GetInstance()->vecStaticMesh[iMeshNum]));
+				MeshNum = text.Left(1);
+				iMeshNum = _ttoi(MeshNum);
 
 
-			objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+				CMFCToolView::GetInstance()->CreateStaticMesh((*CMFCToolView::GetInstance()->vecStaticMesh[iMeshNum]));
 
 
-			++objStaticCreateCount;
+				objStatic = treeObjStatic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+
+
+				++objStaticCreateCount;
+			}
 		}
 		else if (checkState == _T("DynamicMesh"))
 		{
-			temp2.Format(_T("%d"), objDynamicCreateCount);
+			if (VertexManager::GetInstance()->isObjectMesh == true && VertexManager::GetInstance()->isStaticMesh == false)
+			{
+				temp2.Format(_T("%d"), objDynamicCreateCount);
 
-			text = treeObjCreate.GetItemText((selectItem)) + _T(" - ") + temp2;
-
-
-			MeshNum = text.Left(1);
-			iMeshNum = _ttoi(MeshNum);
+				text = treeObjCreate.GetItemText((selectItem)) + _T(" - ") + temp2;
 
 
-			CMFCToolView::GetInstance()->CreateDynamicMesh((*CMFCToolView::GetInstance()->vecDynamicMesh[iMeshNum]));
+				MeshNum = text.Left(1);
+				iMeshNum = _ttoi(MeshNum);
 
 
-			objDynamic = treeObjDynamic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+				CMFCToolView::GetInstance()->CreateDynamicMesh((*CMFCToolView::GetInstance()->vecDynamicMesh[iMeshNum]));
 
 
-			++objDynamicCreateCount;
+				objDynamic = treeObjDynamic.InsertItem(text, 0, 0, TVI_ROOT, TVI_LAST);
+
+
+				++objDynamicCreateCount;
+			}
 		}
 		//text += L"Mesh_" + treeObjCreate.GetItemText((treeObjCreate.GetParentItem(selectItem)));
 
@@ -913,35 +921,68 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
 
-		//해당 셀에 담긴 Text
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformPosX += 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosX += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
+			}
+			else
+			{
+				m_fTransformPosX -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+			SetDlgItemText(IDC_EDIT14, cVertex);
 		}
-		else
-		{
-			m_fTransformPosX -= 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
-		}
-		dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
-		SetDlgItemText(IDC_EDIT14, cVertex);
 
+
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
+
+			//해당 셀에 담긴 Text
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosX += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
+			}
+			else
+			{
+				m_fTransformPosX -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+			SetDlgItemText(IDC_EDIT14, cVertex);
+		}
 		*pResult = 0;
 
 
@@ -1014,36 +1055,69 @@ void MeshPage::TransformPosYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-
-		//해당 셀에 담긴 Text
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformPosY += 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosY += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
+			}
+			else
+			{
+				m_fTransformPosY -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+			SetDlgItemText(IDC_EDIT15, cVertex);
 		}
-		else
-		{
-			m_fTransformPosY -= 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
-		SetDlgItemText(IDC_EDIT15, cVertex);
 
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
+
+			//해당 셀에 담긴 Text
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosY += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
+			}
+			else
+			{
+				m_fTransformPosY -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosY);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].y = m_fTransformPosY;
+			SetDlgItemText(IDC_EDIT15, cVertex);
+		}
 		*pResult = 0;
 
 
@@ -1113,36 +1187,68 @@ void MeshPage::TransformPosZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			//해당 셀에 담긴 Text
 
-		//해당 셀에 담긴 Text
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosZ += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
+			}
+			else
+			{
+				m_fTransformPosZ -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
+			SetDlgItemText(IDC_EDIT16, cVertex);
+
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformPosZ += 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformPosZ += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
+			}
+			else
+			{
+				m_fTransformPosZ -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosZ;
+			SetDlgItemText(IDC_EDIT16, cVertex);
 		}
-		else
-		{
-			m_fTransformPosZ -= 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformPosZ);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].z = m_fTransformPosZ;
-		SetDlgItemText(IDC_EDIT16, cVertex);
-
 		*pResult = 0;
 
 
@@ -1209,36 +1315,67 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			//해당 셀에 담긴 Text
 
-		//해당 셀에 담긴 Text
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotX += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
+			}
+			else
+			{
+				m_fTransformRotX -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
+			SetDlgItemText(IDC_EDIT10, cVertex);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformRotX += 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotX += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
+			}
+			else
+			{
+				m_fTransformRotX -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
+			SetDlgItemText(IDC_EDIT10, cVertex);
 		}
-		else
-		{
-			m_fTransformRotX -= 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);;
-		SetDlgItemText(IDC_EDIT10, cVertex);
-
 		*pResult = 0;
 
 
@@ -1305,36 +1442,67 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			//해당 셀에 담긴 Text
 
-		//해당 셀에 담긴 Text
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotY += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+			}
+			else
+			{
+				m_fTransformRotY -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+			SetDlgItemText(IDC_EDIT12, cVertex);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformRotY += 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotY += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+			}
+			else
+			{
+				m_fTransformRotY -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+			SetDlgItemText(IDC_EDIT12, cVertex);
 		}
-		else
-		{
-			m_fTransformRotY -= 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
-		SetDlgItemText(IDC_EDIT12, cVertex);
-
 		*pResult = 0;
 
 
@@ -1401,36 +1569,67 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			//해당 셀에 담긴 Text
 
-		//해당 셀에 담긴 Text
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotZ += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+			}
+			else
+			{
+				m_fTransformRotZ -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
+			SetDlgItemText(IDC_EDIT13, cVertex);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformRotZ += 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformRotZ += 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+			}
+			else
+			{
+				m_fTransformRotZ -= 0.1f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
+			SetDlgItemText(IDC_EDIT13, cVertex);
 		}
-		else
-		{
-			m_fTransformRotZ -= 0.1f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
-		SetDlgItemText(IDC_EDIT13, cVertex);
-
 		*pResult = 0;
 
 
@@ -1499,36 +1698,67 @@ void MeshPage::TransformScalXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			//해당 셀에 담긴 Text
 
-		//해당 셀에 담긴 Text
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalX += 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
+			}
+			else
+			{
+				m_fTransformScalX -= 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
+			SetDlgItemText(IDC_EDIT5, cVertex);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformScalX += 0.01f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalX += 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
+			}
+			else
+			{
+				m_fTransformScalX -= 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
+			SetDlgItemText(IDC_EDIT5, cVertex);
 		}
-		else
-		{
-			m_fTransformScalX -= 0.01f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformScalX);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x = m_fTransformScalX;
-		SetDlgItemText(IDC_EDIT5, cVertex);
-
 		*pResult = 0;
 
 
@@ -1596,36 +1826,69 @@ void MeshPage::TransformScalYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
-
-		//해당 셀에 담긴 Text
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformScalY += 0.01f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalY += 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
+			}
+			else
+			{
+				m_fTransformScalY -= 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
+			SetDlgItemText(IDC_EDIT7, cVertex);
+
 		}
-		else
-		{
-			m_fTransformScalY -= 0.01f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
-		SetDlgItemText(IDC_EDIT7, cVertex);
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
 
+			//해당 셀에 담긴 Text
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalY += 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
+			}
+			else
+			{
+				m_fTransformScalY -= 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalY);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalY;
+			SetDlgItemText(IDC_EDIT7, cVertex);
+		}
 		*pResult = 0;
 
 
@@ -1694,36 +1957,67 @@ void MeshPage::TransformScalZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (VertexManager::GetInstance()->isObjectMesh == true)
 	{
+		if (VertexManager::GetInstance()->isStaticMesh == true)
+		{
+			//해당 셀에 담긴 Text
 
-		//해당 셀에 담긴 Text
+				//해당 셀에 담긴 Text
+			if (lastStaticObjSelectItem == nullptr)
+				return;
+			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+			CString objStaticIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objStaticIndexNum);
+
+
+			//Text를 int로 바꾸기
+
+
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalZ += 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
+			}
+			else
+			{
+				m_fTransformScalZ -= 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
+			}
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z = m_fTransformScalZ;
+			SetDlgItemText(IDC_EDIT8, cVertex);
+		}
+		else if (VertexManager::GetInstance()->isStaticMesh == false)
+		{//해당 셀에 담긴 Text
 
 			//해당 셀에 담긴 Text
-		if (lastStaticObjSelectItem == nullptr)
-			return;
-		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-		CString objStaticIndexNum = a.Right(1);
-		size_t temp = 0;
-		temp = _ttoi(objStaticIndexNum);
+			if (lastDynamicObjSelectItem == nullptr)
+				return;
+			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+			CString objDynamicIndexNum = a.Right(1);
+			size_t temp = 0;
+			temp = _ttoi(objDynamicIndexNum);
 
 
-		//Text를 int로 바꾸기
+			//Text를 int로 바꾸기
 
 
-		///////////////////
-		CString cVertex;
-		if (pNMUpDown->iDelta < 0)
-		{
-			m_fTransformScalZ += 0.01f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
+			///////////////////
+			CString cVertex;
+			if (pNMUpDown->iDelta < 0)
+			{
+				m_fTransformScalZ += 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
+			}
+			else
+			{
+				m_fTransformScalZ -= 0.01f;
+				cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
+			}
+			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vScale.y = m_fTransformScalZ;
+			SetDlgItemText(IDC_EDIT8, cVertex);
 		}
-		else
-		{
-			m_fTransformScalZ -= 0.01f;
-			cVertex.Format(_T("%9.2f\n"), m_fTransformScalZ);
-		}
-		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z = m_fTransformScalZ;
-		SetDlgItemText(IDC_EDIT8, cVertex);
-
 		*pResult = 0;
 
 
