@@ -56,6 +56,8 @@ BEGIN_MESSAGE_MAP(ColliderPage, CDialogEx)
 	ON_LBN_SELCHANGE(IDC_LIST2, &ColliderPage::OnLbnSelchangeList2)
 	ON_BN_CLICKED(IDC_BUTTON2, &ColliderPage::OnBnClickedButton2)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN13, &ColliderPage::OnDeltaposSpin13)
+	ON_BN_CLICKED(IDC_BUTTON13, &ColliderPage::OnBnClickedButton13)
+	ON_BN_CLICKED(IDC_BUTTON14, &ColliderPage::OnBnClickedButton14)
 END_MESSAGE_MAP()
 
 
@@ -620,4 +622,159 @@ void ColliderPage::OnDeltaposSpin13(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 
 	
+}
+
+//Save 버튼
+void ColliderPage::OnBnClickedButton13()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog Dlg(FALSE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Data");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+		DWORD dwByte = 0;
+		DWORD dwstrByte = 0;
+
+		TCHAR meshKey[MAX_PATH] = L"";
+
+		//저장해야될게 구체수, 구체위치, 구체Radius, 뼈이름
+		CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic_Collider.front());
+		
+		lstrcpy(meshKey, dMesh->meshKey);
+		_int len = lstrlen(meshKey) * 2;
+		WriteFile(hFile, &len, sizeof(_int), &dwByte, nullptr);
+		WriteFile(hFile, lstrcpyW(meshKey, dMesh->meshKey), len, &dwByte, nullptr);
+		WriteFile(hFile, dynamic_cast<Engine::CTransform*>(dMesh->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS], sizeof(_vec3), &dwByte, nullptr);
+		WriteFile(hFile, dynamic_cast<Engine::CTransform*>(dMesh->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vScale, sizeof(_vec3), &dwByte, nullptr);
+		WriteFile(hFile, dynamic_cast<Engine::CTransform*>(dMesh->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle, sizeof(_vec3), &dwByte, nullptr);
+
+		int sphereCtn = dMesh->m_VecSphereCollider.size();
+		WriteFile(hFile, &sphereCtn, sizeof(_int), &dwByte, nullptr);
+		for (auto& _sphere : dMesh->m_VecSphereCollider)
+		{
+			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(_sphere->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS], sizeof(_vec3), &dwByte, nullptr);
+			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(_sphere->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vScale, sizeof(_vec3), &dwByte, nullptr);
+			TCHAR frameKey[MAX_PATH] = L"";
+			CString tempString(_sphere->m_FrameName.c_str());
+			lstrcpy(frameKey, tempString);
+			_int framelen = lstrlen(frameKey) * 2;
+			WriteFile(hFile, &framelen, sizeof(_int), &dwByte, nullptr);
+			WriteFile(hFile, lstrcpyW(frameKey, tempString), framelen, &dwByte, nullptr);
+		}
+
+		CloseHandle(hFile);
+	}
+}
+
+// Load 버튼
+void ColliderPage::OnBnClickedButton14()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog Dlg(TRUE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
+	TCHAR szCurPath[MAX_PATH] = L"";
+	TCHAR szDataPath[MAX_PATH] = L"";
+	GetCurrentDirectory(MAX_PATH, szCurPath);
+	PathRemoveFileSpec(szCurPath);
+	PathCombine(szDataPath, szCurPath, L"Data");
+	Dlg.m_ofn.lpstrInitialDir = szDataPath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString strPath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(strPath.GetString(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+		DWORD dwByte = 0;
+		DWORD dwstrByte = 0;
+		int triTotalNumber = 0;
+
+		
+
+		vector<Engine::CGameObject*>* vecDynamic_Col = &CMFCToolView::GetInstance()->vectorObjDynamic_Collider;
+		if (vecDynamic_Col->size() != 0) {
+			CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(vecDynamic_Col->front());
+			dMesh->isDead = true;
+			vecDynamic_Col->clear();
+		}
+
+		bool sphereOverlap = false;
+
+		_vec3 vecPos, vecAng, vecScal;
+		TCHAR meshName[MAX_PATH] = L"";
+		_int meshNameSize;
+		ReadFile(hFile, &meshNameSize, sizeof(_int), &dwByte, nullptr);
+		ReadFile(hFile, &meshName, meshNameSize, &dwByte, nullptr);
+		ReadFile(hFile, &vecPos, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vecScal, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vecAng, sizeof(_vec3), &dwByte, nullptr);
+		//
+		_int sphereCnt = 0;
+		ReadFile(hFile, &sphereCnt, sizeof(_int), &dwByte, nullptr);
+
+		CMFCDynamicMesh* dMesh = CMFCToolView::GetInstance()->LoadDynamicMesh_Collider(meshName, vecPos, vecScal, vecAng);
+
+		for (size_t i = 0; i < sphereCnt; i++)
+		{
+			_vec3 spherePos, sphereScale;
+			TCHAR frameName[MAX_PATH] = L"";
+			_int frameNameSize;
+			ReadFile(hFile, &spherePos, sizeof(_vec3), &dwByte, nullptr);
+			ReadFile(hFile, &sphereScale, sizeof(_vec3), &dwByte, nullptr);
+			ReadFile(hFile, &frameNameSize, sizeof(_int), &dwByte, nullptr);
+			ReadFile(hFile, &frameName, frameNameSize, &dwByte, nullptr);
+			dMesh->Load_BoneOfSphereCollier(spherePos, sphereScale, frameName);
+		}
+		//
+		CString text, num;
+		text = meshName;
+		
+		int idx = -1;
+		int size = CMFCToolView::GetInstance()->vecDynamicMesh.size();
+		for (int i = 0; i < size; i++)
+		{
+			CString* pStr = CMFCToolView::GetInstance()->vecDynamicMesh[i];
+			if (*pStr == text.GetString())
+			{
+				idx = i;
+				break;
+			}
+		}
+		num.Format(_T("%d"), idx);
+
+		m_BoneList.ResetContent();
+
+		for (auto& frameName : dMesh->m_VecFrameName)
+		{
+			if (frameName == nullptr) {
+				continue;
+			}
+			WCHAR tmpName[50] = {};
+			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, frameName, strlen(frameName), tmpName, 50);
+
+			m_BoneList.InsertString(-1, (LPCTSTR)tmpName);
+
+		}
+		
+		m_AniClip = dMesh->m_AniClip;
+		SetDlgItemInt(IDC_EDIT1, m_AniClip);
+		BoneColliderList_Renewal();
+
+		
+		CloseHandle(hFile);
+	}
+	UpdateData(FALSE);
 }

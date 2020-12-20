@@ -30,6 +30,7 @@ public:
 	//뼈이름으로 인자를 받아서 그 뼈한테 원 콜라이더 생성
 	Engine::CTransform* GetTransform() { return m_pTransformCom; }
 	void			Create_BoneOfSphereCollier(CString boneName);
+	void Load_BoneOfSphereCollier(_vec3 pos, _vec3 scale, CString boneName);
 	void			Ready_VecFrameNameGet(Engine::D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;

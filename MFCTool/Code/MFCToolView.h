@@ -22,6 +22,7 @@ class CMFC_Terrain;
 class CDynamicCamera;
 class CSphereMesh;
 class CMFCStaticMesh;
+class CMFCDynamicMesh;
 class CTerrainTri;
 class CMFCToolView : public CScrollView
 {
@@ -92,6 +93,7 @@ public:
 
 	void LoadStaticMesh(CString _mesh,_vec3 pos, _vec3 scal, _vec3 angle);
 	void LoadDynamicMesh(CString _mesh, _vec3 pos, _vec3 scal, _vec3 angle);
+	CMFCDynamicMesh* LoadDynamicMesh_Collider(CString _mesh, _vec3 pos, _vec3 scal, _vec3 angle);
 	void CreateStaticMesh(CString _mesh);
 	void CreateDynamicMesh(CString _mesh);
 	void CreateDynamicMesh_OfCollider(CString _mesh);
