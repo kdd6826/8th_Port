@@ -1,0 +1,26 @@
+AniSet
+0   Idle
+1   Run
+2   Down
+3   DownDuring
+4   StandUp
+5   DamageParry
+6   TurnLeft
+7   TurnRight
+8   WalkE
+9   WalkN
+10  WalkS
+11  WalkW
+12  DamageWeakPoint
+13  AttackBallista
+14  AttackHammer
+15  AttackKick
+16  AttackRage
+17  AttackStomp
+18  AttackTurnLeft
+19  AttackTurnRight
+20  AttackTwoStap
+21  DyingFront
+22  DyingBack
+23  DyingLeft
+24  DyingRight

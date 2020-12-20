@@ -94,6 +94,9 @@
     <Filter Include="02. GameObject\01. Stage\08.Monster\00.Dog">
       <UniqueIdentifier>{775004a5-1bc2-4c3e-8637-66b6a010c65b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\08.Monster\01.Titian">
+      <UniqueIdentifier>{59a175a9-baa9-47f6-b200-cc164ed071d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
