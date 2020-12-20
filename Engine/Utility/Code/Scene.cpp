@@ -25,7 +25,7 @@ Engine::_int Engine::CScene::Update_Scene(const _float& fTimeDelta)
 	for (auto& iter : m_mapLayer)
 	{
 		iExit = iter.second->Update_Layer(fTimeDelta);
-
+		
 		if (iExit & 0x80000000)
 		{
 			MSG_BOX("Layer Problem");

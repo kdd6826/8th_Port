@@ -137,11 +137,6 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 	m_state = dogState::STATE_STAND;
 	//SetUp_OnTerrain()
 	Engine::CGameObject::Update_Object(fTimeDelta);	
-	_float fCamAngle;
-	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"Environment", L"DynamicCamera"));
-	fCamAngle = D3DXToDegree(pCamera->Get_Angle());
-	//vCamPos = pCamera->Get_Eye();
-
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;
 
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);

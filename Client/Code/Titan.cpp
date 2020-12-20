@@ -365,6 +365,44 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
 				}
 			}
+			else if (m_state == titanState::STATE_ATTACKKICK)
+			{
+				_vec3	vPos, vDir, vRight;
+				m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+				m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+				Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+				_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
+
+				//플레이어를 향한 위치벡터
+				_vec3 toPlayerDir = playerPos - vPos;
+				float spinSpeed = 1.f;
+				//오른쪽이다
+				//if (angle2 > 0)
+				//{
+				//	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta * spinSpeed));
+				//}
+				////왼쪽이다.
+				//else
+				//{
+				//	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
+				//}
+
+				//기존 몬스터의 룩벡터
+				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+				D3DXVec3Normalize(&vDir, &vDir);
+
+				if (delay > 2.f && delay < 2.5f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+				}
+				if (delay > 1.f && delay < 1.5f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+				}
+			}
+			
+
 
 			if (true == m_pMeshCom->Is_AnimationSetEnd())
 			{
@@ -386,10 +424,6 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 	//SetUp_OnTerrain()
 	Engine::CGameObject::Update_Object(fTimeDelta);	
-	_float fCamAngle;
-	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"Environment", L"DynamicCamera"));
-	fCamAngle = D3DXToDegree(pCamera->Get_Angle());
-	//vCamPos = pCamera->Get_Eye();
 
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;
 

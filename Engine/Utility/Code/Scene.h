@@ -23,7 +23,7 @@ public:
 protected:
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 	map<const _tchar*, CLayer*>			m_mapLayer;
-
+	int i = 0;
 public:
 	virtual void		Free(void);
 };

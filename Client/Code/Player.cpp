@@ -297,7 +297,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
 
-	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"Environment", L"DynamicCamera"));
+	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 	vCamPos = pCamera->Get_Eye();
 	fCamAngle = pCamera->Get_Angle();
 
@@ -663,7 +663,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 
 	Engine::CGameObject::Update_Object(fTimeDelta);	
 	_float fCamAngle;
-	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"Environment", L"DynamicCamera"));
+	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 	fCamAngle = D3DXToDegree(pCamera->Get_Angle());
 	//vCamPos = pCamera->Get_Eye();
 

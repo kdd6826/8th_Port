@@ -20,6 +20,8 @@ HRESULT CLogo::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_UI_Layer(L"UI"), E_FAIL);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -80,31 +82,27 @@ HRESULT CLogo::Ready_Environment_Layer(const _tchar * pLayerTag)
 	m_mapLayer.emplace(pLayerTag, pLayer);
 	
 	return S_OK;
-
-	/*pGameObject = CBackGround::Create(m_pGraphicDev);
-	if (nullptr == pGameObject)
-		goto except;
-	
-	if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
-		goto except;
-	
-	m_mapLayer.emplace(pLayerTag, pLayer);
-
-	return S_OK;
-
-except:
-	Client::Safe_Release(pLayer);
-
-	return E_FAIL;*/
 }
 
 HRESULT CLogo::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 {
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+	m_mapLayer.emplace(pLayerTag, pLayer);
+
 	return S_OK;
 }
 
 HRESULT CLogo::Ready_UI_Layer(const _tchar * pLayerTag)
 {
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+	m_mapLayer.emplace(pLayerTag, pLayer);
+
 	return S_OK;
 }
 
