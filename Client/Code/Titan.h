@@ -79,6 +79,8 @@ private:
 	_vec3						m_vDir;
 	_float						m_fAniSpeed=1.f;
 	_float						delay = 0.f;
+	int i = 1;
+
 public:
 	static CTitan*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
