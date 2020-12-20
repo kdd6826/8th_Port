@@ -17,32 +17,20 @@ END
 BEGIN(Client)
 class CMonster : public Engine::CGameObject
 {
-private:
-	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
+public:
+	CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CMonster(void);
-
-public:
-	virtual HRESULT Ready_Object(void) override;
-	virtual _int Update_Object(const _float& fTimeDelta) override;
-	virtual void Render_Object(void) override;
-
+protected:
+	bool PlayerSearch(_vec3 _MonsterPos);
 private:
-	HRESULT		Add_Component(void);
-	void		SetUp_OnTerrain(void);
-	void		Key_Input(const _float& fTimeDelta);
-	_vec3		PickUp_OnTerrain(void);
 
-private:
-	Engine::CRcTex*				m_pBufferCom = nullptr;
-	Engine::CTexture*			m_pTextureCom = nullptr;
-	Engine::CTransform*			m_pTransformCom = nullptr;
-	Engine::CRenderer*			m_pRendererCom = nullptr;
-	Engine::CCalculator*		m_pCalculatorCom = nullptr;
+protected:
+	_bool isSearch = false;
+	_bool isAnimating = false;
+	//플레이어까지의 거리
+	_float disPlayer = 0.f;
+	_float m_fSpeed;
 
-public:
-	static CMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
-private:
 	virtual void Free(void) override;
 
 };

@@ -1,20 +1,20 @@
 #include "stdafx.h"
-#include "UI.h"
+#include "SkillSlot.h"
 #include "Export_Function.h"
 
-CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev)
+CSkillSlot::CSkillSlot(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 
 }
 
-CUI::~CUI(void)
+CSkillSlot::~CSkillSlot(void)
 {
 
 }
 
 
-HRESULT Client::CUI::Add_Component(void)
+HRESULT Client::CSkillSlot::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 
@@ -24,7 +24,7 @@ HRESULT Client::CUI::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_UI"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SkillSlot"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
@@ -42,9 +42,9 @@ HRESULT Client::CUI::Add_Component(void)
 	return S_OK;
 }
 
-CUI* CUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CSkillSlot* CSkillSlot::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CUI*	pInstance = new CUI(pGraphicDev);
+	CSkillSlot*	pInstance = new CSkillSlot(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -52,25 +52,25 @@ CUI* CUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CUI::Free(void)
+void CSkillSlot::Free(void)
 {
 	Engine::CGameObject::Free();
 }
 
 
-HRESULT Client::CUI::Ready_Object(void)
+HRESULT Client::CSkillSlot::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fX = 400.f;
 	m_fY = 550.f;
 
-	m_fSizeX = 800.f;
-	m_fSizeY = 160.f;
+	m_fSizeX = 560.f;
+	m_fSizeY = 80.f;
 
 	return S_OK;
 }
-Client::_int Client::CUI::Update_Object(const _float& fTimeDelta)
+Client::_int Client::CSkillSlot::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 		
@@ -80,7 +80,7 @@ Client::_int Client::CUI::Update_Object(const _float& fTimeDelta)
 
 	return 0;
 }
-void Client::CUI::Render_Object(void)
+void Client::CSkillSlot::Render_Object(void)
 {
 	_matrix		matWorld, matView, matOriginView, matOriginProj;
 

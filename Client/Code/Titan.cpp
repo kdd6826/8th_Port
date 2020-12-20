@@ -1,22 +1,22 @@
 #include "stdafx.h"
-#include "Dog.h"
+#include "Titan.h"
 #include "Export_Function.h"
 #include "DynamicCamera.h"
 
 
-CDog::CDog(LPDIRECT3DDEVICE9 pGraphicDev)
+CTitan::CTitan(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
 
 }
 
-CDog::~CDog(void)
+CTitan::~CTitan(void)
 {
 
 }
 
-Client::_vec3 Client::CDog::PickUp_OnTerrain(void)
+Client::_vec3 Client::CTitan::PickUp_OnTerrain(void)
 {
 	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3(0.f, 0.f, 0.f));
@@ -27,12 +27,12 @@ Client::_vec3 Client::CDog::PickUp_OnTerrain(void)
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 }
 
-HRESULT Client::CDog::Add_Component(void)
+HRESULT Client::CTitan::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 
 	// Mesh
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Dog"));
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Titan"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
@@ -57,7 +57,7 @@ HRESULT Client::CDog::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	m_pTransformCom->Set_Pos(&_vec3{23.f,0.f,23.f});
+	m_pTransformCom->Set_Pos(&_vec3{18.f,0.f,18.f});
 	Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
@@ -68,7 +68,7 @@ HRESULT Client::CDog::Add_Component(void)
 	return S_OK;
 }
 
-HRESULT CDog::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+HRESULT CTitan::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
 	_matrix		matWorld, matView, matProj;
 
@@ -84,29 +84,92 @@ HRESULT CDog::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 }
 
 
-void CDog::Move(const _float& fTimeDelta)
+void CTitan::Move(const _float& fTimeDelta)
 {
 
-	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
-	_float fCamAngle;
-	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+	_vec3	vPos, vDir, vRight;
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
 	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+	_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
 
-	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
-	NULL_CHECK(pTerrainBufferCom);
+	//플레이어를 향한 위치벡터
+	_vec3 toPlayerDir = playerPos - vPos;
 
+	//기존 몬스터의 룩벡터
+	D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	//내적을 통한 각도
+	float frontRadian = D3DXVec3Dot(&toPlayerDir, &vDir);
+	float rightRadian = D3DXVec3Dot(&toPlayerDir, &vRight);
+	//플레이어가 내 앞? 내 뒤?
+	float angle = D3DXToDegree(frontRadian);
+	//플레이어가 내 왼쪽? 오른쪽?
+	float angle2 = D3DXToDegree(rightRadian);
+	//		45	56	60	52 45 	22.5
+	//		0.78 0.98	0.7
+	//			    ↑
+	//      0        ㅇ		-0
+	//		     (몬스터)
+	//
+	//			-40 -60  -55
+	//			-0.7 -0.9 -1
+	// -10
+	//플레이어가 정면에있다
+	//몬스터의 시야각
+	if (55.f <= angle && angle < 60.f)
+	{
+		m_state = titanState::STATE_RUN;
+	}
+	//몬스터의 정면
+	else if (angle > 0)
+	{
+		//오른쪽이다
+		if (angle2 > 0)
+		{
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta));
+			m_state = titanState::STATE_RUN;
+			//m_state = titanState::STATE_TURNRIGHT;
+		}
+
+		//왼쪽이다.
+		else
+		{
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta));
+			m_state = titanState::STATE_RUN;
+		}
+	}
+	//플레이어가 뒤에 있다.
+	else
+	{
+		if (angle2 > 0)
+		{
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta));
+			m_state = titanState::STATE_RUN;
+			//m_state = titanState::STATE_TURNRIGHT;
+		}
+		//왼쪽이다.
+		else
+		{
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta));
+			m_state = titanState::STATE_RUN;
+		}
+		//m_state = titanState::STATE_ATTACKKICK;
+
+	}
+	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
 
 }
 
-void CDog::Attack(const _float& fTimeDelta)
+void CTitan::Attack(const _float& fTimeDelta)
 {
 }
 
-CDog* CDog::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTitan* CTitan::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CDog*	pInstance = new CDog(pGraphicDev);
+	CTitan*	pInstance = new CTitan(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -114,27 +177,91 @@ CDog* CDog::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CDog::Free(void)
+void CTitan::Free(void)
 {
 	Engine::CGameObject::Free();
 }
 
 
-HRESULT Client::CDog::Ready_Object(void)
+HRESULT Client::CTitan::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
-	m_pMeshCom->Set_AnimationSet(dogState::STATE_STAND);
+	m_pTransformCom->Set_Scale(0.03f, 0.03f, 0.03f);
+	m_fSpeed = 2.f;
+	m_pMeshCom->Set_AnimationSet(titanState::STATE_IDLE);
 
 	m_pNaviMeshCom->Set_NaviIndex(0);
 
 	return S_OK;
 }
-Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
+Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 {
+	if (delay > 0)
+	{
+		delay -= fTimeDelta;
+	}
 
-	m_state = dogState::STATE_STAND;
+	
+	m_vDir.x += 10.f * fTimeDelta;
+	
+
+		isSearch = PlayerSearch(m_pTransformCom->m_vInfo[Engine::INFO_POS]);
+	//m_state = titanState::STATE_IDLE;
+	if (isSearch == true)
+	{
+		
+		if (disPlayer < 2.f)
+		{
+
+
+			delay = 4.2f;
+			m_state = titanState::STATE_ATTACKBALLISTA;
+			m_fAniSpeed = 1.5f;
+			isAnimating = true;
+		}
+		else
+		{
+			if (!isAnimating)
+				Move(fTimeDelta);
+		}
+
+		if (isAnimating)
+		{
+			if (m_state == titanState::STATE_ATTACKBALLISTA)
+			{
+				_vec3	vPos, vDir, vRight;
+				m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+				m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+				Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+				_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
+
+				//플레이어를 향한 위치벡터
+				_vec3 toPlayerDir = playerPos - vPos;
+
+				//기존 몬스터의 룩벡터
+				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+				D3DXVec3Normalize(&vDir, &vDir);
+
+				if (delay>1.5f&&delay < 3.f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+				}
+			}
+			if (true == m_pMeshCom->Is_AnimationSetEnd())
+			{
+				isAnimating = false;
+				m_fAniSpeed = 1.5f;
+				delay= 0;
+			}
+		}
+
+		//이동
+	}
+	m_pMeshCom->Set_AnimationSet(m_state);
+
+
 	//SetUp_OnTerrain()
 	Engine::CGameObject::Update_Object(fTimeDelta);	
 	_float fCamAngle;
@@ -155,7 +282,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 
 	return 0;
 }
-void Client::CDog::Render_Object(void)
+void Client::CTitan::Render_Object(void)
 {
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
@@ -178,7 +305,7 @@ void Client::CDog::Render_Object(void)
 
 	Engine::Safe_Release(pEffect);
 }
-void Client::CDog::SetUp_OnTerrain(void)
+void Client::CTitan::SetUp_OnTerrain(void)
 {
 	_vec3	vPosition;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPosition);

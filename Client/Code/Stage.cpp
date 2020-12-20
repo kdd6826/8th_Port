@@ -18,6 +18,7 @@ HRESULT CStage::Ready_Scene(void)
 	
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_UI_Layer(L"UI"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -147,6 +148,12 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 	
+
+	pGameObject = CTitan::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
+
+
 	/*for (_uint i = 0; i < 50; ++i)
 	{
 		pGameObject = CMonster::Create(m_pGraphicDev);
@@ -169,9 +176,9 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Effect", pGameObject), E_FAIL);
 	//}
 
-	//pGameObject = CUI::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+	/*pGameObject = CSkillSlot::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkillSlot", pGameObject), E_FAIL);*/
 
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
@@ -181,6 +188,40 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 {
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CSkillSlot::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkillSlot", pGameObject), E_FAIL);
+
+	pGameObject = CHpBarBack::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HpBarBack", pGameObject), E_FAIL);
+
+	pGameObject = CHpBarValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HpBarValue", pGameObject), E_FAIL);
+
+	pGameObject = CSpBarBack::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SpBarBack", pGameObject), E_FAIL);
+
+	pGameObject = CSpBarValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SpBarValue", pGameObject), E_FAIL);
+
+	pGameObject = CStaminaBarBack::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaminaBarBack", pGameObject), E_FAIL);
+
+	pGameObject = CStaminaBarValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaminaBarValue", pGameObject), E_FAIL);
+
+	m_mapLayer.emplace(pLayerTag, pLayer);
 	return S_OK;
 }
 

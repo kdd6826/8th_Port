@@ -1,5 +1,5 @@
-#ifndef UI_h__
-#define UI_h__
+#ifndef HpBarBack_h__
+#define HpBarBack_h__
 
 #include "GameObject.h"
 #include "Define.h"
@@ -14,11 +14,11 @@ class CTransform;
 END
 
 BEGIN(Client)
-class CUI : public Engine::CGameObject
+class CHpBarBack : public Engine::CGameObject
 {
 private:
-	explicit CUI(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CUI(void);
+	explicit CHpBarBack(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CHpBarBack(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -40,7 +40,7 @@ private:
 	_float						m_fSizeX, m_fSizeY;
 
 public:
-	static CUI*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CHpBarBack*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
@@ -48,4 +48,4 @@ private:
 };
 
 END
-#endif // UI_h__
+#endif // HpBarBack_h__

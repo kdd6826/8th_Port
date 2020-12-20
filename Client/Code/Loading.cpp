@@ -128,8 +128,18 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_UI", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/hpbar.png") , E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillSlot", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/skill_slot.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Back.png") , E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Value.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerSpBar_Back.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SpBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerSpBar_ValueBar.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_Back.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_ValueBar.png"), E_FAIL);
 	
+
+
+
+
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	
 	Load_StaticObject();

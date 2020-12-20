@@ -263,8 +263,6 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 		}
 	}
-	m_pMeshCom->Set_AnimationSet(m_state);
-
 	if (isSkill)
 	{
 		if (m_state == playerState::STATE_IDLE ||
@@ -281,8 +279,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			isSkill = false;
 		}
 	}
-	/*if(true == m_pMeshCom->Is_AnimationSetEnd())
-		m_pMeshCom->Set_AnimationSet(39);*/
+
+	m_pMeshCom->Set_AnimationSet(m_state);
 
 }
 

@@ -10,12 +10,20 @@
 #include "DynamicCamera.h"
 #include "Monster.h"
 #include "Dog.h"
+#include "Titan.h"
 
 #include "Stone.h"
 #include "Sword.h"
 #include "Tree.h"
 #include "Effect.h"
-#include "UI.h"
+#include "SkillSlot.h"
+#include "HpBarBack.h"
+#include "HpBarValue.h"
+#include "SpBarBack.h"
+#include "SpBarValue.h"
+#include "StaminaBarBack.h"
+#include "StaminaBarValue.h"
+
 
 #include "StaticObject.h"
 BEGIN(Client)

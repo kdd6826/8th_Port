@@ -1,5 +1,5 @@
-#ifndef Dog_h__
-#define Dog_h__
+#ifndef Titan_h__
+#define Titan_h__
 
 #include "Monster.h"
 #include "Define.h"
@@ -17,34 +17,41 @@ class CShader;
 END
 
 BEGIN(Client)
-class CDog : public CMonster
+class CTitan : public CMonster
 {
 
-	enum dogState
+	enum titanState
 	{
-		STATE_DASHATT,
-		STATE_DMGBOTTOM,
-		STATE_DMGUP,
-		STATE_DOWNSTART,
-		STATE_DOWNING,
-		STATE_DOWNEND,
-		STATE_DYING,
-		STATE_STAND,
-		STATE_TURNLEFT,
-		STATE_TURNRIGHT,
-		STATE_DOWNDMG,
-		STATE_AIRSTART,
-		STATE_AIRING,
-		STATE_AIREND,
-		STATE_KNOCKBACK,
-		STATE_ATT,
-		STATE_FALLING,
-		STATE_RUN,
+		STATE_IDLE				,
+		STATE_RUN				,
+		STATE_DOWN				,
+		STATE_DOWNDURING		,
+		STATE_STANDUP			,
+		STATE_DAMAGEPARRY		,
+		STATE_TURNLEFT			,
+		STATE_TURNRIGHT			,
+		STATE_WALKRIGHT			,
+		STATE_WALKUP			,
+		STATE_WALKDOWN			,
+		STATE_WALKLEFT			,
+		STATE_DAMAGEWEAKPOINT	,
+		STATE_ATTACKBALLISTA	,
+		STATE_ATTACKHAMMER		,
+		STATE_ATTACKKICK		,
+		STATE_ATTACKRAGE		,
+		STATE_ATTACKSTOMP		,
+		STATE_ATTACKTURNLEFT	,
+		STATE_ATTACKTURNRIGHT	,
+		STATE_ATTACKTWOSTEP		,
+		STATE_DYINGFRONT		,
+		STATE_DYINGBACK			,
+		STATE_DYINGLEFT			,
+		STATE_DYINGRIGHT		
 
 	};
 private:
-	explicit CDog(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CDog(void);
+	explicit CTitan(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CTitan(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -59,7 +66,7 @@ private:
 	void		SetUp_OnTerrain(void);
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
-	dogState m_state = dogState::STATE_STAND;
+	titanState m_state = titanState::STATE_IDLE;
 
 private:
 	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
@@ -73,7 +80,7 @@ private:
 	_float						m_fAniSpeed=1.f;
 	_float						delay = 0.f;
 public:
-	static CDog*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTitan*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
@@ -81,4 +88,4 @@ private:
 };
 
 END
-#endif // Dog_h__
+#endif // Titan_h__

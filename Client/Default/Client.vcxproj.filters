@@ -67,9 +67,6 @@
     <Filter Include="02. GameObject\01. Stage\01. SkyBox">
       <UniqueIdentifier>{b31838b3-b35f-44cb-9c87-1365b2987d00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\02. Monster">
-      <UniqueIdentifier>{fa6b4915-cecb-40a6-9eed-252997339b14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Stage\03. Stone">
       <UniqueIdentifier>{9ca9802c-94fd-45f3-8163-49d2396cdb9f}</UniqueIdentifier>
     </Filter>
@@ -88,14 +85,23 @@
     <Filter Include="02. GameObject\01. Stage\99. StaticObject">
       <UniqueIdentifier>{5617e660-383b-457a-9312-bff30573ffca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\08.Monster">
+    <Filter Include="02. GameObject\01. Stage\02.Monster">
       <UniqueIdentifier>{3f3a261b-c4b9-4a8c-ab89-d051ac1a7e9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\08.Monster\00.Dog">
+    <Filter Include="02. GameObject\01. Stage\02.Monster\00.Dog">
       <UniqueIdentifier>{775004a5-1bc2-4c3e-8637-66b6a010c65b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\08.Monster\01.Titian">
+    <Filter Include="02. GameObject\01. Stage\02.Monster\01.Titian">
       <UniqueIdentifier>{59a175a9-baa9-47f6-b200-cc164ed071d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\00. HpBar">
+      <UniqueIdentifier>{afd1bf34-2a18-4a98-8517-c699b4c44fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\01. StaminaBar">
+      <UniqueIdentifier>{49e7f275-0a5c-4e6b-88f0-d09b44c7e0ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\02. SpBar">
+      <UniqueIdentifier>{01889ca6-6062-4944-83d7-762d213cef18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,9 +162,6 @@
     <ClInclude Include="..\Code\SkyBox.h">
       <Filter>02. GameObject\01. Stage\01. SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Monster.h">
-      <Filter>02. GameObject\01. Stage\02. Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Stone.h">
       <Filter>02. GameObject\01. Stage\03. Stone</Filter>
     </ClInclude>
@@ -171,14 +174,38 @@
     <ClInclude Include="..\Code\Effect.h">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\UI.h">
-      <Filter>02. GameObject\01. Stage\07. UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\StaticObject.h">
       <Filter>02. GameObject\01. Stage\99. StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Dog.h">
-      <Filter>02. GameObject\01. Stage\08.Monster\00.Dog</Filter>
+      <Filter>02. GameObject\01. Stage\02.Monster\00.Dog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Titan.h">
+      <Filter>02. GameObject\01. Stage\02.Monster\01.Titian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Monster.h">
+      <Filter>02. GameObject\01. Stage\02.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkillSlot.h">
+      <Filter>02. GameObject\01. Stage\07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\HpBarBack.h">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\HpBarValue.h">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SpBarBack.h">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SpBarValue.h">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaminaBarValue.h">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaminaBarBack.h">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,9 +248,6 @@
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. GameObject\01. Stage\01. SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. GameObject\01. Stage\02. Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Stone.cpp">
       <Filter>02. GameObject\01. Stage\03. Stone</Filter>
     </ClCompile>
@@ -236,14 +260,38 @@
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI.cpp">
-      <Filter>02. GameObject\01. Stage\07. UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\StaticObject.cpp">
       <Filter>02. GameObject\01. Stage\99. StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Dog.cpp">
-      <Filter>02. GameObject\01. Stage\08.Monster\00.Dog</Filter>
+      <Filter>02. GameObject\01. Stage\02.Monster\00.Dog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Titan.cpp">
+      <Filter>02. GameObject\01. Stage\02.Monster\01.Titian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. GameObject\01. Stage\02.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillSlot.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HpBarBack.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HpBarValue.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBarBack.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBarValue.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaminaBarValue.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaminaBarBack.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
