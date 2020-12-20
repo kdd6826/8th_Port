@@ -111,6 +111,7 @@ public:
 	
 
 	afx_msg void OnBnClickedObjStaticDelete();
+	afx_msg void OnBnClickedObjDynamicDelete();
 	//transformScalX
 	afx_msg void OnEnChangeTransformScalX();
 	afx_msg void OnEnChangeTransformScalY();

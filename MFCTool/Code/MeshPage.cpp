@@ -109,6 +109,7 @@ BEGIN_MESSAGE_MAP(MeshPage, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON14, &MeshPage::OnBnClickedDynamicLoad)
 	ON_BN_CLICKED(IDC_RADIO7, &MeshPage::OnBnClickedRadio7)
 	ON_BN_CLICKED(IDC_RADIO8, &MeshPage::OnBnClickedRadio8)
+	ON_BN_CLICKED(IDC_BUTTON12, &MeshPage::OnBnClickedObjDynamicDelete)
 END_MESSAGE_MAP()
 
 
@@ -2474,6 +2475,29 @@ void MeshPage::OnBnClickedObjStaticDelete()
 
 }
 
+void MeshPage::OnBnClickedObjDynamicDelete()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString a = treeObjDynamic.GetItemText(selectItem);
+	CString objDynamicIndexNum = a.Right(1);
+	int temp = 0;
+	temp = _ttoi(objDynamicIndexNum);
+	objDynamicCreateCount--;
+
+
+
+	treeObjDynamic.DeleteItem(selectItem);
+	///////////////////
+	vector<Engine::CGameObject*> vecObj = CMFCToolView::GetInstance()->vectorObjDynamic;
+
+	dynamic_cast<CMFCDynamicMesh*>(*(vecObj.begin() + temp))->isDead = true;
+
+
+	//vecObj.erase(vecObj.begin()+temp);
+	int i = vecObj.size();
+
+}
+
 
 void MeshPage::OnEnChangeTransformScalX()
 {
@@ -3270,3 +3294,6 @@ void MeshPage::LockOnTree()
 
 	//*pResult = 0;
 }
+
+
+
