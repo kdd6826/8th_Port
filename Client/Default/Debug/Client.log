@@ -1,7 +1,3 @@
-﻿  Stage.cpp
-  Player.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(228): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-  코드를 생성하고 있습니다...
-c:\users\gmh\desktop\client\8th_port\client\code\stage.cpp(102): warning C4715: 'Client::CStage::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+﻿  Titan.cpp
   Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

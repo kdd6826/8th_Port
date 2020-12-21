@@ -125,8 +125,8 @@ void CTitan::Move(const _float& fTimeDelta)
 		m_state = titanState::STATE_RUN;
 		if (disPlayer < 2.f)
 		{
-			//int i = rand() % 8;
-			
+			int i = rand() % 8;
+			//int i =7;
 			switch (i)
 			{
 			case 0:
@@ -296,10 +296,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 			float angle2 = D3DXToDegree(rightRadian);
 
 			//몬스터의 정면
-			
-
-
-		
+				
 			//발리스타공격
 			if (m_state == titanState::STATE_ATTACKBALLISTA)
 			{
@@ -333,6 +330,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
 				}
 			}
+			//주먹질
 			else if (m_state == titanState::STATE_ATTACKHAMMER)
 			{
 				_vec3	vPos, vDir, vRight;
@@ -365,6 +363,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
 				}
 			}
+			//발차기
 			else if (m_state == titanState::STATE_ATTACKKICK)
 			{
 				_vec3	vPos, vDir, vRight;
@@ -391,26 +390,214 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				//기존 몬스터의 룩벡터
 				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 				D3DXVec3Normalize(&vDir, &vDir);
-
-				if (delay > 2.f && delay < 2.5f)
+				m_fSpeed = 5.f;
+				if (delay > 1.7f && delay < 2.2f)
 				{
 					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
 				}
-				if (delay > 1.f && delay < 1.5f)
+				if (delay > 1.2f && delay < 1.5f)
 				{
 					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
 				}
 			}
-			
+			//분노의주먹질
+			else if (m_state == titanState::STATE_ATTACKRAGE)
+			{
+				_vec3	vPos, vDir, vRight;
+				m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+				m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+				Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+				_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
 
+				//플레이어를 향한 위치벡터
+				_vec3 toPlayerDir = playerPos - vPos;
+				float spinSpeed = 1.f;
+				//오른쪽이다
+				if (angle2 > 0)
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta * spinSpeed));
+				}
+				//왼쪽이다.
+				else
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
+				}
+
+				//기존 몬스터의 룩벡터
+				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+				D3DXVec3Normalize(&vDir, &vDir);
+				m_fSpeed = 5.f;
+				//8.3f 스타트
+				if (delay > 5.5f && delay < 7.1f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+				}
+				if (delay > 1.4f && delay < 3.8f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+				}
+			}
+			//
+			else if (m_state == titanState::STATE_ATTACKSTOMP)
+			{
+			_vec3	vPos, vDir, vRight;
+			m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+			m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+			m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+			Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+			_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
+
+			//플레이어를 향한 위치벡터
+			_vec3 toPlayerDir = playerPos - vPos;
+			float spinSpeed = 1.f;
+			//오른쪽이다
+				if (angle2 > 0)
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta * spinSpeed));
+				}
+				//왼쪽이다.
+				else
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
+				}
+
+				//기존 몬스터의 룩벡터
+				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+				D3DXVec3Normalize(&vDir, &vDir);
+				m_fSpeed = 3.f;
+				//3.5f 스타트
+				if (delay > 1.2f && delay < 1.75f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+				}
+			}
+			else if (m_state == titanState::STATE_ATTACKTURNLEFT)
+			{
+				_vec3	vPos, vDir, vRight;
+				m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+				m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+				Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+				_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
+
+				//플레이어를 향한 위치벡터
+				_vec3 toPlayerDir = playerPos - vPos;
+				float spinSpeed = 6.f;
+				//오른쪽이다
+				//if (angle2 > 0)
+				//{
+				//	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta * spinSpeed));
+				//}
+				////왼쪽이다.
+				//else
+				//{
+				//}
+
+
+				//기존 몬스터의 룩벡터
+				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+				D3DXVec3Normalize(&vDir, &vDir);
+				m_fSpeed = 3.f;
+				if (delay > 1.3f && delay < 1.4f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+
+				}
+				if (delay > 1.5f && delay < 2.f)
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(20.f * fTimeDelta * spinSpeed));
+				}
+				if (delay > 1.2f && delay < 1.35f)
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-172.5f * fTimeDelta * spinSpeed));
+				}
+			}
+			else if (m_state == titanState::STATE_ATTACKTURNRIGHT)
+			{
+			_vec3	vPos, vDir, vRight;
+			m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+			m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+			m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+			Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+			_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
+
+			//플레이어를 향한 위치벡터
+			_vec3 toPlayerDir = playerPos - vPos;
+			float spinSpeed = 6.f;
+
+
+			//기존 몬스터의 룩벡터
+			D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+			D3DXVec3Normalize(&vDir, &vDir);
+			m_fSpeed = 5.f;
+			//8.3f 스타트
+			if (delay > 1.3f && delay < 1.4f)
+			{
+				m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir* fTimeDelta* m_fSpeed)));
+				
+			}
+			if (delay > 1.5f && delay < 2.f)
+			{
+				m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-20.f * fTimeDelta * spinSpeed));
+			}
+			if (delay > 1.2f && delay < 1.35f)
+			{
+				m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(172.5f * fTimeDelta * spinSpeed));
+			}
+			}
 
 			if (true == m_pMeshCom->Is_AnimationSetEnd())
 			{
 
 				isAnimating = false;
+				m_fSpeed = TitanSpeed;
 				delay= 0;
 
 				
+			}
+			else if (m_state == titanState::STATE_ATTACKTWOSTEP)
+			{
+				_vec3	vPos, vDir, vRight;
+				m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vDir);
+				m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+				Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+				_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
+
+				//플레이어를 향한 위치벡터
+				_vec3 toPlayerDir = playerPos - vPos;
+				float spinSpeed = 1.f;
+				//오른쪽이다
+				if (angle2 > 0)
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta * spinSpeed));
+				}
+				//왼쪽이다.
+				else
+				{
+					m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
+				}
+
+				//기존 몬스터의 룩벡터
+				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
+				D3DXVec3Normalize(&vDir, &vDir);
+				m_fSpeed = 7.f;
+				//1.8f 스타트
+				if (delay > 0.6f && delay < 1.1f)
+				{
+					m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_fSpeed)));
+				}
+			}
+
+			if (true == m_pMeshCom->Is_AnimationSetEnd())
+			{
+
+				isAnimating = false;
+				m_fSpeed = TitanSpeed;
+				delay = 0;
+
+
 			}
 		}
 
