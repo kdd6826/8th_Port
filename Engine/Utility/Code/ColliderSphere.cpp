@@ -31,26 +31,26 @@ Engine::CColliderSphere::~CColliderSphere(void)
 
 HRESULT Engine::CColliderSphere::Ready_ColliderSphere()
 {
-	D3DXCreateSphere(m_pGraphicDev, 30.f, 12, 12, &pMesh, NULL);
-
-	m_dwFVF = pMesh->GetFVF();
+	D3DXCreateSphere(m_pGraphicDev, 30.f, 12, 12, &pMesh[0], NULL);
+	
+	m_dwFVF = pMesh[0]->GetFVF();
 	if (!(m_dwFVF & D3DFVF_DIFFUSE))
 	{
-		pMesh->CloneMeshFVF(pMesh->GetOptions(), m_dwFVF |= D3DFVF_DIFFUSE, m_pGraphicDev, &pMesh);
+		pMesh[0]->CloneMeshFVF(pMesh[0]->GetOptions(), m_dwFVF |= D3DFVF_DIFFUSE, m_pGraphicDev, &pMesh[0]);
 	}
 	else
 	{
-		pMesh->CloneMeshFVF(pMesh->GetOptions(), m_dwFVF, m_pGraphicDev, &pMesh);
+		pMesh[0]->CloneMeshFVF(pMesh[0]->GetOptions(), m_dwFVF, m_pGraphicDev, &pMesh[0]);
 	}
 
 
-	m_dwTriCnt = pMesh->GetNumFaces();
-	m_dwVtxCnt = pMesh->GetNumVertices();
-	m_dwVtxSize = pMesh->GetNumBytesPerVertex();
+	m_dwTriCnt = pMesh[0]->GetNumFaces();
+	m_dwVtxCnt = pMesh[0]->GetNumVertices();
+	m_dwVtxSize = pMesh[0]->GetNumBytesPerVertex();
 	m_dwIdxSize = sizeof(INDEX16);
 	m_IdxFmt = D3DFMT_INDEX16;
-	FAILED_CHECK_RETURN(pMesh->GetVertexBuffer(&m_pVB), E_FAIL);
-	FAILED_CHECK_RETURN(pMesh->GetIndexBuffer(&m_pIB), E_FAIL);
+	FAILED_CHECK_RETURN(pMesh[0]->GetVertexBuffer(&m_pVB), E_FAIL);
+	FAILED_CHECK_RETURN(pMesh[0]->GetIndexBuffer(&m_pIB), E_FAIL);
 
 
 	return S_OK;
@@ -75,7 +75,7 @@ void Engine::CColliderSphere::Render_ColliderSphere(COLLTYPE eType, const _matri
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	pMesh->DrawSubset(0);
+	pMesh[0]->DrawSubset(0);
 	
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 #endif
