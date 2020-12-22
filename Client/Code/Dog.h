@@ -1,7 +1,7 @@
 #ifndef Dog_h__
 #define Dog_h__
 
-#include "Monster.h"
+#include "Unit.h"
 #include "Define.h"
 
 BEGIN(Engine)
@@ -17,7 +17,7 @@ class CShader;
 END
 
 BEGIN(Client)
-class CDog : public CMonster
+class CDog : public CUnit
 {
 
 	enum dogState

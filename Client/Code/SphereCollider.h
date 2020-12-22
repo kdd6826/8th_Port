@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "Engine_Define.h"
 #include "Export_Function.h"
-#include "Monster.h"
+#include "Unit.h"
 BEGIN(Engine)
 
 class CRcTex;

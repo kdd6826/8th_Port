@@ -1,7 +1,7 @@
 #ifndef Titan_h__
 #define Titan_h__
 
-#include "Monster.h"
+#include "Unit.h"
 #include "Define.h"
 #include "SphereCollider.h"
 BEGIN(Engine)
@@ -16,7 +16,7 @@ class CShader;
 END
 
 BEGIN(Client)
-class CTitan : public CMonster
+class CTitan : public CUnit
 {
 
 	enum titanState

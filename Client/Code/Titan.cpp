@@ -5,7 +5,7 @@
 
 
 CTitan::CTitan(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CMonster(pGraphicDev)
+	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
 
@@ -36,7 +36,11 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	CMonster::Add_Component();
+	CUnit::Add_Component();
+
+	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	m_pTransformCom->Set_Pos(&_vec3{ 17.f,0.f,17.f });
+	Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
@@ -104,8 +108,8 @@ void CTitan::Move(const _float& fTimeDelta)
 		m_state = titanState::STATE_RUN;
 		if (disPlayer < 2.f)
 		{
-			//int i = rand() % 8;
-			int i =3;
+			int i = rand() % 8;
+			/*int i =3;*/
 			switch (i)
 			{
 			case 0:
@@ -268,7 +272,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 	//oldPos = leftToePos;
 
 
-	CMonster::Update_Object(fTimeDelta);
+	CUnit::Update_Object(fTimeDelta);
 	if (delay > 0)
 	{
 		delay -= fTimeDelta;

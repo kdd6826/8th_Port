@@ -13,7 +13,6 @@
 #include "ColliderSphere.h"
 #include "Optimization.h"
 #include "Shader.h"
-
 #include "RenderTargetMgr.h"
 
 BEGIN(Engine)
@@ -37,6 +36,7 @@ inline HRESULT					Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* p
 inline void						Render_Light(LPD3DXEFFECT& pEffect);
 // Renderer
 inline CRenderer*		Get_Renderer(void);
+
 
 // RenderTargetMgr
 inline HRESULT		Ready_RenderTarget(LPDIRECT3DDEVICE9 pGraphicDev,

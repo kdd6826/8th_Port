@@ -1,7 +1,7 @@
 #ifndef Player_h__
 #define Player_h__
 
-#include "GameObject.h"
+#include "Unit.h"
 #include "Define.h"
 
 BEGIN(Engine)
@@ -17,7 +17,7 @@ class CShader;
 END
 
 BEGIN(Client)
-class CPlayer : public Engine::CGameObject
+class CPlayer : public CUnit
 {
 
 	enum playerState
@@ -103,13 +103,6 @@ private:
 	bool		isRunning = false;
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 private:
-	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
-	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr; 
-	Engine::CTransform*			m_pTransformCom = nullptr;
-	Engine::CRenderer*			m_pRendererCom = nullptr;
-	Engine::CCalculator*		m_pCalculatorCom = nullptr;
-	Engine::CCollider*			m_pColliderCom = nullptr;
-	Engine::CShader*			m_pShaderCom = nullptr;
 	_vec3						m_vDir;
 	bool						isAnimating;
 	_float						delay = 0.f;

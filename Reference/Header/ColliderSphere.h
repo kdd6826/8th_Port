@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "CollSphere.h"
+#include "GameObject.h"
 BEGIN(Engine)
 
 class ENGINE_DLL CColliderSphere : public CComponent
@@ -24,7 +25,8 @@ public:
 	LPDIRECT3DTEXTURE9			m_pTexture[COL_END];
 	
 	/// ///
-	LPD3DXMESH	pMesh;
+	vector<LPD3DXMESH>	pMesh;
+	Engine::CGameObject* m_pDynamicMesh;
 	vector<Engine::CCollSphere*>	m_VecSphereCollider;
 	_ulong						m_dwVtxCnt;
 	_ulong						m_dwTriCnt;

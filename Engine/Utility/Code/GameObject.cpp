@@ -33,6 +33,11 @@ Engine::_int Engine::CGameObject::Update_Object(const _float& fTimeDelta)
 	return iExit;
 }
 
+bool CGameObject::IsDead()
+{
+	return isDead;
+}
+
 CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENTID eID)
 {
 	auto	iter = find_if(m_mapComponent[eID].begin(), m_mapComponent[eID].end(), CTag_Finder(pComponentTag));

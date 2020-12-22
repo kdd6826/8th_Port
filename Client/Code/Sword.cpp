@@ -38,10 +38,10 @@ HRESULT Client::CSword::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
-	// Collider 
-	pComponent = m_pColliderCom = Engine::CColliderSphere::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
+	//// Collider 
+	//pComponent = m_pColliderCom = Engine::CColliderSphere::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
 	//// Shader
 	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Trail"));
@@ -112,7 +112,7 @@ void Client::CSword::Render_Object(void)
 		m_pTransformCom->Get_WorldMatrix(&matWorld);
 		//m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
 
-	m_pColliderCom->Render_ColliderSphere(Engine::COLLTYPE(m_bColl), &matWorld);
+//	m_pColliderCom->Render_ColliderSphere(Engine::COLLTYPE(m_bColl), &matWorld);
 
 
 }

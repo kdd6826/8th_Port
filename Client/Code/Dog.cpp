@@ -5,7 +5,7 @@
 
 
 CDog::CDog(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CMonster(pGraphicDev)
+	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
 

@@ -79,11 +79,11 @@ _int CSphereCollider::Update_Object(const _float& fTimeDelta)
 		if (!m_FrameNameCheck)
 			return 0;
 
-		const Engine::D3DXFRAME_DERIVED* pFrame = dynamic_cast<CMonster*>(m_pDynamicMesh)->m_pMeshCom->Get_FrameByName(m_FrameName.c_str());
+		const Engine::D3DXFRAME_DERIVED* pFrame = dynamic_cast<CUnit*>(m_pDynamicMesh)->m_pMeshCom->Get_FrameByName(m_FrameName.c_str());
 
 		m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
 
-		Engine::CTransform* pPlayerTransCom = dynamic_cast<CMonster*>(m_pDynamicMesh)->m_pTransformCom;
+		Engine::CTransform* pPlayerTransCom = dynamic_cast<CUnit*>(m_pDynamicMesh)->m_pTransformCom;
 		NULL_CHECK_RETURN(pPlayerTransCom, 0);
 		m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
 	}

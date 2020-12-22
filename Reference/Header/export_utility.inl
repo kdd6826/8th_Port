@@ -49,7 +49,6 @@ CRenderer*		Get_Renderer(void)
 {
 	return CRenderer::GetInstance();
 }
-
 // LightMgr
 
 const D3DLIGHT9*		Get_Light(const _uint& iIndex)
