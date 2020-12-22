@@ -11,7 +11,7 @@ class CTransform;
 class CRenderer;
 class CCalculator;
 class CCollider;
-
+class CShader;
 END
 
 BEGIN(Client)
@@ -37,6 +37,8 @@ private:
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	Engine::CCollider*			m_pColliderCom = nullptr;
+	Engine::CShader*			m_pShaderCom = nullptr;
+
 	_bool						m_bColl = false;
 
 	const	_matrix*			m_pParentBoneMatrix = nullptr;

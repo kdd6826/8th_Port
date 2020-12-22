@@ -203,6 +203,18 @@
     <ClInclude Include="..\Code\RenderTargetMgr.h">
       <Filter>10. RenderTarget\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_Trail.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Weapon.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Manablade.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Base.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl">

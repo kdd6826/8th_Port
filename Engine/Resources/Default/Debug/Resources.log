@@ -1,5 +1,4 @@
-﻿  LINK : ../Bin\Resources.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
-     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
+﻿     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
 NaviMesh.obj : warning LNK4099: 'vc140.pdb' PDB를 'NaviMesh.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 Line.obj : warning LNK4099: 'vc140.pdb' PDB를 'Line.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 HierarchyLoader.obj : warning LNK4099: 'vc140.pdb' PDB를 'HierarchyLoader.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
@@ -31,7 +30,6 @@ AniCtrl.obj : warning LNK4099: 'vc140.pdb' PDB를 'AniCtrl.obj' 또는 'C:\Users
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Header\Engine_Enum.h
   .\Engine\Header\Engine_Function.h
   .\Engine\Header\Engine_Macro.h
@@ -41,7 +39,7 @@ AniCtrl.obj : warning LNK4099: 'vc140.pdb' PDB를 'AniCtrl.obj' 또는 'C:\Users
   .\Engine\Header\Export_Resouces.h
   .\Engine\Header\Export_System.h
   .\Engine\Header\Export_Utility.h
-          9개 파일이 복사되었습니다.
+         10개 파일이 복사되었습니다.
   .\Engine\Header\Export_Resouces.inl
   .\Engine\Header\Export_System.inl
   .\Engine\Header\Export_Utility.inl
