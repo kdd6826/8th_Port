@@ -10,6 +10,7 @@
 #include "Calculator.h"
 #include "LightMgr.h"
 #include "Collider.h"
+#include "ColliderSphere.h"
 #include "Optimization.h"
 #include "Shader.h"
 

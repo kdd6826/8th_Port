@@ -129,6 +129,9 @@
     <ClCompile Include="..\Code\RenderTargetMgr.cpp">
       <Filter>10. RenderTarget\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ColliderSphere.cpp">
+      <Filter>04. Component\02. Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Component.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Shader_Base.hpp">
       <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderSphere.h">
+      <Filter>04. Component\02. Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

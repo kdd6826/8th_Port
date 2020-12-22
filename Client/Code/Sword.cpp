@@ -39,7 +39,7 @@ HRESULT Client::CSword::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
 	// Collider 
-	pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
+	pComponent = m_pColliderCom = Engine::CColliderSphere::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
@@ -112,7 +112,7 @@ void Client::CSword::Render_Object(void)
 		m_pTransformCom->Get_WorldMatrix(&matWorld);
 		//m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
 
-	m_pColliderCom->Render_Collider(Engine::COLLTYPE(m_bColl), &matWorld);
+	m_pColliderCom->Render_ColliderSphere(Engine::COLLTYPE(m_bColl), &matWorld);
 
 
 }
@@ -123,6 +123,7 @@ _bool CSword::Collision_ToObject(const _tchar * pLayerTag, const _tchar * pObjTa
 	Engine::CCollider*	pPlayerColliderCom = dynamic_cast<Engine::CCollider*>(Engine::Get_Component(pLayerTag, pObjTag, L"Com_Collider", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pPlayerColliderCom, false);
 	
+
 	/*return m_pCalculatorCom->Collision_AABB(pPlayerColliderCom->Get_Min(),
 											pPlayerColliderCom->Get_Max(),
 											pPlayerColliderCom->Get_CollMatrix(),
@@ -130,10 +131,10 @@ _bool CSword::Collision_ToObject(const _tchar * pLayerTag, const _tchar * pObjTa
 											m_pColliderCom->Get_Max(),
 											m_pColliderCom->Get_CollMatrix());*/
 
-	return m_pCalculatorCom->Collision_OBB(pPlayerColliderCom->Get_Min(),
+	return true;/* m_pCalculatorCom->Collision_OBB(pPlayerColliderCom->Get_Min(),
 		pPlayerColliderCom->Get_Max(),
 		pPlayerColliderCom->Get_CollMatrix(),
 		m_pColliderCom->Get_Min(),
 		m_pColliderCom->Get_Max(),
-		m_pColliderCom->Get_CollMatrix());
+		m_pColliderCom->Get_CollMatrix());*/
 }

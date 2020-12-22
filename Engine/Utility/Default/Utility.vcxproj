@@ -168,6 +168,7 @@ Call CopyUtility.bat</Command>
   <ItemGroup>
     <ClCompile Include="..\Code\Calculator.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />
+    <ClCompile Include="..\Code\ColliderSphere.cpp" />
     <ClCompile Include="..\Code\Collider.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
     <ClCompile Include="..\Code\Frustum.cpp" />
@@ -191,6 +192,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\Code\Calculator.h" />
     <ClInclude Include="..\Code\Camera.h" />
+    <ClInclude Include="..\Code\ColliderSphere.h" />
     <ClInclude Include="..\Code\Collider.h" />
     <ClInclude Include="..\Code\Component.h" />
     <ClInclude Include="..\Code\Frustum.h" />
