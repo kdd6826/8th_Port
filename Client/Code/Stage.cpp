@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
 #include "Export_Function.h"
-
+#include "Loading.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -10,7 +10,7 @@ CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CStage::~CStage(void)
 {
-
+	
 }
 
 HRESULT CStage::Ready_Scene(void)

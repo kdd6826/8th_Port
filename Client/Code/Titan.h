@@ -3,7 +3,7 @@
 
 #include "Monster.h"
 #include "Define.h"
-
+#include "SphereCollider.h"
 BEGIN(Engine)
 
 class CDynamicMesh;
@@ -13,7 +13,6 @@ class CCalculator;
 class CCollider;
 class CNaviMesh;
 class CShader;
-
 END
 
 BEGIN(Client)
@@ -62,20 +61,15 @@ private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 	void		Move(const _float& fTimeDelta);
+	
 	void		Attack(const _float& fTimeDelta);
 	void		SetUp_OnTerrain(void);
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	titanState m_state = titanState::STATE_IDLE;
 
-private:
-	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
-	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr; 
-	Engine::CTransform*			m_pTransformCom = nullptr;
-	Engine::CRenderer*			m_pRendererCom = nullptr;
-	Engine::CCalculator*		m_pCalculatorCom = nullptr;
-	Engine::CCollider*			m_pColliderCom = nullptr;
-	Engine::CShader*			m_pShaderCom = nullptr;
+
+
 	_vec3						m_vDir;
 	_float						m_fAniSpeed=1.f;
 	_float						delay = 0.f;

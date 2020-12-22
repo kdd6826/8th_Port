@@ -4,6 +4,7 @@
 
 #include "Export_Function.h"
 
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -105,6 +106,12 @@ _uint CLoading::Loading_ForStage(void)
 												L"../Bin/Resource/Texture/Terrain/Terrain_%d_n.tga", 8),
 												E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+		Engine::RESOURCE_STATIC,
+		L"Buffer_CollSphere",
+		Engine::BUFFER_COLLSPHERE),
+		E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Texture_Filter",
@@ -200,7 +207,8 @@ _uint CLoading::Loading_ForStage(void)
 	//										L"Tree01.X"),
 	//										E_FAIL);
 	//
-	
+
+
 	lstrcpy(m_szLoading, L"Loading Complete!!!");
 
 	m_bFinish = true;
@@ -276,6 +284,8 @@ void CLoading::Load_StaticObject()
 					firstfd2Name.c_str()),
 					);
 				iResult2 = _findnext(handle2, &fd2);
+
+				
 			}
 		}
 

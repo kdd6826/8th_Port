@@ -5,9 +5,9 @@
 #include "Base.h"
 
 BEGIN(Client)
-
 class CLoading : public CBase 
 {
+	
 public:
 	enum LOADINGID {LOADING_STAGE, LOADING_BOSS, LOADING_END };
 

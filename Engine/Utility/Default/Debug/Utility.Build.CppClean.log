@@ -5,7 +5,6 @@ c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\camera.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\collider.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\component.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\frustum.obj
-c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\light.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\lightmgr.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\optimization.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\pipeline.obj
@@ -14,11 +13,13 @@ c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\gameobject.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\layer.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\management.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\quadtree.obj
-c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\renderer.obj
-c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\rendertarget.obj
+c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\rendertargetmgr.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\scene.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\shader.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\transform.obj
+c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\light.obj
+c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\rendertarget.obj
+c:\users\gmh\desktop\client\8th_port\engine\utility\default\debug\renderer.obj
 c:\users\gmh\desktop\client\8th_port\engine\utility\bin\utility.ilk
 c:\users\gmh\desktop\client\8th_port\engine\utility\bin\utility.dll
 c:\users\gmh\desktop\client\8th_port\engine\utility\bin\utility.pdb

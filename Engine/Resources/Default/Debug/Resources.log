@@ -1,14 +1,18 @@
-﻿     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
-NaviMesh.obj : warning LNK4099: 'vc140.pdb' PDB를 'NaviMesh.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-Line.obj : warning LNK4099: 'vc140.pdb' PDB를 'Line.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-HierarchyLoader.obj : warning LNK4099: 'vc140.pdb' PDB를 'HierarchyLoader.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DynamicMesh.obj : warning LNK4099: 'vc140.pdb' PDB를 'DynamicMesh.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-Cell.obj : warning LNK4099: 'vc140.pdb' PDB를 'Cell.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-AniCtrl.obj : warning LNK4099: 'vc140.pdb' PDB를 'AniCtrl.obj' 또는 'C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Bin\vc140.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+﻿  VIBuffer.cpp
+  CollSphere.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  TriCol.cpp
+  TerrainTex.cpp
+  ResourcesMgr.cpp
+  RcTex.cpp
+  CubeTex.cpp
+  코드를 생성하고 있습니다...
   Resources.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\AniCtrl.h
   .\Engine\Resources\Code\Cell.h
+  .\Engine\Resources\Code\CollSphere.h
   .\Engine\Resources\Code\CubeTex.h
   .\Engine\Resources\Code\DynamicMesh.h
   .\Engine\Resources\Code\HierarchyLoader.h
@@ -26,7 +30,7 @@ AniCtrl.obj : warning LNK4099: 'vc140.pdb' PDB를 'AniCtrl.obj' 또는 'C:\Users
   .\Engine\Resources\Code\Texture.h
   .\Engine\Resources\Code\TriCol.h
   .\Engine\Resources\Code\VIBuffer.h
-         19개 파일이 복사되었습니다.
+         20개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

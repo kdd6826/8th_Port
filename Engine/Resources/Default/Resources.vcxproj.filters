@@ -52,6 +52,9 @@
     <Filter Include="00. Resources\02. Mesh\02. NaviMesh\01. Line">
       <UniqueIdentifier>{07d14f51-6a99-4840-a95a-597f0504aff2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\04. Sphere">
+      <UniqueIdentifier>{ceb08f3e-b3ef-4967-8917-4ec1a2a107ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Resources.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Line.cpp">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CollSphere.cpp">
+      <Filter>00. Resources\00. VIBuffer\04. Sphere</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Line.h">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CollSphere.h">
+      <Filter>00. Resources\00. VIBuffer\04. Sphere</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

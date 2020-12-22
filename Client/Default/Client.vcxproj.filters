@@ -85,15 +85,6 @@
     <Filter Include="02. GameObject\01. Stage\99. StaticObject">
       <UniqueIdentifier>{5617e660-383b-457a-9312-bff30573ffca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\02.Monster">
-      <UniqueIdentifier>{3f3a261b-c4b9-4a8c-ab89-d051ac1a7e9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Stage\02.Monster\00.Dog">
-      <UniqueIdentifier>{775004a5-1bc2-4c3e-8637-66b6a010c65b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Stage\02.Monster\01.Titian">
-      <UniqueIdentifier>{59a175a9-baa9-47f6-b200-cc164ed071d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Stage\07. UI\00. HpBar">
       <UniqueIdentifier>{afd1bf34-2a18-4a98-8517-c699b4c44fa2}</UniqueIdentifier>
     </Filter>
@@ -102,6 +93,18 @@
     </Filter>
     <Filter Include="02. GameObject\01. Stage\07. UI\02. SpBar">
       <UniqueIdentifier>{01889ca6-6062-4944-83d7-762d213cef18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\98.SphereCollider">
+      <UniqueIdentifier>{e767e0ef-cd77-4409-aa54-ace134be7814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\02. Monster">
+      <UniqueIdentifier>{3f3a261b-c4b9-4a8c-ab89-d051ac1a7e9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\02. Monster\00.Dog">
+      <UniqueIdentifier>{775004a5-1bc2-4c3e-8637-66b6a010c65b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\02. Monster\01.Titian">
+      <UniqueIdentifier>{59a175a9-baa9-47f6-b200-cc164ed071d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -178,13 +181,13 @@
       <Filter>02. GameObject\01. Stage\99. StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Dog.h">
-      <Filter>02. GameObject\01. Stage\02.Monster\00.Dog</Filter>
+      <Filter>02. GameObject\01. Stage\02. Monster\00.Dog</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Titan.h">
-      <Filter>02. GameObject\01. Stage\02.Monster\01.Titian</Filter>
+      <Filter>02. GameObject\01. Stage\02. Monster\01.Titian</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Monster.h">
-      <Filter>02. GameObject\01. Stage\02.Monster</Filter>
+      <Filter>02. GameObject\01. Stage\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SkillSlot.h">
       <Filter>02. GameObject\01. Stage\07. UI</Filter>
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\StaminaBarBack.h">
       <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SphereCollider.h">
+      <Filter>02. GameObject\01. Stage\98.SphereCollider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,13 +270,13 @@
       <Filter>02. GameObject\01. Stage\99. StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Dog.cpp">
-      <Filter>02. GameObject\01. Stage\02.Monster\00.Dog</Filter>
+      <Filter>02. GameObject\01. Stage\02. Monster\00.Dog</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Titan.cpp">
-      <Filter>02. GameObject\01. Stage\02.Monster\01.Titian</Filter>
+      <Filter>02. GameObject\01. Stage\02. Monster\01.Titian</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. GameObject\01. Stage\02.Monster</Filter>
+      <Filter>02. GameObject\01. Stage\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SkillSlot.cpp">
       <Filter>02. GameObject\01. Stage\07. UI</Filter>
@@ -292,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaminaBarBack.cpp">
       <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SphereCollider.cpp">
+      <Filter>02. GameObject\01. Stage\98.SphereCollider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
