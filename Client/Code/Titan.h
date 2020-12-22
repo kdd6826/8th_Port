@@ -68,7 +68,11 @@ private:
 	_float		m_fAngle;
 	titanState m_state = titanState::STATE_IDLE;
 
-
+	_vec3 oldPos;
+	_vec3 newPos;
+	_vec3 dirPos;
+	const	_matrix* m_pParentBoneMatrix = nullptr;
+	const	_matrix* m_pParentWorldMatrix = nullptr;
 
 	_vec3						m_vDir;
 	_float						m_fAniSpeed=1.f;

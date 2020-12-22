@@ -82,10 +82,6 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 		Engine::CDynamicMesh*	pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
 		NULL_CHECK_RETURN(pPlayerMeshCom, 0);
 
-		//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger31"); //-90
-//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger01");
-//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger1");
-//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger12"); //X -100
 		const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger22"); //X -100
 		m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
 		

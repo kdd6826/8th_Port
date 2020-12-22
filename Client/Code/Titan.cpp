@@ -104,8 +104,8 @@ void CTitan::Move(const _float& fTimeDelta)
 		m_state = titanState::STATE_RUN;
 		if (disPlayer < 2.f)
 		{
-			int i = rand() % 8;
-			//int i =7;
+			//int i = rand() % 8;
+			int i =3;
 			switch (i)
 			{
 			case 0:
@@ -236,6 +236,37 @@ HRESULT Client::CTitan::Ready_Object(void)
 }
 Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 {
+
+	
+	//Engine::CDynamicMesh* pTitanMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Titan", L"Com_Mesh", Engine::ID_STATIC));
+	//NULL_CHECK_RETURN(pTitanMeshCom, 0);
+	//const Engine::D3DXFRAME_DERIVED* pFrame = pTitanMeshCom->Get_FrameByName("ValveBiped_Bip01_L_Toe0"); //X -100
+	//m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
+	//_vec3 leftToePos{ m_pParentBoneMatrix->_41,m_pParentBoneMatrix->_42,m_pParentBoneMatrix->_43 };
+	//newPos = leftToePos;
+	//
+	//_vec3 temp2 = m_pTransformCom->m_vInfo[Engine::INFO_POS] - newPos;
+	//D3DXVec3Normalize(&temp2, &temp2);
+	//	
+	//if (>0)
+	//{
+	//	if (oldPos != newPos)
+	//	{
+	//		_vec3 vPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	//		_vec3 temp = newPos - oldPos;
+	//		temp.y = 0;
+	//		D3DXVec3Length(&temp);
+	//		D3DXVec3Normalize(&temp, &temp);
+	//		dirPos = temp;
+	//		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(dirPos * fTimeDelta * m_fSpeed * 10.f)));
+	//	}
+	//}
+	//pFrame = pTitanMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Toe0"); //X -100
+	//m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
+	//_vec3 rightToePos{ m_pParentBoneMatrix->_41,m_pParentBoneMatrix->_42,m_pParentBoneMatrix->_43 };
+
+	//oldPos = leftToePos;
+
 
 	CMonster::Update_Object(fTimeDelta);
 	if (delay > 0)
