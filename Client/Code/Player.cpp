@@ -35,35 +35,11 @@ HRESULT Client::CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	//pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
-
-	//// Transform
-	//pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
-
-	//// Renderer
-	//pComponent = m_pRendererCom = Engine::Get_Renderer();
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//Safe_AddRef(pComponent);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
-
-	//// Calculator
-	//pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
-
 	CUnit::Add_Component();
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&PlayerSpawnPosition);
 	Engine::CGameObject::Update_Object(timeDelta);
-	// Collider 
-	//pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));

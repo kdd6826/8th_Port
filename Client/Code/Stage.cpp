@@ -2,6 +2,7 @@
 #include "Stage.h"
 #include "Export_Function.h"
 #include "Loading.h"
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -10,7 +11,7 @@ CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CStage::~CStage(void)
 {
-	
+
 }
 
 HRESULT CStage::Ready_Scene(void)
@@ -35,7 +36,6 @@ void CStage::Render_Scene(void)
 {
 
 }
-
 
 HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
 {
@@ -107,14 +107,13 @@ HRESULT CStage::Ready_Environment_Layer(const _tchar * pLayerTag)
 	
 	Engine::CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CSkyBox::Create(m_pGraphicDev);
+	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
 
 	pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
-
 
 	
 	m_mapLayer.emplace(pLayerTag, pLayer);
@@ -142,7 +141,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	pGameObject = CDog::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
-	
+
 
 	pGameObject = CTitan::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -171,9 +170,9 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Effect", pGameObject), E_FAIL);
 	//}
 
-	/*pGameObject = CSkillSlot::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkillSlot", pGameObject), E_FAIL);*/
+	//pGameObject = CUI::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
 
 	m_mapLayer.emplace(pLayerTag, pLayer);
@@ -183,6 +182,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 {
+
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
@@ -233,6 +233,7 @@ HRESULT CStage::Ready_LightInfo(void)
 	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
+	// 0번 조명
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 
 	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
@@ -242,6 +243,28 @@ HRESULT CStage::Ready_LightInfo(void)
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
 	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+		return E_FAIL;
+
+	// 1번 조명
+	tLightInfo.Type = D3DLIGHT_POINT;
+	tLightInfo.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.f, 0.f, 1.f);
+	tLightInfo.Position = _vec3(5.f, 5.f, 5.f);
+	tLightInfo.Range = 10.f;
+
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1)))
+		return E_FAIL;
+		
+	// 2번 조명
+	tLightInfo.Type = D3DLIGHT_POINT;
+	tLightInfo.Diffuse = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.f, 0.f, 0.2f, 1.f);
+	tLightInfo.Position = _vec3(10.f, 5.f, 10.f);
+	tLightInfo.Range = 10.f;
+
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 2)))
 		return E_FAIL;
 
 	return S_OK;

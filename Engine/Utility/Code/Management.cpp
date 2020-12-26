@@ -24,7 +24,7 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 											ViewPort.Width, 
 											ViewPort.Height,
 											D3DFMT_A16B16G16R16F, 
-											D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), 
+											D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), 
 											E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Albedo", 0.f, 0.f, 200.f, 200.f), E_FAIL);
@@ -52,7 +52,7 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 											ViewPort.Width,
 											ViewPort.Height,
 											D3DFMT_A16B16G16R16F,
-											D3DXCOLOR(0.f, 0.f, 0.f, 1.f)),
+											D3DXCOLOR(0.f, 0.f, 0.f, 0.f)),
 											E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Specular", 200.f, 200.f, 200.f, 200.f), E_FAIL);
 
@@ -61,7 +61,7 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 											ViewPort.Width,
 											ViewPort.Height,
 											D3DFMT_A32B32G32R32F,
-											D3DXCOLOR(0.f, 0.f, 0.f, 1.f)),
+											D3DXCOLOR(1.f, 1.f, 1.f, 1.f)),
 											E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Depth", 0.f, 400.f, 200.f, 200.f), E_FAIL);
 
@@ -75,11 +75,6 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 
 	CShader*		pShader = nullptr;
-
-	//// Trail
-	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Weapon.hpp");
-	//NULL_CHECK_RETURN(pShader, E_FAIL);
-	//FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Weapon", pShader), E_FAIL);
 
 	// Trail
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Manablade.hpp");
@@ -115,6 +110,16 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Blend.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Blend", pShader), E_FAIL);
+
+	// SkyBox
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_SkyBox.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_SkyBox", pShader), E_FAIL);
+
+	// Effect
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Effect.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Effect", pShader), E_FAIL);
 
 	return S_OK;
 }
@@ -168,5 +173,6 @@ Engine::CGameObject* Engine::CManagement::Get_GameObject(const _tchar* pLayerTag
 
 	return m_pScene->Get_GameObject(pLayerTag, pObjTag);
 }
+
 
 
