@@ -37,7 +37,7 @@ private:
 
 protected:
 	HRESULT		Add_Component(void);
-	_int Load_ColliderFile(_tchar* pFilePath);
+	_int Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType);
 
 	vector<CSphereCollider*>	m_VecSphereCollider;
 	_bool isSearch = false;

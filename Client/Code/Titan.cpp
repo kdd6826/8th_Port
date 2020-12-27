@@ -5,7 +5,7 @@
 
 
 CTitan::CTitan(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CUnit(pGraphicDev)
+	: CMonster(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
 
@@ -47,7 +47,7 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveTitan.dat");
+	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY);
 	return S_OK;
 }
 
@@ -662,6 +662,9 @@ void Client::CTitan::Render_Object(void)
 
 
 	Engine::Safe_Release(pEffect);
+}
+void CTitan::OnCollision(Engine::CGameObject* target)
+{
 }
 void Client::CTitan::SetUp_OnTerrain(void)
 {

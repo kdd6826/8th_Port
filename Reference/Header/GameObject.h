@@ -21,7 +21,7 @@ public:
 	virtual HRESULT			Ready_Object(void) { return S_OK; };
 	virtual _int			Update_Object(const _float& fTimeDelta);
 	virtual void			Render_Object(void) {};
-
+	virtual void			OnCollision(CGameObject* target);
 	bool IsDead();
 
 

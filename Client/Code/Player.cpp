@@ -46,6 +46,8 @@ HRESULT Client::CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
+	Load_ColliderFile(L"../Bin/savePlayer.dat",Engine::COLLID::PLAYER);
+
 	return S_OK;
 }
 
@@ -653,7 +655,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 
 	m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
-
+	CUnit::Update_Object(fTimeDelta);
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
 	return 0;
@@ -680,6 +682,12 @@ void Client::CPlayer::Render_Object(void)
 
 
 	Engine::Safe_Release(pEffect);
+}
+void CPlayer::OnCollision(Engine::CGameObject* target)
+{
+	_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+
+	m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir*0.1;
 }
 void Client::CPlayer::SetUp_OnTerrain(void)
 {

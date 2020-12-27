@@ -30,7 +30,7 @@ private:
 	//void		SetUp_OnTerrain(void);
 	//void		Key_Input(const _float& fTimeDelta);
 	//_vec3		PickUp_OnTerrain(void);
-
+	virtual void  OnCollision();
 public:
 	Engine::CCollSphere* m_pBufferCom = nullptr;
 	Engine::CTransform* m_pTransformCom = nullptr;

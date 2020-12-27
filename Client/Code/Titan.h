@@ -1,7 +1,7 @@
 #ifndef Titan_h__
 #define Titan_h__
 
-#include "Unit.h"
+#include "Monster.h"
 #include "Define.h"
 #include "SphereCollider.h"
 BEGIN(Engine)
@@ -16,7 +16,7 @@ class CShader;
 END
 
 BEGIN(Client)
-class CTitan : public CUnit
+class CTitan : public CMonster
 {
 
 	enum titanState
@@ -56,7 +56,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-
+	virtual void OnCollision(Engine::CGameObject* target)override;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);

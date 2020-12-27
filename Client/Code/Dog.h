@@ -1,7 +1,7 @@
 #ifndef Dog_h__
 #define Dog_h__
 
-#include "Unit.h"
+#include "Monster.h"
 #include "Define.h"
 
 BEGIN(Engine)
@@ -17,7 +17,7 @@ class CShader;
 END
 
 BEGIN(Client)
-class CDog : public CUnit
+class CDog : public CMonster
 {
 
 	enum dogState
@@ -50,7 +50,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-
+	virtual void OnCollision(Engine::CGameObject* target)override;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);

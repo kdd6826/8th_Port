@@ -33,6 +33,10 @@ Engine::_int Engine::CGameObject::Update_Object(const _float& fTimeDelta)
 	return iExit;
 }
 
+void CGameObject::OnCollision(CGameObject* target)
+{
+}
+
 bool CGameObject::IsDead()
 {
 	return isDead;

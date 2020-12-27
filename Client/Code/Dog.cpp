@@ -5,7 +5,7 @@
 
 
 CDog::CDog(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CUnit(pGraphicDev)
+	: CMonster(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
 
@@ -172,6 +172,9 @@ void Client::CDog::Render_Object(void)
 
 
 	Engine::Safe_Release(pEffect);
+}
+void CDog::OnCollision(Engine::CGameObject* target)
+{
 }
 void Client::CDog::SetUp_OnTerrain(void)
 {

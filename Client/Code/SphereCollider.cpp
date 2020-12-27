@@ -42,6 +42,10 @@ HRESULT CSphereCollider::Add_Component(void)
 	return S_OK;
 }
 
+void CSphereCollider::OnCollision()
+{
+}
+
 CSphereCollider* CSphereCollider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CSphereCollider* pInstance = new CSphereCollider(pGraphicDev);

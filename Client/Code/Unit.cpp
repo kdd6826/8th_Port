@@ -79,7 +79,7 @@ HRESULT CUnit::Add_Component(void)
 	return S_OK;
 }
 
-_int CUnit::Load_ColliderFile(_tchar* pFilePath)
+_int CUnit::Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType)
 {
 	_tchar		szDataPath[256] = L"";
 
@@ -126,7 +126,7 @@ _int CUnit::Load_ColliderFile(_tchar* pFilePath)
 		m_VecSphereCollider.emplace_back(sphereCol);
 		sphereCol->m_pTransformCom->m_vInfo[Engine::INFO_POS] = spherePos;
 		sphereCol->m_pTransformCom->m_vScale = sphereScale;
-		CColliderMgr::GetInstance()->objectList[Engine::COLLID::NONE];
+		CColliderMgr::GetInstance()->RegisterObject(_collType, sphereCol);
 	}
 
 	CloseHandle(hFile);

@@ -17,9 +17,11 @@ public:
 public:
 	void Update();
 	void CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstType);
-
+	static void RegisterObject(Engine::COLLID colType, CSphereCollider* _pObj);
+	void DisregisterObject(CSphereCollider* obj);
+	static void DisregisterObject(Engine::COLLID colType, CSphereCollider* _pObj);
 	static bool IsCollided(CSphereCollider* _srcType, CSphereCollider* _dstType);
-
+	static bool FindObject(Engine::COLLID colType, CSphereCollider* _pObj);
 public:
 	list<CSphereCollider*>				objectList[Engine::COLLID::NONE];
 

@@ -23,7 +23,7 @@
 #include "SpBarValue.h"
 #include "StaminaBarBack.h"
 #include "StaminaBarValue.h"
-
+#include "ColliderMgr.h"
 
 #include "StaticObject.h"
 BEGIN(Client)
