@@ -36,26 +36,8 @@ HRESULT Client::CDog::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
-
-	// Transform
-	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
-
-	// Renderer
-	pComponent = m_pRendererCom = Engine::Get_Renderer();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Safe_AddRef(pComponent);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
-
-	// Calculator
-	pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
-
+	CUnit::Add_Component();
+	
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&_vec3{23.f,0.f,23.f});
 	Engine::CGameObject::Update_Object(timeDelta);
@@ -65,6 +47,7 @@ HRESULT Client::CDog::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
+	Load_ColliderFile(L"../Bin/saveDog3.dat", Engine::COLLID::ENEMY);
 	return S_OK;
 }
 
@@ -116,7 +99,7 @@ CDog* CDog::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CDog::Free(void)
 {
-	Engine::CGameObject::Free();
+	CMonster::Free();
 }
 
 
@@ -133,7 +116,7 @@ HRESULT Client::CDog::Ready_Object(void)
 }
 Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 {
-
+	CMonster::Update_Object(fTimeDelta);
 	m_state = dogState::STATE_STAND;
 	//SetUp_OnTerrain()
 	Engine::CGameObject::Update_Object(fTimeDelta);	

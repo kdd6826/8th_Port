@@ -86,6 +86,18 @@ void Engine::CAniCtrl::Set_AnimationSet(const _uint& iIndex)
 	m_iCurrentTrack = m_iNewTrack;
 }
 
+_double CAniCtrl::Get_AnimationPeriod(const _uint& iIndex)
+{
+	LPD3DXANIMATIONSET		pAS = NULL;
+
+	// 인덱스 값에 해당하는 애니메이션 셋을 얻어는 함수
+	m_pAniCtrl->GetAnimationSet(iIndex, &pAS);
+
+	// m_pAniCtrl->GetAnimationSetByName()
+
+	return m_dPeriod = pAS->GetPeriod(); // 애니메이션 셋의 재생 시간을 반환하는 함수
+}
+
 void Engine::CAniCtrl::Play_Animation(const _float& fTimeDelta)
 {
 	m_pAniCtrl->AdvanceTime(fTimeDelta, NULL);	// 2인자 : 애니메이션 재생에 따라 사운드나, 이펙트를 구동 가능, 하지만 안씀.

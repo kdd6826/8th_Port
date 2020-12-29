@@ -14,7 +14,7 @@ protected:
 public:
 	CComponent*	   Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	_float			Get_ViewZ(void) const { return m_fViewZ; }
-
+	virtual void Die();
 	void			Compute_ViewZ(const _vec3* pPos);
 
 public:
@@ -23,7 +23,7 @@ public:
 	virtual void			Render_Object(void) {};
 	virtual void			OnCollision(CGameObject* target);
 	bool IsDead();
-
+	bool isColl = false;
 
 private:
 	CComponent*		Find_Component(const _tchar* pComponentTag, COMPONENTID eID);

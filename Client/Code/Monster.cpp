@@ -14,7 +14,24 @@ CMonster::~CMonster(void)
 
 _int CMonster::Update_Object(const _float& fTimeDelta)
 {
+	CUnit::Update_Object(fTimeDelta);
 	return S_OK;
+}
+
+void CMonster::OnCollision(Engine::CGameObject* target)
+{
+	_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+
+	m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
+	m_pTransformCom->stat.hp -= 1.f;
+
+	if (m_pTransformCom->stat.hp <= 0 && isDie == false)
+	{
+		
+		isDie = true;
+		
+	}
+
 }
 
 bool CMonster::PlayerSearch(_vec3 _MonsterPos)
@@ -44,6 +61,6 @@ bool CMonster::PlayerSearch(_vec3 _MonsterPos)
 
 void CMonster::Free(void)
 {
-	Engine::CGameObject::Free();
+	CUnit::Free();
 }
 

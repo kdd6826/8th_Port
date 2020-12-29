@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SphereCollider.h"
 #include "Export_Function.h"
+#include "ColliderMgr.h"
 CSphereCollider::CSphereCollider(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -8,7 +9,7 @@ CSphereCollider::CSphereCollider(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CSphereCollider::~CSphereCollider(void)
 {
-
+	CColliderMgr::GetInstance()->DisregisterObject(this);
 }
 
 HRESULT CSphereCollider::Add_Component(void)
@@ -58,6 +59,8 @@ CSphereCollider* CSphereCollider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CSphereCollider::Free(void)
 {
+	Safe_Release(m_pGraphicDev);
+	
 	Engine::CGameObject::Free();
 }
 
@@ -72,9 +75,13 @@ HRESULT CSphereCollider::Ready_Object(void)
 
 _int CSphereCollider::Update_Object(const _float& fTimeDelta)
 {
+
 	if (m_Dead)
 		return 1;
-	
+	if (m_pDynamicMesh->isColl == false)
+		isColl=false;
+	else
+		isColl = true;
 
 	if (nullptr == m_pParentBoneMatrix)
 	{
@@ -105,11 +112,14 @@ _int CSphereCollider::Update_Object(const _float& fTimeDelta)
 }
 void CSphereCollider::Render_Object(void)
 {
+	
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pBufferCom->Render_Buffer();
+	if (m_pBufferCom != nullptr)
+	{
+		m_pBufferCom->Render_Buffer();
+	}
 	//m_pTextureCom->Render_Texture(0);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

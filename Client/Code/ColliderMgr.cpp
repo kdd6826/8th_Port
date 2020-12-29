@@ -35,7 +35,9 @@ void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstTy
 		{
 			if (IsCollided(srcElem, dstElem))
 			{
+				if(dstElem->isColl==true)
 				srcElem->m_pDynamicMesh->OnCollision(dstElem->m_pDynamicMesh);
+				if (srcElem->isColl == true)
 				dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
 			}
 		}
@@ -91,7 +93,7 @@ bool CColliderMgr::IsCollided(CSphereCollider* _srcType, CSphereCollider* _dstTy
 
 	_vec3 distance = srcPos- dstPos;
 	float dist = sqrtf(distance.x * distance.x + distance.y * distance.y + distance.z * distance.z);
-	
+
 	float radius1 = _dstType->m_pTransformCom->m_vScale.x * dynamic_cast<CUnit*>(_dstType->m_pDynamicMesh)->m_pTransformCom->m_vScale.x;
 	float radius2 = _srcType->m_pTransformCom->m_vScale.x * dynamic_cast<CUnit*>(_srcType->m_pDynamicMesh)->m_pTransformCom->m_vScale.x;
 	if (dist < (radius1 + radius2))

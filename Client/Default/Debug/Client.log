@@ -1,5 +1,4 @@
-﻿  Player.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(208): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(690): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+﻿  Dog.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\dog.cpp(74): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
   Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

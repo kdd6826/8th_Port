@@ -48,7 +48,7 @@ public:
 	_vec3			m_vDirection;
 	_matrix			m_matWorld;
 	_matrix			m_matNRotWorld;
-
+	STAT stat;
 public:
 	static		CTransform*		Create(void);
 	virtual CComponent*		Clone(void);

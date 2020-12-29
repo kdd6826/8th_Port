@@ -62,6 +62,11 @@ CComponent * CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTI
 	return pComponent;
 }
 
+void CGameObject::Die()
+{
+	isDead = true;
+}
+
 void CGameObject::Compute_ViewZ(const _vec3 * pPos)
 {
 	_matrix		matCamWorld;

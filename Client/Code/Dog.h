@@ -62,13 +62,6 @@ private:
 	dogState m_state = dogState::STATE_STAND;
 
 private:
-	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
-	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr; 
-	Engine::CTransform*			m_pTransformCom = nullptr;
-	Engine::CRenderer*			m_pRendererCom = nullptr;
-	Engine::CCalculator*		m_pCalculatorCom = nullptr;
-	Engine::CCollider*			m_pColliderCom = nullptr;
-	Engine::CShader*			m_pShaderCom = nullptr;
 	_vec3						m_vDir;
 	_float						m_fAniSpeed=1.f;
 	_float						delay = 0.f;

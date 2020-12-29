@@ -110,7 +110,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STATIC,
 		L"Buffer_CollSphere",
 		Engine::BUFFER_COLLSPHERE),
-		E_FAIL);
+		E_FAIL);	
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

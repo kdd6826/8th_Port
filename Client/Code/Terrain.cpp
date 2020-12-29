@@ -179,7 +179,7 @@ HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetFloat("g_fDetail", fDetail);
 	
 #pragma region Aura
-	/*
+	
 	Engine::CTransform*	pPlayerTransform = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransform, E_FAIL);
 	
@@ -189,7 +189,7 @@ HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetVector("g_vPlayerPos", &_vec4(vPlayerPos, 1.f));
 
 	_float	fRange = 3.f;
-	pEffect->SetFloat("g_fRange", fRange);*/
+	pEffect->SetFloat("g_fRange", fRange);
 #pragma endregion Aura
 	
 	return S_OK;

@@ -10,10 +10,11 @@ CUnit::CUnit(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CUnit::~CUnit(void)
 {
-	for (auto& sphere : m_VecSphereCollider)
-	{
-		Engine::Safe_Release(sphere);
-	}
+	//for (auto& iterator = m_VecSphereCollider.begin(); iterator != m_VecSphereCollider.end();++iterator)
+	//{
+	//	//Engine::Safe_Delete_Array(*iterator);
+	//		Engine::Safe_Release(*iterator);
+	//}
 }
 
 _int CUnit::Update_Object(const _float& fTimeDelta)
@@ -26,27 +27,7 @@ _int CUnit::Update_Object(const _float& fTimeDelta)
 	return S_OK;
 }
 
-bool CUnit::PlayerSearch(_vec3 _UnitPos)
-{
-	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
-	_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
-	if (pPlayerTransCom == nullptr)
-		return false;
-	_float distX = playerPos.x - _UnitPos.x;
-	_float distZ = playerPos.z - _UnitPos.z;
 
-	disPlayer = sqrt(distX * distX + distZ * distZ);
-
-	if (isSearch == true)
-		return true;
-	if (disPlayer < 2.f)
-		return true;
-	
-
-
-
-	return false;
-}
 
 HRESULT CUnit::Add_Component(void)
 {
@@ -126,7 +107,7 @@ _int CUnit::Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType)
 		m_VecSphereCollider.emplace_back(sphereCol);
 		sphereCol->m_pTransformCom->m_vInfo[Engine::INFO_POS] = spherePos;
 		sphereCol->m_pTransformCom->m_vScale = sphereScale;
-		CColliderMgr::GetInstance()->RegisterObject(_collType, sphereCol);
+		//CColliderMgr::GetInstance()->RegisterObject(_collType, sphereCol);
 	}
 
 	CloseHandle(hFile);

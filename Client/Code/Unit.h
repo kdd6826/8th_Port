@@ -30,21 +30,19 @@ public:
 	Engine::CCalculator* m_pCalculatorCom = nullptr;
 	Engine::CCollider* m_pColliderCom = nullptr;
 	Engine::CShader* m_pShaderCom = nullptr;
-protected:
-	bool PlayerSearch(_vec3 _UnitPos);
-	
+
 private:
 
 protected:
 	HRESULT		Add_Component(void);
 	_int Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType);
 
+
+
 	vector<CSphereCollider*>	m_VecSphereCollider;
 	_bool isSearch = false;
 	_bool isAnimating = false;
-	//플레이어까지의 거리
-	_float disPlayer = 0.f;
-	_float m_fSpeed;
+	_bool isDie=false;
 
 	virtual void Free(void) override;
 

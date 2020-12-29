@@ -49,7 +49,7 @@ class CPlayer : public CUnit
 		STATE_THROW_BALL,//¸¶³ª¸®Àü, µð¸à¼ÇÈ¦
 		STATE_RUINBLADE,
 		STATE_LORDOFMANA,
-		STATE_CONFUSIONHOLE,
+		STATE_CONFUSIONHOLE,//°¡µå
 		STATE_DARKKNIGHT_TRANS1,
 		STATE_DARKKNIGHT_TRANS2,
 		STATE_DARKKNIGHT_END,
@@ -96,17 +96,19 @@ private:
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	playerState m_state = playerState::STATE_IDLE;
+
 	bool		isManaBlade = false;
 	bool		isBattle = false;
 	bool		isAttack = false;
 	bool		isMove = false;
+	bool		isHit = false;
+	bool		isInvincible = false;
 	bool		isRunning = false;
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 private:
 	_vec3						m_vDir;
 	bool						isAnimating;
 	_float						delay = 0.f;
-	_float						m_fSpeed = 5.f;
 	_float						m_fAniSpeed = 1.f;
 	_float						m_fBattleCount=0.f;
 public:

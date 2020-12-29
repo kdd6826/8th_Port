@@ -144,6 +144,11 @@ _bool Engine::CDynamicMesh::Is_AnimationSetEnd(void)
 	return m_pAniCtrl->Is_AnimationSetEnd();
 }
 
+_double Engine::CDynamicMesh::Get_AnimationPeriod(const _uint& iIndex)
+{
+	return m_pAniCtrl->Get_AnimationPeriod(iIndex);
+}
+
 void CDynamicMesh::Set_AnimationSet(const _uint & iIndex)
 {
 	m_pAniCtrl->Set_AnimationSet(iIndex);

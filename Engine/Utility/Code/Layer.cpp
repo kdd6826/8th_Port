@@ -21,10 +21,21 @@ Engine::_int Engine::CLayer::Update_Layer(const _float& fTimeDelta)
 {
 	_int iExit = 0;
 
-	for (auto& iter : m_mapObject)
+	for (auto iter = m_mapObject.begin(); iter != m_mapObject.end();)
 	{
-		iExit = iter.second->Update_Object(fTimeDelta);
+		iExit = iter->second->Update_Object(fTimeDelta);
+		if (1 == iExit)
+		{
+			
+			Engine::Safe_Release(iter->second);
+			iter = m_mapObject.erase(iter);
 
+		}
+		else
+		{
+			++iter;
+
+		}
 		if (iExit & 0x80000000)
 		{
 			MSG_BOX("GameObject Problem");
