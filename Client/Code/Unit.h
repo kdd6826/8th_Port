@@ -40,6 +40,8 @@ protected:
 
 
 	vector<CSphereCollider*>	m_VecSphereCollider;
+
+	_bool isInvincible = false;
 	_bool isSearch = false;
 	_bool isAnimating = false;
 	_bool isDie=false;

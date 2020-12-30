@@ -102,7 +102,6 @@ private:
 	bool		isAttack = false;
 	bool		isMove = false;
 	bool		isHit = false;
-	bool		isInvincible = false;
 	bool		isRunning = false;
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 private:

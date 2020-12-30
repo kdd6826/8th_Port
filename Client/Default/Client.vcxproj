@@ -178,6 +178,9 @@
     <ClInclude Include="..\Code\Effect.h" />
     <ClInclude Include="..\Code\HpBarBack.h" />
     <ClInclude Include="..\Code\HpBarValue.h" />
+    <ClInclude Include="..\Code\Inkells.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\Logo.h" />
     <ClInclude Include="..\Code\MainApp.h" />
@@ -204,6 +207,9 @@
     <ClInclude Include="..\Code\Titan.h" />
     <ClInclude Include="..\Code\Tree.h" />
     <ClInclude Include="..\Code\SkillSlot.h" />
+    <ClInclude Include="..\Code\Zecallion.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Function.h" />
     <ClInclude Include="..\Header\Macro.h" />
@@ -221,6 +227,9 @@
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\HpBarBack.cpp" />
     <ClCompile Include="..\Code\HpBarValue.cpp" />
+    <ClCompile Include="..\Code\Inkells.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
@@ -247,6 +256,9 @@
     <ClCompile Include="..\Code\Titan.cpp" />
     <ClCompile Include="..\Code\Tree.cpp" />
     <ClCompile Include="..\Code\SkillSlot.cpp" />
+    <ClCompile Include="..\Code\Zecallion.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -109,8 +109,11 @@
     <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\01.Titian">
       <UniqueIdentifier>{59a175a9-baa9-47f6-b200-cc164ed071d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\Ingkells">
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells">
       <UniqueIdentifier>{4b722e47-8d0d-460d-a97c-7d04f79018f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion">
+      <UniqueIdentifier>{bcab0aa7-71d8-4ca0-8e3c-8c0d661277fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +228,12 @@
     <ClInclude Include="..\Code\Monster.h">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Inkells.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Zecallion.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -319,6 +328,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Inkells.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Zecallion.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

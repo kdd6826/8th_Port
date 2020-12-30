@@ -47,9 +47,6 @@ HRESULT Client::CTitan::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
 	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY);
-
-	m_pTransformCom->stat.maxHp = 3.f;
-	m_pTransformCom->stat.hp = 3.f;
 	return S_OK;
 }
 
