@@ -18,7 +18,7 @@ HRESULT Client::CSword::Add_Component(void)
 	Engine::CComponent*		pComponent = nullptr;
 	
 	// Mesh
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Sword"));
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Sword2"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
@@ -72,6 +72,7 @@ HRESULT Client::CSword::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(-100.f));
+	m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 5.f;
 	//m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(-45.f));
 	return S_OK;
 }
@@ -83,6 +84,7 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 		NULL_CHECK_RETURN(pPlayerMeshCom, 0);
 
 		const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger22"); //X -100
+		//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Hand"); //X -100
 		m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
 		
 

@@ -35,6 +35,8 @@ namespace Engine
 		float attack = 1.f;
 		float hp = 10.f;
 		float maxHp = 10.f;
+		float stamina = 10.f;
+		float maxStamina = 10.f;
 		float totalExp = 10.f;
 		float exp = 0.f;
 		float moveSpeed = 3.f;

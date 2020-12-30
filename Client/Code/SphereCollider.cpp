@@ -128,27 +128,14 @@ _int CSphereCollider::Update_Object(const _float& fTimeDelta)
 }
 void CSphereCollider::Render_Object(void)
 {
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
 #ifdef _DEBUG
-	//LPD3DXMESH tmpMesh;
-	//D3DXCreateSphere(m_pGraphicDev, 1, 10, 10, &tmpMesh, nullptr);
-	//if (nullptr == tmpMesh)
-	//	return;
-	//_matrix tmpMatrix;
-	//D3DXMatrixIdentity(&tmpMatrix);
-	//tmpMatrix = *m_pTransformCom->Get_WorldMatrix();
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &tmpMatrix);
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pTransformCom->Set_Transform(m_pGraphicDev);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//m_pGraphicDev->SetTexture(0, m_pTexture[0]);
-	//tmpMesh->DrawSubset(0);
-
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	//tmpMesh->Release();
-	////m_pBufferCom->Render_Buffer();
-
+	//m_pBufferCom->Render_Buffer();
 	////m_pTextureCom->Render_Texture(0);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 #endif
 }

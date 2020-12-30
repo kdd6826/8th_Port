@@ -51,7 +51,7 @@ HRESULT Client::CDog::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveDog.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMY);
+	Load_ColliderFile(L"../Bin/saveDog.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	return S_OK;
 }
 
@@ -120,10 +120,10 @@ HRESULT Client::CDog::Ready_Object(void)
 }
 Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 {
+	CMonster::Update_Object(fTimeDelta);
 
 	if (isDead)
 		return 1;
-	CMonster::Update_Object(fTimeDelta);
 	if (!isDie)
 	{
 		m_state = dogState::STATE_STAND;
@@ -134,7 +134,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 
 	if (isDie)
 	{
-		m_state = dogState::STATE_DOWNING;
+		m_state = dogState::STATE_DOWNSTART;
 		if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
 			isDead = true;
@@ -146,7 +146,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
 	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-
+	m_pMeshCom->Set_AnimationSet(m_state);
 	m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
@@ -178,6 +178,7 @@ void Client::CDog::Render_Object(void)
 }
 void CDog::OnCollision(Engine::CGameObject* target)
 {
+	CMonster::OnCollision(target);
 }
 void Client::CDog::SetUp_OnTerrain(void)
 {

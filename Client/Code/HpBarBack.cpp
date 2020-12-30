@@ -65,6 +65,7 @@ HRESULT Client::CHpBarBack::Ready_Object(void)
 	m_fX = 400.f;
 	m_fY = 15.f;
 
+	
 	m_fSizeX = 800.f;
 	m_fSizeY = 25.f;
 
@@ -73,7 +74,8 @@ HRESULT Client::CHpBarBack::Ready_Object(void)
 Client::_int Client::CHpBarBack::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
-		
+
+
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);

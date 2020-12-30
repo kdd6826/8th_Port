@@ -29,8 +29,8 @@ void CColliderMgr::Destroy()
 
 void CColliderMgr::Update()
 {
-	CollisionCheck(Engine::PLAYERATTACK,Engine::ENEMY);
-	CollisionCheck(Engine::ENEMYATTACK, Engine::PLAYER);
+	CollisionAttack(Engine::PLAYERATTACK,Engine::ENEMY);
+	CollisionAttack(Engine::ENEMYATTACK, Engine::PLAYER);
 }
 
 void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstType)
@@ -45,6 +45,36 @@ void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstTy
 				srcElem->m_pDynamicMesh->OnCollision(dstElem->m_pDynamicMesh);
 				if (srcElem->isColl == true)
 				dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
+			}
+		}
+	}
+}
+
+void CColliderMgr::CollisionAttack(Engine::COLLID _srcType, Engine::COLLID _dstType)
+{
+	for (auto& srcElem : objectList[_srcType])
+	{
+		for (auto& dstElem : objectList[_dstType])
+		{
+			if (IsCollided(srcElem, dstElem))
+			{
+					//플레이어피격
+					//srcElem->m_pDynamicMesh->OnCollision(dstElem->m_pDynamicMesh);
+				//플레이어 
+				if (srcElem->isColl == true)
+				{
+					for (auto& hit : hitList)
+					{
+						//맞은 놈이다
+						if (hit == srcElem->m_pDynamicMesh)
+						{
+							return;
+						}
+					}
+							dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
+							hitList.emplace_back(srcElem->m_pDynamicMesh);
+
+				}
 			}
 		}
 	}

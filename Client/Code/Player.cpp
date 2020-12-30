@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Export_Function.h"
 #include "DynamicCamera.h"
-
+#include "ColliderMgr.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -47,7 +47,10 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
 	Load_ColliderFile(L"../Bin/savePlayer.dat",Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
-
+	Load_ColliderFile(L"../Bin/saveWeapon1.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
+	Load_ColliderFile(L"../Bin/saveWeapon2.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
+	Load_ColliderFile(L"../Bin/saveWeapon3.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
+	Load_ColliderFile(L"../Bin/saveWeapon4.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
 	return S_OK;
 }
 
@@ -504,7 +507,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
-					
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 			}
 			if (delay <= 0.9f)
@@ -516,6 +519,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 			}
 			if (delay <= 0.8f)
@@ -527,6 +531,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else if (m_state == playerState::STATE_ATT1)
 				{
@@ -535,6 +540,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else
 				{
@@ -545,6 +551,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 						delay = temp;
+						CColliderMgr::GetInstance()->hitList.clear();
 					}
 					else
 					{
@@ -553,6 +560,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 						delay = temp;
+						CColliderMgr::GetInstance()->hitList.clear();
 					}
 				}
 
@@ -571,6 +579,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else if (m_state == playerState::STATE_MB_ATT4 && delay <= 0.8)
 				{
@@ -579,6 +588,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else if (m_state == playerState::STATE_MB_ATT3)
 				{
@@ -587,6 +597,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else if (m_state == playerState::STATE_MB_ATT2)
 				{
@@ -595,6 +606,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else if (m_state == playerState::STATE_MB_ATT1)
 				{
@@ -603,6 +615,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
+					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else
 				{
@@ -613,6 +626,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 						delay = temp;
+						CColliderMgr::GetInstance()->hitList.clear();
 					}
 					else if (m_state != playerState::STATE_MB_ATT2 &&
 						m_state != playerState::STATE_MB_ATT3 &&
@@ -626,6 +640,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 						delay = temp;
+						CColliderMgr::GetInstance()->hitList.clear();
 					}
 				}
 
@@ -802,7 +817,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 		_vec3 vMyPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
 		float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(hitDir * timeDelta*4.f)));
-
+		m_pTransformCom->stat.hp -= 1.f;
 
 		//m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		if (isHit == false)

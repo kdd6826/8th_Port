@@ -245,6 +245,7 @@ HRESULT Client::CTitan::Ready_Object(void)
 }
 Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 {
+	CMonster::Update_Object(fTimeDelta);
 	
 	if (isDead)
 	{
@@ -644,7 +645,6 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 
 	//SetUp_OnTerrain()
-	CMonster::Update_Object(fTimeDelta);
 	//Engine::CGameObject::Update_Object(fTimeDelta);	
 
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;

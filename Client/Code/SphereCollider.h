@@ -32,10 +32,12 @@ private:
 	//_vec3		PickUp_OnTerrain(void);
 	virtual void  OnCollision();
 public:
-//	Engine::CCollSphere* m_pBufferCom = nullptr;
+#ifdef _DEBUG
+	/*Engine::CCollSphere* m_pBufferCom = nullptr;
+	Engine::CRenderer* m_pRendererCom = nullptr;
+	Engine::CCalculator* m_pCalculatorCom = nullptr;*/
+#endif
 	Engine::CTransform* m_pTransformCom = nullptr;
-	/*Engine::CRenderer* m_pRendererCom = nullptr;*/
-	//Engine::CCalculator* m_pCalculatorCom = nullptr;
 
 public:
 	static CSphereCollider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
