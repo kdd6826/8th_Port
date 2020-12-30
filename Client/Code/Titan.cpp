@@ -12,7 +12,7 @@ CTitan::CTitan(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CTitan::~CTitan(void)
 {
-
+	int i = 0;
 }
 
 Client::_vec3 Client::CTitan::PickUp_OnTerrain(void)
@@ -46,7 +46,7 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	//Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY);
+	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY);
 	return S_OK;
 }
 
@@ -242,7 +242,7 @@ HRESULT Client::CTitan::Ready_Object(void)
 }
 Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 {
-	CMonster::Update_Object(fTimeDelta);
+	
 	if (isDead)
 	{
 		return 1;
@@ -641,7 +641,8 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 
 	//SetUp_OnTerrain()
-	Engine::CGameObject::Update_Object(fTimeDelta);	
+	CMonster::Update_Object(fTimeDelta);
+	//Engine::CGameObject::Update_Object(fTimeDelta);	
 
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;
 

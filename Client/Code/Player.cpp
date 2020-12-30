@@ -46,7 +46,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	//Load_ColliderFile(L"../Bin/savePlayer1.dat",Engine::COLLID::PLAYER);
+	Load_ColliderFile(L"../Bin/savePlayer.dat",Engine::COLLID::PLAYER);
 
 	return S_OK;
 }

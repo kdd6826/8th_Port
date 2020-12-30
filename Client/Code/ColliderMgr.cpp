@@ -22,6 +22,11 @@ HRESULT CColliderMgr::Ready_ColliderMgr(LPDIRECT3DDEVICE9& pGraphicDev)
 	return S_OK;
 }
 
+void CColliderMgr::Destroy()
+{
+	delete m_pInstance;
+}
+
 void CColliderMgr::Update()
 {
 	CollisionCheck(Engine::PLAYER,Engine::ENEMY);

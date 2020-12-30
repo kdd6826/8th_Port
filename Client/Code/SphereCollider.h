@@ -32,11 +32,10 @@ private:
 	//_vec3		PickUp_OnTerrain(void);
 	virtual void  OnCollision();
 public:
-	Engine::CCollSphere* m_pBufferCom = nullptr;
+//	Engine::CCollSphere* m_pBufferCom = nullptr;
 	Engine::CTransform* m_pTransformCom = nullptr;
-	Engine::CRenderer* m_pRendererCom = nullptr;
-	Engine::CCalculator* m_pCalculatorCom = nullptr;
-
+	/*Engine::CRenderer* m_pRendererCom = nullptr;*/
+	//Engine::CCalculator* m_pCalculatorCom = nullptr;
 
 public:
 	static CSphereCollider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -44,7 +43,6 @@ public:
 	bool m_Dead = false;
 	//자기자신
 	Engine::CGameObject* m_pDynamicMesh;
-
 	_bool						m_bColl = false;
 	const	_matrix* m_pParentBoneMatrix = nullptr;
 	const	_matrix* m_pParentWorldMatrix = nullptr;

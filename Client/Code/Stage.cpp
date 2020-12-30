@@ -23,7 +23,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
+	CColliderMgr::GetInstance();
 	return S_OK;
 }
 
@@ -284,5 +284,6 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CStage::Free(void)
 {
 	Engine::CScene::Free();
+	CColliderMgr::Destroy();
 }
 

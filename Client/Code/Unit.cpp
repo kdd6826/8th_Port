@@ -10,15 +10,16 @@ CUnit::CUnit(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CUnit::~CUnit(void)
 {
-	//for (auto& iterator = m_VecSphereCollider.begin(); iterator != m_VecSphereCollider.end();++iterator)
-	//{
-	//	//Engine::Safe_Delete_Array(*iterator);
-	//		Engine::Safe_Release(*iterator);
-	//}
+	for (auto& iterator = m_VecSphereCollider.begin(); iterator != m_VecSphereCollider.end();++iterator)
+	{
+		//Engine::Safe_Delete_Array(*iterator);
+			Engine::Safe_Release(*iterator);
+	}
 }
 
 _int CUnit::Update_Object(const _float& fTimeDelta)
 {
+	Engine::CGameObject::Update_Object(fTimeDelta);
 	for (auto& sphere : m_VecSphereCollider)
 	{
 		sphere->m_pDynamicMesh = this;
@@ -107,7 +108,7 @@ _int CUnit::Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType)
 		m_VecSphereCollider.emplace_back(sphereCol);
 		sphereCol->m_pTransformCom->m_vInfo[Engine::INFO_POS] = spherePos;
 		sphereCol->m_pTransformCom->m_vScale = sphereScale;
-		//CColliderMgr::GetInstance()->RegisterObject(_collType, sphereCol);
+		CColliderMgr::GetInstance()->RegisterObject(_collType, sphereCol);
 	}
 
 	CloseHandle(hFile);

@@ -13,7 +13,11 @@ CDog::CDog(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CDog::~CDog(void)
 {
-
+	//for (auto& iterator = m_VecSphereCollider.begin(); iterator != m_VecSphereCollider.end();++iterator)
+	//{
+	//	//Engine::Safe_Delete_Array(*iterator);
+	//		Engine::Safe_Release(*iterator);
+	//}
 }
 
 Client::_vec3 Client::CDog::PickUp_OnTerrain(void)
@@ -116,11 +120,27 @@ HRESULT Client::CDog::Ready_Object(void)
 }
 Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 {
+
+	if (isDead)
+		return 1;
 	CMonster::Update_Object(fTimeDelta);
-	m_state = dogState::STATE_STAND;
+	if (!isDie)
+	{
+		m_state = dogState::STATE_STAND;
+	}
 	//SetUp_OnTerrain()
-	Engine::CGameObject::Update_Object(fTimeDelta);	
+	//Engine::CGameObject::Update_Object(fTimeDelta);	
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;
+
+	if (isDie)
+	{
+		m_state = dogState::STATE_DOWNING;
+		if (true == m_pMeshCom->Is_AnimationSetEnd())
+		{
+			isDead = true;
+			return 1;
+		}
+	}
 
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
 	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);

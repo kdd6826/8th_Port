@@ -25,7 +25,6 @@ public:
 
 	bool colorGreenCheck = true;
 	bool colorGreen = true;
-	bool isClone = false;
 };
 END
 

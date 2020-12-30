@@ -5,7 +5,6 @@ Engine::CCollSphere::CCollSphere(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
 	
 {
-	isClone = false;
 	Engine::Safe_Release(m_pGraphicDev);
 	Engine::Safe_Release(m_pGraphicDev);
 	Engine::Safe_Release(m_pGraphicDev);
@@ -17,7 +16,6 @@ Engine::CCollSphere::CCollSphere(const CCollSphere& rhs)
 	,pMesh(rhs.pMesh)
 {
 	Safe_AddRef(pMesh);
-	isClone = true;
 }
 
 Engine::CCollSphere::~CCollSphere(void)
@@ -114,5 +112,8 @@ void Engine::CCollSphere::Free(void)
 	int a= Safe_Release(m_pVB);
 	int b= Safe_Release(m_pIB);
 	int c= Safe_Release(pMesh);
+	int a2 = Safe_Release(m_pVB);
+	int b2 = Safe_Release(m_pIB);
+	int c2 = Safe_Release(pMesh);
 }
 
