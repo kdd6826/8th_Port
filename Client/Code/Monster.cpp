@@ -21,10 +21,13 @@ _int CMonster::Update_Object(const _float& fTimeDelta)
 void CMonster::OnCollision(Engine::CGameObject* target)
 {
 	_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
-
-	m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
-	m_pTransformCom->stat.hp -= 1.f;
-
+	//¹«ÀûÀÌ¾Æ´Ò¶§
+	if (!isInvincible)
+	{
+		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
+		m_pTransformCom->stat.hp -= 1.f;
+	}
+	//»ç¸Á
 	if (m_pTransformCom->stat.hp <= 0 && isDie == false)
 	{
 		

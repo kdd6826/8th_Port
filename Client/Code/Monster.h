@@ -30,7 +30,7 @@ protected:
 private:
 
 protected:
-
+	
 	_bool isSearch = false;
 	_bool isAnimating = false;
 	//플레이어까지의 거리

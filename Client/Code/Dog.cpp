@@ -51,7 +51,7 @@ HRESULT Client::CDog::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveDog3.dat", Engine::COLLID::ENEMY);
+	Load_ColliderFile(L"../Bin/saveDog.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMY);
 	return S_OK;
 }
 

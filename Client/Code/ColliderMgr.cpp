@@ -29,7 +29,8 @@ void CColliderMgr::Destroy()
 
 void CColliderMgr::Update()
 {
-	CollisionCheck(Engine::PLAYER,Engine::ENEMY);
+	CollisionCheck(Engine::PLAYERATTACK,Engine::ENEMY);
+	CollisionCheck(Engine::ENEMYATTACK, Engine::PLAYER);
 }
 
 void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstType)

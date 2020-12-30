@@ -105,6 +105,7 @@ private:
 	bool		isRunning = false;
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 private:
+	vector<CUnit*>				hitMonsters;
 	_vec3						m_vDir;
 	bool						isAnimating;
 	_float						delay = 0.f;

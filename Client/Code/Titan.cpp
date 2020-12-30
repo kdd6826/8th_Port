@@ -46,7 +46,7 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY);
+	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 
 	m_pTransformCom->stat.maxHp = 3.f;
 	m_pTransformCom->stat.hp = 3.f;

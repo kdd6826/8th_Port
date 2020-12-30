@@ -35,7 +35,7 @@ private:
 
 protected:
 	HRESULT		Add_Component(void);
-	_int Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType);
+	_int Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType, Engine::COLLID _collType2);
 
 
 
