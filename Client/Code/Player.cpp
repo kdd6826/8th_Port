@@ -368,6 +368,35 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 
 	}
+	else if (Engine::Get_DIKeyState(DIK_Y) & 0x80)
+	{
+		if (isRunning)
+		{
+			m_state = playerState::STATE_FIELD_SPRINT;
+			m_pTransformCom->stat.moveSpeed = 5.f;
+		}
+		else if (!isRunning)
+		{
+			m_state = playerState::STATE_FIELD_RUN;
+			m_pTransformCom->stat.moveSpeed = 3.f;
+		}
+		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_DIFUSION;
+				m_fBattleCount = 6.2f;
+				m_fAniSpeed = 1.2f;
+				//delay = 1.2f;
+				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+				delay = temp;
+			}
+		}
+
+		m_pTransformCom->Move_Pos(&(vLook * m_pTransformCom->stat.moveSpeed * fTimeDelta*100));
+		
+	}
 
 	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
