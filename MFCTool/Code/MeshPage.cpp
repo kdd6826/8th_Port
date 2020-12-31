@@ -949,7 +949,7 @@ void MeshPage::TransformPosXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 				m_fTransformPosX -= 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformPosX);
 			}
-			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
+			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vInfo[Engine::INFO_POS].x = m_fTransformPosX;
 			SetDlgItemText(IDC_EDIT14, cVertex);
 		}
 

@@ -58,10 +58,10 @@ HRESULT CMFCStaticMesh::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
-	// Optimization
-	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+	//// Optimization
+	//pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
 
 	return S_OK;
 }
@@ -105,10 +105,10 @@ HRESULT CMFCStaticMesh::Add_Component(CString _mesh)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
-	// Optimization
-	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+	//// Optimization
+	//pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
 
 	return S_OK;
 }
@@ -173,7 +173,7 @@ Engine::_int CMFCStaticMesh::Update_Object(const _float& fTimeDelta)
 	Engine::_vec3	vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
 
-	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
+	//m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
@@ -183,8 +183,8 @@ Engine::_int CMFCStaticMesh::Update_Object(const _float& fTimeDelta)
 
 void CMFCStaticMesh::Render_Object(void)
 {
-	if (false == m_bDraw)
-		return;
+	//if (false == m_bDraw)
+	//	return;
 
 
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
@@ -194,11 +194,13 @@ void CMFCStaticMesh::Render_Object(void)
 	if (CMFCToolView::GetInstance()->wireFrame) {
 		m_pMeshCom->Render_Meshes();
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
 	else {
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		m_pMeshCom->Render_Meshes();
 	}
 

@@ -52,7 +52,7 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 			_vec3		vLook;
 			memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
 
-			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
+			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 50.f * fTimeDelta;
 
 			m_vEye += vLength;
 			m_vAt += vLength;
@@ -63,7 +63,7 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 			_vec3		vLook;
 			memcpy(vLook, &matCamWorld.m[2][0], sizeof(_vec3));
 
-			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 5.f * fTimeDelta;
+			_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * 50.f * fTimeDelta;
 
 			m_vEye -= vLength;
 			m_vAt -= vLength;
@@ -74,7 +74,7 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 			_vec3		vRight;
 			memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
 
-			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 50.f * fTimeDelta;
 
 			m_vEye -= vLength;
 			m_vAt -= vLength;
@@ -85,7 +85,7 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 			_vec3		vRight;
 			memcpy(vRight, &matCamWorld.m[0][0], sizeof(_vec3));
 
-			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 5.f * fTimeDelta;
+			_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * 50.f * fTimeDelta;
 
 			m_vEye += vLength;
 			m_vAt += vLength;

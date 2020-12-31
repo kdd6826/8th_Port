@@ -42,7 +42,7 @@ private:
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
 	Engine::CObjSphere*			m_pColSphereCom = nullptr;
 	Engine::CCollider*			m_pColliderCom = nullptr;
-	Engine::COptimization*		m_pOptimizationCom = nullptr;
+	//Engine::COptimization*		m_pOptimizationCom = nullptr;
 	Engine::_bool						m_bColl = false;
 	Engine::_bool						m_bDraw = false;
 
