@@ -15,6 +15,9 @@ CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CLoading::~CLoading(void)
 {
+	for (auto& iter : vecStaticMesh)
+		&iter->erase();
+	
 
 }
 
@@ -148,8 +151,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	
-	Load_StaticObject();
-	Load_DynamicObject();
+	//Load_StaticObject();
+	//Load_DynamicObject();
 	// Stone
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 												Engine::RESOURCE_STAGE,
@@ -167,6 +170,66 @@ _uint CLoading::Loading_ForStage(void)
 												NULL),
 												E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Player",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/Mesh/DynamicMesh/Player/",
+		L"Player.X"),
+		E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			Engine::RESOURCE_STAGE,
+		L"Mesh_Dog",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/Mesh/DynamicMesh/Dog/",
+		L"Dog.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Titan",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/Mesh/DynamicMesh/Titan/",
+		L"Titan.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_TombStone",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+		L"TombStone.X"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Colosseum",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Colosseum/",
+		L"Colosseum.X"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Stage2",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Stage2/",
+		L"Stage2.X"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Sword2",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Sword2/",
+		L"WeaponArisha2.X"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Sword",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+		L"WeaponArisha.X"),
+		E_FAIL);
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	Engine::RESOURCE_STAGE,
 	//	L"Mesh_Player",
