@@ -9,8 +9,11 @@
 #include "MFCDynamicMesh.h"
 #include "SphereCollider.h"
 #include "DynamicCamera.h"
-
-
+#include "DynamicMesh.h"
+#include "AniCtrl.h"
+#include "Engine_Define.h"
+#include "Export_Function.h"
+#include "VertexManager.h"
 // ColliderPage 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(ColliderPage, CDialogEx)
@@ -23,6 +26,8 @@ ColliderPage::ColliderPage(CWnd* pParent /*=NULL*/)
 	, m_PosY(0)
 	, m_PosZ(0)
 	, meshRotY(0)
+	, m_fFrame(0)
+	, m_fMaxFrame(0)
 {
 	
 }
@@ -43,6 +48,8 @@ void ColliderPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT10, m_PosY);
 	DDX_Text(pDX, IDC_EDIT17, m_PosZ);
 	DDX_Text(pDX, IDC_EDIT11, meshRotY);
+	DDX_Text(pDX, IDC_EDIT2, m_fFrame);
+	DDX_Text(pDX, IDC_EDIT3, m_fMaxFrame);
 }
 
 
@@ -58,6 +65,7 @@ BEGIN_MESSAGE_MAP(ColliderPage, CDialogEx)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN13, &ColliderPage::OnDeltaposSpin13)
 	ON_BN_CLICKED(IDC_BUTTON13, &ColliderPage::OnBnClickedButton13)
 	ON_BN_CLICKED(IDC_BUTTON14, &ColliderPage::OnBnClickedButton14)
+	ON_BN_CLICKED(IDC_BUTTON17, &ColliderPage::OnBnClickedButton17)
 END_MESSAGE_MAP()
 
 
@@ -389,7 +397,7 @@ void ColliderPage::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 			CMFCToolView::GetInstance()->CreateDynamicMesh_OfCollider((*CMFCToolView::GetInstance()->vecDynamicMesh[iMeshNum]));
 			CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic_Collider.front());
 			dMesh->m_pTransformCom->Set_Pos(&_vec3{ -100.f,-100.f,-100.f });
-			
+			dMesh->isColliderSample = true;
 			m_BoneList.ResetContent();
 			m_BoneColliderList.ResetContent();
 
@@ -477,7 +485,14 @@ void ColliderPage::OnBnClickedButton3()
 	CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(vecGameObject->front());
 	if (dMesh == nullptr)
 		return;
+	
+	double temp = dMesh->m_pMeshCom->Get_AnimationPeriod(m_AniClip);
+	m_fMaxFrame = temp;
+	
+	CString cRotVertexX, cRotVertexY, cRotVertexZ;
+	cRotVertexX.Format(_T("%9.2f\n"), temp);
 
+	SetDlgItemText(IDC_EDIT3, cRotVertexX);
 	m_AniClip = GetDlgItemInt(IDC_EDIT1);
 	dMesh->m_AniClip = m_AniClip;
 	
@@ -777,4 +792,28 @@ void ColliderPage::OnBnClickedButton14()
 		CloseHandle(hFile);
 	}
 	UpdateData(FALSE);
+}
+
+//셋버튼
+void ColliderPage::OnBnClickedButton17()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	vector<Engine::CGameObject*>* vecGameObject = &CMFCToolView::GetInstance()->vectorObjDynamic_Collider;
+	if (vecGameObject->size() == 0)
+		return;
+	CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(vecGameObject->front());
+	if (dMesh == nullptr)
+		return;
+
+	
+	m_fFrame = dMesh->m_pMeshCom->GetAniCtrl()->Get_AccTime();
+
+	CString cRotVertexX;
+	cRotVertexX.Format(_T("%9.2f\n"), m_fFrame);
+
+	SetDlgItemText(IDC_EDIT2, cRotVertexX);
+
+	
+
+	
 }

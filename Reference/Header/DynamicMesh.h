@@ -19,6 +19,9 @@ public:
 	void			Render_Meshes(void);
 	const  D3DXFRAME_DERIVED*		Get_FrameByName(const char* pFrameName);
 	_bool							Is_AnimationSetEnd(void);
+	void Set_AnimationSetSecond(const _uint& iIndex, float _startTime, float _endTime);
+	_double Get_AnimationPeriod(const _uint& iIndex);
+	CAniCtrl* GetAniCtrl() { return m_pAniCtrl; }
 public:
 	void			Set_AnimationSet(const _uint& iIndex);
 	void			Play_Animation(const _float& fTimeDelta);

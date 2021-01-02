@@ -19,9 +19,9 @@ public:
 
 public:
 	HRESULT			Ready_AnimationCtrl(void);
-
+	float			Get_AccTime() { return m_fAccTime; }
 	void			Set_AnimationSet(const _uint& iIndex);
-
+	void			Set_AnimationSetSecond(const _uint& iIndex,float _startTime, float _endTime);
 	void			Play_Animation(const _float& fTimeDelta);
 
 private:
@@ -39,6 +39,7 @@ public:
 	static CAniCtrl*			Create(LPD3DXANIMATIONCONTROLLER pAniCtrl);
 	static CAniCtrl*			Create(const CAniCtrl& rhs);
 	virtual void				Free(void);
+	_double Get_AnimationPeriod(const _uint& iIndex);
 };
 
 END

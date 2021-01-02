@@ -10,6 +10,7 @@
 #include "Export_Function.h"
 #include "MeshPage.h"
 #include "DynamicCamera.h"
+#include "MFCDynamicMesh.h"
 USING(Engine)
 
 IMPLEMENT_SINGLETON(VertexManager)
@@ -43,6 +44,11 @@ void VertexManager::DestroyValue()
 void VertexManager::Update(float deltaTime)
 {
 	Key_Input(deltaTime);
+
+	/// //////////////////
+
+
+	/// //////////////////
 }
 
 void VertexManager::Key_Input(float deltaTime)

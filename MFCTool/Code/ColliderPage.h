@@ -54,4 +54,8 @@ public:
 	int meshRotY;
 	afx_msg void OnBnClickedButton13();
 	afx_msg void OnBnClickedButton14();
+	float m_fFrame;
+	float m_fMaxFrame;
+	//frame º¯°æ
+	afx_msg void OnBnClickedButton17();
 };

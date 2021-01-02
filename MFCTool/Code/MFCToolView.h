@@ -105,6 +105,7 @@ public:
 	bool colliderView = false;
 	CTerrainTri* PickUp_Tri(void);
 
+	float m_fFrame;
 	void Sort_TriNumber();
 	CTerrainTri* Get_TriOfNumber(int number);
 

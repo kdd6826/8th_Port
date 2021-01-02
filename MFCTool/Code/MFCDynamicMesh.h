@@ -47,6 +47,8 @@ private:
 	_vec3		PickUp_OnTerrain(void);
 
 public:
+	_float currentFrame=0.f;
+	_float endFrame=0.f;
 	Engine::CDynamicMesh*		m_pMeshCom = nullptr;
 	Engine::CNaviMesh*			m_pNaviMeshCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
@@ -55,7 +57,7 @@ public:
 	Engine::CCollider*			m_pColliderCom = nullptr;
 	_vec3						m_vDir;
 	_float						m_fSpeed = 5.f;
-
+	_bool						isColliderSample = false;
 public:
 	vector<CSphereCollider*>		m_VecSphereCollider;
 	vector<LPSTR>					m_VecFrameName;

@@ -411,6 +411,23 @@ void CMFCToolView::OnInitialUpdate()
 void CMFCToolView::Update(float deltaTime)
 {	
 	
+	/// //////////////////
+
+	vector<Engine::CGameObject*>* vecGameObject = &CMFCToolView::GetInstance()->vectorObjDynamic_Collider;
+	if (vecGameObject->size() == 0)
+		return;
+	CMFCDynamicMesh* dMesh = dynamic_cast<CMFCDynamicMesh*>(vecGameObject->front());
+	if (dMesh == nullptr)
+		return;
+
+	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+
+	m_fFrame += timeDelta;
+
+	if (true == dMesh->m_pMeshCom->Is_AnimationSetEnd())
+		m_fFrame = 0.f;
+	/// //////////////////
+
 
 	Key_Input(deltaTime);
 

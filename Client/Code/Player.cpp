@@ -37,7 +37,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
-
+	
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

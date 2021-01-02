@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 #include "SphereCollider.h"
 #include "../../Engine/Header/Engine_Struct.h"
-
+#include "MFCToolView.h"
 CMFCDynamicMesh::CMFCDynamicMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -258,6 +258,13 @@ _int CMFCDynamicMesh::Update_Object(const _float& fTimeDelta)
 
 	SetUp_OnTerrain();
 	Key_Input(fTimeDelta);
+
+	/*endFrame=m_pMeshCom->Get_AnimationPeriod(m_AniClip);*/
+	
+	//if (isColliderSample&&currentFrame<endFrame)
+	//	m_pMeshCom->Set_AnimationSetSecond(m_AniClip,currentFrame, endFrame);
+	//else
+
 	m_pMeshCom->Set_AnimationSet(m_AniClip);
 	Engine::CGameObject::Update_Object(fTimeDelta);
 

@@ -75,7 +75,6 @@ public:
 	bool KeyC = false;
 	bool KeyLShift = false;
 	
-
 	//CSphereMesh 전부 모아논 리스트
 	list<CSphereMesh*> list_TotalSphere;
 	//삼각형을 만들기위해 3번 찍을동안 담아놓는 SphereMesh 리스트
