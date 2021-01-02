@@ -145,10 +145,17 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_Back.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_ValueBar.png"), E_FAIL);
 	
-
-
-
-
+	//둠세이어
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill0", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill0.tga"), E_FAIL);
+	//마나이미지
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill1.tga"), E_FAIL);
+	//루블
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill2.tga"), E_FAIL);
+	//로오마
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill4", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill4.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_01_able.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_02_able.tga"), E_FAIL);
+	
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
 	
 	//Load_StaticObject();

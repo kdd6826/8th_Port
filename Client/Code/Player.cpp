@@ -600,65 +600,68 @@ void CPlayer::Attack(const _float& fTimeDelta)
 #pragma region ManaBladeAttack
 		else if (isManaBlade == true)
 		{
-			if (delay <= 1.f)
+			m_fAniSpeed = 1.2f;
+			if (delay <= 1.4f)
 			{
-				if (m_state == playerState::STATE_MB_ATT5)
+				if (m_state == playerState::STATE_MB_ATT5 && delay <= 0.7f)
 				{
 					m_state = playerState::STATE_MB_ATT6;
 					//delay = 1.15f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 				}
-				else if (m_state == playerState::STATE_MB_ATT4 && delay <= 0.8)
+				else if (m_state == playerState::STATE_MB_ATT4 && delay <= 0.95f)
 				{
 					m_state = playerState::STATE_MB_ATT5;
 					//delay = 1.3f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 				}
-				else if (m_state == playerState::STATE_MB_ATT3)
+				else if (m_state == playerState::STATE_MB_ATT3 && delay <= 0.81f)
 				{
 					m_state = playerState::STATE_MB_ATT4;
 					//delay = 1.3f;
+					
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 				}
-				else if (m_state == playerState::STATE_MB_ATT2)
+				else if (m_state == playerState::STATE_MB_ATT2 && delay <= 0.63f)
 				{
 					m_state = playerState::STATE_MB_ATT3;
 					//delay = 1.3f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 				}
-				else if (m_state == playerState::STATE_MB_ATT1)
+				else if (m_state == playerState::STATE_MB_ATT1&&delay<=0.78f)
 				{
 					m_state = playerState::STATE_MB_ATT2;
 					//delay = 1.17f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 				}
 				else
 				{
-					if (m_state == playerState::STATE_MB_ATT6 && delay <= 0.8)
+					if (m_state == playerState::STATE_MB_ATT6 && delay <= 0.7)
 					{
 						m_state = playerState::STATE_MB_ATT1;
 						//delay = 1.3f;
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
 					}
-					else if (m_state != playerState::STATE_MB_ATT2 &&
+					else if (m_state != playerState::STATE_MB_ATT1 &&
+						m_state != playerState::STATE_MB_ATT2 &&
 						m_state != playerState::STATE_MB_ATT3 &&
 						m_state != playerState::STATE_MB_ATT4 &&
 						m_state != playerState::STATE_MB_ATT5 &&
@@ -668,7 +671,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						m_state = playerState::STATE_MB_ATT1;
 						//delay = 1.3f;
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
 					}

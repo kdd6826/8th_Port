@@ -23,6 +23,12 @@
 #include "SpBarValue.h"
 #include "StaminaBarBack.h"
 #include "StaminaBarValue.h"
+#include "Skill0.h"
+#include "Skill1.h"
+#include "Skill2.h"
+#include "Skill4.h"
+#include "SkillDkTransform.h"
+#include "SkillDkTransform2.h"
 #include "ColliderMgr.h"
 
 #include "StaticObject.h"

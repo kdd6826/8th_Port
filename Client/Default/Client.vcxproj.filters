@@ -115,6 +115,9 @@
     <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion">
       <UniqueIdentifier>{bcab0aa7-71d8-4ca0-8e3c-8c0d661277fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\03. SkillSlot">
+      <UniqueIdentifier>{f7d4c20f-7121-467a-a1da-0d7f462c31dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -192,9 +195,6 @@
     <ClInclude Include="..\Code\Titan.h">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\01.Titian</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\SkillSlot.h">
-      <Filter>02. GameObject\01. Stage\07. UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\HpBarBack.h">
       <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
     </ClInclude>
@@ -233,6 +233,27 @@
     </ClInclude>
     <ClInclude Include="..\Code\Zecallion.h">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkillSlot.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkillDkTransform2.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkillDkTransform.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill2.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill1.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill0.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill4.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +314,6 @@
     <ClCompile Include="..\Code\Titan.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\01.Titian</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SkillSlot.cpp">
-      <Filter>02. GameObject\01. Stage\07. UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\HpBarBack.cpp">
       <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
     </ClCompile>
@@ -334,6 +352,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\Zecallion.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillSlot.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillDkTransform2.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillDkTransform.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill2.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill1.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill0.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill4.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
