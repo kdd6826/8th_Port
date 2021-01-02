@@ -30,7 +30,7 @@ void CColliderMgr::Destroy()
 void CColliderMgr::Update()
 {
 	CollisionAttack(Engine::PLAYERATTACK,Engine::ENEMY);
-	CollisionAttack(Engine::ENEMYATTACK, Engine::PLAYER);
+	CollisionCheck(Engine::ENEMYATTACK, Engine::PLAYER);
 }
 
 void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstType)

@@ -71,8 +71,8 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	
-	
+
+
 
 	if (m_state == playerState::STATE_ATT1 ||
 		m_state == playerState::STATE_ATT2 ||
@@ -88,8 +88,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_state == playerState::STATE_THROW_BALL ||
 		m_state == playerState::STATE_RUINBLADE ||
 		m_state == playerState::STATE_LORDOFMANA ||
-		m_state == playerState::STATE_DOOMSAYER ||
-		m_state == playerState::STATE_DIFUSION
+		m_state == playerState::STATE_DOOMSAYER
+
 		)
 	{
 		isAttack = true;
@@ -106,7 +106,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_state == playerState::STATE_FIELD_SPRINT ||
 		m_state == playerState::STATE_FIELD_SPRINTSTOP ||
 		m_state == playerState::STATE_TIRED_RUN ||
-		m_state == playerState::STATE_DASH
+		m_state == playerState::STATE_DASH||
+		m_state == playerState::STATE_DIFUSION
 		)
 	{
 		isMove = true;

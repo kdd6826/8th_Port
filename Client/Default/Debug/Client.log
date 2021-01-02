@@ -1,3 +1,4 @@
-﻿  Loading.cpp
+﻿  Titan.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\titan.cpp(164): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

@@ -112,54 +112,58 @@ void CTitan::Move(const _float& fTimeDelta)
 		{
 			
 			int i = rand() % 8;
-			/*int i =3;*/
+
 			switch (i)
 			{
 			case 0:
 				m_state = titanState::STATE_ATTACKBALLISTA;
-				delay = 4.2f;
 				m_fAniSpeed = 3.5f;
+				//delay = 4.2f;
 				break;
 			case 1:
 				m_state = titanState::STATE_ATTACKHAMMER;
-				delay = 3.2f;//3.13
+				//delay = 3.2f;//3.13
 				m_fAniSpeed = 3.5f;
+				
 				break;
 			case 2:
 				m_state = titanState::STATE_ATTACKKICK;
-				delay = 2.9f; //2.82
+				//delay = 2.9f; //2.82
 				m_fAniSpeed = 3.5f;
 				break;
 			case 3:
 				m_state = titanState::STATE_ATTACKRAGE;
-				delay = 8.3f;//8.28
+				//delay = 8.3f;//8.28
 				m_fAniSpeed = 2.5f;
 				break;
 			case 4:
 				m_state = titanState::STATE_ATTACKSTOMP;
-				delay = 3.6f;//3.55
+				//delay = 3.6f;//3.55
 				m_fAniSpeed = 2.5f;
 				break;
 			case 5:
 				m_state = titanState::STATE_ATTACKTURNLEFT;
-				delay = 2.3f;//2.2
+				//delay = 2.3f;//2.2
 				m_fAniSpeed = 3.5f;
 				break;
 			case 6:
 				m_state = titanState::STATE_ATTACKTURNRIGHT;
-				delay = 2.2f;//2.1f
+				//delay = 2.2f;//2.1f
 				m_fAniSpeed = 3.5f;
 				break;
 			case 7:
 				m_state = titanState::STATE_ATTACKTWOSTEP;
-				delay = 1.9f;//1.8f
+				//delay = 1.9f;//1.8f
 				m_fAniSpeed = 2.f;
 				break;
 			default:
 				break;
 			}
+			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+			temp = (temp / (m_fAniSpeed)) - 0.2f;
+			delay = temp;
 			isAnimating = true;
-
+			reverseDelay = 0.f;
 			return;
 		}
 	}
@@ -254,7 +258,8 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 	if (delay > 0)
 	{
-		delay -= fTimeDelta;	
+		delay -= fTimeDelta;
+		reverseDelay += fTimeDelta;
 	}
 	if (!isDie)
 	{
@@ -315,11 +320,25 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
+					//6.13 
 
-					if (delay > 1.5f && delay < 3.f)
+					//0.83 2.06
+					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 2.06 / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
 					}
+					//4 6.4
+					if (reverseDelay > 4 / m_fAniSpeed && reverseDelay < 6.4 / m_fAniSpeed)
+					{
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					}
+					if (reverseDelay > 6 / m_fAniSpeed && reverseDelay < 6.3 / m_fAniSpeed)
+					{
+						
+						isColl = true;
+					}
+					else
+					isColl = false;
 				}
 				//주먹질
 				else if (m_state == titanState::STATE_ATTACKHAMMER)
@@ -348,11 +367,25 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
+					//0.8 6.2
+					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 6.2 / m_fAniSpeed)
+					{
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					}
 
-					if (delay > 1.5f && delay < 3.f)
+					//충돌판정 2.27 2.98
+					if (reverseDelay > 2.27 / m_fAniSpeed && reverseDelay < 2.7 / m_fAniSpeed)
 					{
 						isColl = true;
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					}
+					//충돌판정 4.1 4.6
+					else if (reverseDelay > 4.1 / m_fAniSpeed && reverseDelay < 4.6 / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 5.3 / m_fAniSpeed && reverseDelay < 5.7 / m_fAniSpeed)
+					{
+						isColl = true;
 					}
 					else
 						isColl = false;
@@ -385,21 +418,24 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pTransformCom->stat.moveSpeed = 5.f;
-					if (delay > 1.7f && delay < 2.2f)
+
+					if (reverseDelay > 2.6 / m_fAniSpeed && reverseDelay < 4 / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
-						isColl = true;
 					}
-					else if (delay > 1.2f && delay < 1.5f)
+					//if (reverseDelay > 7.56 / m_fAniSpeed && reverseDelay < 9.45 / m_fAniSpeed)
+					//{
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//}
+					//충돌판정 4.2 5.5
+					if (reverseDelay > 4.2 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
-					{
 						isColl = false;
+
 					}
-				}
 				//분노의주먹질
 				else if (m_state == titanState::STATE_ATTACKRAGE)
 				{
@@ -428,21 +464,78 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pTransformCom->stat.moveSpeed = 5.f;
-					//8.3f 스타트
-					if (delay > 5.5f && delay < 7.1f)
+					////8.3f 스타트
+					//if (delay > 5.5f && delay < 7.1f)
+					//{
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//	isColl = true;
+					//}
+					//else if (delay > 1.4f && delay < 3.8f)
+					//{
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//	isColl = true;
+					//}
+					//else
+					//{
+					//	isColl = false;
+					//}
+
+					if (reverseDelay > 3.5 / m_fAniSpeed && reverseDelay < 7.2 / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
-						isColl = true;
 					}
-					else if (delay > 1.4f && delay < 3.8f)
+					//12 16
+					if (reverseDelay > 12.f / m_fAniSpeed && reverseDelay < 16.f / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					}
+					//if (reverseDelay > 7.56 / m_fAniSpeed && reverseDelay < 9.45 / m_fAniSpeed)
+					//{
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//}
+					//충돌판정 4.2 5.5
+					if (reverseDelay > 4.98 / m_fAniSpeed && reverseDelay < 5.2f / m_fAniSpeed)
+					{
 						isColl = true;
 					}
+					else if (reverseDelay > 6.9 / m_fAniSpeed && reverseDelay < 7.1f / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 8.6 / m_fAniSpeed && reverseDelay < 8.8f / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 10.6 / m_fAniSpeed && reverseDelay < 10.8f / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 12.9 / m_fAniSpeed && reverseDelay < 13.1 / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 13.8 / m_fAniSpeed && reverseDelay < 14 / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 14.7 / m_fAniSpeed && reverseDelay < 14.9 / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 15.7 / m_fAniSpeed && reverseDelay < 15.9 / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 16.5 / m_fAniSpeed && reverseDelay < 16.7 / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+				
+					//12.9 13.8 14.7 15.7	16.5
 					else
-					{
 						isColl = false;
-					}
+
+					
 				}
 				//
 				else if (m_state == titanState::STATE_ATTACKSTOMP)
@@ -473,11 +566,20 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pTransformCom->stat.moveSpeed = 3.f;
 					//3.5f 스타트
-					if (delay > 1.2f && delay < 1.75f)
+					//4.53 5.12
+
+					if (reverseDelay > 4.35 / m_fAniSpeed && reverseDelay < 5.6 / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					}
+
+
+					//move 4.35 5.6
+					if (reverseDelay > 4.53 / m_fAniSpeed && reverseDelay < 5.12f / m_fAniSpeed)
+					{
 						isColl = true;
 					}
+
 					else
 					{
 						isColl = false;
@@ -510,25 +612,48 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pTransformCom->stat.moveSpeed = 3.f;
-					if (delay > 1.3f && delay < 1.4f)
+
+					/*if (delay > 1.3f && delay < 1.4f)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
-						isColl = true;
+
+					}*/
+					if (reverseDelay > 2.5f / m_fAniSpeed && reverseDelay < 4.f / m_fAniSpeed)
+					{
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+
 					}
-					else if (delay > 1.5f && delay < 2.f)
+					if (reverseDelay > 1.1 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(20.f * fTimeDelta * spinSpeed));
-						isColl = true;
+						//isColl = true;
 					}
-					else if (delay > 1.2f && delay < 1.35f)
+					else if (reverseDelay > 3.3 / m_fAniSpeed && reverseDelay < 4.1 / m_fAniSpeed)
 					{
-						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-172.5f * fTimeDelta * spinSpeed));
+						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-90.f * fTimeDelta * spinSpeed));
 						isColl = true;
 					}
 					else
 					{
 						isColl = false;
 					}
+					/*else if (delay > 3.3f && delay < 4.3f)
+					{
+						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-172.5f * fTimeDelta * spinSpeed));
+						
+					}*/
+					//1.1 2.8
+					//3.3 4.3
+					//else if (delay > 1.5f && delay < 2.f)
+					//{
+					//	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(20.f * fTimeDelta * spinSpeed));
+
+					//}
+					//else if (delay > 1.2f && delay < 1.35f)
+					//{
+					//	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-172.5f * fTimeDelta * spinSpeed));
+					//	isColl = true;
+					//}
 				}
 				else if (m_state == titanState::STATE_ATTACKTURNRIGHT)
 				{
@@ -549,36 +674,38 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pTransformCom->stat.moveSpeed = 5.f;
 					//8.3f 스타트
-					if (delay > 1.3f && delay < 1.4f)
+					if (reverseDelay > 2.5f / m_fAniSpeed && reverseDelay < 3.6f / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
-						isColl = true;
+
 					}
-					else if (delay > 1.5f && delay < 2.f)
+					if (reverseDelay > 1.4 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-20.f * fTimeDelta * spinSpeed));
-						isColl = true;
+						//isColl = true;
 					}
-					else if (delay > 1.2f && delay < 1.35f)
+					else if (reverseDelay > 3.3 / m_fAniSpeed && reverseDelay < 3.6 / m_fAniSpeed)
 					{
-						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(172.5f * fTimeDelta * spinSpeed));
+						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta * spinSpeed));
 						isColl = true;
 					}
+
 					else
 					{
 						isColl = false;
 					}
-				}
-
-				if (true == m_pMeshCom->Is_AnimationSetEnd())
-				{
-
-					isAnimating = false;
-					m_pTransformCom->stat.moveSpeed = TitanSpeed;
-					delay = 0;
-
 
 				}
+
+				//if (true == m_pMeshCom->Is_AnimationSetEnd())
+				//{
+
+				//	isAnimating = false;
+				//	m_pTransformCom->stat.moveSpeed = TitanSpeed;
+				//	delay = 0;
+
+
+				//}
 				else if (m_state == titanState::STATE_ATTACKTWOSTEP)
 				{
 					_vec3	vPos, vDir, vRight;
@@ -607,9 +734,22 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pTransformCom->stat.moveSpeed = 7.f;
 					//1.8f 스타트
-					if (delay > 0.6f && delay < 1.1f)
+					if (reverseDelay > 1.6f / m_fAniSpeed && reverseDelay < 2.6f / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+
+					}
+					if (reverseDelay > 2.8f / m_fAniSpeed && reverseDelay < 3.5f / m_fAniSpeed)
+					{
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+
+					}
+					if (reverseDelay > 2.5 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
+					{
+						isColl = true;
+					}
+					else if (reverseDelay > 3.5 / m_fAniSpeed && reverseDelay < 3.7 / m_fAniSpeed)
+					{
 						isColl = true;
 					}
 					else
