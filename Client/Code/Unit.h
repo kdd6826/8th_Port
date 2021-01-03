@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Define.h"
 #include "SphereCollider.h"
+//#include "ColliderMgr.h"
 BEGIN(Engine)
 
 class CDynamicMesh;
@@ -30,7 +31,7 @@ public:
 	Engine::CCalculator* m_pCalculatorCom = nullptr;
 	Engine::CCollider* m_pColliderCom = nullptr;
 	Engine::CShader* m_pShaderCom = nullptr;
-
+	void NaviMeshChange(const _tchar* pFileKey);
 private:
 
 protected:

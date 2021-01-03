@@ -29,7 +29,6 @@
 #include "Skill4.h"
 #include "SkillDkTransform.h"
 #include "SkillDkTransform2.h"
-#include "ColliderMgr.h"
 
 #include "StaticObject.h"
 BEGIN(Client)

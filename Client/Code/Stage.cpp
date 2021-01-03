@@ -2,7 +2,7 @@
 #include "Stage.h"
 #include "Export_Function.h"
 #include "Loading.h"
-
+#include "Stage2.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -23,14 +23,26 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	CColliderMgr::GetInstance();
+
 	return S_OK;
 }
 
 Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 {
-	CColliderMgr::GetInstance()->Update();
+	
+	if (Engine::Get_DIKeyState(DIK_F11) & 0x80)
+	{
+		CScene* pScene = nullptr;
+	pScene = CStage2::Create(m_pGraphicDev);
+
+	FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
+	return 1;
+	}
+
 	return Engine::CScene::Update_Scene(fTimeDelta);
+
+
+
 }
 
 void CStage::Render_Scene(void)
@@ -130,6 +142,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	Engine::CGameObject*		pGameObject = nullptr;
 
 	pGameObject = CPlayer::Create(m_pGraphicDev);
+	//dynamic_cast<CPlayer*>(pGameObject)->m_pNaviMeshCom->
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
@@ -309,6 +322,6 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CStage::Free(void)
 {
 	Engine::CScene::Free();
-	CColliderMgr::Destroy();
+
 }
 

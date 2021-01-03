@@ -10,6 +10,7 @@ CSphereCollider::CSphereCollider(LPDIRECT3DDEVICE9 pGraphicDev)
 CSphereCollider::~CSphereCollider(void)
 {
 	//Engine::Safe_Release(m_pGraphicDev);
+	if(isCreate)
 	CColliderMgr::GetInstance()->DisregisterObject(this);
 	
 }

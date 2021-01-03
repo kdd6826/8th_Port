@@ -4,6 +4,7 @@
 #include "DynamicCamera.h"
 #include "ColliderMgr.h"
 #include "Sword.h"
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)

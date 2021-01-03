@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 
 #include "Stage.h"
-
+#include "Stage2.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)

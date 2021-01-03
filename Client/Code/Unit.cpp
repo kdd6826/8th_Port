@@ -30,6 +30,21 @@ _int CUnit::Update_Object(const _float& fTimeDelta)
 
 
 
+void CUnit::NaviMeshChange(const _tchar* pFileKey)
+{
+	//Engine::CComponent* pComponent = nullptr;
+
+	//m_pMeshCom->Free();
+	//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
+
+	m_pNaviMeshCom->Free();
+	m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, pFileKey));
+	
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
+
+}
+
 HRESULT CUnit::Add_Component(void)
 {
 	Engine::CComponent* pComponent = nullptr;
@@ -103,6 +118,7 @@ _int CUnit::Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType, Engin
 
 		CSphereCollider* sphereCol = CSphereCollider::Create(m_pGraphicDev);
 		sphereCol->m_pDynamicMesh = this;
+		sphereCol->isCreate = true;
 		sphereCol->m_FrameName = frameNameString;
 		sphereCol->m_FrameNameCheck = true;
 		m_VecSphereCollider.emplace_back(sphereCol);

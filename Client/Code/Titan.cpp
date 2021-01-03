@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Titan.h"
+#include "ColliderMgr.h"
 #include "Export_Function.h"
 
 
@@ -111,8 +112,8 @@ void CTitan::Move(const _float& fTimeDelta)
 		if (disPlayer < 2.f)
 		{
 			
-			int i = rand() % 8;
-
+			//int i = rand() % 8;
+			int i = 1;
 			switch (i)
 			{
 			case 0:
@@ -325,6 +326,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//0.83 2.06
 					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 2.06 / m_fAniSpeed)
 					{
+						
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
 					}
 					//4 6.4
@@ -334,7 +336,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					}
 					if (reverseDelay > 6 / m_fAniSpeed && reverseDelay < 6.3 / m_fAniSpeed)
 					{
-						
+						CColliderMgr::GetInstance()->PlayerhitList.clear();
 						isColl = true;
 					}
 					else
@@ -376,15 +378,18 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//충돌판정 2.27 2.98
 					if (reverseDelay > 2.27 / m_fAniSpeed && reverseDelay < 2.7 / m_fAniSpeed)
 					{
+						CColliderMgr::GetInstance()->PlayerhitList.clear();
 						isColl = true;
 					}
 					//충돌판정 4.1 4.6
 					else if (reverseDelay > 4.1 / m_fAniSpeed && reverseDelay < 4.6 / m_fAniSpeed)
 					{
+						CColliderMgr::GetInstance()->PlayerhitList.clear();
 						isColl = true;
 					}
 					else if (reverseDelay > 5.3 / m_fAniSpeed && reverseDelay < 5.7 / m_fAniSpeed)
 					{
+						CColliderMgr::GetInstance()->PlayerhitList.clear();
 						isColl = true;
 					}
 					else

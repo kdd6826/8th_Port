@@ -2,7 +2,7 @@
 #include "Stage2.h"
 #include "Export_Function.h"
 #include "Loading.h"
-
+#include "Unit.h"
 CStage2::CStage2(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -29,8 +29,19 @@ HRESULT CStage2::Ready_Scene(void)
 
 Engine::_int CStage2::Update_Scene(const _float& fTimeDelta)
 {
+	if (!isInitial)
+	{
+		InitialUpdate();
+		isInitial = true;
+	}
 	CColliderMgr::GetInstance()->Update();
 	return Engine::CScene::Update_Scene(fTimeDelta);
+}
+
+void CStage2::InitialUpdate()
+{
+	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+	pPlayerTransCom->Set_Pos(&PlayerSpawnPositionCastle);
 }
 
 void CStage2::Render_Scene(void)
@@ -131,6 +142,8 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi2");
+	
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
 	pGameObject = CSword::Create(m_pGraphicDev);
@@ -144,9 +157,9 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 
 
-	pGameObject = CTitan::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
+	//pGameObject = CTitan::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
 
 
 	/*for (_uint i = 0; i < 50; ++i)

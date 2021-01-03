@@ -14,6 +14,7 @@ class CCollider;
 class CNaviMesh;
 class CShader;
 class CPlayerState;
+
 END
 
 BEGIN(Client)

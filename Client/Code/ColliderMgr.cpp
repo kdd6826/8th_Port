@@ -30,7 +30,7 @@ void CColliderMgr::Destroy()
 void CColliderMgr::Update()
 {
 	CollisionAttack(Engine::PLAYERATTACK,Engine::ENEMY);
-	CollisionCheck(Engine::ENEMYATTACK, Engine::PLAYER);
+	CollisionMonsterAttack(Engine::ENEMYATTACK, Engine::PLAYER);
 }
 
 void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstType)
@@ -41,8 +41,8 @@ void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstTy
 		{
 			if (IsCollided(srcElem, dstElem))
 			{
-				if(dstElem->isColl==true)
-				srcElem->m_pDynamicMesh->OnCollision(dstElem->m_pDynamicMesh);
+				//if(dstElem->isColl==true)
+				//srcElem->m_pDynamicMesh->OnCollision(dstElem->m_pDynamicMesh);
 				if (srcElem->isColl == true)
 				dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
 			}
@@ -73,6 +73,36 @@ void CColliderMgr::CollisionAttack(Engine::COLLID _srcType, Engine::COLLID _dstT
 					}
 							dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
 							hitList.emplace_back(srcElem->m_pDynamicMesh);
+
+				}
+			}
+		}
+	}
+}
+
+void CColliderMgr::CollisionMonsterAttack(Engine::COLLID _srcType, Engine::COLLID _dstType)
+{
+	for (auto& srcElem : objectList[_srcType])
+	{
+		for (auto& dstElem : objectList[_dstType])
+		{
+			if (IsCollided(srcElem, dstElem))
+			{
+				//플레이어피격
+				//srcElem->m_pDynamicMesh->OnCollision(dstElem->m_pDynamicMesh);
+			//플레이어 
+				if (srcElem->isColl == true)
+				{
+					for (auto& hit : PlayerhitList)
+					{
+						//맞은 놈이다
+						if (hit == srcElem->m_pDynamicMesh)
+						{
+							return;
+						}
+					}
+					dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
+					PlayerhitList.emplace_back(srcElem->m_pDynamicMesh);
 
 				}
 			}

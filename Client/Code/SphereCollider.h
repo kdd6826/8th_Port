@@ -43,6 +43,7 @@ public:
 	static CSphereCollider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	//list<Engine::VTXCOL*> list_pVtx;
 	bool m_Dead = false;
+	bool isCreate = false;
 	//자기자신
 	Engine::CGameObject* m_pDynamicMesh;
 	_bool						m_bColl = false;

@@ -10,7 +10,7 @@
 
 
 #define PlayerSpawnPosition _vec3({20.f,0.f,20.f})
-//#define PlayerSpawnPosition _vec3({98.f,0.f,3.f})
+#define PlayerSpawnPositionCastle _vec3({98.f,0.f,3.f})
 #define TitanSpeed 2.f
 extern HWND g_hWnd;
 extern HINSTANCE g_hInst;
