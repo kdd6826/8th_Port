@@ -128,8 +128,8 @@ void CMainApp::Free(void)
 	Client::Safe_Release(m_pManagementClass);
 
 
-	CColliderMgr::Destroy();
 	Engine::Release_Utility();
+	CColliderMgr::Destroy();
 	Engine::Release_Resoures();
 	Engine::Release_System();
 }

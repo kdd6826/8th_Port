@@ -78,30 +78,41 @@ void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 	playerDir = pPlayerTransCom->Get_Dir();
 
 	playerScale = pPlayerTransCom->m_vScale;
+	if (Engine::Get_DIKeyState(DIK_9) & 0x80)
+	{
+		isFree = true;
+	}
+	if (Engine::Get_DIKeyState(DIK_8) & 0x80)
+	{
+		isFree = false;
+	}
 	/// ////////////
-	_vec3 local;
-	_matrix matLocal, rotY, matTrans;
+	if (!isFree)
+	{
+		_vec3 local;
+		_matrix matLocal, rotY, matTrans;
 
-	local = m_vOffset;
+		local = m_vOffset;
 
-	//local.x += m_fRadius;
-	local.z += -m_fRadius;
-	D3DXMatrixTranslation(&matTrans, local.x, local.y, local.z);
+		//local.x += m_fRadius;
+		local.z += -m_fRadius;
+		D3DXMatrixTranslation(&matTrans, local.x, local.y, local.z);
 
-	D3DXMatrixRotationY(&rotY, m_fAngle);
-	matLocal = matTrans * rotY;
-	memcpy(&local, matLocal.m[3], sizeof(_vec3));
+		D3DXMatrixRotationY(&rotY, m_fAngle);
+		matLocal = matTrans * rotY;
+		memcpy(&local, matLocal.m[3], sizeof(_vec3));
 
-	m_vEye = local + playerPos;
-	//m_vEye.y += eyeOffSet;
+		m_vEye = local + playerPos;
+		//m_vEye.y += eyeOffSet;
 
-	dir = playerPos - m_vEye;
-	dir.y = 0;
-	D3DXVec3Normalize(&dir, &dir);
+		dir = playerPos - m_vEye;
+		dir.y = 0;
+		D3DXVec3Normalize(&dir, &dir);
 
-	//m_vAt = playerPos;
-	m_vAt = playerPos + dir * 20.f;
-
+		//m_vAt = playerPos;
+		m_vAt = playerPos + dir * 20.f;
+	}
+	//
 	if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80)
 	{
 		if (true == m_bClick)
@@ -124,6 +135,7 @@ void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 
 void Client::CDynamicCamera::Mouse_Move(void)
 {
+	
 	_matrix			matCamWorld;
 	D3DXMatrixInverse(&matCamWorld, NULL, &m_matView);
 

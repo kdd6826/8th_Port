@@ -40,7 +40,7 @@ private:
 
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
-	Engine::COptimization*		m_pOptimizationCom = nullptr;
+	//Engine::COptimization*		m_pOptimizationCom = nullptr;
 	Engine::CShader*			m_pShaderCom = nullptr;
 
 	Engine::INDEX32*			m_pIndex = nullptr;

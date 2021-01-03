@@ -49,8 +49,8 @@ HRESULT Client::CTitan::Add_Component(void)
 
 	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 
-	m_pTransformCom->stat.maxHp = 3.f;
-	m_pTransformCom->stat.hp = 3.f;
+	m_pTransformCom->stat.maxHp = 10.f;
+	m_pTransformCom->stat.hp = 10.f;
 	return S_OK;
 }
 
@@ -112,8 +112,8 @@ void CTitan::Move(const _float& fTimeDelta)
 		if (disPlayer < 2.f)
 		{
 			
-			//int i = rand() % 8;
-			int i = 1;
+			int i = rand() % 8;
+			//int i = 1;
 			switch (i)
 			{
 			case 0:
@@ -336,7 +336,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					}
 					if (reverseDelay > 6 / m_fAniSpeed && reverseDelay < 6.3 / m_fAniSpeed)
 					{
-						CColliderMgr::GetInstance()->PlayerhitList.clear();
+
 						isColl = true;
 					}
 					else
@@ -378,18 +378,18 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//충돌판정 2.27 2.98
 					if (reverseDelay > 2.27 / m_fAniSpeed && reverseDelay < 2.7 / m_fAniSpeed)
 					{
-						CColliderMgr::GetInstance()->PlayerhitList.clear();
+
 						isColl = true;
 					}
 					//충돌판정 4.1 4.6
 					else if (reverseDelay > 4.1 / m_fAniSpeed && reverseDelay < 4.6 / m_fAniSpeed)
 					{
-						CColliderMgr::GetInstance()->PlayerhitList.clear();
+						
 						isColl = true;
 					}
 					else if (reverseDelay > 5.3 / m_fAniSpeed && reverseDelay < 5.7 / m_fAniSpeed)
 					{
-						CColliderMgr::GetInstance()->PlayerhitList.clear();
+						
 						isColl = true;
 					}
 					else

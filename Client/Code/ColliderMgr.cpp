@@ -24,13 +24,14 @@ HRESULT CColliderMgr::Ready_ColliderMgr(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CColliderMgr::Destroy()
 {
+	if(nullptr!=m_pInstance)
 	delete m_pInstance;
 }
 
 void CColliderMgr::Update()
 {
 	CollisionAttack(Engine::PLAYERATTACK,Engine::ENEMY);
-	CollisionMonsterAttack(Engine::ENEMYATTACK, Engine::PLAYER);
+	CollisionCheck(Engine::ENEMYATTACK, Engine::PLAYER);
 }
 
 void CColliderMgr::CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstType)
@@ -80,35 +81,7 @@ void CColliderMgr::CollisionAttack(Engine::COLLID _srcType, Engine::COLLID _dstT
 	}
 }
 
-void CColliderMgr::CollisionMonsterAttack(Engine::COLLID _srcType, Engine::COLLID _dstType)
-{
-	for (auto& srcElem : objectList[_srcType])
-	{
-		for (auto& dstElem : objectList[_dstType])
-		{
-			if (IsCollided(srcElem, dstElem))
-			{
-				//플레이어피격
-				//srcElem->m_pDynamicMesh->OnCollision(dstElem->m_pDynamicMesh);
-			//플레이어 
-				if (srcElem->isColl == true)
-				{
-					for (auto& hit : PlayerhitList)
-					{
-						//맞은 놈이다
-						if (hit == srcElem->m_pDynamicMesh)
-						{
-							return;
-						}
-					}
-					dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
-					PlayerhitList.emplace_back(srcElem->m_pDynamicMesh);
 
-				}
-			}
-		}
-	}
-}
 
 void CColliderMgr::RegisterObject(Engine::COLLID colType, CSphereCollider* _pObj)
 {

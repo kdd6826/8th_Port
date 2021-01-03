@@ -19,7 +19,7 @@ public:
 	void Update();
 	void CollisionCheck(Engine::COLLID _srcType, Engine::COLLID _dstType);
 	void CollisionAttack(Engine::COLLID _srcType, Engine::COLLID _dstType);
-	void CollisionMonsterAttack(Engine::COLLID _srcType, Engine::COLLID _dstType);
+	
 	static void RegisterObject(Engine::COLLID colType, CSphereCollider* _pObj);
 	void DisregisterObject(CSphereCollider* obj);
 	static void DisregisterObject(Engine::COLLID colType, CSphereCollider* _pObj);
@@ -29,7 +29,7 @@ public:
 public:
 	list<CSphereCollider*>				objectList[Engine::COLLID::NONE];
 	list<Engine::CGameObject*>			hitList;
-	list<Engine::CGameObject*>			PlayerhitList;
+	
 private:
 	virtual void Free(void);
 };

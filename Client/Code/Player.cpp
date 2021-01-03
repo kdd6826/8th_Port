@@ -48,7 +48,10 @@ HRESULT Client::CPlayer::Add_Component(void)
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&PlayerSpawnPosition);
 	Engine::CGameObject::Update_Object(timeDelta);
-
+	m_pTransformCom->stat.hp = 10.f;
+	m_pTransformCom->stat.maxHp = 10.f;
+	m_pTransformCom->stat.stamina = 200.f;
+	m_pTransformCom->stat.maxStamina = 200.f;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -81,7 +84,12 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
 
 
-
+	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
+	{
+		m_pMeshCom->Free();
+		m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+		m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_NORMAL;
+	}
 	if (m_state == playerState::STATE_ATT1 ||
 		m_state == playerState::STATE_ATT2 ||
 		m_state == playerState::STATE_ATT3 ||
@@ -316,10 +324,12 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			{
 
 				m_pMeshCom->Free();
-				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
-				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_NORMAL;
+				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
+				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
 			}
 		}
+
+		
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
 
@@ -907,7 +917,9 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;
+			isInvincible = true;
 			isHit = true;
+			isSkill = true;
 		}
 	}
 }

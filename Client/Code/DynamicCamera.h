@@ -29,7 +29,7 @@ private:
 	void		Mouse_Fix(void);
 
 private:
-
+	bool isFree = false;
 	Engine::CTransform* m_pTransformCom = nullptr;
 	_bool		m_bClick = false;
 	_bool		m_bFix = true;

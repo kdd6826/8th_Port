@@ -34,7 +34,7 @@ protected:
 	_bool isSearch = false;
 	//플레이어까지의 거리
 	_float disPlayer = 0.f;
-
+	_float						reverseDelay = 0.f;
 	virtual void Free(void) override;
 
 };
