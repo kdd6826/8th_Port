@@ -67,6 +67,9 @@
     <Filter Include="10. RenderTarget\Manager">
       <UniqueIdentifier>{9c4150a9-62d8-4ded-b70c-a64fb0471430}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\04. PlayerState">
+      <UniqueIdentifier>{fe6d0eb3-883c-4cfc-a666-ee4e7ec15e95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Component.cpp">
@@ -131,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ColliderSphere.cpp">
       <Filter>04. Component\02. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerState.cpp">
+      <Filter>04. Component\04. PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\ColliderSphere.h">
       <Filter>04. Component\02. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PlayerState.h">
+      <Filter>04. Component\04. PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

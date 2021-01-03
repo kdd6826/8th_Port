@@ -1,28 +1,8 @@
-﻿  Calculator.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Transform.cpp
-  Renderer.cpp
-  Management.cpp
+﻿  Management.cpp
   코드를 생성하고 있습니다...
   건너뛰고 있습니다... (관련된 변경 내용 없음)
-  Shader.cpp
-  Scene.cpp
-  RenderTargetMgr.cpp
-  RenderTarget.cpp
-  QuadTree.cpp
-  ProtoMgr.cpp
-  Pipeline.cpp
-  Optimization.cpp
-  LightMgr.cpp
-  Light.cpp
-  Layer.cpp
-  GameObject.cpp
-  Frustum.cpp
-  Component.cpp
-  ColliderSphere.cpp
-  Collider.cpp
-  Camera.cpp
+  Renderer.cpp
+  PlayerState.cpp
   Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
@@ -38,6 +18,7 @@
   .\Engine\Utility\Code\Management.h
   .\Engine\Utility\Code\Optimization.h
   .\Engine\Utility\Code\Pipeline.h
+  .\Engine\Utility\Code\PlayerState.h
   .\Engine\Utility\Code\ProtoMgr.h
   .\Engine\Utility\Code\QuadTree.h
   .\Engine\Utility\Code\Renderer.h
@@ -46,7 +27,7 @@
   .\Engine\Utility\Code\Scene.h
   .\Engine\Utility\Code\Shader.h
   .\Engine\Utility\Code\Transform.h
-         21개 파일이 복사되었습니다.
+         22개 파일이 복사되었습니다.
   .\Engine\Utility\Code\ShaderManablade.hpp
   .\Engine\Utility\Code\ShaderWeapon.hpp
   .\Engine\Utility\Code\Shader_Base.hpp

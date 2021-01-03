@@ -78,8 +78,10 @@ HRESULT Client::CSword::Ready_Object(void)
 }
 Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 {
-	if (nullptr == m_pParentBoneMatrix)
-	{
+
+	//if (nullptr == m_pParentBoneMatrix)
+	//{
+
 		Engine::CDynamicMesh*	pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
 		NULL_CHECK_RETURN(pPlayerMeshCom, 0);
 
@@ -91,7 +93,7 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 		Engine::CTransform*		pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 		NULL_CHECK_RETURN(pPlayerTransCom, 0);
 		m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
-	}
+	//}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 		
@@ -107,9 +109,14 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 void Client::CSword::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
-
-	m_pMeshCom->Render_Meshes();
-
+	//
+	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerStateCom, );
+	if (pPlayerStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
+		//
+	{
+		m_pMeshCom->Render_Meshes();
+	}
 	_matrix matWorld;
 		m_pTransformCom->Get_WorldMatrix(&matWorld);
 		//m_pTransformCom->Get_NRotWorldMatrix(&matWorld);

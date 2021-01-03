@@ -13,13 +13,18 @@ class CCalculator;
 class CCollider;
 class CNaviMesh;
 class CShader;
-
+class CPlayerState;
 END
 
 BEGIN(Client)
 class CPlayer : public CUnit
 {
-
+	//enum playerMesh
+	//{
+	//	MESH_NORMAL,
+	//	MESH_DKKNIGHT,
+	//	MESH_DKKNIGHT2
+	//};
 	enum playerState
 	{
 		STATE_IDLE,
@@ -86,6 +91,7 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 	virtual void OnCollision(Engine::CGameObject* target)override;
+	Engine::CPlayerState* m_pStateCom = nullptr;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
@@ -96,7 +102,7 @@ private:
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	playerState m_state = playerState::STATE_IDLE;
-
+	/*playerMesh	meshTransform = playerMesh::MESH_NORMAL;*/
 	bool		isManaBlade = false;
 	bool		isBattle = false;
 	bool		isAttack = false;

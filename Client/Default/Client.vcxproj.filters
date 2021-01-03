@@ -255,6 +255,9 @@
     <ClInclude Include="..\Code\Skill4.h">
       <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Stage2.h">
+      <Filter>01. Scene\01. Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -373,6 +376,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Skill4.cpp">
       <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage2.cpp">
+      <Filter>01. Scene\01. Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

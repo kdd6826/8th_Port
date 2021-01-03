@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Pipeline.h"
 #include "Calculator.h"
+#include "PlayerState.h"
 #include "LightMgr.h"
 #include "Collider.h"
 #include "ColliderSphere.h"

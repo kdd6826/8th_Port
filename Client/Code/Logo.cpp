@@ -121,6 +121,9 @@ HRESULT Client::CLogo::Ready_Resource(Engine::RESOURCETYPE eType)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Transform", pComponent);
 
+	pComponent = Engine::CPlayerState::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_PlayerState", pComponent);
 
 	return S_OK;
 }

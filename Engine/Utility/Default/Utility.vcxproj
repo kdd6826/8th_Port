@@ -176,6 +176,7 @@ Call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\LightMgr.cpp" />
     <ClCompile Include="..\Code\Optimization.cpp" />
     <ClCompile Include="..\Code\Pipeline.cpp" />
+    <ClCompile Include="..\Code\PlayerState.cpp" />
     <ClCompile Include="..\Code\ProtoMgr.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
     <ClCompile Include="..\Code\Layer.cpp" />
@@ -200,6 +201,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\LightMgr.h" />
     <ClInclude Include="..\Code\Optimization.h" />
     <ClInclude Include="..\Code\Pipeline.h" />
+    <ClInclude Include="..\Code\PlayerState.h" />
     <ClInclude Include="..\Code\ProtoMgr.h" />
     <ClInclude Include="..\Code\GameObject.h" />
     <ClInclude Include="..\Code\Layer.h" />

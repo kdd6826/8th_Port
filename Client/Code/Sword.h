@@ -47,9 +47,9 @@ private:
 
 public:
 	static CSword*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual void Free(void) override;
 
 private:
-	virtual void Free(void) override;
 
 };
 

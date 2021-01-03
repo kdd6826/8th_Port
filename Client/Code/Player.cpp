@@ -3,6 +3,7 @@
 #include "Export_Function.h"
 #include "DynamicCamera.h"
 #include "ColliderMgr.h"
+#include "Sword.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -34,6 +35,12 @@ HRESULT Client::CPlayer::Add_Component(void)
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+
+
+	// Transform
+	pComponent = m_pStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Clone(L"Proto_PlayerState"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_PlayerState", pComponent);
 
 	CUnit::Add_Component();
 
@@ -266,7 +273,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 			{
 
-				m_state = playerState::STATE_CONFUSIONHOLE;
+ 				m_state = playerState::STATE_CONFUSIONHOLE;
 				m_fBattleCount = 5.f;
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
@@ -286,6 +293,31 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			isSkill = false;
 			isInvincible = false;
+		}
+
+		if (m_state == playerState::STATE_DARKKNIGHT_TRANS1)
+		{
+			if (delay<3.f&& m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
+			{
+				/*Engine::CGameObject* pSword = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"Sword"));
+				if (pSword == nullptr)
+					return;
+				dynamic_cast<CSword*>(pSword)->Free();*/
+				
+				m_pMeshCom->Free();
+				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
+				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT;
+			}
+		}
+		if (m_state == playerState::STATE_DARKKNIGHT_TRANS2)
+		{
+			if (delay < 2.f && m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_DKKNIGHT)
+			{
+
+				m_pMeshCom->Free();
+				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_NORMAL;
+			}
 		}
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
@@ -315,7 +347,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 	vCamPos = pCamera->Get_Eye();
 	fCamAngle = pCamera->Get_Angle();
-
+	
 
 
 
@@ -743,6 +775,21 @@ void CPlayer::Attack(const _float& fTimeDelta)
 		{
 
 			m_state = playerState::STATE_DARKKNIGHT_TRANS1;
+			//OK
+			//delay = 8.1f;
+			m_fBattleCount = 13.1f;
+			isSkill = true;
+			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+			delay = temp;
+		}
+	}
+	if (Engine::Get_DIKeyState(DIK_7) & 0x80)
+	{
+		if (delay <= 0.f)
+		{
+
+			m_state = playerState::STATE_DARKKNIGHT_TRANS2;
 			//OK
 			//delay = 8.1f;
 			m_fBattleCount = 13.1f;
