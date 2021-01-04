@@ -73,10 +73,10 @@ HRESULT Client::CStaminaBarValue::Ready_Object(void)
 Client::_int Client::CStaminaBarValue::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
-	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransCom, 0);
-	m_fX = 400 * (pPlayerTransCom->stat.stamina / pPlayerTransCom->stat.maxStamina);
-	m_fSizeX = 800 * pPlayerTransCom->stat.stamina / pPlayerTransCom->stat.maxStamina;
+	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerStateCom, 0);
+	m_fX = 400 * (pPlayerStateCom->stat.stamina / pPlayerStateCom->stat.maxStamina);
+	m_fSizeX = 800 * pPlayerStateCom->stat.stamina / pPlayerStateCom->stat.maxStamina;
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 

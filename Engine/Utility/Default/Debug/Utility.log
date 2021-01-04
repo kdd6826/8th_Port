@@ -1,9 +1,4 @@
-﻿  Management.cpp
-  코드를 생성하고 있습니다...
-  건너뛰고 있습니다... (관련된 변경 내용 없음)
-  Renderer.cpp
-  PlayerState.cpp
-  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -16,6 +11,7 @@
   .\Engine\Utility\Code\Light.h
   .\Engine\Utility\Code\LightMgr.h
   .\Engine\Utility\Code\Management.h
+  .\Engine\Utility\Code\MonsterState.h
   .\Engine\Utility\Code\Optimization.h
   .\Engine\Utility\Code\Pipeline.h
   .\Engine\Utility\Code\PlayerState.h
@@ -27,7 +23,7 @@
   .\Engine\Utility\Code\Scene.h
   .\Engine\Utility\Code\Shader.h
   .\Engine\Utility\Code\Transform.h
-         22개 파일이 복사되었습니다.
+         23개 파일이 복사되었습니다.
   .\Engine\Utility\Code\ShaderManablade.hpp
   .\Engine\Utility\Code\ShaderWeapon.hpp
   .\Engine\Utility\Code\Shader_Base.hpp

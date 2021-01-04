@@ -35,14 +35,16 @@ HRESULT Client::CDog::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 
+	CMonster::Add_Component();
+
 	// Mesh
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Dog"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	CUnit::Add_Component();
 	
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	/*int i = rand() % 8;*/
 	m_pTransformCom->Set_Pos(&_vec3{23.f,0.f,23.f});
 	Engine::CGameObject::Update_Object(timeDelta);
 
@@ -182,7 +184,7 @@ void CDog::Move(const _float& fTimeDelta)
 
 	}
 	m_fAniSpeed = 1.5f;
-	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 }
 
@@ -288,10 +290,10 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 					if (reverseDelay > 0.3 / m_fAniSpeed && reverseDelay < 1.42 / m_fAniSpeed)
 					{
 
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 
-					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 1.1 / m_fAniSpeed)
+					if (reverseDelay > 0.6 / m_fAniSpeed && reverseDelay < 1.1 / m_fAniSpeed)
 					{
 
 						isColl = true;
@@ -326,7 +328,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					//6.13 
-					if (reverseDelay > 0.4 / m_fAniSpeed && reverseDelay < 2.1 / m_fAniSpeed)
+					if (reverseDelay > 0.2 / m_fAniSpeed && reverseDelay < 2.1 / m_fAniSpeed)
 					{
 
 						isColl = true;
@@ -339,7 +341,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pTransformCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = TitanSpeed;
 					delay = 0;
 					isColl = false;
 
@@ -400,6 +402,11 @@ void Client::CDog::Render_Object(void)
 void CDog::OnCollision(Engine::CGameObject* target)
 {
 	CMonster::OnCollision(target);
+	if (m_state != STATE_DMGUP)
+	{
+		m_state = STATE_DMGUP;
+		isAnimating = true;
+	}
 }
 void Client::CDog::SetUp_OnTerrain(void)
 {

@@ -35,7 +35,7 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	CUnit::Add_Component();
+	CMonster::Add_Component();
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&_vec3{ 17.f,0.f,17.f });
@@ -203,7 +203,7 @@ void CTitan::Move(const _float& fTimeDelta)
 
 	}
 	m_fAniSpeed = 2.f;
-	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 }
 
@@ -233,7 +233,7 @@ HRESULT Client::CTitan::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Set_Scale(0.05f, 0.05f, 0.05f);
-	m_pTransformCom->stat.moveSpeed = 2.f;
+	m_pStateCom->stat.moveSpeed = 2.f;
 	m_pMeshCom->Set_AnimationSet(titanState::STATE_IDLE);
 
 	m_pNaviMeshCom->Set_NaviIndex(0);
@@ -314,7 +314,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 					if (delay > 1.5f && delay < 3.f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 				}
 				//ÁÖ¸ÔÁú
@@ -348,7 +348,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					if (delay > 1.5f && delay < 3.f)
 					{
 						isColl = true;
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					else
 						isColl = false;
@@ -380,15 +380,15 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					if (delay > 1.7f && delay < 2.2f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.2f && delay < 1.5f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -423,16 +423,16 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					//8.3f ½ºÅ¸Æ®
 					if (delay > 5.5f && delay < 7.1f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.4f && delay < 3.8f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -467,11 +467,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 3.f;
+					m_pStateCom->stat.moveSpeed = 3.f;
 					//3.5f ½ºÅ¸Æ®
 					if (delay > 1.2f && delay < 1.75f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -505,10 +505,10 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 3.f;
+					m_pStateCom->stat.moveSpeed = 3.f;
 					if (delay > 1.3f && delay < 1.4f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.5f && delay < 2.f)
@@ -543,11 +543,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					//8.3f ½ºÅ¸Æ®
 					if (delay > 1.3f && delay < 1.4f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.5f && delay < 2.f)
@@ -570,7 +570,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pTransformCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = TitanSpeed;
 					delay = 0;
 
 
@@ -601,11 +601,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 7.f;
+					m_pStateCom->stat.moveSpeed = 7.f;
 					//1.8f ½ºÅ¸Æ®
 					if (delay > 0.6f && delay < 1.1f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -616,7 +616,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pTransformCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = TitanSpeed;
 					delay = 0;
 					isColl = false;
 

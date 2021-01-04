@@ -36,7 +36,7 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	CUnit::Add_Component();
+	CMonster::Add_Component();
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&_vec3{ 17.f,0.f,17.f });
@@ -49,8 +49,8 @@ HRESULT Client::CTitan::Add_Component(void)
 
 	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 
-	m_pTransformCom->stat.maxHp = 10.f;
-	m_pTransformCom->stat.hp = 10.f;
+	m_pStateCom->stat.maxHp = 10.f;
+	m_pStateCom->stat.hp = 10.f;
 	return S_OK;
 }
 
@@ -211,7 +211,7 @@ void CTitan::Move(const _float& fTimeDelta)
 
 	}
 	m_fAniSpeed = 2.f;
-	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 }
 
@@ -241,7 +241,7 @@ HRESULT Client::CTitan::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Set_Scale(0.05f, 0.05f, 0.05f);
-	m_pTransformCom->stat.moveSpeed = 2.f;
+	m_pStateCom->stat.moveSpeed = 2.f;
 	m_pMeshCom->Set_AnimationSet(titanState::STATE_IDLE);
 
 	m_pNaviMeshCom->Set_NaviIndex(0);
@@ -327,12 +327,12 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 2.06 / m_fAniSpeed)
 					{
 						
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					//4 6.4
 					if (reverseDelay > 4 / m_fAniSpeed && reverseDelay < 6.4 / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					if (reverseDelay > 6 / m_fAniSpeed && reverseDelay < 6.3 / m_fAniSpeed)
 					{
@@ -372,7 +372,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//0.8 6.2
 					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 6.2 / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 
 					//충돌판정 2.27 2.98
@@ -422,15 +422,15 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 
 					if (reverseDelay > 2.6 / m_fAniSpeed && reverseDelay < 4 / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					//if (reverseDelay > 7.56 / m_fAniSpeed && reverseDelay < 9.45 / m_fAniSpeed)
 					//{
-					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					//}
 					//충돌판정 4.2 5.5
 					if (reverseDelay > 4.2 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
@@ -468,16 +468,16 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					////8.3f 스타트
 					//if (delay > 5.5f && delay < 7.1f)
 					//{
-					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					//	isColl = true;
 					//}
 					//else if (delay > 1.4f && delay < 3.8f)
 					//{
-					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					//	isColl = true;
 					//}
 					//else
@@ -487,16 +487,16 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 					if (reverseDelay > 3.5 / m_fAniSpeed && reverseDelay < 7.2 / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					//12 16
 					if (reverseDelay > 12.f / m_fAniSpeed && reverseDelay < 16.f / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					//if (reverseDelay > 7.56 / m_fAniSpeed && reverseDelay < 9.45 / m_fAniSpeed)
 					//{
-					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					//}
 					//충돌판정 4.2 5.5
 					if (reverseDelay > 4.98 / m_fAniSpeed && reverseDelay < 5.2f / m_fAniSpeed)
@@ -569,13 +569,13 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 3.f;
+					m_pStateCom->stat.moveSpeed = 3.f;
 					//3.5f 스타트
 					//4.53 5.12
 
 					if (reverseDelay > 4.35 / m_fAniSpeed && reverseDelay < 5.6 / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 
 
@@ -616,16 +616,16 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 3.f;
+					m_pStateCom->stat.moveSpeed = 3.f;
 
 					/*if (delay > 1.3f && delay < 1.4f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}*/
 					if (reverseDelay > 2.5f / m_fAniSpeed && reverseDelay < 4.f / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}
 					if (reverseDelay > 1.1 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
@@ -677,11 +677,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					//8.3f 스타트
 					if (reverseDelay > 2.5f / m_fAniSpeed && reverseDelay < 3.6f / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}
 					if (reverseDelay > 1.4 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
@@ -706,7 +706,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				//{
 
 				//	isAnimating = false;
-				//	m_pTransformCom->stat.moveSpeed = TitanSpeed;
+				//	m_pStateCom->stat.moveSpeed = TitanSpeed;
 				//	delay = 0;
 
 
@@ -737,16 +737,16 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 7.f;
+					m_pStateCom->stat.moveSpeed = 7.f;
 					//1.8f 스타트
 					if (reverseDelay > 1.6f / m_fAniSpeed && reverseDelay < 2.6f / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}
 					if (reverseDelay > 2.8f / m_fAniSpeed && reverseDelay < 3.5f / m_fAniSpeed)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}
 					if (reverseDelay > 2.5 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
@@ -765,7 +765,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pTransformCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = TitanSpeed;
 					delay = 0;
 					isColl = false;
 

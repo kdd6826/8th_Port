@@ -25,16 +25,29 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 	if (!isInvincible)
 	{
 		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
-		m_pTransformCom->stat.hp -= 1.f;
+		m_pStateCom->stat.hp -= 1.f;
 	}
 	//»ç¸Á
-	if (m_pTransformCom->stat.hp <= 0 && isDie == false)
+	if (m_pStateCom->stat.hp <= 0 && isDie == false)
 	{
 		
 		isDie = true;
 		
 	}
 
+}
+
+HRESULT CMonster::Add_Component(void)
+{
+	CUnit::Add_Component();
+	Engine::CComponent* pComponent = nullptr;
+
+
+	// state
+	pComponent = m_pStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Clone(L"Proto_MonsterState"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_MonsterState", pComponent);
+	return S_OK;
 }
 
 bool CMonster::PlayerSearch(_vec3 _MonsterPos)

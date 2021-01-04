@@ -125,6 +125,11 @@ HRESULT Client::CLogo::Ready_Resource(Engine::RESOURCETYPE eType)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_PlayerState", pComponent);
 
+	pComponent = Engine::CMonsterState::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_MonsterState", pComponent);
+
+
 	return S_OK;
 }
 

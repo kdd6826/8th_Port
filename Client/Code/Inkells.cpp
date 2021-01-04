@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "Titan.h"
+#include "Inkells.h"
 #include "Export_Function.h"
 
 
-CTitan::CTitan(LPDIRECT3DDEVICE9 pGraphicDev)
+CInkells::CInkells(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
 
 }
 
-CTitan::~CTitan(void)
+CInkells::~CInkells(void)
 {
 	int i = 0;
 }
 
-Client::_vec3 Client::CTitan::PickUp_OnTerrain(void)
+Client::_vec3 Client::CInkells::PickUp_OnTerrain(void)
 {
 	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3(0.f, 0.f, 0.f));
@@ -26,16 +26,17 @@ Client::_vec3 Client::CTitan::PickUp_OnTerrain(void)
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 }
 
-HRESULT Client::CTitan::Add_Component(void)
+HRESULT Client::CInkells::Add_Component(void)
 {
+	CMonster::Add_Component();
+
 	Engine::CComponent*		pComponent = nullptr;
 
 	// Mesh
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Titan"));
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Inkells"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	CUnit::Add_Component();
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&_vec3{ 17.f,0.f,17.f });
@@ -46,11 +47,11 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY);
+	Load_ColliderFile(L"../Bin/saveInkells.dat",Engine::COLLID::ENEMY);
 	return S_OK;
 }
 
-HRESULT CTitan::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+HRESULT CInkells::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
 	_matrix		matWorld, matView, matProj;
 
@@ -66,7 +67,7 @@ HRESULT CTitan::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 }
 
 
-void CTitan::Move(const _float& fTimeDelta)
+void CInkells::Move(const _float& fTimeDelta)
 {
 
 	_vec3	vPos, vDir, vRight;
@@ -104,7 +105,7 @@ void CTitan::Move(const _float& fTimeDelta)
 	float spinSpeed = 5.f;
 	if (55.f <= angle && angle < 60.f)
 	{
-		m_state = titanState::STATE_RUN;
+		m_state = InkellsState::STATE_RUN;
 		if (disPlayer < 2.f)
 		{
 			
@@ -113,42 +114,42 @@ void CTitan::Move(const _float& fTimeDelta)
 			switch (i)
 			{
 			case 0:
-				m_state = titanState::STATE_ATTACKBALLISTA;
+				m_state = InkellsState::STATE_ATTACKBALLISTA;
 				delay = 4.2f;
 				m_fAniSpeed = 3.5f;
 				break;
 			case 1:
-				m_state = titanState::STATE_ATTACKHAMMER;
+				m_state = InkellsState::STATE_ATTACKHAMMER;
 				delay = 3.2f;//3.13
 				m_fAniSpeed = 3.5f;
 				break;
 			case 2:
-				m_state = titanState::STATE_ATTACKKICK;
+				m_state = InkellsState::STATE_ATTACKKICK;
 				delay = 2.9f; //2.82
 				m_fAniSpeed = 3.5f;
 				break;
 			case 3:
-				m_state = titanState::STATE_ATTACKRAGE;
+				m_state = InkellsState::STATE_ATTACKRAGE;
 				delay = 8.3f;//8.28
 				m_fAniSpeed = 2.5f;
 				break;
 			case 4:
-				m_state = titanState::STATE_ATTACKSTOMP;
+				m_state = InkellsState::STATE_ATTACKSTOMP;
 				delay = 3.6f;//3.55
 				m_fAniSpeed = 2.5f;
 				break;
 			case 5:
-				m_state = titanState::STATE_ATTACKTURNLEFT;
+				m_state = InkellsState::STATE_ATTACKTURNLEFT;
 				delay = 2.3f;//2.2
 				m_fAniSpeed = 3.5f;
 				break;
 			case 6:
-				m_state = titanState::STATE_ATTACKTURNRIGHT;
+				m_state = InkellsState::STATE_ATTACKTURNRIGHT;
 				delay = 2.2f;//2.1f
 				m_fAniSpeed = 3.5f;
 				break;
 			case 7:
-				m_state = titanState::STATE_ATTACKTWOSTEP;
+				m_state = InkellsState::STATE_ATTACKTWOSTEP;
 				delay = 1.9f;//1.8f
 				m_fAniSpeed = 2.f;
 				break;
@@ -169,7 +170,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		if (angle2 > 0)
 		{
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta* spinSpeed));
-			m_state = titanState::STATE_RUN;
+			m_state = InkellsState::STATE_RUN;
 
 		}
 
@@ -177,7 +178,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		else
 		{
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta* spinSpeed));
-			m_state = titanState::STATE_RUN;
+			m_state = InkellsState::STATE_RUN;
 		}
 		
 	}
@@ -191,29 +192,29 @@ void CTitan::Move(const _float& fTimeDelta)
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta* spinSpeed));
 
 			//isAnimating = true;
-			//m_state = titanState::STATE_TURNRIGHT;
+			//m_state = InkellsState::STATE_TURNRIGHT;
 		}
 		//¿ÞÂÊÀÌ´Ù.
 		else
 		{
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta* spinSpeed));
-			m_state = titanState::STATE_RUN;
+			m_state = InkellsState::STATE_RUN;
 		}
-		//m_state = titanState::STATE_ATTACKKICK;
+		//m_state = InkellsState::STATE_ATTACKKICK;
 
 	}
 	m_fAniSpeed = 2.f;
-	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 }
 
-void CTitan::Attack(const _float& fTimeDelta)
+void CInkells::Attack(const _float& fTimeDelta)
 {
 }
 
-CTitan* CTitan::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CInkells* CInkells::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTitan*	pInstance = new CTitan(pGraphicDev);
+	CInkells*	pInstance = new CInkells(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -221,26 +222,26 @@ CTitan* CTitan::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CTitan::Free(void)
+void CInkells::Free(void)
 {
 
 	CMonster::Free();
 }
 
 
-HRESULT Client::CTitan::Ready_Object(void)
+HRESULT Client::CInkells::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Set_Scale(0.05f, 0.05f, 0.05f);
-	m_pTransformCom->stat.moveSpeed = 2.f;
-	m_pMeshCom->Set_AnimationSet(titanState::STATE_IDLE);
+	m_pStateCom->stat.moveSpeed = 2.f;
+	m_pMeshCom->Set_AnimationSet(InkellsState::STATE_IDLE);
 
 	m_pNaviMeshCom->Set_NaviIndex(0);
 
 	return S_OK;
 }
-Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
+Client::_int Client::CInkells::Update_Object(const _float& fTimeDelta)
 {
 	
 	if (isDead)
@@ -256,7 +257,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 	{
 
 		isSearch = PlayerSearch(m_pTransformCom->m_vInfo[Engine::INFO_POS]);
-		//m_state = titanState::STATE_IDLE;
+		//m_state = InkellsState::STATE_IDLE;
 		if (isSearch == true)
 		{
 
@@ -285,7 +286,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				//¸ó½ºÅÍÀÇ Á¤¸é
 
 				//¹ß¸®½ºÅ¸°ø°Ý
-				if (m_state == titanState::STATE_ATTACKBALLISTA)
+				if (m_state == InkellsState::STATE_ATTACKBALLISTA)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -314,11 +315,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 					if (delay > 1.5f && delay < 3.f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 				}
 				//ÁÖ¸ÔÁú
-				else if (m_state == titanState::STATE_ATTACKHAMMER)
+				else if (m_state == InkellsState::STATE_ATTACKHAMMER)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -348,13 +349,13 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					if (delay > 1.5f && delay < 3.f)
 					{
 						isColl = true;
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					else
 						isColl = false;
 				}
 				//¹ßÂ÷±â
-				else if (m_state == titanState::STATE_ATTACKKICK)
+				else if (m_state == InkellsState::STATE_ATTACKKICK)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -380,15 +381,15 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					if (delay > 1.7f && delay < 2.2f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.2f && delay < 1.5f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -397,7 +398,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					}
 				}
 				//ºÐ³ëÀÇÁÖ¸ÔÁú
-				else if (m_state == titanState::STATE_ATTACKRAGE)
+				else if (m_state == InkellsState::STATE_ATTACKRAGE)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -423,16 +424,16 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					//8.3f ½ºÅ¸Æ®
 					if (delay > 5.5f && delay < 7.1f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.4f && delay < 3.8f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -441,7 +442,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					}
 				}
 				//
-				else if (m_state == titanState::STATE_ATTACKSTOMP)
+				else if (m_state == InkellsState::STATE_ATTACKSTOMP)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -467,11 +468,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 3.f;
+					m_pStateCom->stat.moveSpeed = 3.f;
 					//3.5f ½ºÅ¸Æ®
 					if (delay > 1.2f && delay < 1.75f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -479,7 +480,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 						isColl = false;
 					}
 				}
-				else if (m_state == titanState::STATE_ATTACKTURNLEFT)
+				else if (m_state == InkellsState::STATE_ATTACKTURNLEFT)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -505,10 +506,10 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 3.f;
+					m_pStateCom->stat.moveSpeed = 3.f;
 					if (delay > 1.3f && delay < 1.4f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.5f && delay < 2.f)
@@ -526,7 +527,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 						isColl = false;
 					}
 				}
-				else if (m_state == titanState::STATE_ATTACKTURNRIGHT)
+				else if (m_state == InkellsState::STATE_ATTACKTURNRIGHT)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -543,11 +544,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 5.f;
+					m_pStateCom->stat.moveSpeed = 5.f;
 					//8.3f ½ºÅ¸Æ®
 					if (delay > 1.3f && delay < 1.4f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else if (delay > 1.5f && delay < 2.f)
@@ -570,12 +571,12 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pTransformCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = InkellsSpeed;
 					delay = 0;
 
 
 				}
-				else if (m_state == titanState::STATE_ATTACKTWOSTEP)
+				else if (m_state == InkellsState::STATE_ATTACKTWOSTEP)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -601,11 +602,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//±âÁ¸ ¸ó½ºÅÍÀÇ ·èº¤ÅÍ
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
-					m_pTransformCom->stat.moveSpeed = 7.f;
+					m_pStateCom->stat.moveSpeed = 7.f;
 					//1.8f ½ºÅ¸Æ®
 					if (delay > 0.6f && delay < 1.1f)
 					{
-						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 						isColl = true;
 					}
 					else
@@ -616,7 +617,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pTransformCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = InkellsSpeed;
 					delay = 0;
 					isColl = false;
 
@@ -630,7 +631,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 	}
 	else if(isDie)
 	{
-		m_state = titanState::STATE_DYINGFRONT;
+		m_state = InkellsState::STATE_DYINGFRONT;
 		if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
 			isDead = true;
@@ -657,7 +658,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 	return 0;
 }
-void Client::CTitan::Render_Object(void)
+void Client::CInkells::Render_Object(void)
 {
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
@@ -681,7 +682,7 @@ void Client::CTitan::Render_Object(void)
 	Engine::Safe_Release(pEffect);
 }
 
-void Client::CTitan::SetUp_OnTerrain(void)
+void Client::CInkells::SetUp_OnTerrain(void)
 {
 	_vec3	vPosition;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPosition);

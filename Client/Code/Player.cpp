@@ -48,10 +48,10 @@ HRESULT Client::CPlayer::Add_Component(void)
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&PlayerSpawnPosition);
 	Engine::CGameObject::Update_Object(timeDelta);
-	m_pTransformCom->stat.hp = 10.f;
-	m_pTransformCom->stat.maxHp = 10.f;
-	m_pTransformCom->stat.stamina = 200.f;
-	m_pTransformCom->stat.maxStamina = 200.f;
+	m_pStateCom->stat.hp = 10.f;
+	m_pStateCom->stat.maxHp = 10.f;
+	m_pStateCom->stat.stamina = 200.f;
+	m_pStateCom->stat.maxStamina = 200.f;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -242,8 +242,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 		D3DXVec3Normalize(&vLook, &vLook);
 		
-		m_pTransformCom->stat.moveSpeed = 5.f;
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+		m_pStateCom->stat.moveSpeed = 5.f;
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 		isInvincible = true;
 		if (delay < 0.1f)
 		{
@@ -367,31 +367,31 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		if (isRunning)
 		{
 			m_state = playerState::STATE_FIELD_SPRINT;
-			m_pTransformCom->stat.moveSpeed = 5.f;
+			m_pStateCom->stat.moveSpeed = 5.f;
 
 		}
 		else if (!isRunning)
 		{
 			m_state = playerState::STATE_FIELD_RUN;
-			m_pTransformCom->stat.moveSpeed = 3.f;
+			m_pStateCom->stat.moveSpeed = 3.f;
 		}
 
-		//m_pTransformCom->Move_Pos(&(vDir * m_pTransformCom->stat.moveSpeed * fTimeDelta));
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pTransformCom->stat.moveSpeed * 100.f)));
+		//m_pTransformCom->Move_Pos(&(vDir * m_pStateCom->stat.moveSpeed * fTimeDelta));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
 
 		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 		{
 
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pTransformCom->stat.moveSpeed * 100.f)));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
 		}
 		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 		{
 
 
-			//m_pTransformCom->Move_Pos(&(vDir * m_pTransformCom->stat.moveSpeed * fTimeDelta));
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pTransformCom->stat.moveSpeed * 100.f)));
+			//m_pTransformCom->Move_Pos(&(vDir * m_pStateCom->stat.moveSpeed * fTimeDelta));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
 		}
 
@@ -417,12 +417,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		if (isRunning)
 		{
 			m_state = playerState::STATE_FIELD_SPRINT;
-			m_pTransformCom->stat.moveSpeed = 5.f;
+			m_pStateCom->stat.moveSpeed = 5.f;
 		}
 		else if (!isRunning)
 		{
 			m_state = playerState::STATE_FIELD_RUN;
-			m_pTransformCom->stat.moveSpeed = 3.f;
+			m_pStateCom->stat.moveSpeed = 3.f;
 		}
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
@@ -438,7 +438,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			}
 		}
 
-		m_pTransformCom->Move_Pos(&(vLook * m_pTransformCom->stat.moveSpeed * fTimeDelta*100));
+		m_pTransformCom->Move_Pos(&(vLook * m_pStateCom->stat.moveSpeed * fTimeDelta*100));
 		
 	}
 
@@ -447,12 +447,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		if (isRunning)
 		{
 			m_state = playerState::STATE_FIELD_SPRINT;
-			m_pTransformCom->stat.moveSpeed = 5.f;
+			m_pStateCom->stat.moveSpeed = 5.f;
 		}
 		else if (!isRunning)
 		{
 			m_state = playerState::STATE_FIELD_RUN;
-			m_pTransformCom->stat.moveSpeed = 3.f;
+			m_pStateCom->stat.moveSpeed = 3.f;
 		}
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
@@ -468,18 +468,18 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			}
 		}
 
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pTransformCom->stat.moveSpeed * 100.f)));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(180));
 		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 		{
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pTransformCom->stat.moveSpeed * 100.f)));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-135));
 		}
 		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 		{
 
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pTransformCom->stat.moveSpeed * 100.f)));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 
 			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(135));
 		}
@@ -490,12 +490,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		if (isRunning)
 		{
 			m_state = playerState::STATE_FIELD_SPRINT;
-			m_pTransformCom->stat.moveSpeed = 5.f;
+			m_pStateCom->stat.moveSpeed = 5.f;
 		}
 		else if (!isRunning)
 		{
 			m_state = playerState::STATE_FIELD_RUN;
-			m_pTransformCom->stat.moveSpeed = 3.f;
+			m_pStateCom->stat.moveSpeed = 3.f;
 		}
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
@@ -517,7 +517,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		D3DXVec3Cross(&vDir, &up, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90));
 	}
@@ -526,12 +526,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		if (isRunning)
 		{
 			m_state = playerState::STATE_FIELD_SPRINT;
-			m_pTransformCom->stat.moveSpeed = 5.f;
+			m_pStateCom->stat.moveSpeed = 5.f;
 		}
 		else if (!isRunning)
 		{
 			m_state = playerState::STATE_FIELD_RUN;
-			m_pTransformCom->stat.moveSpeed = 3.f;
+			m_pStateCom->stat.moveSpeed = 3.f;
 		}
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
@@ -552,7 +552,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		D3DXVec3Cross(&vDir, &vDir, &up);
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_pTransformCom->stat.moveSpeed)));
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
 	}
@@ -908,7 +908,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 		_vec3 vMyPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
 		float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(hitDir * timeDelta*4.f)));
-		m_pTransformCom->stat.hp -= 1.f;
+		m_pStateCom->stat.hp -= 1.f;
 
 		//m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		if (isHit == false)

@@ -24,13 +24,14 @@ public:
 	virtual ~CMonster(void);
 	virtual _int Update_Object(const _float& fTimeDelta);
 	virtual void OnCollision(Engine::CGameObject* target)override;
+	HRESULT		Add_Component(void);
 protected:
 	bool PlayerSearch(_vec3 _MonsterPos);
 	
 private:
-
 protected:
 
+	Engine::CMonsterState* m_pStateCom = nullptr;
 	_bool isSearch = false;
 	//플레이어까지의 거리
 	_float disPlayer = 0.f;

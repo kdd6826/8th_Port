@@ -145,6 +145,12 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_Back.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_ValueBar.png"), E_FAIL);
 	
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarBase", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_base.dds"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarGreen", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_green.dds"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarOrange", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_Orange.dds"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarRed", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_Red.dds"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarHit", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_Hit.dds"), E_FAIL);
+
 	//둠세이어
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill0", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill0.tga"), E_FAIL);
 	//마나이미지

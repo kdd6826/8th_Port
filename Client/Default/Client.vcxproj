@@ -172,6 +172,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\BackGround.h" />
+    <ClInclude Include="..\Code\BossHpBarBase.h" />
+    <ClInclude Include="..\Code\BossHpBarGreen.h" />
+    <ClInclude Include="..\Code\BossHpBarHit.h" />
+    <ClInclude Include="..\Code\BossHpBarOrange.h" />
+    <ClInclude Include="..\Code\BossHpBarRed.h" />
     <ClInclude Include="..\Code\ColliderMgr.h" />
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
@@ -236,6 +241,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BackGround.cpp" />
+    <ClCompile Include="..\Code\BossHpBarBase.cpp" />
+    <ClCompile Include="..\Code\BossHpBarGreen.cpp" />
+    <ClCompile Include="..\Code\BossHpBarHit.cpp" />
+    <ClCompile Include="..\Code\BossHpBarOrange.cpp" />
+    <ClCompile Include="..\Code\BossHpBarRed.cpp" />
     <ClCompile Include="..\Code\ColliderMgr.cpp" />
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />

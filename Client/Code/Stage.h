@@ -23,6 +23,13 @@
 #include "SpBarValue.h"
 #include "StaminaBarBack.h"
 #include "StaminaBarValue.h"
+
+#include "BossHpBarBase.h"
+#include "BossHpBarGreen.h"
+#include "BossHpBarHit.h"
+#include "BossHpBarOrange.h"
+#include "BossHpBarRed.h"
+
 #include "Skill0.h"
 #include "Skill1.h"
 #include "Skill2.h"

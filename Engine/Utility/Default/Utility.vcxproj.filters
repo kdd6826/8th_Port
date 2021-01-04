@@ -70,6 +70,9 @@
     <Filter Include="04. Component\04. PlayerState">
       <UniqueIdentifier>{fe6d0eb3-883c-4cfc-a666-ee4e7ec15e95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\05. MonsterState">
+      <UniqueIdentifier>{9dffaba1-2598-4157-8430-644755acef6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Component.cpp">
@@ -137,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerState.cpp">
       <Filter>04. Component\04. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterState.cpp">
+      <Filter>04. Component\05. MonsterState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\PlayerState.h">
       <Filter>04. Component\04. PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MonsterState.h">
+      <Filter>04. Component\05. MonsterState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
