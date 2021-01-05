@@ -215,6 +215,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Scene.h" />
     <ClInclude Include="..\Code\Shader.h" />
     <ClInclude Include="..\Code\Shader_Base.hpp" />
+    <ClInclude Include="..\Code\Shader_DamageFont.hpp" />
     <ClInclude Include="..\Code\Shader_Manablade.hpp" />
     <ClInclude Include="..\Code\Shader_Mesh.hpp" />
     <ClInclude Include="..\Code\Shader_Sample.hpp" />

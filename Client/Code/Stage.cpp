@@ -184,6 +184,10 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
 	}*/
 
+	//pGameObject = CDamageFont::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DamageFont", pGameObject), E_FAIL);
+
 	//pGameObject = CStone::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);

@@ -1,4 +1,5 @@
-﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Management.cpp
+  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -28,6 +29,7 @@
   .\Engine\Utility\Code\ShaderWeapon.hpp
   .\Engine\Utility\Code\Shader_Base.hpp
   .\Engine\Utility\Code\Shader_Blend.hpp
+  .\Engine\Utility\Code\Shader_DamageFont.hpp
   .\Engine\Utility\Code\Shader_Effect.hpp
   .\Engine\Utility\Code\Shader_Mesh.hpp
   .\Engine\Utility\Code\Shader_Sample.hpp
@@ -35,7 +37,7 @@
   .\Engine\Utility\Code\Shader_SkyBox.hpp
   .\Engine\Utility\Code\Shader_Terrain.hpp
   .\Engine\Utility\Code\Shader_Trail.hpp
-         11개 파일이 복사되었습니다.
+         12개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

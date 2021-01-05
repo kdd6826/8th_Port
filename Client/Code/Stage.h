@@ -16,6 +16,7 @@
 #include "Sword.h"
 #include "Tree.h"
 #include "Effect.h"
+#include "DamageFont.h"
 #include "SkillSlot.h"
 #include "HpBarBack.h"
 #include "HpBarValue.h"

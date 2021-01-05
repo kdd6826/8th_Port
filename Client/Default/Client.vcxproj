@@ -178,6 +178,7 @@
     <ClInclude Include="..\Code\BossHpBarOrange.h" />
     <ClInclude Include="..\Code\BossHpBarRed.h" />
     <ClInclude Include="..\Code\ColliderMgr.h" />
+    <ClInclude Include="..\Code\DamageFont.h" />
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Effect.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="..\Code\BossHpBarOrange.cpp" />
     <ClCompile Include="..\Code\BossHpBarRed.cpp" />
     <ClCompile Include="..\Code\ColliderMgr.cpp" />
+    <ClCompile Include="..\Code\DamageFont.cpp" />
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />

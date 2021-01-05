@@ -276,6 +276,9 @@
     <ClInclude Include="..\Code\BossHpBarBase.h">
       <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\DamageFont.h">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -412,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossHpBarBase.cpp">
       <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DamageFont.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

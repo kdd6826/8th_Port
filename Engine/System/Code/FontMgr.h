@@ -16,6 +16,7 @@ private:
 	virtual ~CFontMgr(void);
 
 public:
+	
 	HRESULT	Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev,
 						const _tchar* pFontTag,
 						const _tchar* pFontType,

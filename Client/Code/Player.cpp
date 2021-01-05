@@ -52,6 +52,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.maxHp = 10.f;
 	m_pStateCom->stat.stamina = 200.f;
 	m_pStateCom->stat.maxStamina = 200.f;
+	m_pStateCom->stat.damage = 2.f;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -82,7 +83,7 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
-
+	m_pStateCom->stat.hp = 6.f;
 
 	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
 	{

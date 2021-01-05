@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include "Export_Function.h"
 #include "ColliderMgr.h"
+#include "Player.h"
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 {
@@ -21,11 +22,12 @@ _int CMonster::Update_Object(const _float& fTimeDelta)
 void CMonster::OnCollision(Engine::CGameObject* target)
 {
 	_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+	dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
 	//¹«ÀûÀÌ¾Æ´Ò¶§
 	if (!isInvincible)
 	{
 		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
-		m_pStateCom->stat.hp -= 1.f;
+		m_pStateCom->stat.hp -= dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
 	}
 	//»ç¸Á
 	if (m_pStateCom->stat.hp <= 0 && isDie == false)

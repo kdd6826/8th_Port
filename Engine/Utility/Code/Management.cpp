@@ -121,6 +121,10 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Effect", pShader), E_FAIL);
 
+	// Effect
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_DamageFont.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_DamageFont", pShader), E_FAIL);
 	return S_OK;
 }
 

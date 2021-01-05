@@ -33,6 +33,7 @@ namespace Engine
 	typedef struct _objectStat
 	{
 		float attack = 1.f;
+		float damage = 1.f;
 		float hp = 10.f;
 		float maxHp = 10.f;
 		float stamina = 10.f;

@@ -75,7 +75,7 @@ Client::_int Client::CHpBarValue::Update_Object(const _float& fTimeDelta)
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerStateCom, 0);
-	m_fX = 400 * (pPlayerStateCom->stat.hp / pPlayerStateCom->stat.maxHp);
+	m_fX = 26 + 374 * (pPlayerStateCom->stat.hp / pPlayerStateCom->stat.maxHp);
 	m_fSizeX = 800 * pPlayerStateCom->stat.hp / pPlayerStateCom->stat.maxHp;
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 

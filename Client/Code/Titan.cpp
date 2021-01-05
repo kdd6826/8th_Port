@@ -49,8 +49,8 @@ HRESULT Client::CTitan::Add_Component(void)
 
 	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 
-	m_pStateCom->stat.maxHp = 10.f;
-	m_pStateCom->stat.hp = 10.f;
+	m_pStateCom->stat.maxHp = 1000.f;
+	m_pStateCom->stat.hp = 1000.f;
 	return S_OK;
 }
 
@@ -840,4 +840,10 @@ void Client::CTitan::SetUp_OnTerrain(void)
 	_float fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPosition, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ, VTXITV);
 
 	m_pTransformCom->Move_Pos(vPosition.x, fHeight, vPosition.z);
+}
+
+void CTitan::OnCollision(Engine::CGameObject* target)
+{
+	CMonster::OnCollision(target);
+
 }

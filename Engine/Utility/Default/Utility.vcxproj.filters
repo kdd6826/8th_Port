@@ -239,6 +239,9 @@
     <ClInclude Include="..\Code\MonsterState.h">
       <Filter>04. Component\05. MonsterState</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_DamageFont.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl">
