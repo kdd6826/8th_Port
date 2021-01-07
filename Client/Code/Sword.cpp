@@ -22,15 +22,15 @@ HRESULT Client::CSword::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+	//// texture
+	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
-	// texture
-	pComponent = m_pTextureCom2 = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2Normal"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+	//// texture
+	//pComponent = m_pTextureCom2 = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2Normal"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));

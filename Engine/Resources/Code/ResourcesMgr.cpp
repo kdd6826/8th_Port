@@ -58,6 +58,10 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_COLLSPHERE:
 		pResources = CCollSphere::Create(pGraphicDev);
 		break;
+	case BUFFER_PTTEX:
+		pResources = CPtTex::Create(pGraphicDev);
+		break;
+
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);
 	
@@ -115,7 +119,7 @@ HRESULT Engine::CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev,
 		break;
 
 	case TYPE_NAVI:
-		pResources = CNaviMesh::Create(pGraphicDev,pFilePath);
+		pResources = CNaviMesh::Create(pGraphicDev, pFilePath);
 		break;
 	}
 

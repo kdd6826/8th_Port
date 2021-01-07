@@ -175,6 +175,7 @@ call CopyResources.bat</Command>
     <ClCompile Include="..\Code\Line.cpp" />
     <ClCompile Include="..\Code\Mesh.cpp" />
     <ClCompile Include="..\Code\NaviMesh.cpp" />
+    <ClCompile Include="..\Code\PtTex.cpp" />
     <ClCompile Include="..\Code\RcTex.cpp" />
     <ClCompile Include="..\Code\Resources.cpp" />
     <ClCompile Include="..\Code\ResourcesMgr.cpp" />
@@ -195,6 +196,7 @@ call CopyResources.bat</Command>
     <ClInclude Include="..\Code\Line.h" />
     <ClInclude Include="..\Code\Mesh.h" />
     <ClInclude Include="..\Code\NaviMesh.h" />
+    <ClInclude Include="..\Code\PtTex.h" />
     <ClInclude Include="..\Code\RcTex.h" />
     <ClInclude Include="..\Code\Resources.h" />
     <ClInclude Include="..\Code\ResourcesMgr.h" />

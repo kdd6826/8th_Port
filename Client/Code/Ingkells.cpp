@@ -50,6 +50,7 @@ HRESULT Client::CIngkells::Add_Component(void)
 
 	Load_ColliderFile(L"../Bin/saveIngkells.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
+	Load_ColliderFile(L"../Bin/saveInkellsWeapon1.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon2.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon3.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon4.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
@@ -112,7 +113,7 @@ void CIngkells::Move(const _float& fTimeDelta)
 	//플레이어가 정면에있다
 	//몬스터의 시야각
 	float spinSpeed = 5.f;
-	if (52.5f <= angle && angle < 60.f)
+	if (55.f <= angle && angle < 60.f)
 	{
 		m_state = IngkellsState::STATE_RUN;
 		if (disPlayer < 5.f)
@@ -424,12 +425,16 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 					//{
 					//	int i = 0;
 					//}
+					if (reverseDelay > 1.2 / m_fAniSpeed && reverseDelay < 1.4 / m_fAniSpeed)
+					{
+						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-90.f * fTimeDelta * spinSpeed));
+					}
+					if (reverseDelay > 1.7 / m_fAniSpeed && reverseDelay < 1.9 / m_fAniSpeed)
+					{
+						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta * spinSpeed));
+					}
 					if (reverseDelay > 1.3 / m_fAniSpeed && reverseDelay < 1.87 / m_fAniSpeed)
 					{
-						if (reverseDelay > 1.3 / m_fAniSpeed && reverseDelay < 1.5 / m_fAniSpeed)
-						{
-							m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-90.f * fTimeDelta * spinSpeed));
-						}
 						isColl = true;
 					}
 					else

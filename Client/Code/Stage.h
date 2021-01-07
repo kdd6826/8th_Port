@@ -41,6 +41,8 @@
 #include "SkillDkTransform2.h"
 
 #include "StaticObject.h"
+#include "Particle.h"
+
 BEGIN(Client)
 
 class CStage : public Engine::CScene
@@ -54,7 +56,7 @@ public:
 	virtual _int Update_Scene(const _float& fTimeDelta) override;
 	virtual void Render_Scene(void) override;
 	HRESULT		Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag);
-
+		
 private:
 	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
 	HRESULT		Ready_GameLogic_Layer(const _tchar* pLayerTag);

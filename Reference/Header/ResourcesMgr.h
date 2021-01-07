@@ -9,6 +9,7 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 #include "CollSphere.h"
+#include "PtTex.h"
 
 #include "Texture.h"
 

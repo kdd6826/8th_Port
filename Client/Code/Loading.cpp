@@ -1,9 +1,9 @@
+
 #include "stdafx.h"
 #include <io.h>
 #include "Loading.h"
 
 #include "Export_Function.h"
-
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -17,7 +17,8 @@ CLoading::~CLoading(void)
 {
 	for (auto& iter : vecStaticMesh)
 		&iter->erase();
-	
+
+
 
 }
 
@@ -94,6 +95,12 @@ _uint CLoading::Loading_ForStage(void)
 												Engine::BUFFER_CUBETEX),
 												E_FAIL);
 
+	//FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
+	//										Engine::RESOURCE_STATIC,
+	//										L"Buffer_PtTex",
+	//										Engine::BUFFER_PTTEX),
+	//										E_FAIL);
+
 
 	lstrcpy(m_szLoading, L"Texture Loading.............................");
 	// ÅØ½ºÃÄ
@@ -103,11 +110,11 @@ _uint CLoading::Loading_ForStage(void)
 	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Monster", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Monster%d.png"), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												L"Texture_Terrain",
-												Engine::TEX_NORMAL,
-												L"../Bin/Resource/Texture/Terrain/Terrain_%d_n.tga", 8),
-												E_FAIL);
+		Engine::RESOURCE_STAGE,
+		L"Texture_Terrain",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Texture/Terrain/Terrain_%d_n.tga", 8),
+		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -133,7 +140,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STATIC,
 		L"Buffer_CollSphere",
 		Engine::BUFFER_COLLSPHERE),
-		E_FAIL);	
+		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -159,13 +166,13 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_DamageFont", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Font_Damage.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillSlot", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/skill_slot.png"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Back.png") , E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Back.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Value.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerSpBar_Back.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SpBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerSpBar_ValueBar.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_Back.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_StaminaBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerStaminaBar_ValueBar.png"), E_FAIL);
-	
+
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarBase", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_base.dds"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarGreen", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_green.dds"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_BossHpBarOrange", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/BossHpBar_Orange.dds"), E_FAIL);
@@ -182,35 +189,32 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill4", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill4.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_01_able.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_02_able.tga"), E_FAIL);
-	
+
 	lstrcpy(m_szLoading, L"Mesh Loading.............................");
-	
-	//Load_StaticObject();
-	//Load_DynamicObject();
 	// Stone
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												L"Mesh_Stone", 
-												Engine::TYPE_STATIC, 
-												L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-												L"TombStone.X"),
-												E_FAIL);
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Stone",
+		Engine::TYPE_STATIC,
+		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+		L"TombStone.X"),
+		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												L"Mesh_Navi",
-												Engine::TYPE_NAVI,
-												L"../Bin/saveNaviCollo.dat",
-												NULL),
-												E_FAIL);
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Navi",
+		Engine::TYPE_NAVI,
+		L"../Bin/saveNaviCollo.dat",
+		NULL),
+		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-												Engine::RESOURCE_STAGE,
-												L"Mesh_Navi2",
-												Engine::TYPE_NAVI,
-												L"../Bin/saveNaviCastle.dat",
-												NULL),
-												E_FAIL);
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Navi2",
+		Engine::TYPE_NAVI,
+		L"../Bin/saveNaviCastle.dat",
+		NULL),
+		E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -237,8 +241,8 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"darkknight_2_idle.X"),
 	//	E_FAIL);
 
-		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-			Engine::RESOURCE_STAGE,
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
 		L"Mesh_Dog",
 		Engine::TYPE_DYNAMIC,
 		L"../Bin/Resource/Mesh/DynamicMesh/Dog/",
@@ -262,87 +266,87 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 
 
-/*	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_TombStone",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
-		L"TombStone.X"),
-		E_FAIL)*/;
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Colosseum",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Colosseum/",
-		L"Colosseum.X"),
-		E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Stage2",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Stage2/",
-		L"Stage2.X"),
-		E_FAIL);
+	/*	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			Engine::RESOURCE_STAGE,
+			L"Mesh_TombStone",
+			Engine::TYPE_STATIC,
+			L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
+			L"TombStone.X"),
+			E_FAIL)*/;
+			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+				Engine::RESOURCE_STAGE,
+				L"Mesh_Colosseum",
+				Engine::TYPE_STATIC,
+				L"../Bin/Resource/Mesh/StaticMesh/Colosseum/",
+				L"Colosseum.X"),
+				E_FAIL);
+			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+				Engine::RESOURCE_STAGE,
+				L"Mesh_Stage2",
+				Engine::TYPE_STATIC,
+				L"../Bin/Resource/Mesh/StaticMesh/Stage2/",
+				L"Stage2.X"),
+				E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Sword2",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Sword2/",
-		L"WeaponArisha2.X"),
-		E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Sword",
-		Engine::TYPE_STATIC,
-		L"../Bin/Resource/Mesh/StaticMesh/Sword/",
-		L"WeaponArisha.X"),
-		E_FAIL);
-
-
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	Engine::RESOURCE_STAGE,
-	//	L"Mesh_Player",
-	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/ArishaX/",
-	//	L"NewArisha.X"),
-	//	E_FAIL);
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-//	Engine::RESOURCE_STAGE,
-//	L"Mesh_Sword",
-//	Engine::TYPE_STATIC,
-//	L"../Bin/Resource/Arisha/Weapon/",
-//	L"WeaponArisha.X"),
-
-//	E_FAIL);
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//											Engine::RESOURCE_STAGE,
-	//											L"Mesh_Player",
-	//											Engine::TYPE_DYNAMIC,
-	//											L"../Bin/Resource/Mesh/DynamicMesh/PlayerXFile/",
-	//											L"Player.X"),
-	//											E_FAIL);
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//											Engine::RESOURCE_STAGE,
-	//											L"Mesh_Sword",
-	//											Engine::TYPE_STATIC,
-	//											L"../Bin/Resource/Mesh/StaticMesh/Sword/",
-	//											L"Sword.X"),
-	//											E_FAIL);
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//										Engine::RESOURCE_STAGE,
-	//										L"Mesh_Tree",
-	//										Engine::TYPE_STATIC,
-	//										L"../Bin/Resource/Mesh/StaticMesh/Tree/",
-	//										L"Tree01.X"),
-	//										E_FAIL);
-	//
+			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+				Engine::RESOURCE_STAGE,
+				L"Mesh_Sword2",
+				Engine::TYPE_STATIC,
+				L"../Bin/Resource/Mesh/StaticMesh/Sword2/",
+				L"WeaponArisha2.X"),
+				E_FAIL);
+			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+				Engine::RESOURCE_STAGE,
+				L"Mesh_Sword",
+				Engine::TYPE_STATIC,
+				L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+				L"WeaponArisha.X"),
+				E_FAIL);
 
 
+
+			//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			//	Engine::RESOURCE_STAGE,
+			//	L"Mesh_Player",
+			//	Engine::TYPE_DYNAMIC,
+			//	L"../Bin/Resource/ArishaX/",
+			//	L"NewArisha.X"),
+			//	E_FAIL);
+
+			//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		//	Engine::RESOURCE_STAGE,
+		//	L"Mesh_Sword",
+		//	Engine::TYPE_STATIC,
+		//	L"../Bin/Resource/Arisha/Weapon/",
+		//	L"WeaponArisha.X"),
+
+		//	E_FAIL);
+			//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			//											Engine::RESOURCE_STAGE,
+			//											L"Mesh_Player",
+			//											Engine::TYPE_DYNAMIC,
+			//											L"../Bin/Resource/Mesh/DynamicMesh/PlayerXFile/",
+			//											L"Player.X"),
+			//											E_FAIL);
+
+			//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			//											Engine::RESOURCE_STAGE,
+			//											L"Mesh_Sword",
+			//											Engine::TYPE_STATIC,
+			//											L"../Bin/Resource/Mesh/StaticMesh/Sword/",
+			//											L"Sword.X"),
+			//											E_FAIL);
+
+			//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			//										Engine::RESOURCE_STAGE,
+			//										L"Mesh_Tree",
+			//										Engine::TYPE_STATIC,
+			//										L"../Bin/Resource/Mesh/StaticMesh/Tree/",
+			//										L"Tree01.X"),
+			//										E_FAIL);
+			//
+	
+	
 	lstrcpy(m_szLoading, L"Loading Complete!!!");
 
 	m_bFinish = true;
@@ -419,7 +423,7 @@ void CLoading::Load_StaticObject()
 					);
 				iResult2 = _findnext(handle2, &fd2);
 
-				
+
 			}
 		}
 

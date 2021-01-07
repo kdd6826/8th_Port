@@ -78,6 +78,25 @@ namespace Engine
 
 
 	}D3DXMESHCONTAINER_DERIVED;
+
+	typedef struct tagVertexPointTexture
+	{
+		_vec3			vPos;
+		_float			fPSize;
+		_vec2			vTexUV;
+
+	}VTXPTTEX;
+
+	typedef struct tagVertexMatrix
+	{
+		_vec4		vRight;
+		_vec4		vUp;
+		_vec4		vLook;
+		_vec4		vPosition;
+
+	}VTXMATRIX;
+
+
 }
 
 #endif // Engine_Struct_h__

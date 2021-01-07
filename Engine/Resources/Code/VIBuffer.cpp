@@ -59,7 +59,7 @@ void Engine::CVIBuffer::Render_Buffer(void)
 {
 	// 그래픽 디바이스 장치에게 현재 내가 그리려는 버퍼를 링크시켜주는 함수
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
-	// 1인자 : 몇 번 슬롯에 보관할 것인가
+	// 1인자 : 몇 번 슬롯(스트림)에 보관할 것인가
 	// 2인자 : 어떤 것을 넘겨줄 것인가
 	// 3인자 : 어디서부터 그릴 것인가
 	// 4인자 : 어떤 단위로 표현할 것인가

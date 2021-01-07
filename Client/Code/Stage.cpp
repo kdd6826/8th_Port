@@ -29,14 +29,13 @@ HRESULT CStage::Ready_Scene(void)
 
 Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 {
-	
 	if (Engine::Get_DIKeyState(DIK_F11) & 0x80)
 	{
 		CScene* pScene = nullptr;
-	pScene = CStage2::Create(m_pGraphicDev);
+		pScene = CStage2::Create(m_pGraphicDev);
 
-	FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
-	return 1;
+		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
+		return 1;
 	}
 
 	return Engine::CScene::Update_Scene(fTimeDelta);
@@ -142,7 +141,6 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	Engine::CGameObject*		pGameObject = nullptr;
 
 	pGameObject = CPlayer::Create(m_pGraphicDev);
-	//dynamic_cast<CPlayer*>(pGameObject)->m_pNaviMeshCom->
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
@@ -151,6 +149,8 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
 
+
+	/*pGameObject = CParticle::Create(m_pGraphicDev);*/
 
 	pGameObject = CDog::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -209,8 +209,6 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//pGameObject = CUI::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
-
-
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
@@ -218,7 +216,6 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 {
-
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
@@ -344,6 +341,5 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CStage::Free(void)
 {
 	Engine::CScene::Free();
-
 }
 

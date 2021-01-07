@@ -86,7 +86,7 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Trail", pShader), E_FAIL);
 
-	//// Trail
+	//// Weapon
 	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Weapon.hpp");
 	//NULL_CHECK_RETURN(pShader, E_FAIL);
 	//FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Weapon", pShader), E_FAIL);

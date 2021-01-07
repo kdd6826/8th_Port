@@ -121,6 +121,9 @@
     <Filter Include="02. GameObject\01. Stage\07. UI\04. BossHpBar">
       <UniqueIdentifier>{cee1fdd1-f1be-4413-96ee-2dca3c5e0bf3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\08. Particle">
+      <UniqueIdentifier>{07f39377-ce50-47e5-bee1-a41aaa0f20c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -279,6 +282,9 @@
     <ClInclude Include="..\Code\Ingkells.h">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Particle.h">
+      <Filter>02. GameObject\01. Stage\08. Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -418,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Ingkells.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Particle.cpp">
+      <Filter>02. GameObject\01. Stage\08. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

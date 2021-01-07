@@ -10,9 +10,6 @@ sampler BaseSampler = sampler_state
 
 	minfilter = linear;
 	magfilter = linear;
-
-	addressU = clamp;
-	addressV = clamp;
 };
 
 struct	VS_IN 
@@ -61,13 +58,74 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
 
-	//Out.vColor.rgb = 1.f;
+	/*Out.vColor.rb = 1.f;*/
 
 	return Out;
 }
 
-//VS_OUT VS_TEMP(VS_IN In);
-//PS_OUT PS_TEMP(PS_IN In);
+struct VS_IN_PARTICLE
+{
+	float3		vPos : POSITION;
+	float		fPSize : PSIZE;
+	float2		vTexUV : TEXCOORD0;
+
+	float4		vRight	: TEXCOORD1;
+	float4		vUp		: TEXCOORD2;
+	float4		vLook	: TEXCOORD3;
+	float4		vPosition : TEXCOORD4;
+
+};
+
+struct VS_OUT_PARTICLE
+{
+	float4		vPos : POSITION;
+	float		fPSize : PSIZE;
+	float2		vTexUV : TEXCOORD0;
+};
+
+VS_OUT_PARTICLE	VS_PARTICLE(VS_IN_PARTICLE In)
+{
+	VS_OUT_PARTICLE		Out = (VS_OUT_PARTICLE)0;
+
+	matrix	matWorld = float4x4(In.vRight, In.vUp, In.vLook, In.vPosition);
+
+
+	matrix matWV, matWVP;
+
+	matWV = mul(matWorld, g_matView);
+	matWVP = mul(matWV, g_matProj);
+
+	Out.vPos = mul(vector(In.vPos.xyz, 1.f), matWVP);
+
+	Out.fPSize = (600.f * In.fPSize) * sqrt(1.f / pow(Out.vPos.w, 2.f));
+
+	Out.vTexUV = In.vTexUV;
+	
+	return Out;
+}
+struct PS_IN_PARTICLE
+{
+	float4		vPos : POSITION;
+	float		fPSize : PSIZE;
+	float2		vTexUV : TEXCOORD0;
+
+};
+
+struct PS_OUT_PARTICLE
+{
+	float4		vColor : COLOR0;
+};
+
+PS_OUT_PARTICLE		PS_PARTICLE(PS_IN_PARTICLE In)
+{
+	PS_OUT_PARTICLE		Out = (PS_OUT_PARTICLE)0;
+
+	Out.vColor = tex2D(BaseSampler, In.vTexUV);	// 2차원 텍스처로부터 uv좌표에 해당하는 색을 얻어오는 함수, 반환 타입이 vector 타입
+
+
+	return Out;
+}
+
 
 technique Default_Device
 {
@@ -82,9 +140,17 @@ technique Default_Device
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}
 
-	/*pass	
+	pass	PointSprite
 	{
-		vertexshader = compile vs_3_0 VS_TEMP();
-		pixelshader = compile ps_3_0 PS_TEMP();
-	}*/
+
+		PointSpriteEnable = true;
+		zwriteenable = false;
+
+		alphatestenable = true;
+		alpharef = 0;
+		alphafunc = Greater;
+
+		vertexshader = compile vs_3_0 VS_PARTICLE();
+		pixelshader = compile ps_3_0 PS_PARTICLE();
+	}
 };

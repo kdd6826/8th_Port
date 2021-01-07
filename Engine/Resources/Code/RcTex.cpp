@@ -48,6 +48,7 @@ HRESULT Engine::CRcTex::Ready_Buffer(void)
 	pVertex[3].vTexUV = _vec2(0.f, 1.f);
 
 	m_pVB->Unlock();
+	
 
 	INDEX16*		pIndex = nullptr;
 
