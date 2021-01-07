@@ -83,7 +83,7 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	m_pStateCom->stat.hp = 6.f;
+	//m_pStateCom->stat.hp = 6.f;
 
 	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
 	{
@@ -191,6 +191,16 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				}
 				else if (isManaBlade == false)
 				{
+					_matrix a;
+					/*-0.986199, 0.095553, 0.135209, 0.000000, 
+						0.094849, 0.995424, -0.011656, 0.000000,
+						-0.135704, 0.001329, -0.990749, 0.000000,
+						10.277658, 34.647542, 0.000000, 1.000000*/
+					D3DXMatrixIdentity(&a);
+
+					D3DXMatrixRotationY(&a, D3DXToRadian(-90.f));
+					a;
+					int i = 0;
 					isManaBlade = true;
 					m_state = STATE_MANABLADE;
 					m_fBattleCount = 5.f;

@@ -109,6 +109,26 @@ _uint CLoading::Loading_ForStage(void)
 												L"../Bin/Resource/Texture/Terrain/Terrain_%d_n.tga", 8),
 												E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_Sword2Normal",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Mesh/StaticMesh/Sword2/longblade_blackhammer_normal.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_Sword2",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Mesh/StaticMesh/Sword2/longblade_blackhammer.tga"),
+		E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_Sword2Noraml",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Texture/Terrain/Terrain_%d_n.tga", 8),
+		E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
 		Engine::RESOURCE_STATIC,
 		L"Buffer_CollSphere",
@@ -201,21 +221,21 @@ _uint CLoading::Loading_ForStage(void)
 		L"Player.X"),
 		E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Player1",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/darkknight1/",
-		L"darkknight_1_idle.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Player1",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/darkknight1/",
+	//	L"darkknight_1_idle.X"),
+	//	E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Player2",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/darkknight2/",
-		L"darkknight_2_idle.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Player2",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/darkknight2/",
+	//	L"darkknight_2_idle.X"),
+	//	E_FAIL);
 
 		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 			Engine::RESOURCE_STAGE,
@@ -225,21 +245,30 @@ _uint CLoading::Loading_ForStage(void)
 		L"Dog.X"),
 		E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Titan",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Titan/",
-		L"Titan.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Titan",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Titan/",
+	//	L"Titan.X"),
+	//	E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Ingkells",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
+		L"Ingkells.X"),
+		E_FAIL);
+
+
+/*	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_TombStone",
 		Engine::TYPE_STATIC,
 		L"../Bin/Resource/Mesh/StaticMesh/TombStone/",
 		L"TombStone.X"),
-		E_FAIL);
+		E_FAIL)*/;
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Colosseum",

@@ -22,6 +22,16 @@ HRESULT Client::CSword::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
+	// texture
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+
+	// texture
+	pComponent = m_pTextureCom2 = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2Normal"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -43,10 +53,10 @@ HRESULT Client::CSword::Add_Component(void)
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
-	//// Shader
-	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Trail"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+	// Shader
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	return S_OK;
 }
 
@@ -109,21 +119,73 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 void Client::CSword::Render_Object(void)
 {
 	m_pTransformCom->Set_Transform(m_pGraphicDev);
-	//
-	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerStateCom, );
-	if (pPlayerStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
-		//
-	{
-		m_pMeshCom->Render_Meshes();
-	}
-	_matrix matWorld;
-		m_pTransformCom->Get_WorldMatrix(&matWorld);
+	////
+	//Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	//NULL_CHECK_RETURN(pPlayerStateCom, );
+	//if (pPlayerStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
+	//	//
+	//{
+	//	m_pMeshCom->Render_Meshes();
+	//}
+	//_matrix matWorld;
+	//	m_pTransformCom->Get_WorldMatrix(&matWorld);
 		//m_pTransformCom->Get_NRotWorldMatrix(&matWorld);
 
 //	m_pColliderCom->Render_ColliderSphere(Engine::COLLTYPE(m_bColl), &matWorld);
+	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
+	NULL_CHECK(pEffect);
+	Engine::Safe_AddRef(pEffect);
 
+	_uint	iMaxPass = 0;
 
+	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
+	pEffect->BeginPass(0);
+
+	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	m_pMeshCom->Render_Meshes(pEffect);
+
+	pEffect->EndPass();
+	pEffect->End();
+
+	Engine::Safe_Release(pEffect);
+}
+
+HRESULT CSword::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
+{
+	/*_matrix		matWorld, matView, matProj;
+
+	const D3DLIGHT9* pLightInfo = Engine::Get_Light(0);
+
+	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+
+	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture");
+	m_pTextureCom2->Set_Texture(pEffect, "g_NormalTexture");
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+	pEffect->SetVector("g_vCamPos", &_vec4(pCamera->Get_Eye(), 0.f));
+	pEffect->SetVector("g_vColorR", &_vec4(1.f,1.f,1.f,1.f));
+	pEffect->SetVector("g_vColorG", &_vec4(1.f,1.f,1.f,1.f));
+	pEffect->SetVector("g_vColorB", &_vec4(1.f,1.f,1.f,1.f));
+		
+	pEffect->SetMatrix("g_matWorld", &matWorld);
+	pEffect->SetMatrix("g_matView", &matView);
+	pEffect->SetMatrix("g_matProj", &matProj);
+
+	return S_OK;*/
+	_matrix		matWorld, matView, matProj;
+
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	pEffect->SetMatrix("g_matWorld", &matWorld);
+	pEffect->SetMatrix("g_matView", &matView);
+	pEffect->SetMatrix("g_matProj", &matProj);
+
+	return S_OK;
 }
 
 

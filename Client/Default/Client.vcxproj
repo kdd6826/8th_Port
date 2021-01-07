@@ -184,8 +184,8 @@
     <ClInclude Include="..\Code\Effect.h" />
     <ClInclude Include="..\Code\HpBarBack.h" />
     <ClInclude Include="..\Code\HpBarValue.h" />
-    <ClInclude Include="..\Code\Inkells.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    <ClInclude Include="..\Code\Ingkells.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\Logo.h" />
@@ -254,8 +254,8 @@
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\HpBarBack.cpp" />
     <ClCompile Include="..\Code\HpBarValue.cpp" />
-    <ClCompile Include="..\Code\Inkells.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\Code\Ingkells.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />

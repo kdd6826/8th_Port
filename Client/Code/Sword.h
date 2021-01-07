@@ -13,6 +13,7 @@ class CCalculator;
 class CCollider;
 class CColliderSphere;
 class CShader;
+class CTexture;
 END
 
 BEGIN(Client)
@@ -27,12 +28,14 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 
+	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 private:
 	HRESULT		Add_Component(void);
 	_bool		Collision_ToObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
 private:
-
+	Engine::CTexture* m_pTextureCom = nullptr;
+	Engine::CTexture* m_pTextureCom2 = nullptr;
 	Engine::CStaticMesh*		m_pMeshCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;

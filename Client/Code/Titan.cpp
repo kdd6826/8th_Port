@@ -210,7 +210,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		//m_state = titanState::STATE_ATTACKKICK;
 
 	}
-	m_fAniSpeed = 2.f;
+	m_fAniSpeed = 1.5f;
 	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 }
@@ -702,12 +702,6 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 				}
 
-				//if (true == m_pMeshCom->Is_AnimationSetEnd())
-				//{
-
-				//	isAnimating = false;
-				//	m_pStateCom->stat.moveSpeed = TitanSpeed;
-				//	delay = 0;
 
 
 				//}

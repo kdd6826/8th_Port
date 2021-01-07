@@ -41,6 +41,7 @@ private:
 	list<D3DXMESHCONTAINER_DERIVED*>			m_MeshContainerList;
 
 public:
+	float						m_fRot=0.f;
 	static	CDynamicMesh*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath, const _tchar* pFileName);
 	virtual CResources*			Clone(void);
 	virtual void				Free(void);

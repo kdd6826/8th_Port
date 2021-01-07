@@ -1,5 +1,5 @@
-#ifndef Titan_h__
-#define Titan_h__
+#ifndef Zecallion_h__
+#define Zecallion_h__
 
 #include "Monster.h"
 #include "Define.h"
@@ -16,10 +16,10 @@ class CShader;
 END
 
 BEGIN(Client)
-class CTitan : public CMonster
+class CZecallion : public CMonster
 {
 
-	enum titanState
+	enum ZecallionState
 	{
 		STATE_IDLE				,
 		STATE_RUN				,
@@ -49,8 +49,8 @@ class CTitan : public CMonster
 
 	};
 private:
-	explicit CTitan(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CTitan(void);
+	explicit CZecallion(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CZecallion(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -65,7 +65,7 @@ private:
 	void		SetUp_OnTerrain(void);
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
-	titanState m_state = titanState::STATE_IDLE;
+	ZecallionState m_state = ZecallionState::STATE_IDLE;
 
 	_vec3 oldPos;
 	_vec3 newPos;
@@ -79,7 +79,7 @@ private:
 
 
 public:
-	static CTitan*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CZecallion*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
@@ -87,4 +87,4 @@ private:
 };
 
 END
-#endif // Titan_h__
+#endif // Zecallion_h__

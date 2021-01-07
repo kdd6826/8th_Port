@@ -231,9 +231,6 @@
     <ClInclude Include="..\Code\Monster.h">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Inkells.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Zecallion.h">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
     </ClInclude>
@@ -278,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\DamageFont.h">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Ingkells.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -371,9 +371,6 @@
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Inkells.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Zecallion.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
     </ClCompile>
@@ -418,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DamageFont.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ingkells.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

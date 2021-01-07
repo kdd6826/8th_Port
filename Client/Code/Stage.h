@@ -11,6 +11,8 @@
 #include "Unit.h"
 #include "Dog.h"
 #include "Titan.h"
+#include "Ingkells.h"
+//#include "Zecallion.h"
 
 #include "Stone.h"
 #include "Sword.h"

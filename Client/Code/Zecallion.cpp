@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "Titan.h"
+#include "Zecallion.h"
 #include "Export_Function.h"
 
 
-CTitan::CTitan(LPDIRECT3DDEVICE9 pGraphicDev)
+CZecallion::CZecallion(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
 {
 
 }
 
-CTitan::~CTitan(void)
+CZecallion::~CZecallion(void)
 {
 	int i = 0;
 }
 
-Client::_vec3 Client::CTitan::PickUp_OnTerrain(void)
+Client::_vec3 Client::CZecallion::PickUp_OnTerrain(void)
 {
 	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3(0.f, 0.f, 0.f));
@@ -26,12 +26,12 @@ Client::_vec3 Client::CTitan::PickUp_OnTerrain(void)
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 }
 
-HRESULT Client::CTitan::Add_Component(void)
+HRESULT Client::CZecallion::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 
 	// Mesh
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Titan"));
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Zecallion"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
@@ -46,11 +46,11 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY);
+	Load_ColliderFile(L"../Bin/saveZecallion.dat",Engine::COLLID::ENEMY);
 	return S_OK;
 }
 
-HRESULT CTitan::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+HRESULT CZecallion::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
 	_matrix		matWorld, matView, matProj;
 
@@ -66,7 +66,7 @@ HRESULT CTitan::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 }
 
 
-void CTitan::Move(const _float& fTimeDelta)
+void CZecallion::Move(const _float& fTimeDelta)
 {
 
 	_vec3	vPos, vDir, vRight;
@@ -104,7 +104,7 @@ void CTitan::Move(const _float& fTimeDelta)
 	float spinSpeed = 5.f;
 	if (55.f <= angle && angle < 60.f)
 	{
-		m_state = titanState::STATE_RUN;
+		m_state = ZecallionState::STATE_RUN;
 		if (disPlayer < 2.f)
 		{
 			
@@ -113,42 +113,42 @@ void CTitan::Move(const _float& fTimeDelta)
 			switch (i)
 			{
 			case 0:
-				m_state = titanState::STATE_ATTACKBALLISTA;
+				m_state = ZecallionState::STATE_ATTACKBALLISTA;
 				delay = 4.2f;
 				m_fAniSpeed = 3.5f;
 				break;
 			case 1:
-				m_state = titanState::STATE_ATTACKHAMMER;
+				m_state = ZecallionState::STATE_ATTACKHAMMER;
 				delay = 3.2f;//3.13
 				m_fAniSpeed = 3.5f;
 				break;
 			case 2:
-				m_state = titanState::STATE_ATTACKKICK;
+				m_state = ZecallionState::STATE_ATTACKKICK;
 				delay = 2.9f; //2.82
 				m_fAniSpeed = 3.5f;
 				break;
 			case 3:
-				m_state = titanState::STATE_ATTACKRAGE;
+				m_state = ZecallionState::STATE_ATTACKRAGE;
 				delay = 8.3f;//8.28
 				m_fAniSpeed = 2.5f;
 				break;
 			case 4:
-				m_state = titanState::STATE_ATTACKSTOMP;
+				m_state = ZecallionState::STATE_ATTACKSTOMP;
 				delay = 3.6f;//3.55
 				m_fAniSpeed = 2.5f;
 				break;
 			case 5:
-				m_state = titanState::STATE_ATTACKTURNLEFT;
+				m_state = ZecallionState::STATE_ATTACKTURNLEFT;
 				delay = 2.3f;//2.2
 				m_fAniSpeed = 3.5f;
 				break;
 			case 6:
-				m_state = titanState::STATE_ATTACKTURNRIGHT;
+				m_state = ZecallionState::STATE_ATTACKTURNRIGHT;
 				delay = 2.2f;//2.1f
 				m_fAniSpeed = 3.5f;
 				break;
 			case 7:
-				m_state = titanState::STATE_ATTACKTWOSTEP;
+				m_state = ZecallionState::STATE_ATTACKTWOSTEP;
 				delay = 1.9f;//1.8f
 				m_fAniSpeed = 2.f;
 				break;
@@ -169,7 +169,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		if (angle2 > 0)
 		{
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta* spinSpeed));
-			m_state = titanState::STATE_RUN;
+			m_state = ZecallionState::STATE_RUN;
 
 		}
 
@@ -177,7 +177,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		else
 		{
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta* spinSpeed));
-			m_state = titanState::STATE_RUN;
+			m_state = ZecallionState::STATE_RUN;
 		}
 		
 	}
@@ -191,15 +191,15 @@ void CTitan::Move(const _float& fTimeDelta)
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta* spinSpeed));
 
 			//isAnimating = true;
-			//m_state = titanState::STATE_TURNRIGHT;
+			//m_state = ZecallionState::STATE_TURNRIGHT;
 		}
 		//왼쪽이다.
 		else
 		{
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta* spinSpeed));
-			m_state = titanState::STATE_RUN;
+			m_state = ZecallionState::STATE_RUN;
 		}
-		//m_state = titanState::STATE_ATTACKKICK;
+		//m_state = ZecallionState::STATE_ATTACKKICK;
 
 	}
 	m_fAniSpeed = 2.f;
@@ -207,13 +207,13 @@ void CTitan::Move(const _float& fTimeDelta)
 
 }
 
-void CTitan::Attack(const _float& fTimeDelta)
+void CZecallion::Attack(const _float& fTimeDelta)
 {
 }
 
-CTitan* CTitan::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CZecallion* CZecallion::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTitan*	pInstance = new CTitan(pGraphicDev);
+	CZecallion*	pInstance = new CZecallion(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -221,26 +221,26 @@ CTitan* CTitan::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CTitan::Free(void)
+void CZecallion::Free(void)
 {
 
 	CMonster::Free();
 }
 
 
-HRESULT Client::CTitan::Ready_Object(void)
+HRESULT Client::CZecallion::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Set_Scale(0.05f, 0.05f, 0.05f);
 	m_pStateCom->stat.moveSpeed = 2.f;
-	m_pMeshCom->Set_AnimationSet(titanState::STATE_IDLE);
+	m_pMeshCom->Set_AnimationSet(ZecallionState::STATE_IDLE);
 
 	m_pNaviMeshCom->Set_NaviIndex(0);
 
 	return S_OK;
 }
-Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
+Client::_int Client::CZecallion::Update_Object(const _float& fTimeDelta)
 {
 	
 	if (isDead)
@@ -256,7 +256,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 	{
 
 		isSearch = PlayerSearch(m_pTransformCom->m_vInfo[Engine::INFO_POS]);
-		//m_state = titanState::STATE_IDLE;
+		//m_state = ZecallionState::STATE_IDLE;
 		if (isSearch == true)
 		{
 
@@ -285,7 +285,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				//몬스터의 정면
 
 				//발리스타공격
-				if (m_state == titanState::STATE_ATTACKBALLISTA)
+				if (m_state == ZecallionState::STATE_ATTACKBALLISTA)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -318,7 +318,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					}
 				}
 				//주먹질
-				else if (m_state == titanState::STATE_ATTACKHAMMER)
+				else if (m_state == ZecallionState::STATE_ATTACKHAMMER)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -354,7 +354,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 						isColl = false;
 				}
 				//발차기
-				else if (m_state == titanState::STATE_ATTACKKICK)
+				else if (m_state == ZecallionState::STATE_ATTACKKICK)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -397,7 +397,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					}
 				}
 				//분노의주먹질
-				else if (m_state == titanState::STATE_ATTACKRAGE)
+				else if (m_state == ZecallionState::STATE_ATTACKRAGE)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -441,7 +441,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					}
 				}
 				//
-				else if (m_state == titanState::STATE_ATTACKSTOMP)
+				else if (m_state == ZecallionState::STATE_ATTACKSTOMP)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -479,7 +479,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 						isColl = false;
 					}
 				}
-				else if (m_state == titanState::STATE_ATTACKTURNLEFT)
+				else if (m_state == ZecallionState::STATE_ATTACKTURNLEFT)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -526,7 +526,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 						isColl = false;
 					}
 				}
-				else if (m_state == titanState::STATE_ATTACKTURNRIGHT)
+				else if (m_state == ZecallionState::STATE_ATTACKTURNRIGHT)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -570,12 +570,12 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pStateCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = ZecallionSpeed;
 					delay = 0;
 
 
 				}
-				else if (m_state == titanState::STATE_ATTACKTWOSTEP)
+				else if (m_state == ZecallionState::STATE_ATTACKTWOSTEP)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -616,7 +616,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 				{
 
 					isAnimating = false;
-					m_pStateCom->stat.moveSpeed = TitanSpeed;
+					m_pStateCom->stat.moveSpeed = ZecallionSpeed;
 					delay = 0;
 					isColl = false;
 
@@ -630,7 +630,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 	}
 	else if(isDie)
 	{
-		m_state = titanState::STATE_DYINGFRONT;
+		m_state = ZecallionState::STATE_DYINGFRONT;
 		if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
 			isDead = true;
@@ -657,7 +657,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 	return 0;
 }
-void Client::CTitan::Render_Object(void)
+void Client::CZecallion::Render_Object(void)
 {
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
@@ -681,7 +681,7 @@ void Client::CTitan::Render_Object(void)
 	Engine::Safe_Release(pEffect);
 }
 
-void Client::CTitan::SetUp_OnTerrain(void)
+void Client::CZecallion::SetUp_OnTerrain(void)
 {
 	_vec3	vPosition;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPosition);
