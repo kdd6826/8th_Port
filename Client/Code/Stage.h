@@ -19,6 +19,10 @@
 #include "Tree.h"
 #include "Effect.h"
 #include "DamageFont.h"
+#include "ConfusionHole.h"
+#include "ConfusionHole2.h"
+#include"SwordTrail.h"
+
 #include "SkillSlot.h"
 #include "HpBarBack.h"
 #include "HpBarValue.h"
@@ -52,6 +56,7 @@ private:
 	virtual ~CStage(void);
 
 public:
+	
 	virtual HRESULT Ready_Scene(void) override;
 	virtual _int Update_Scene(const _float& fTimeDelta) override;
 	virtual void Render_Scene(void) override;

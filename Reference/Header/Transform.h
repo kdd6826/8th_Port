@@ -48,6 +48,7 @@ public:
 	_vec3			m_vDirection;
 	_matrix			m_matWorld;
 	_matrix			m_matNRotWorld;
+	_matrix			m_matRotation;
 	//STAT stat;
 public:
 	static		CTransform*		Create(void);

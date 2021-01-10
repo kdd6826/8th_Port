@@ -28,6 +28,11 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 	{
 		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		m_pStateCom->stat.hp -= dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
+		Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+		
+		pPlayerStateCom->stat.sp += 20.f;
+		if (pPlayerStateCom->stat.sp > pPlayerStateCom->stat.maxSp)
+			pPlayerStateCom->stat.sp = pPlayerStateCom->stat.maxSp;
 	}
 	//»ç¸Á
 	if (m_pStateCom->stat.hp <= 0 && isDie == false)

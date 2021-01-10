@@ -103,6 +103,7 @@ private:
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	playerState m_state = playerState::STATE_IDLE;
+	
 	/*playerMesh	meshTransform = playerMesh::MESH_NORMAL;*/
 	bool		isManaBlade = false;
 	bool		isBattle = false;

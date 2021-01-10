@@ -4,7 +4,8 @@
 #include "DynamicCamera.h"
 #include "ColliderMgr.h"
 #include "Sword.h"
-
+#include "ConfusionHole.h"
+#include "ConfusionHole2.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -52,11 +53,14 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.maxHp = 10.f;
 	m_pStateCom->stat.stamina = 200.f;
 	m_pStateCom->stat.maxStamina = 200.f;
+	m_pStateCom->stat.sp = 250.f;
+	m_pStateCom->stat.maxSp = 1250.f;
 	m_pStateCom->stat.damage = 2.f;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+
 
 	Load_ColliderFile(L"../Bin/savePlayer.dat",Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
 	Load_ColliderFile(L"../Bin/saveWeapon1.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
@@ -84,12 +88,13 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
 	//m_pStateCom->stat.hp = 6.f;
-
+	
 	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
 	{
 		m_pMeshCom->Free();
 		m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
 		m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_NORMAL;
+		//m_pStateCom->playerState == Engine::CPlayerState::playerState::STATE_ATT1;
 	}
 	if (m_state == playerState::STATE_ATT1 ||
 		m_state == playerState::STATE_ATT2 ||
@@ -222,6 +227,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
+
 				m_state = playerState::STATE_CONFUSIONHOLE;
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
@@ -292,8 +298,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 			{
-
  				m_state = playerState::STATE_CONFUSIONHOLE;
+				
 				m_fBattleCount = 5.f;
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
@@ -319,6 +325,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (delay<3.f&& m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
 			{
+				
 				/*Engine::CGameObject* pSword = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"Sword"));
 				if (pSword == nullptr)
 					return;
@@ -355,7 +362,11 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 void CPlayer::MovePlayer(const _float& fTimeDelta)
 {
-
+	//if (Engine::Get_DIKeyState(DIK_Z) & 0x80)
+	//{
+	//	m_pTransformCom->Set_Pos(102.f, 0.f, 4.5f);
+	//}
+	
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 	_float fCamAngle;
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
@@ -573,7 +584,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 void CPlayer::Attack(const _float& fTimeDelta)
 {
-
+	//m_pStateCom->stat.sp = 625;
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
 #pragma region NormalBladeAttack
@@ -737,58 +748,73 @@ void CPlayer::Attack(const _float& fTimeDelta)
 #pragma endregion
 	}
 
+	if (m_pStateCom->stat.sp > 100)
+	{
+		if (Engine::Get_DIKeyState(DIK_2) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_DOOMSAYER;
+				//delay = 3.7f;
+				m_fBattleCount = 8.8f;
+				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+				delay = temp;
+				isInvincible = true;
+				m_pStateCom->stat.sp -= 100.f;
+			}
+		}
+	}
+	if (m_pStateCom->stat.sp > 250)
+	{
+		if (Engine::Get_DIKeyState(DIK_3) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_RUINBLADE;
+				//delay = 5.4f;//4.f
+				m_fBattleCount = 13.1f;
+				m_fAniSpeed = 1.5f;
+				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+				delay = temp;
+				m_pStateCom->stat.sp -= 250.f;
+			}
+		}
+	}
+	if (m_pStateCom->stat.sp > 150)
+	{
+		if (Engine::Get_DIKeyState(DIK_4) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_MANA_IMAGE;
+				//OK
+				//delay = 1.f;
+				m_fBattleCount = 6.f;
+				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+				delay = temp;
+				m_pStateCom->stat.sp -= 150;
+			}
+		}
+	}
+	if (m_pStateCom->stat.sp > 750)
+	{
+		if (Engine::Get_DIKeyState(DIK_5) & 0x80)
+		{
+			if (delay <= 0.f)
+			{
+				m_state = playerState::STATE_LORDOFMANA;
 
-	if (Engine::Get_DIKeyState(DIK_2) & 0x80)
-	{
-		if (delay <= 0.f)
-		{
-			m_state = playerState::STATE_DOOMSAYER;
-			//delay = 3.7f;
-			m_fBattleCount = 8.8f;
-			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
-			delay = temp;
-			isInvincible = true;
-		}
-	}
-	if (Engine::Get_DIKeyState(DIK_3) & 0x80)
-	{
-		if (delay <= 0.f)
-		{
-			m_state = playerState::STATE_RUINBLADE;
-			//delay = 5.4f;//4.f
-			m_fBattleCount = 13.1f;
-			m_fAniSpeed = 1.5f;
-			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
-			delay = temp;
-		}
-	}
-	if (Engine::Get_DIKeyState(DIK_4) & 0x80)
-	{
-		if (delay <= 0.f)
-		{
-			m_state = playerState::STATE_MANA_IMAGE;
-			//OK
-			//delay = 1.f;
-			m_fBattleCount = 6.f;
-			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
-			delay = temp;
-		}
-	}
-	if (Engine::Get_DIKeyState(DIK_5) & 0x80)
-	{
-		if (delay <= 0.f)
-		{
-			m_state = playerState::STATE_LORDOFMANA;
-
-			//delay = 14.2f;
-			m_fBattleCount = 19.f;
-			isSkill = true;
-			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
-			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
-			delay = temp;
+				//delay = 14.2f;
+				m_fBattleCount = 19.f;
+				isSkill = true;
+				_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+				delay = temp;
+				m_pStateCom->stat.sp -= 750;
+			}
 		}
 	}
 	if (Engine::Get_DIKeyState(DIK_6) & 0x80)
@@ -882,7 +908,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	//
 	m_pMeshCom->Set_AnimationSet(m_state);
 	//
-	m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
+	//m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
 	CUnit::Update_Object(fTimeDelta);
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -895,13 +921,13 @@ void Client::CPlayer::Render_Object(void)
 	Engine::Safe_AddRef(pEffect);
 
 	_uint	iMaxPass = 0;
-
 	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
 	pEffect->BeginPass(0);
 
-	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect));
 		
-	m_pMeshCom->Render_Meshes(pEffect);
+	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);
 	
 	pEffect->EndPass();
 	pEffect->End();

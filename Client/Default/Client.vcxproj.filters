@@ -124,6 +124,9 @@
     <Filter Include="02. GameObject\01. Stage\08. Particle">
       <UniqueIdentifier>{07f39377-ce50-47e5-bee1-a41aaa0f20c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\06. Effect\Player">
+      <UniqueIdentifier>{54a48bcb-e186-4a7e-8e1b-5c24c8096de6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -285,6 +288,15 @@
     <ClInclude Include="..\Code\Particle.h">
       <Filter>02. GameObject\01. Stage\08. Particle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SwordTrail.h">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ConfusionHole.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ConfusionHole2.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -427,6 +439,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Particle.cpp">
       <Filter>02. GameObject\01. Stage\08. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SwordTrail.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ConfusionHole.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ConfusionHole2.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

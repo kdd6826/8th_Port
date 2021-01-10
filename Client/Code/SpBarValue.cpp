@@ -73,7 +73,12 @@ HRESULT Client::CSpBarValue::Ready_Object(void)
 Client::_int Client::CSpBarValue::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
-		
+
+	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerStateCom, 0);
+	m_fX = 38 + 187 * (pPlayerStateCom->stat.sp / pPlayerStateCom->stat.maxSp);
+	m_fSizeX = 400.f * pPlayerStateCom->stat.sp / pPlayerStateCom->stat.maxSp;
+
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);

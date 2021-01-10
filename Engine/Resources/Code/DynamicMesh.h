@@ -18,6 +18,7 @@ public:
 	HRESULT			Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName);
 	void			Render_Meshes(void);
 	void			Render_Meshes(LPD3DXEFFECT& pEffect);
+	void			Render_Meshes(LPD3DXEFFECT& pEffect, const _float& fTimeDelta);
 	const  D3DXFRAME_DERIVED*		Get_FrameByName(const char* pFrameName);
 	_bool							Is_AnimationSetEnd(void);
 	_double Get_AnimationPeriod(const _uint& iIndex);

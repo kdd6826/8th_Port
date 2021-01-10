@@ -58,17 +58,19 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 
 
 	// 회전 적용
-	_matrix		matRot[ROT_END];
+	/*_matrix		matRot[ROT_END];
 	D3DXMatrixRotationX(&matRot[ROT_X], m_vAngle.x);
 	D3DXMatrixRotationY(&matRot[ROT_Y], m_vAngle.y);
 	D3DXMatrixRotationZ(&matRot[ROT_Z], m_vAngle.z);
+	
+
+
+	m_matRotation = matRot[ROT_X] * matRot[ROT_Y] * matRot[ROT_Z];*/
+	D3DXMatrixRotationYawPitchRoll(&m_matRotation, m_vAngle.y, m_vAngle.x, m_vAngle.z);
 
 	for (_uint i = 0; i < INFO_POS; ++i)
 	{
-		for (_uint j = 0; j < ROT_END; ++j)
-		{
-			D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRot[j]);
-		}
+		D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &m_matRotation);
 	}
 
 	/*CPipeline::MyRotationX(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT], m_vAngle.x);

@@ -126,11 +126,11 @@ void CIngkells::Move(const _float& fTimeDelta)
 				case 0:
 					m_state = IngkellsState::STATE_TURNRIGHT_ATK;
 					//delay = 2.9f; //2.82
-					m_fAniSpeed = 2.5f;
+					m_fAniSpeed = 2.f;
 					break;
 				case 1:
 					m_state = IngkellsState::STATE_TURNLEFT_ATK;
-					m_fAniSpeed = 2.5f;
+					m_fAniSpeed = 2.f;
 					break;
 
 				default:
@@ -148,7 +148,7 @@ void CIngkells::Move(const _float& fTimeDelta)
 
 				case 0:
 					m_state = IngkellsState::STATE_SWING_TRIPLE;
-					m_fAniSpeed = 3.5f;
+					m_fAniSpeed = 2.f;
 					break;
 
 				case 1:
@@ -168,7 +168,7 @@ void CIngkells::Move(const _float& fTimeDelta)
 				{
 				case 0:
 					m_state = IngkellsState::STATE_SWORDWAVE;
-					m_fAniSpeed = 3.5f;
+					m_fAniSpeed = 2.5f;
 					break;
 
 				default:
@@ -785,7 +785,7 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 
-	m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed);
+	//m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -804,7 +804,8 @@ void Client::CIngkells::Render_Object(void)
 
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
-	m_pMeshCom->Render_Meshes(pEffect);
+	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed);
 
 	pEffect->EndPass();
 	pEffect->End();

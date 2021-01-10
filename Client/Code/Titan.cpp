@@ -793,7 +793,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 
-	m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed);
+	//m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -811,8 +811,8 @@ void Client::CTitan::Render_Object(void)
 	pEffect->BeginPass(0);
 
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
-		
-	m_pMeshCom->Render_Meshes(pEffect);
+	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed);
 	
 	pEffect->EndPass();
 	pEffect->End();

@@ -178,6 +178,8 @@
     <ClInclude Include="..\Code\BossHpBarOrange.h" />
     <ClInclude Include="..\Code\BossHpBarRed.h" />
     <ClInclude Include="..\Code\ColliderMgr.h" />
+    <ClInclude Include="..\Code\ConfusionHole.h" />
+    <ClInclude Include="..\Code\ConfusionHole2.h" />
     <ClInclude Include="..\Code\DamageFont.h" />
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
@@ -207,6 +209,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\Stage2.h" />
+    <ClInclude Include="..\Code\SwordTrail.h" />
     <ClInclude Include="..\Code\TestMonster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
@@ -249,6 +252,8 @@
     <ClCompile Include="..\Code\BossHpBarOrange.cpp" />
     <ClCompile Include="..\Code\BossHpBarRed.cpp" />
     <ClCompile Include="..\Code\ColliderMgr.cpp" />
+    <ClCompile Include="..\Code\ConfusionHole.cpp" />
+    <ClCompile Include="..\Code\ConfusionHole2.cpp" />
     <ClCompile Include="..\Code\DamageFont.cpp" />
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
@@ -278,6 +283,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Stage2.cpp" />
+    <ClCompile Include="..\Code\SwordTrail.cpp" />
     <ClCompile Include="..\Code\TestMonster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>

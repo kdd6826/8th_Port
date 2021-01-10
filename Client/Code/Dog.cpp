@@ -44,8 +44,8 @@ HRESULT Client::CDog::Add_Component(void)
 
 	
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	/*int i = rand() % 8;*/
-	m_pTransformCom->Set_Pos(&_vec3{23.f,0.f,23.f});
+	int i = rand() % 8;
+	//m_pTransformCom->Set_Pos(&_vec3{23.f+i,0.f,23.f+i});
 	Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
@@ -93,6 +93,9 @@ void CDog::Move(const _float& fTimeDelta)
 	//내적을 통한 각도
 	float frontRadian = D3DXVec3Dot(&toPlayerDir, &vDir);
 	float rightRadian = D3DXVec3Dot(&toPlayerDir, &vRight);
+
+
+
 	//플레이어가 내 앞? 내 뒤?
 	float angle = D3DXToDegree(frontRadian);
 	//플레이어가 내 왼쪽? 오른쪽?
@@ -185,7 +188,10 @@ void CDog::Move(const _float& fTimeDelta)
 	}
 	m_fAniSpeed = 1.5f;
 	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
-
+	if (Engine::Get_DIKeyState(DIK_Z) & 0x80)
+	{
+		m_pTransformCom->Set_Pos(102.f, 0.f, 6.5f);
+	}
 }
 
 void CDog::Attack(const _float& fTimeDelta)
@@ -361,16 +367,9 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 	m_pMeshCom->Set_AnimationSet(m_state);
 	//SetUp_OnTerrain()
 
-	//Engine::CGameObject::Update_Object(fTimeDelta);	
-	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;
 
 
-
-	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
-	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-	m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
+	//m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -388,8 +387,8 @@ void Client::CDog::Render_Object(void)
 	pEffect->BeginPass(0);
 
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
-		
-	m_pMeshCom->Render_Meshes(pEffect);
+	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);
 	
 	pEffect->EndPass();
 	pEffect->End();

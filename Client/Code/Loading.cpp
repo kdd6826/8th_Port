@@ -164,6 +164,9 @@ _uint CLoading::Loading_ForStage(void)
 		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_ConfusionHole1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/aming_point_big04.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_ConfusionHole2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/aming_point_big05.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SwordTrail0", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/heroes_longblade_trail00.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_DamageFont", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Font_Damage.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillSlot", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/skill_slot.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Back.png"), E_FAIL);
@@ -215,7 +218,13 @@ _uint CLoading::Loading_ForStage(void)
 		L"../Bin/saveNaviCastle.dat",
 		NULL),
 		E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Navi3",
+		Engine::TYPE_NAVI,
+		L"../Bin/save14.dat",
+		NULL),
+		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -241,13 +250,13 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"darkknight_2_idle.X"),
 	//	E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Dog",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Dog/",
-		L"Dog.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Dog",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Dog/",
+	//	L"Dog.X"),
+	//	E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	Engine::RESOURCE_STAGE,
@@ -257,13 +266,13 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"Titan.X"),
 	//	E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Ingkells",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
-		L"Ingkells.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Ingkells",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
+	//	L"Ingkells.X"),
+	//	E_FAIL);
 
 
 	/*	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
