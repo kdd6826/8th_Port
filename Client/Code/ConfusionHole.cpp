@@ -89,39 +89,86 @@ HRESULT Client::CConfusionHole::Ready_Object(void)
 	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(-100.f));
 //	m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 5.f;
 	//m_pTransformCom->Set_Pos(1.f, 0.f, 1.f);
-
+	m_pTransformCom->Set_Scale(0.5, 0.5, 0.5);
 	return S_OK;
 }
 Client::_int Client::CConfusionHole::Update_Object(const _float& fTimeDelta)
 {
-	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(-2.f));
-	//m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(2.f));
+		Engine::CGameObject::Update_Object(fTimeDelta);
 
-	_vec3 playerPos, playerLook, playerDir, playerLook2;
-	float playerAngle;
-	_vec3 worldX = { 1.f,0.f,0.f };
-	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransCom, 0);
-	//m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
-	pPlayerTransCom->Get_Info(Engine::INFO_POS, &playerPos);
-	pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook);
-	pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook2);
-	D3DXVec3Normalize(&playerLook2, &playerLook2);
+	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(-0.5f));
+	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerStateCom, );
+	if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
+	{
+		if (count == 0)
+		{
+			m_pTransformCom->Set_Scale(0.5, 0.5, 0.5);
+		}
+		//m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(2.f));
 
-
-	float radian = atan2f(playerLook2.x, playerLook2.z);
-	playerDir = playerLook * 33.f;
-	////}
-
-	m_pTransformCom->Set_Rotation(Engine::ROT_Y, radian /*+ D3DX_PI * 0.5f*/);
-
-	Engine::CGameObject::Update_Object(fTimeDelta);
-
-	m_pTransformCom->m_vInfo[Engine::INFO_LOOK] = playerLook;
-	m_pTransformCom->Set_Pos(&(playerPos + playerDir + _vec3{ 0.f,0.5f,0.f }));
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+		_vec3 playerPos, playerLook, playerDir, playerLook2;
+		float playerAngle;
+		_vec3 worldX = { 1.f,0.f,0.f };
+		Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+		NULL_CHECK_RETURN(pPlayerTransCom, 0);
+		//m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
+		pPlayerTransCom->Get_Info(Engine::INFO_POS, &playerPos);
+		pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook);
+		pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook2);
+		D3DXVec3Normalize(&playerLook2, &playerLook2);
 
 
+		float radian = atan2f(playerLook2.x, playerLook2.z);
+		playerDir = playerLook * 21.f;
+		////}
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, radian /*+ D3DX_PI * 0.5f*/);
+
+
+		m_pTransformCom->m_vInfo[Engine::INFO_LOOK] = playerLook;
+		m_pTransformCom->Set_Pos(&(playerPos + playerDir + _vec3{ 0.f,0.5f,0.f }));
+
+	}
+	else if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION)
+	{
+		//m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(2.f));
+
+		_vec3 playerPos, playerLook, playerDir, playerLook2,myPos;
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &myPos);
+		float playerAngle;
+		_vec3 worldX = { 1.f,0.f,0.f };
+		Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+		NULL_CHECK_RETURN(pPlayerTransCom, 0);
+		//m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
+		pPlayerTransCom->Get_Info(Engine::INFO_POS, &playerPos);
+		pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook);
+		pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook2);
+		D3DXVec3Normalize(&playerLook2, &playerLook2);
+
+
+		float radian = atan2f(playerLook2.x, playerLook2.z);
+		playerDir = -playerLook * 21.f;
+		////}
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, radian /*+ D3DX_PI * 0.5f*/);
+
+	//	Engine::CGameObject::Update_Object(fTimeDelta);
+		
+		m_pTransformCom->m_vInfo[Engine::INFO_LOOK] = playerLook;
+		if (count == 0)
+		{
+			m_pTransformCom->Set_Pos(&(playerPos + playerDir + _vec3{ 0.f,0.5f,0.f }));
+		}
+		else
+		{
+			//m_pTransformCom->Move_Pos(&(vLook * m_pStateCom->stat.moveSpeed * fTimeDelta * 100));
+			m_pTransformCom->Move_Pos(&(playerDir * fTimeDelta));
+		}
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+
+	}
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 	return 0;
 }
 void Client::CConfusionHole::Render_Object(void)
@@ -129,6 +176,27 @@ void Client::CConfusionHole::Render_Object(void)
 
 
 //	m_pTransformCom->Set_Transform(m_pGraphicDev);
+
+	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerStateCom, );
+	if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
+	{
+		count += fTimeDelta;
+
+	}
+	else if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION)
+	{
+		count += fTimeDelta;
+
+	}
+	//else if(pPlayerStateCom->playerState != Engine::CPlayerState::STATE_CONFUSIONHOLE|| pPlayerStateCom->playerState != Engine::CPlayerState::STATE_DIFUSION)
+	//{
+	//	count = 0;
+	//	return;
+	//}
+	if (count > 0.7f||count<0.1f)
+		return;
 
 	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);

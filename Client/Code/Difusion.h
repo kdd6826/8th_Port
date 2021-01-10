@@ -26,7 +26,6 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 
-	_float count = 0.f;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
@@ -38,6 +37,7 @@ private:
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CShader*			m_pShaderCom = nullptr;
 
+	_float count = 0.f;
 
 	const	_matrix* m_pParentBoneMatrix = nullptr;
 	const	_matrix* m_pParentWorldMatrix = nullptr;

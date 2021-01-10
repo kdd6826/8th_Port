@@ -227,11 +227,11 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
-
+  				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
-				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+				temp = (temp / (m_fAniSpeed * 1.5f)) -0.1f;
 				delay = temp;
 				isInvincible = true;
 				m_fBattleCount = 5.f;
@@ -272,7 +272,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		//대쉬가드
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
-
+			ConufusionHoleInit();
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 			
 			//delay = 1.f;
@@ -298,6 +298,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 			{
+				ConufusionHoleInit();
  				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 				
 				m_fBattleCount = 5.f;
@@ -358,6 +359,14 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 
 
+}
+
+void CPlayer::ConufusionHoleInit()
+{
+	Engine::CGameObject* counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole"));
+	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
+	Engine::CGameObject* counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2"));
+	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
 }
 
 void CPlayer::MovePlayer(const _float& fTimeDelta)
@@ -421,6 +430,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
+				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				m_fBattleCount = 6.2f;
 
@@ -450,6 +460,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
+				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				m_fBattleCount = 6.2f;
 				m_fAniSpeed = 1.2f;
@@ -480,6 +491,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
+				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				m_fBattleCount = 6.2f;
 				m_fAniSpeed = 1.2f;
@@ -523,6 +535,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
+				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				/*delay = 1.2f;*/
 				m_fBattleCount = 6.2f;
@@ -559,6 +572,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
+				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				//delay = 1.2f;
 				m_fBattleCount = 6.2f;
@@ -939,6 +953,11 @@ void Client::CPlayer::Render_Object(void)
 }
 void CPlayer::OnCollision(Engine::CGameObject* target)
 {
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
+	{
+		Engine::CTransform* confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole",L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
+	}
 	if (!isInvincible)
 	{
 		_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
@@ -946,7 +965,6 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 		float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(hitDir * timeDelta*4.f)));
 		m_pStateCom->stat.hp -= 1.f;
-
 		//m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		if (isHit == false)
 		{

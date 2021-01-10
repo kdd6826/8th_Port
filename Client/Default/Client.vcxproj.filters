@@ -297,6 +297,9 @@
     <ClInclude Include="..\Code\ConfusionHole2.h">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Difusion.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -447,6 +450,9 @@
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ConfusionHole2.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Difusion.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClCompile>
   </ItemGroup>

@@ -100,6 +100,7 @@ private:
 	void		Attack(const _float& fTimeDelta);
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
+	void		ConufusionHoleInit();
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	//playerState m_state = playerState::STATE_IDLE;

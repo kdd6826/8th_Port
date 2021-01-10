@@ -181,6 +181,9 @@
     <ClInclude Include="..\Code\ConfusionHole.h" />
     <ClInclude Include="..\Code\ConfusionHole2.h" />
     <ClInclude Include="..\Code\DamageFont.h" />
+    <ClInclude Include="..\Code\Difusion.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Effect.h" />
@@ -255,6 +258,9 @@
     <ClCompile Include="..\Code\ConfusionHole.cpp" />
     <ClCompile Include="..\Code\ConfusionHole2.cpp" />
     <ClCompile Include="..\Code\DamageFont.cpp" />
+    <ClCompile Include="..\Code\Difusion.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />

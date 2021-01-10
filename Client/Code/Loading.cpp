@@ -266,13 +266,13 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"Titan.X"),
 	//	E_FAIL);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	Engine::RESOURCE_STAGE,
-	//	L"Mesh_Ingkells",
-	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
-	//	L"Ingkells.X"),
-	//	E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Ingkells",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
+		L"Ingkells.X"),
+		E_FAIL);
 
 
 	/*	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
