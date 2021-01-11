@@ -290,6 +290,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE && delay < 0.1f)
 	{
 		isInvincible = false;
+		m_pStateCom->perfectGuard = false;
 	}
 	if (isSkill == false)
 	{
@@ -364,6 +365,10 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 void CPlayer::ConufusionHoleInit()
 {
 	Engine::CGameObject* counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole"));
+	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
+	counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole_R"));
+	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
+	counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole_L"));
 	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
 	Engine::CGameObject* counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2"));
 	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
@@ -957,6 +962,11 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 	{
 		Engine::CTransform* confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole",L"Com_Transform", Engine::ID_DYNAMIC));
 		confusionHoleTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole_R", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.8f, 0.8f, 0.8f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole_L", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.8f, 0.8f, 0.8f);
+		m_pStateCom->perfectGuard = true;
 	}
 	if (!isInvincible)
 	{

@@ -153,6 +153,16 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole", pGameObject), E_FAIL);
 
+	pGameObject = CConfusionHole::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CConfusionHole*>(pGameObject)->dir = 1;
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_L", pGameObject), E_FAIL);
+
+	pGameObject = CConfusionHole::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CConfusionHole*>(pGameObject)->dir = 2;
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_R", pGameObject), E_FAIL);
+
 	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2", pGameObject), E_FAIL);

@@ -84,6 +84,7 @@ public:
 	STAT stat;
 	playerMesh playerMeshState=MESH_NORMAL;
 	playerState playerState = STATE_IDLE;
+	bool		perfectGuard = false;
 public:
 	static		CPlayerState*		Create(void);
 	virtual CComponent*		Clone(void);

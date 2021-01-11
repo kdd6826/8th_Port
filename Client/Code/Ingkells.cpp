@@ -526,7 +526,7 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 
 					}
 
-					if (reverseDelay > 4.32 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
+					if (reverseDelay > 4.02 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
 					{
 						isColl = true;
 					}
