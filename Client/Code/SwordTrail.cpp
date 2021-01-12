@@ -86,17 +86,17 @@ void CSwordTrail::Free(void)
 HRESULT Client::CSwordTrail::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(-100.f));
-	m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 5.f;
+	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(-100.f));
+	//m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 5.f;
 	//m_pTransformCom->Set_Pos(1.f, 0.f, 1.f);
 
 	return S_OK;
 }
 Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 {
-//	if (nullptr == m_pParentBoneMatrix)
-//{
 
+
+	m_pTransformCom->Get_WorldMatrix();
 	Engine::CDynamicMesh* pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
 	NULL_CHECK_RETURN(pPlayerMeshCom, 0);
 
@@ -105,41 +105,18 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 	m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
 
 
-	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransCom, 0);
-	m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
+	Engine::CTransform* pSwordTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Sword", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pSwordTransCom, 0);
+	m_pParentWorldMatrix = pSwordTransCom->Get_WorldMatrix();
 	//}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
+	m_pTransformCom->Set_WorldMatrix(m_pParentWorldMatrix);
 
-	//m_fFrame += 90.f * fTimeDelta;
-
-	//if (90.f < m_fFrame)
-	//	m_fFrame = 0.f;
-
-	//Engine::CGameObject::Update_Object(fTimeDelta);
-
-	//_vec3 vPos;
-	//m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
-	//CGameObject::Compute_ViewZ(&vPos);
-
-	//_matrix		matWorld, matView, matBill;
-
-	//D3DXMatrixIdentity(&matBill);
-	//m_pTransformCom->Get_WorldMatrix(&matWorld);
-	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-
-	//matBill._11 = matView._11;
-	//matBill._13 = matView._13;
-	//matBill._31 = matView._31;
-	//matBill._33 = matView._33;
-
-	//D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	//// 행렬의 곱셈순서를 주의할 것
-	//m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+	//m_pTransformCom->Set_WorldMatrix(&matWorld);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 

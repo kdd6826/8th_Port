@@ -25,7 +25,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-
+	_int	dir = 0;
 	_float count = 0.f;
 private:
 	HRESULT		Add_Component(void);

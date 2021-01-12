@@ -151,7 +151,11 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	if (delay <= 0)
 	{
 		m_fAniSpeed = 1.f;
-		if (isBattle == false)
+		if (isTired)
+		{
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_ING;
+		}
+		else if (isBattle == false)
 		{
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_IDLE;
 		}
@@ -160,7 +164,6 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			if (isManaBlade == true)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_MANA_IDLE;
-				m_fBattleCount = 5.f;
 			}
 			else if (isManaBlade == false)
 			{
@@ -168,7 +171,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 		}
 
-		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80)
+		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80&&!isTired)
 		{
 			isRunning = true;
 		}
@@ -196,16 +199,6 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				}
 				else if (isManaBlade == false)
 				{
-					_matrix a;
-					/*-0.986199, 0.095553, 0.135209, 0.000000, 
-						0.094849, 0.995424, -0.011656, 0.000000,
-						-0.135704, 0.001329, -0.990749, 0.000000,
-						10.277658, 34.647542, 0.000000, 1.000000*/
-					D3DXMatrixIdentity(&a);
-
-					D3DXMatrixRotationY(&a, D3DXToRadian(-90.f));
-					a;
-					int i = 0;
 					isManaBlade = true;
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MANABLADE;
 					m_fBattleCount = 5.f;
@@ -234,7 +227,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				temp = (temp / (m_fAniSpeed * 1.5f)) -0.1f;
 				delay = temp;
 				isInvincible = true;
-				m_fBattleCount = 5.f;
+				m_fBattleCount = delay + 5.f;
+				m_pStateCom->stat.stamina -= 10.f;
 			}
 		}
 	}
@@ -279,8 +273,10 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;
-			m_fBattleCount = 5.f;
+			m_fBattleCount = delay + 5.f;
 			isInvincible = true;
+
+			m_pStateCom->stat.stamina -= 10.f;
 		}
 		if (delay < 0.1f)
 		{
@@ -302,12 +298,14 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				ConufusionHoleInit();
  				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 				
-				m_fBattleCount = 5.f;
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
 				isInvincible = true;
+				m_fBattleCount = delay + 5.f;
+
+				m_pStateCom->stat.stamina -= 10.f;
 			}
 		}
 	}
@@ -400,7 +398,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
-		if (isRunning)
+		if (isTired)
+		{
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_RUN;
+			m_pStateCom->stat.moveSpeed = 2.f;
+		}
+		else if (isRunning)
 		{
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_FIELD_SPRINT;
 			m_pStateCom->stat.moveSpeed = 5.f;
@@ -411,7 +414,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_FIELD_RUN;
 			m_pStateCom->stat.moveSpeed = 3.f;
 		}
-
+		
 		//m_pTransformCom->Move_Pos(&(vDir * m_pStateCom->stat.moveSpeed * fTimeDelta));
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
@@ -437,13 +440,14 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
-				m_fBattleCount = 6.2f;
 
 				//delay = 1.2f;
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				m_fBattleCount = delay + 5.f;
+				m_pStateCom->stat.stamina -= 11.f;
 			}
 		}
 
@@ -467,12 +471,14 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
-				m_fBattleCount = 6.2f;
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				m_fBattleCount = delay + 5.f;
+
+				m_pStateCom->stat.stamina -= 11.f;
 			}
 		}
 
@@ -482,7 +488,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
-		if (isRunning)
+		if (isTired)
+		{
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_RUN;
+			m_pStateCom->stat.moveSpeed = 2.f;
+		}
+		else if (isRunning)
 		{
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_FIELD_SPRINT;
 			m_pStateCom->stat.moveSpeed = 5.f;
@@ -498,12 +509,14 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
-				m_fBattleCount = 6.2f;
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+
+				m_fBattleCount = delay + 5.f;
+				m_pStateCom->stat.stamina -= 11.f;
 			}
 		}
 
@@ -526,7 +539,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 	else if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 	{
-		if (isRunning)
+		if (isTired)
+		{
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_RUN;
+			m_pStateCom->stat.moveSpeed = 2.f;
+		}
+		else if (isRunning)
 		{
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_FIELD_SPRINT;
 			m_pStateCom->stat.moveSpeed = 5.f;
@@ -543,11 +561,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				/*delay = 1.2f;*/
-				m_fBattleCount = 6.2f;
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				m_fBattleCount = delay + 5.f;
+				m_pStateCom->stat.stamina -= 11.f;
 			}
 		}
 
@@ -563,7 +582,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	}
 	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
-		if (isRunning)
+		if (isTired)
+		{
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_RUN;
+			m_pStateCom->stat.moveSpeed = 2.f;
+		}
+		else if (isRunning)
 		{
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_FIELD_SPRINT;
 			m_pStateCom->stat.moveSpeed = 5.f;
@@ -580,11 +604,12 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				//delay = 1.2f;
-				m_fBattleCount = 6.2f;
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				m_fBattleCount =delay + 5.f;
+				m_pStateCom->stat.stamina -= 11.f;
 			}
 		}
 		vDir = (vCamPos - vMyPos);
@@ -603,6 +628,8 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 void CPlayer::Attack(const _float& fTimeDelta)
 {
+	if (isTired)
+		return;
 	//m_pStateCom->stat.sp = 625;
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
@@ -611,7 +638,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 		{
 
 			m_fAniSpeed = 1.3f;
-			m_fBattleCount = 5.f;
+	
 			if (delay <= 1.2f)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
@@ -622,6 +649,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					m_pStateCom->stat.stamina -=8.f;
 				}
 			}
 			if (delay <= 0.9f)
@@ -634,6 +662,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					m_pStateCom->stat.stamina -= 7.f;
 				}
 			}
 			if (delay <= 0.8f)
@@ -679,6 +708,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 
 			}
+			m_fBattleCount = delay + 5.f;
 		}
 #pragma endregion
 #pragma region ManaBladeAttack
@@ -695,6 +725,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					m_pStateCom->stat.stamina -= 7.f;
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT4 && delay <= 0.95f)
 				{
@@ -704,6 +735,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					m_pStateCom->stat.stamina -= 7.f;
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT3 && delay <= 0.81f)
 				{
@@ -714,6 +746,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					m_pStateCom->stat.stamina -= 7.f;
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT2 && delay <= 0.63f)
 				{
@@ -723,6 +756,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					m_pStateCom->stat.stamina -= 7.f;
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1&&delay<=0.78f)
 				{
@@ -732,6 +766,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					m_pStateCom->stat.stamina -= 7.f;
 				}
 				else
 				{
@@ -743,6 +778,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
+						m_pStateCom->stat.stamina -= 7.f;
 					}
 					else if (m_pStateCom->playerState != Engine::CPlayerState::STATE_MB_ATT1 &&
 						m_pStateCom->playerState != Engine::CPlayerState::STATE_MB_ATT2 &&
@@ -758,10 +794,11 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
+						m_pStateCom->stat.stamina -= 7.f;
 					}
 				}
 
-				m_fBattleCount = 5.f;
+				m_fBattleCount = delay + 5.f;
 			}
 		}
 #pragma endregion
@@ -775,12 +812,12 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DOOMSAYER;
 				//delay = 3.7f;
-				m_fBattleCount = 8.8f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
 				isInvincible = true;
 				m_pStateCom->stat.sp -= 100.f;
+				m_fBattleCount = delay + 5.f;
 			}
 		}
 	}
@@ -792,12 +829,12 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_RUINBLADE;
 				//delay = 5.4f;//4.f
-				m_fBattleCount = 13.1f;
 				m_fAniSpeed = 1.5f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
 				m_pStateCom->stat.sp -= 250.f;
+				m_fBattleCount = delay + 5.f;
 			}
 		}
 	}
@@ -810,11 +847,11 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_MANA_IMAGE;
 				//OK
 				//delay = 1.f;
-				m_fBattleCount = 6.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
 				m_pStateCom->stat.sp -= 150;
+				m_fBattleCount = delay + 5.f;
 			}
 		}
 	}
@@ -827,12 +864,12 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_LORDOFMANA;
 
 				//delay = 14.2f;
-				m_fBattleCount = 19.f;
 				isSkill = true;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
 				m_pStateCom->stat.sp -= 750;
+				m_fBattleCount = delay + 5.f;
 			}
 		}
 	}
@@ -844,11 +881,11 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1;
 			//OK
 			//delay = 8.1f;
-			m_fBattleCount = 13.1f;
 			isSkill = true;
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;
+			m_fBattleCount = delay + 5.f;
 		}
 	}
 	if (Engine::Get_DIKeyState(DIK_7) & 0x80)
@@ -859,11 +896,11 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS2;
 			//OK
 			//delay = 8.1f;
-			m_fBattleCount = 13.1f;
 			isSkill = true;
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;
+			m_fBattleCount = delay + 5.f;
 		}
 	}
 }
@@ -897,10 +934,19 @@ HRESULT Client::CPlayer::Ready_Object(void)
 }
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
+	CUnit::Update_Object(fTimeDelta);
 	if (delay > 0)
 	{
 		delay -= fTimeDelta;
 	}
+	if (m_fBattleCount < 5.f)
+	{
+		if (m_pStateCom->stat.stamina > m_pStateCom->stat.maxStamina)
+			m_pStateCom->stat.stamina = m_pStateCom->stat.maxStamina;
+		else if(m_pStateCom->stat.stamina<m_pStateCom->stat.maxStamina)
+		m_pStateCom->stat.stamina += 10.f * fTimeDelta;
+	}
+
 	//SetUp_OnTerrain();
 	if(!isHit)
 	Key_Input(fTimeDelta);
@@ -912,7 +958,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 			isHit = false;
 		}
 	}
-	Engine::CGameObject::Update_Object(fTimeDelta);	
+	//Engine::CGameObject::Update_Object(fTimeDelta);	
 	_float fCamAngle;
 	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 	fCamAngle = D3DXToDegree(pCamera->Get_Angle());
@@ -925,10 +971,23 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 	//
+	if (m_pStateCom->stat.stamina < 0)
+	{
+		m_pStateCom->stat.stamina = 0;
+		m_pStateCom->playerState= Engine::CPlayerState::STATE_TIRED_START;
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+		delay = temp;
+		isTired = true;
+	}
+	else if (m_pStateCom->stat.stamina > 30)
+	{
+		isTired = false;
+	}
+
 	m_pMeshCom->Set_AnimationSet(m_pStateCom->playerState);
 	//
 	//m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
-	CUnit::Update_Object(fTimeDelta);
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
 	return 0;
@@ -966,6 +1025,13 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 		confusionHoleTransformCom->Set_Scale(0.8f, 0.8f, 0.8f);
 		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole_L", L"Com_Transform", Engine::ID_DYNAMIC));
 		confusionHoleTransformCom->Set_Scale(0.8f, 0.8f, 0.8f);
+
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole2", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole2_R", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.6f, 0.6f, 0.6f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole2_L", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.6f, 0.6f, 0.6f);
 		m_pStateCom->perfectGuard = true;
 	}
 	if (!isInvincible)
@@ -985,6 +1051,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 			isInvincible = true;
 			isHit = true;
 			isSkill = true;
+			//isTired = false;
 		}
 	}
 }

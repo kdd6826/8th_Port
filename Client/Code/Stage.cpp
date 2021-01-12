@@ -167,6 +167,21 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2", pGameObject), E_FAIL);
 
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_L", pGameObject), E_FAIL);
+	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 1;
+
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_R", pGameObject), E_FAIL);
+	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 2;
+
+	pGameObject = CRuinBlade::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RuinBlade", pGameObject), E_FAIL);
+	
+
 	/*pGameObject = CParticle::Create(m_pGraphicDev);*/
 
 	//pGameObject = CDog::Create(m_pGraphicDev);
@@ -206,9 +221,9 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	//for (_uint i = 0; i < 100; ++i)
 	//{
-		//pGameObject = CSwordTrail::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SwordTrail", pGameObject), E_FAIL);
+		pGameObject = CSwordTrail::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SwordTrail", pGameObject), E_FAIL);
 
 	//}
 

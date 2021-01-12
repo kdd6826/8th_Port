@@ -127,6 +127,9 @@
     <Filter Include="02. GameObject\01. Stage\06. Effect\Player">
       <UniqueIdentifier>{54a48bcb-e186-4a7e-8e1b-5c24c8096de6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\06. Effect\CollisionEffect">
+      <UniqueIdentifier>{5e393a70-8b1f-4907-8d39-ab2b11b966df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -297,8 +300,11 @@
     <ClInclude Include="..\Code\ConfusionHole2.h">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Difusion.h">
+    <ClInclude Include="..\Code\RuinBlade.h">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CollisionEffect.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\CollisionEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,8 +458,11 @@
     <ClCompile Include="..\Code\ConfusionHole2.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Difusion.cpp">
+    <ClCompile Include="..\Code\RuinBlade.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CollisionEffect.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\CollisionEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

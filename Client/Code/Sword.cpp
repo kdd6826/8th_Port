@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Sword.h"
 #include "Export_Function.h"
-
+#include "DynamicCamera.h"
 CSword::CSword(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -48,11 +48,11 @@ HRESULT Client::CSword::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
 
-	//// Collider 
-	//pComponent = m_pColliderCom = Engine::CColliderSphere::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
-
+	// Collider 
+	pComponent = m_pColliderCom = Engine::CCollider::Create(m_pGraphicDev, m_pMeshCom->Get_VtxPos(), m_pMeshCom->Get_NumVtx(), m_pMeshCom->Get_Stride());
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
+	
 	//// Shader
 	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -92,7 +92,7 @@ HRESULT Client::CSword::Ready_Object(void)
 }
 Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 {
-
+	//_vec3 a = *m_pColliderCom->Get_Min();
 	//if (nullptr == m_pParentBoneMatrix)
 	//{
 
@@ -167,7 +167,9 @@ HRESULT CSword::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+	*/
+	
+	/*
 	pEffect->SetVector("g_vCamPos", &_vec4(pCamera->Get_Eye(), 0.f));
 	pEffect->SetVector("g_vColorR", &_vec4(1.f,1.f,1.f,1.f));
 	pEffect->SetVector("g_vColorG", &_vec4(1.f,1.f,1.f,1.f));

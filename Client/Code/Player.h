@@ -113,6 +113,7 @@ private:
 	bool		isHit = false;
 	bool		isRunning = false;
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
+	bool		isTired = false;
 private:
 	vector<CUnit*>				hitMonsters;
 	_vec3						m_vDir;
