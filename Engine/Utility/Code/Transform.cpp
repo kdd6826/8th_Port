@@ -183,6 +183,14 @@ void CTransform::Set_Rotation(ROTATION eType, const _float& fAngle)
 	*(((_float*)&m_vAngle) + eType) = fAngle;
 }
 
+void CTransform::Set_AnimRotation(ROTATION eType, const _float& fAngle)
+{
+	if(*(((_float*)&m_vAngle) + eType )> fAngle)
+	*(((_float*)&m_vAngle) + eType) -= fAngle;
+	else
+	*(((_float*)&m_vAngle) + eType) += fAngle;
+}
+
 _vec3 CTransform::Get_Rotation()
 {
 	return m_vAngle;

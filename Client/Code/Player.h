@@ -114,6 +114,7 @@ private:
 	bool		isRunning = false;
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 	bool		isTired = false;
+	bool		isShake = false;
 private:
 	vector<CUnit*>				hitMonsters;
 	_vec3						m_vDir;

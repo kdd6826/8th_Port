@@ -28,6 +28,7 @@ public:
 	void			Move_Pos(const float& fX, const float& fY, const float& fZ);
 	void			Rotation(ROTATION eType, const _float& fAngle);
 	void			Set_Rotation(ROTATION eType, const _float& fAngle);
+	void			Set_AnimRotation(ROTATION eType, const _float& fAngle);
 	_vec3			Get_Rotation();
 	void			Set_WorldMatrix(const _matrix* pMatrix);
 	void			Set_ParentMatrix(const _matrix* pParent);

@@ -24,7 +24,8 @@ HRESULT Client::CDynamicCamera::Ready_Object(const _vec3* pEye, const _vec3* pAt
 	m_fFar = fFar;
 	m_vOffset = {0.f,1.f,0.f};
 	m_fAngle = 0.f;
-	m_fRadius = 1.85f;
+	m_fRadius = 2.05f;
+	originRadian = m_fRadius;
 	FAILED_CHECK_RETURN(Engine::CCamera::Ready_Object(), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -65,6 +66,9 @@ void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 	{
 		m_fRadius -= 5.f * Engine::Get_TimeDelta(L"Timer_Immediate");
 	}
+
+	if (Engine::Get_DIKeyState(DIK_7) & 0x80)
+		Shake();
 
 
 	_matrix			matCamWorld;
@@ -172,6 +176,7 @@ void Client::CDynamicCamera::Mouse_Move(void)
 		if (eyeOffSet > -0.5f)
 		eyeOffSet += Sensitivity * D3DXToRadian(ptCenter.y - ptMouse.y) * Engine::Get_TimeDelta(L"Timer_Immediate");
 	}
+
 	//Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 	//_vec3 playerLook, playerPos, playerScale, dst, playerDir, dir;
 
@@ -228,7 +233,8 @@ void CDynamicCamera::Free(void)
 Client::_int Client::CDynamicCamera::Update_Object(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-
+	UpdateShake();
+	UpdateZoomIn();
 	if (true == m_bFix)
 	{
 		Mouse_Move();
@@ -238,4 +244,111 @@ Client::_int Client::CDynamicCamera::Update_Object(const _float& fTimeDelta)
 	_int iExit = Engine::CCamera::Update_Object(fTimeDelta);
 	
 	return iExit;
+}
+
+void CDynamicCamera::UpdateShake()
+{
+	if (isShake)
+	{
+		float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+		shakeDuration -= timeDelta;
+
+		if (0 >= shakeDuration)
+		{
+			isShake = false;
+			Set_Eye(originCamPos);
+			//m_pTransformCom->Set_Pos(&originCamPos);
+			shakeDuration = 0.f;
+			return;
+		}
+		
+		int iMin = (int)(-1 * 100);
+		int iMax = (int)(1 * 100);
+		int range = iMax - iMin + 1;
+		int random = rand() % range;
+		float fRandom = random / 100.f + -1;
+
+		float ranX = fRandom;
+		float ranY = fRandom;
+		float ranZ = fRandom;
+
+		_vec3 randVec = { ranX, ranY, ranZ };
+		_vec3 myPos =Get_Eye();
+		
+		if (nullptr == this)
+			Set_Eye((originCamPos + (randVec * shakeMagnitude)));
+		else
+			Set_Eye((myPos + (randVec * shakeMagnitude)));
+	}
+
+}
+
+void CDynamicCamera::UpdateZoomIn()
+{
+	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	if (isZoom)
+	{
+		zoomDuration -= timeDelta;
+
+		if (0 >= zoomDuration)
+		{
+			isZoom = false;
+			//m_fRadius = originRadian;
+			//m_pTransformCom->Set_Pos(&originCamPos);
+			zoomDuration = 0.f;
+			return;
+		}
+
+		int iMin = (int)(-1 * 100);
+		int iMax = (int)(1 * 100);
+		int range = iMax - iMin + 1;
+		int random = rand() % range;
+		float fRandom = random / 100.f + -1;
+
+		float ranX = fRandom;
+		float ranY = fRandom;
+		float ranZ = fRandom;
+
+		_vec3 randVec = { ranX, ranY, ranZ };
+		_vec3 myPos = Get_Eye();
+
+		if (nullptr == this)
+		{
+			if (originRadian - zoomMagnitude < m_fRadius)
+				m_fRadius -= (zoomMagnitude)*timeDelta*5.f;
+		}
+		else
+		{
+			if (originRadian - zoomMagnitude < m_fRadius)
+				m_fRadius -= (zoomMagnitude)*timeDelta * 5.f;
+		}
+	}
+	else if (!isZoom)
+	{
+		if (originRadian > m_fRadius)
+		{
+			m_fRadius += 2.f * timeDelta;
+		}
+		else
+		{
+			m_fRadius = originRadian;
+		}
+	}
+}
+
+void CDynamicCamera::Shake(float _duration, float _magnitude)
+{
+	isShake = true;
+	shakeDuration = _duration;
+	shakeMagnitude = _magnitude;
+	originCamPos = Get_Eye();
+	
+}
+
+void CDynamicCamera::ZoomIn(float _duration, float _magnitude)
+{
+	isZoom = true;
+	zoomDuration = _duration;
+	zoomMagnitude = _magnitude;
+	//originRadian = m_fRadius;
 }

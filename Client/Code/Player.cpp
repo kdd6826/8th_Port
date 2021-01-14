@@ -87,7 +87,7 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	//m_pStateCom->stat.hp = 6.f;
+	m_pStateCom->stat.sp = 1250.f;
 	
 	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
 	{
@@ -185,7 +185,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 			if (Engine::Get_DIKeyState(DIK_TAB) & 0x80)
 			{
-
+				
 				if (isManaBlade == true)
 				{
 					isManaBlade = false;
@@ -324,13 +324,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1)
 		{
 			if (delay<3.f&& m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
-			{
-				
-				/*Engine::CGameObject* pSword = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"Sword"));
-				if (pSword == nullptr)
-					return;
-				dynamic_cast<CSword*>(pSword)->Free();*/
-				
+			{				
 				m_pMeshCom->Free();
 				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
 				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT;
@@ -347,6 +341,15 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 		}
 
+		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_RUINBLADE)
+		{
+			if (delay < 2.8f&&!isShake)
+			{
+				CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+				pCamera->Shake(0.3f);
+				isShake = true;
+			}
+		}
 		
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
@@ -388,8 +391,9 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
-
-	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+	
+	
 	vCamPos = pCamera->Get_Eye();
 	fCamAngle = pCamera->Get_Angle();
 	
@@ -533,7 +537,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 
 			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 
-			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(135));
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(135.f));
 		}
 	}
 
@@ -577,8 +581,8 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		D3DXVec3Normalize(&vDir, &vDir);
 
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
-
-		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90));
+		
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90.f));
 	}
 	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
@@ -645,6 +649,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT5;
 					//delay = 1.8f;
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(1.f, 0.3f);
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
@@ -658,6 +664,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT4;
 					//delay = 1.9f;
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(2.f, 0.3f);
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
@@ -671,6 +679,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT3;
 					//delay = 1.2f;
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(0.5f, 0.1f);
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
@@ -680,6 +690,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT2;
 					//delay = 1.1f;
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(0.5f, 0.1f);
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
@@ -691,6 +703,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					{
 						m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT1;
 						//delay = 1.2f;
+						CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+						pCamera->ZoomIn(0.5f, 0.1f);
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 						delay = temp;
@@ -703,6 +717,9 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 						delay = temp;
+						//CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+						//pCamera->ZoomIn(0.5f,0.1f);
+						//pCamera->Shake();
 						CColliderMgr::GetInstance()->hitList.clear();
 					}
 				}
@@ -835,6 +852,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				delay = temp;
 				m_pStateCom->stat.sp -= 250.f;
 				m_fBattleCount = delay + 5.f;
+				isShake = false;
+				isSkill = true;
 			}
 		}
 	}

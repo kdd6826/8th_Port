@@ -14,7 +14,9 @@ protected:
 public:
 	virtual HRESULT			Ready_Object(void);
 	virtual _int			Update_Object(const _float& fTimeDelta);
+	void Set_Eye(_vec3 vec) { m_vEye = vec; }
 	_vec3 Get_Eye() { return m_vEye; }
+	_vec3 Get_At() { return m_vAt; }
 	_float Get_Angle() { return m_fAngle; }
 	_float Get_Radius() { return m_fRadius; }
 

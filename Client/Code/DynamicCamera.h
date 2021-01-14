@@ -11,6 +11,8 @@ END
 BEGIN(Client)
 class CDynamicCamera : public Engine::CCamera
 {
+public:
+
 private:
 	explicit CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CDynamicCamera(void);
@@ -20,7 +22,11 @@ public:
 						 const _float& fFovY, const _float& fAspect, const _float& fNear,	const _float& fFar );
 
 	virtual _int Update_Object(const _float& fTimeDelta) override;
-
+	void UpdateShake();
+	void UpdateZoomIn();
+	void Shake(float _duration = 0.05f, float _magnitude = 0.03f);
+	//시간, 확대치
+	void ZoomIn(float _duration = 0.05f, float _magnitude = 0.03f);
 private:
 
 	HRESULT		Add_Component(void);
@@ -47,6 +53,17 @@ private:
 	virtual void Free(void) override;
 	bool isSlowChase = false;
 	float slowTime = 0.f;
+	//Shake
+	bool isShake = false;
+	float shakeDuration;
+	float shakeMagnitude;
+	_vec3 originCamPos;
+
+	//Zoom
+	bool isZoom = false;
+	float zoomDuration;
+	float zoomMagnitude;
+	float originRadian;
 };
 
 END

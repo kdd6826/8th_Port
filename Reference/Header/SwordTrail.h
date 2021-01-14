@@ -19,6 +19,8 @@ public:
 	static CSwordTrail*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent*	Clone(void);
 	virtual void Free(void);
+
+
 };
 END
 

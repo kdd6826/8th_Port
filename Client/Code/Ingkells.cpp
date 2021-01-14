@@ -201,7 +201,30 @@ void CIngkells::Move(const _float& fTimeDelta)
 			return;
 		}
 	}
+	else if (disPlayer < 1.5f)
+	{
+		int i = rand() % 2;
+		switch (i)
+		{
+		case 0:
+			m_state = IngkellsState::STATE_SWORDWAVE;
+			m_fAniSpeed = 2.5f;
+			break;
+		case 1:
+			m_state = IngkellsState::STATE_DOUBLESMASH;
+			m_fAniSpeed = 2.f;
+			break;
 
+		default:
+			break;
+		}
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+		temp = (temp / (m_fAniSpeed)) - 0.1f;
+		delay = temp;
+		isAnimating = true;
+		reverseDelay = 0.f;
+		return;
+	}
 	//몬스터의 정면
 	else if (angle > 0)
 	{
@@ -209,14 +232,14 @@ void CIngkells::Move(const _float& fTimeDelta)
 		//오른쪽이다
 		if (angle2 > 0)
 		{
-			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta * spinSpeed));
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(130.f * fTimeDelta * spinSpeed));
 			m_state = IngkellsState::STATE_RUN;
 		}
 
 		//왼쪽이다.
 		else
 		{
-			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-130.f * fTimeDelta * spinSpeed));
 			m_state = IngkellsState::STATE_RUN;
 		}
 
@@ -228,13 +251,13 @@ void CIngkells::Move(const _float& fTimeDelta)
 		if (angle2 > 0)
 		{
 			m_state = IngkellsState::STATE_RUN;
-			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta * spinSpeed));
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(130.f * fTimeDelta * spinSpeed));
 		}
 		//왼쪽이다.
 		else
 		{
 			m_state = IngkellsState::STATE_RUN;
-			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
+			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-130.f * fTimeDelta * spinSpeed));
 		}
 
 	}
@@ -323,7 +346,7 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 				//몬스터의 정면
 
 				//발리스타공격
-				if (STATE_TAUNT)
+				if (m_state == STATE_TAUNT)
 				{
 					_vec3	vPos, vDir, vRight;
 					m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -425,11 +448,11 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 					//{
 					//	int i = 0;
 					//}
-					if (reverseDelay > 1.2 / m_fAniSpeed && reverseDelay < 1.4 / m_fAniSpeed)
+					if (reverseDelay > 1.2 / m_fAniSpeed && reverseDelay < 1.35 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-90.f * fTimeDelta * spinSpeed));
 					}
-					if (reverseDelay > 1.7 / m_fAniSpeed && reverseDelay < 1.9 / m_fAniSpeed)
+					if (reverseDelay > 1.7 / m_fAniSpeed && reverseDelay < 1.85 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta * spinSpeed));
 					}
