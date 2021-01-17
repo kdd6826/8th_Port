@@ -23,7 +23,7 @@ HRESULT Client::CTerrain::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain2"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
@@ -142,14 +142,14 @@ HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture1", 1);
 	m_pFilterCom->Set_Texture(pEffect, "g_FilterTexture");
 
-	m_pAuraCom->Set_Texture(pEffect, "g_AuraTexture");
+	//m_pAuraCom->Set_Texture(pEffect, "g_AuraTexture");
 
 	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
 
 	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
 
 	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
-	pEffect->SetVector("g_LightSpecular", (_vec4*)&pLightInfo->Specular);
+	//pEffect->SetVector("g_LightSpecular", (_vec4*)&pLightInfo->Specular);
 	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
 		
 	D3DMATERIAL9			tMtrlInfo;
@@ -159,10 +159,10 @@ HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tMtrlInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	tMtrlInfo.Power = 20.f;
+	tMtrlInfo.Power = 20.f;//20.f;
 	
 	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
-	pEffect->SetVector("g_MtrlSpecular", (_vec4*)&tMtrlInfo.Specular);
+	//pEffect->SetVector("g_MtrlSpecular", (_vec4*)&tMtrlInfo.Specular);
 	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
 
 	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);

@@ -98,6 +98,7 @@ private:
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 	void		MovePlayer(const _float& fTimeDelta);
 	void		Attack(const _float& fTimeDelta);
+	void		AttackOnRotation();
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
 	void		ConufusionHoleInit();

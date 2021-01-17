@@ -41,7 +41,7 @@ protected:
 
 
 	vector<CSphereCollider*>	m_VecSphereCollider;
-
+	_float						reverseDelay = 0.f;
 	_bool isInvincible = false;
 	_bool isAnimating = false;
 	_bool isDie=false;

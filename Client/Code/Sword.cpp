@@ -92,7 +92,7 @@ HRESULT Client::CSword::Ready_Object(void)
 }
 Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 {
-	//_vec3 a = *m_pColliderCom->Get_Min();
+	_vec3 a = *m_pColliderCom->Get_Min();
 	//if (nullptr == m_pParentBoneMatrix)
 	//{
 

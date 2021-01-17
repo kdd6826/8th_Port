@@ -63,6 +63,7 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 											D3DFMT_A32B32G32R32F,
 											D3DXCOLOR(1.f, 1.f, 1.f, 1.f)),
 											E_FAIL);
+
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Depth", 0.f, 400.f, 200.f, 200.f), E_FAIL);
 
 
@@ -71,7 +72,7 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Deferred", L"Target_Depth"), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_LightAcc", L"Target_Shade"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_LightAcc", L"Target_Specular"), E_FAIL);
+	//FAILED_CHECK_RETURN(Ready_MRT(L"MRT_LightAcc", L"Target_Specular"), E_FAIL);
 
 
 	CShader*		pShader = nullptr;
@@ -107,6 +108,11 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Mesh", pShader), E_FAIL);
 
+	// Terrain
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Terrain_Shader.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain2", pShader), E_FAIL);
+
 	// Shade
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Shade.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
@@ -117,10 +123,10 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	//NULL_CHECK_RETURN(pShader, E_FAIL);
 	//FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Player", pShader), E_FAIL);
 
-		// Shade
-	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
-	NULL_CHECK_RETURN(pShader, E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain2", pShader), E_FAIL);
+	//	// Shade
+	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
+	//NULL_CHECK_RETURN(pShader, E_FAIL);
+	//FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Terrain2", pShader), E_FAIL);
 
 
 	// Blend

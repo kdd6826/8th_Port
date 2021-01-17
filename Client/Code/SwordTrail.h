@@ -6,6 +6,7 @@
 
 BEGIN(Engine)
 
+class CSwordTrail;
 class CRcTex;
 class CTexture;
 class CRenderer;

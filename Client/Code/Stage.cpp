@@ -3,6 +3,8 @@
 #include "Export_Function.h"
 #include "Loading.h"
 #include "Stage2.h"
+
+//#include "SoundManager.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -16,7 +18,7 @@ CStage::~CStage(void)
 
 HRESULT CStage::Ready_Scene(void)
 {
-	
+	//SoundManager::PlayBGM(L"FireStage.wav");
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_UI_Layer(L"UI"), E_FAIL);
@@ -149,6 +151,20 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
 
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2", pGameObject), E_FAIL);
+
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_L", pGameObject), E_FAIL);
+	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 1;
+
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_R", pGameObject), E_FAIL);
+	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 2;
+
 	pGameObject = CConfusionHole::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole", pGameObject), E_FAIL);
@@ -163,19 +179,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	dynamic_cast<CConfusionHole*>(pGameObject)->dir = 2;
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_R", pGameObject), E_FAIL);
 
-	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2", pGameObject), E_FAIL);
 
-	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_L", pGameObject), E_FAIL);
-	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 1;
-
-	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_R", pGameObject), E_FAIL);
-	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 2;
 
 	pGameObject = CRuinBlade::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -192,13 +196,13 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	////NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	////FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 
-	////pGameObject = CTitan::Create(m_pGraphicDev);
-	////NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	////FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
-
-	pGameObject = CIngkells::Create(m_pGraphicDev);
+	pGameObject = CTitan::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
+
+	//pGameObject = CIngkells::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
 
 	/*for (_uint i = 0; i < 50; ++i)
 	{

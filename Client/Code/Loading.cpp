@@ -113,9 +113,16 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Texture_Terrain",
 		Engine::TEX_NORMAL,
-		L"../Bin/Resource/Texture/Terrain/Terrain_%d_n.tga", 8),
+		L"../Bin/Resource/Texture/Terrain/Terrain_%d.png", 8),
 		E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_Terrain2",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Texture/Terrain/ground_%d.tga", 4),
+
+		E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Texture_Sword2Normal",
@@ -127,13 +134,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"Texture_Sword2",
 		Engine::TEX_NORMAL,
 		L"../Bin/Resource/Mesh/StaticMesh/Sword2/longblade_blackhammer.tga"),
-		E_FAIL);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Texture_Sword2Noraml",
-		Engine::TEX_NORMAL,
-		L"../Bin/Resource/Texture/Terrain/Terrain_%d_n.tga", 8),
 		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
@@ -160,7 +160,7 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Texture_SkyBox",
 		Engine::TEX_CUBE,
-		L"../Bin/Resource/Texture/SkyBox/SkyBox%d.dds", 1),
+		L"../Bin/Resource/Texture/SkyBox/SkyBox%d.dds",2),
 		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
@@ -259,21 +259,21 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"Dog.X"),
 	//	E_FAIL);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	Engine::RESOURCE_STAGE,
-	//	L"Mesh_Titan",
-	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Mesh/DynamicMesh/Titan/",
-	//	L"Titan.X"),
-	//	E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
-		L"Mesh_Ingkells",
+		L"Mesh_Titan",
 		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
-		L"Ingkells.X"),
+		L"../Bin/Resource/Mesh/DynamicMesh/Titan/",
+		L"Titan.X"),
 		E_FAIL);
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Ingkells",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
+	//	L"Ingkells.X"),
+	//	E_FAIL);
 
 
 	/*	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

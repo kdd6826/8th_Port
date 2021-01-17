@@ -95,28 +95,27 @@ HRESULT Client::CSwordTrail::Ready_Object(void)
 Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 {
 
-
-	m_pTransformCom->Get_WorldMatrix();
-	Engine::CDynamicMesh* pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
-	NULL_CHECK_RETURN(pPlayerMeshCom, 0);
-
-	const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger22"); //X -100
-	//const Engine::D3DXFRAME_DERIVED* pFrame = pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Hand"); //X -100
-	m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
-
-
-	Engine::CTransform* pSwordTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Sword", L"Com_Transform", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pSwordTransCom, 0);
-	m_pParentWorldMatrix = pSwordTransCom->Get_WorldMatrix();
-	//}
-
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	m_pTransformCom->Set_WorldMatrix(m_pParentWorldMatrix);
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	CGameObject::Compute_ViewZ(&vPos);
 
+	_matrix		matWorld, matView, matBill;
 
-	//// 행렬의 곱셈순서를 주의할 것
-	//m_pTransformCom->Set_WorldMatrix(&matWorld);
+	D3DXMatrixIdentity(&matBill);
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+
+	D3DXMatrixInverse(&matBill, NULL, &matBill);
+
+	// 행렬의 곱셈순서를 주의할 것
+	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
@@ -124,10 +123,6 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 }
 void Client::CSwordTrail::Render_Object(void)
 {
-
-
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
-
 	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
 	Engine::Safe_AddRef(pEffect);
@@ -135,7 +130,7 @@ void Client::CSwordTrail::Render_Object(void)
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
 	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(1);
+	pEffect->BeginPass(0);
 
 	m_pBufferCom->Render_Buffer();
 
@@ -143,4 +138,23 @@ void Client::CSwordTrail::Render_Object(void)
 	pEffect->End();
 
 	Engine::Safe_Release(pEffect);
+
+
+	//m_pTransformCom->Set_Transform(m_pGraphicDev);
+
+	//LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//NULL_CHECK(pEffect);
+	//Engine::Safe_AddRef(pEffect);
+
+	//FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	//pEffect->Begin(NULL, 0);
+	//pEffect->BeginPass(1);
+
+	//m_pBufferCom->Render_Buffer();
+
+	//pEffect->EndPass();
+	//pEffect->End();
+
+	//Engine::Safe_Release(pEffect);
 }

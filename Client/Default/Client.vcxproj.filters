@@ -91,9 +91,6 @@
     <Filter Include="02. GameObject\01. Stage\07. UI\02. SpBar">
       <UniqueIdentifier>{01889ca6-6062-4944-83d7-762d213cef18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\98.SphereCollider">
-      <UniqueIdentifier>{e767e0ef-cd77-4409-aa54-ace134be7814}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Stage\01. Unit">
       <UniqueIdentifier>{86a4aed0-b479-4ec6-8ca4-b1808b61a7f6}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,12 @@
     </Filter>
     <Filter Include="02. GameObject\01. Stage\06. Effect\CollisionEffect">
       <UniqueIdentifier>{5e393a70-8b1f-4907-8d39-ab2b11b966df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\98. SphereCollider">
+      <UniqueIdentifier>{e767e0ef-cd77-4409-aa54-ace134be7814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\97. SoundManager">
+      <UniqueIdentifier>{4f1b1727-b019-49bf-89b7-96e2ff3651d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -226,10 +229,10 @@
       <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SphereCollider.h">
-      <Filter>02. GameObject\01. Stage\98.SphereCollider</Filter>
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\ColliderMgr.h">
-      <Filter>02. GameObject\01. Stage\98.SphereCollider</Filter>
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\TestMonster.h">
       <Filter>02. GameObject\00. Logo\02. TestMonster</Filter>
@@ -305,6 +308,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\CollisionEffect.h">
       <Filter>02. GameObject\01. Stage\06. Effect\CollisionEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoundManager.h">
+      <Filter>02. GameObject\97. SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -384,10 +390,10 @@
       <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SphereCollider.cpp">
-      <Filter>02. GameObject\01. Stage\98.SphereCollider</Filter>
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ColliderMgr.cpp">
-      <Filter>02. GameObject\01. Stage\98.SphereCollider</Filter>
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestMonster.cpp">
       <Filter>02. GameObject\00. Logo\02. TestMonster</Filter>
@@ -463,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CollisionEffect.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect\CollisionEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundManager.cpp">
+      <Filter>02. GameObject\97. SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

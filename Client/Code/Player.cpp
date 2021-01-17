@@ -241,8 +241,73 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		else if (m_pStateCom->playerState != Engine::CPlayerState::STATE_CONFUSIONHOLE && m_pStateCom->playerState != Engine::CPlayerState::STATE_DIFUSION)
 			Attack(fTimeDelta);
 	}
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT1)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed*30)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT2)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 60)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT3)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.7 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta* m_pStateCom->stat.moveSpeed * 30)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT5)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+		}
+	}
 	//대쉬상태
-	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay > 0.75f)
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay > 0.75f)
 	{
 		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 		_float fCamAngle;
@@ -261,7 +326,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			isInvincible = false;
 		}
 	}
-	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay <= 0.8f)
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay <= 0.8f)
 	{
 		//대쉬가드
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
@@ -397,7 +462,6 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	vCamPos = pCamera->Get_Eye();
 	fCamAngle = pCamera->Get_Angle();
 	
-
 
 
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
@@ -656,6 +720,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -=8.f;
+					AttackOnRotation();
+					reverseDelay = 0.f;
 				}
 			}
 			if (delay <= 0.9f)
@@ -671,6 +737,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					AttackOnRotation();
+					reverseDelay = 0.f;
 				}
 			}
 			if (delay <= 0.8f)
@@ -685,6 +753,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					AttackOnRotation();
+					reverseDelay = 0.f;
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT1)
 				{
@@ -696,6 +766,9 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
+					AttackOnRotation();
+					reverseDelay = 0.f;
+
 				}
 				else
 				{
@@ -709,6 +782,9 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
+						AttackOnRotation();
+						reverseDelay = 0.f;
+
 					}
 					else
 					{
@@ -721,6 +797,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						//pCamera->ZoomIn(0.5f,0.1f);
 						//pCamera->Shake();
 						CColliderMgr::GetInstance()->hitList.clear();
+						reverseDelay = 0.f;
 					}
 				}
 
@@ -743,6 +820,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					reverseDelay = 0.f;
+					AttackOnRotation();
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT4 && delay <= 0.95f)
 				{
@@ -753,6 +832,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					reverseDelay = 0.f;
+					AttackOnRotation();
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT3 && delay <= 0.81f)
 				{
@@ -764,6 +845,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					reverseDelay = 0.f;
+					AttackOnRotation();
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT2 && delay <= 0.63f)
 				{
@@ -774,6 +857,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					reverseDelay = 0.f;
+					AttackOnRotation();
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1&&delay<=0.78f)
 				{
@@ -784,6 +869,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					reverseDelay = 0.f;
+					AttackOnRotation();
 				}
 				else
 				{
@@ -796,6 +883,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
 						m_pStateCom->stat.stamina -= 7.f;
+						reverseDelay = 0.f;
+						AttackOnRotation();
 					}
 					else if (m_pStateCom->playerState != Engine::CPlayerState::STATE_MB_ATT1 &&
 						m_pStateCom->playerState != Engine::CPlayerState::STATE_MB_ATT2 &&
@@ -812,9 +901,10 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
 						m_pStateCom->stat.stamina -= 7.f;
+						reverseDelay = 0.f;
 					}
 				}
-
+				
 				m_fBattleCount = delay + 5.f;
 			}
 		}
@@ -924,6 +1014,58 @@ void CPlayer::Attack(const _float& fTimeDelta)
 	}
 }
 
+void CPlayer::AttackOnRotation()
+{
+	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+	_float fCamAngle;
+	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+	fCamAngle = pCamera->Get_Angle();
+	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
+	{
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
+		}
+	}
+	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
+	{
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(180));
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
+		}
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-135));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(135.f));
+		}
+	}
+
+	else if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+	{
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90.f));
+	}
+	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+	{
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
+	}
+}
+
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CPlayer*	pInstance = new CPlayer(pGraphicDev);
@@ -957,6 +1099,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	if (delay > 0)
 	{
 		delay -= fTimeDelta;
+		reverseDelay += fTimeDelta;
 	}
 	if (m_fBattleCount < 5.f)
 	{
