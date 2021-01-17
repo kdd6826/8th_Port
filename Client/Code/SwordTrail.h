@@ -6,12 +6,14 @@
 
 BEGIN(Engine)
 
-class CSwordTrail;
 class CRcTex;
 class CTexture;
 class CRenderer;
 class CTransform;
 class CShader;
+class CCollider;
+class CTestTrail;
+class CTrailBuffer;
 
 END
 
@@ -32,12 +34,12 @@ private:
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 
 private:
-	Engine::CRcTex*				m_pBufferCom = nullptr;
+	Engine::CTestTrail*				m_pBufferCom = nullptr;
 	Engine::CTexture*			m_pTextureCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CShader*			m_pShaderCom = nullptr;
-
+	Engine::CCollider*			m_pSwordColliderCom = nullptr;
 
 	const	_matrix* m_pParentBoneMatrix = nullptr;
 	const	_matrix* m_pParentWorldMatrix = nullptr;

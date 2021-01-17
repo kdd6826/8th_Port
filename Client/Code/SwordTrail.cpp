@@ -20,7 +20,7 @@ HRESULT Client::CSwordTrail::Add_Component(void)
 	Engine::CComponent*		pComponent = nullptr;
 
 	// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
@@ -97,28 +97,30 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
+	if (nullptr == m_pParentBoneMatrix)
+	{
+		Engine::CDynamicMesh*  m_pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
+		NULL_CHECK_RETURN(m_pPlayerMeshCom, 0);
 
-	_matrix		matWorld, matView, matBill;
+		const Engine::D3DXFRAME_DERIVED* pFrame = m_pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger22");
 
-	D3DXMatrixIdentity(&matBill);
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
+		
 
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
+		Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+		NULL_CHECK_RETURN(pPlayerTransCom, 0);
+		m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
+	}
 
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
-	// 행렬의 곱셈순서를 주의할 것
-	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+	m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
 
+
+	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
+#ifdef _DEBUG
+	/*m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);*/
+#endif
 	return 0;
 }
 void Client::CSwordTrail::Render_Object(void)
@@ -130,7 +132,7 @@ void Client::CSwordTrail::Render_Object(void)
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
 	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(1);
 
 	m_pBufferCom->Render_Buffer();
 

@@ -61,8 +61,8 @@
     <Filter Include="00. Resources\00. VIBuffer\07. TrailBuffer">
       <UniqueIdentifier>{12570779-b1aa-4870-bff9-a928347e507d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Resources\00. VIBuffer\06. SwordTrail">
-      <UniqueIdentifier>{baf460ce-095c-4715-b72a-975bc9eaa15b}</UniqueIdentifier>
+    <Filter Include="00. Resources\00. VIBuffer\06. TestTrail">
+      <UniqueIdentifier>{57063c8e-6851-45d3-bec6-63f23701f51c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,11 +120,11 @@
     <ClCompile Include="..\Code\PtTex.cpp">
       <Filter>00. Resources\00. VIBuffer\05. PtTex</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SwordTrail.cpp">
-      <Filter>00. Resources\00. VIBuffer\06. SwordTrail</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\TrailBuffer.cpp">
       <Filter>00. Resources\00. VIBuffer\07. TrailBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestTrail.cpp">
+      <Filter>00. Resources\00. VIBuffer\06. TestTrail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,11 +185,11 @@
     <ClInclude Include="..\Code\PtTex.h">
       <Filter>00. Resources\00. VIBuffer\05. PtTex</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\SwordTrail.h">
-      <Filter>00. Resources\00. VIBuffer\06. SwordTrail</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\TrailBuffer.h">
       <Filter>00. Resources\00. VIBuffer\07. TrailBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TestTrail.h">
+      <Filter>00. Resources\00. VIBuffer\06. TestTrail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

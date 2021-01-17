@@ -100,7 +100,7 @@ technique Default_Device
 		srcblend = srcalpha;
 		destblend = invsrcalpha;
 		cullmode = none;
-
+		
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}

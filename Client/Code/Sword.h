@@ -13,6 +13,7 @@ class CCalculator;
 class CCollider;
 class CColliderSphere;
 class CShader;
+class CRcTex;
 class CTexture;
 END
 
@@ -36,6 +37,8 @@ private:
 private:
 	//Engine::CTexture* m_pTextureCom = nullptr;
 	//Engine::CTexture* m_pTextureCom2 = nullptr;
+	Engine::CRcTex* m_pBufferCom2 = nullptr;
+	Engine::CTexture* m_pTextureCom = nullptr;
 	Engine::CStaticMesh*		m_pMeshCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;

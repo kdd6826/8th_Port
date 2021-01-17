@@ -3,12 +3,13 @@
 #include "Define.h"
 
 
-
+BEGIN(Client)
+enum SoundChannel { BGM, PLAYER, PLAYER_EFFECT, MONSTER, EFFECT, MAXCHANNEL };
 class SoundManager
 {
-enum SoundChannel { BGM, PLAYER, PLAYER_EFFECT, MONSTER, EFFECT, MAXCHANNEL };
+	DECLARE_SINGLETON(SoundManager)
+
 public:
-	static SoundManager* GetInstance();
 	static void Destroy();
 
 private:
@@ -20,7 +21,7 @@ public:
 	static void Update();
 	static void Release();
 public:
-	static void PlaySound(TCHAR* pSoundKey, SoundChannel eID);
+//	static void PlaySound(TCHAR* pSoundKey, SoundChannel eID);
 	static void PlayOverlapSound(TCHAR* pSoundKey, SoundChannel eID, float offsetVolume = 1.f, float duration = 0.2f);
 	static void PlayOverlapSoundWithAmp(TCHAR* pSoundKey, SoundChannel eID);
 	static void PlayBGM(TCHAR* pSoundKey);
@@ -41,5 +42,6 @@ private:
 	FMOD_SYSTEM* pSystem;
 	float volume;
 };
+END
 #endif // CColliderMgr_h__
 

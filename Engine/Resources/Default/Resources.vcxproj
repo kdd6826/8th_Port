@@ -180,8 +180,8 @@ call CopyResources.bat</Command>
     <ClCompile Include="..\Code\Resources.cpp" />
     <ClCompile Include="..\Code\ResourcesMgr.cpp" />
     <ClCompile Include="..\Code\StaticMesh.cpp" />
-    <ClCompile Include="..\Code\SwordTrail.cpp" />
     <ClCompile Include="..\Code\TerrainTex.cpp" />
+    <ClCompile Include="..\Code\TestTrail.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />
     <ClCompile Include="..\Code\TrailBuffer.cpp" />
     <ClCompile Include="..\Code\TriCol.cpp" />
@@ -203,8 +203,8 @@ call CopyResources.bat</Command>
     <ClInclude Include="..\Code\Resources.h" />
     <ClInclude Include="..\Code\ResourcesMgr.h" />
     <ClInclude Include="..\Code\StaticMesh.h" />
-    <ClInclude Include="..\Code\SwordTrail.h" />
     <ClInclude Include="..\Code\TerrainTex.h" />
+    <ClInclude Include="..\Code\TestTrail.h" />
     <ClInclude Include="..\Code\Texture.h" />
     <ClInclude Include="..\Code\TrailBuffer.h" />
     <ClInclude Include="..\Code\TriCol.h" />

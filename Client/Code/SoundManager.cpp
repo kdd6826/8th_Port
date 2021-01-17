@@ -1,18 +1,14 @@
 #include "stdafx.h"
 #include "SoundManager.h"
-//#include "Unit.h"
-//#include <algorithm>
+#include "Unit.h"
+#include "fmod.h"
+#include <io.h>
+#include <algorithm>
 
+IMPLEMENT_SINGLETON(SoundManager)
 SoundManager* pSoundManager = nullptr;
 
-SoundManager* SoundManager::GetInstance()
-{
-	if (pSoundManager == nullptr)
-	{
-		pSoundManager = new SoundManager;
-	}
-	return pSoundManager;
-}
+
 
 void SoundManager::Destroy()
 {
@@ -34,6 +30,7 @@ SoundManager::~SoundManager()
 {
 	Release();
 }
+
 
 void SoundManager::Initialize()
 {
@@ -74,29 +71,6 @@ void SoundManager::Release()
 	FMOD_System_Close(pSoundManager->pSystem);
 }
 
-
-
-
-void SoundManager::PlaySound(TCHAR * pSoundKey, SoundChannel eID)
-{
-	map<TCHAR*, FMOD_SOUND*>::iterator iter; 
-
-	iter = find_if(pSoundManager->soundMap.begin(), pSoundManager->soundMap.end(), [&](auto& iter)
-	{
-		return !lstrcmp(pSoundKey, iter.first);
-	});
-
-	if (iter == pSoundManager->soundMap.end())
-		return;
-
-	FMOD_BOOL bPlay = FALSE; 
-	if (FMOD_Channel_IsPlaying(pSoundManager->channels[eID], &bPlay))
-	{
-		FMOD_System_PlaySound(pSoundManager->pSystem, FMOD_CHANNEL_FREE, iter->second, FALSE, &pSoundManager->channels[eID]);
-		FMOD_Channel_SetVolume(pSoundManager->channels[eID], pSoundManager->volume);
-	}
-	FMOD_System_Update(pSoundManager->pSystem);
-}
 
 void SoundManager::PlayOverlapSound(TCHAR * pSoundKey, SoundChannel eID, float offsetVolume, float duration)
 {

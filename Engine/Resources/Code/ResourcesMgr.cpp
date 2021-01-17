@@ -26,7 +26,7 @@ HRESULT Engine::CResourcesMgr::Reserve_ContainerSize(const _ushort& wSize)
 	return S_OK;
 }
 
-HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, BUFFERID eID, _ulong dwCntX /*= 1*/, _ulong dwCntZ /*= 1*/, _ulong dwItv /*= 1*/)
+HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, BUFFERID eID, _ulong dwCntX /*= 1*/, _ulong dwCntZ /*= 1*/, _ulong dwItv /*= 1*/, _ulong dwVtxMax/*=1*/)
 {
 	if (nullptr == m_pmapResource)
 	{
@@ -61,7 +61,12 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_PTTEX:
 		pResources = CPtTex::Create(pGraphicDev);
 		break;
-
+	//case BUFFER_TRAIL:
+	//	pResources = CTrailBuffer::Create(pGraphicDev, dwVtxMax);
+	//	break;
+	case BUFFER_TEMPTRAIL:
+		pResources = CTestTrail::Create(pGraphicDev);
+		break;
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);
 	

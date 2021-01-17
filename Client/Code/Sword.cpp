@@ -22,15 +22,18 @@ HRESULT Client::CSword::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-	//// texture
-	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
-	//// texture
-	//pComponent = m_pTextureCom2 = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2Normal"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+
+
+	// buffer
+	pComponent = m_pBufferCom2 = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+
+	// texture
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Player"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
@@ -92,6 +95,7 @@ HRESULT Client::CSword::Ready_Object(void)
 }
 Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 {
+	m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
 	_vec3 a = *m_pColliderCom->Get_Min();
 	//if (nullptr == m_pParentBoneMatrix)
 	//{
@@ -122,7 +126,33 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 }
 void Client::CSword::Render_Object(void)
 {
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	//_matrix matWorld2;
+	//D3DXMatrixIdentity(&matWorld2);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld2);
+	//for (auto& pTex : m_vecTrailTex)
+	//{
+	//	if (pTex)
+	//		pTex->Render_Buffer();
+	//}
+
+	//m_pTransformCom->Set_Transform(m_pGraphicDev);
+
+	//m_pMeshCom->Render_Meshes();
+
+	//_matrix matWorld;
+	//m_pTransformCom->Get_WorldMatrix(&matWorld);
+
+
+	//m_pColliderCom->Render_Collider(Engine::COLLTYPE(m_bColl), &matWorld);
+
+	/////////////////////////////////////////////////////////////////////////////////////////////½¦ÀÌ´õ
+	//m_pTransformCom->Set_Transform(m_pGraphicDev);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	////m_pBufferCom2->Render_Buffer();
+	////m_pTextureCom->Render_Texture(0);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	////
 	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerStateCom, );

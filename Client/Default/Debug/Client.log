@@ -1,6 +1,3 @@
-﻿  ConfusionHole.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(101): warning C4035: 'Client::CConfusionHole::Update_Object': 반환 값이 없습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(111): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(157): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+﻿  Sword.cpp
   Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

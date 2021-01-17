@@ -10,8 +10,9 @@
 #include "CubeTex.h"
 #include "CollSphere.h"
 #include "PtTex.h"
-
+#include "TestTrail.h"
 #include "Texture.h"
+#include "TrailBuffer.h"
 
 #include "StaticMesh.h"
 #include "DynamicMesh.h"
@@ -35,7 +36,8 @@ public:
 							BUFFERID eID, 
 							_ulong dwCntX = 1, 
 							_ulong dwCntZ = 1, 
-							_ulong dwItv = 1);
+							_ulong dwItv = 1,
+							_ulong dwVtxMax = 1);
 
 	HRESULT		Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev,
 							const _ushort& wContainerIdx,
