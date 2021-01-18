@@ -99,6 +99,7 @@ private:
 	void		MovePlayer(const _float& fTimeDelta);
 	void		Attack(const _float& fTimeDelta);
 	void		AttackOnRotation();
+	void		DownOnRotation();
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
 	void		ConufusionHoleInit();

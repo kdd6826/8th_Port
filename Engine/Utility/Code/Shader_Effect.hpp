@@ -1,7 +1,7 @@
 matrix		g_matWorld;
 matrix		g_matView;
 matrix		g_matProj;
-
+float		g_fAlpha;
 texture		g_BaseTexture;
 
 sampler BaseSampler = sampler_state
@@ -65,9 +65,13 @@ PS_OUT	PS_MAIN(PS_IN In)
 	PS_OUT		Out = (PS_OUT)0;
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);
-
+	
 	float2		vDepthUV = (float2)0.f;
 
+	if (Out.vColor.r < 0.5f)
+		Out.vColor.a = 0.f;
+	else
+	Out.vColor.a = 1.f- g_fAlpha;
 	// 우선 z나누기가 끝난 투영 좌표로 변환 -> 텍스처 UV좌표로 변환
 	
 	// (-1 ~ 1) 범위의 투영 좌표 x를 (0 ~ 1) 범위의 텍스쳐 U 값으로 변환
@@ -94,13 +98,16 @@ technique Default_Device
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}
-		pass	AlphaTest
+	pass	AlphaTest
 	{
 		alphablendenable = true;
 		srcblend = srcalpha;
 		destblend = invsrcalpha;
 		cullmode = none;
 		
+		zenable = true;
+		zwriteenable = false;
+
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}

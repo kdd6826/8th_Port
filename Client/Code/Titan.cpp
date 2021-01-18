@@ -839,5 +839,5 @@ void Client::CTitan::SetUp_OnTerrain(void)
 void CTitan::OnCollision(Engine::CGameObject* target)
 {
 	CMonster::OnCollision(target);
-
+	
 }

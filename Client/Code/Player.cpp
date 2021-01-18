@@ -436,13 +436,24 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 void CPlayer::ConufusionHoleInit()
 {
+
 	Engine::CGameObject* counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole"));
+	NULL_CHECK(counfusionHole);
 	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
 	counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole_R"));
+	NULL_CHECK(counfusionHole);
 	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
 	counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole_L"));
+	NULL_CHECK(counfusionHole);
 	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
 	Engine::CGameObject* counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2"));
+	NULL_CHECK(counfusionHole2);
+	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
+	counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2_R"));
+	NULL_CHECK(counfusionHole2);
+	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
+	counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2_L"));
+	NULL_CHECK(counfusionHole2);
 	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
 }
 
@@ -472,9 +483,11 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_IDLE;
 		}
 	}
+
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DOWN_IDLE&&downDelay<0.f)
 	{
 		m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_STANDUP;
+		DownOnRotation();
 		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 		delay = temp;
@@ -484,6 +497,22 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		isDown = false;
 		isInvincible = false;
 	}
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DOWN_FRONTROLL)
+	{
+		if (delay > 0.f && delay < 1.5f)
+		{
+			_vec3 vMyPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+			_vec3 vMyLook = m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+			
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vMyLook * _fTimeDelta * 180.f)));
+		}
+		else if (delay < 0.1f)
+		{
+			isDown = false;
+			isInvincible = false;
+		}
+	}
+	
 	if (isDown)
 	{
 		isInvincible = true;
@@ -1113,6 +1142,78 @@ void CPlayer::AttackOnRotation()
 	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
+	}
+}
+
+void CPlayer::DownOnRotation()
+{
+	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+	_float fCamAngle;
+	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+	fCamAngle = pCamera->Get_Angle();
+	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
+	{
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
+		}
+		m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_FRONTROLL;
+		m_fAniSpeed = 1.5f;
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+		delay = temp;
+	}
+	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
+	{
+
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(180));
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-45));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(45));
+		}
+		if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-135));
+		}
+		else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+		{
+			m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(135.f));
+		}
+		m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_FRONTROLL;
+		m_fAniSpeed = 1.5f;
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+		delay = temp;
+	}
+
+	else if (Engine::Get_DIKeyState(DIK_A) & 0x80)
+	{
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90.f));
+		m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_FRONTROLL;
+		m_fAniSpeed = 1.5f;
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+		delay = temp;
+	}
+	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
+	{
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(90));
+		m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_FRONTROLL;
+		m_fAniSpeed = 1.5f;
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+		delay = temp;
 	}
 }
 

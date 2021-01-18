@@ -11,11 +11,20 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CMonster::~CMonster(void)
 {
+	for (auto& iterator = m_vecSlashPoint.begin(); iterator != m_vecSlashPoint.end(); ++iterator)
+	{
+		//Engine::Safe_Delete_Array(*iterator);
+		Engine::Safe_Release(*iterator);
+	}
 }
 
 _int CMonster::Update_Object(const _float& fTimeDelta)
 {
 	CUnit::Update_Object(fTimeDelta);
+	for (auto& slash : m_vecSlashPoint)
+	{
+		slash->Update_Object(fTimeDelta);
+	}
 	return S_OK;
 }
 
@@ -33,6 +42,13 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		pPlayerStateCom->stat.sp += 20.f;
 		if (pPlayerStateCom->stat.sp > pPlayerStateCom->stat.maxSp)
 			pPlayerStateCom->stat.sp = pPlayerStateCom->stat.maxSp;
+		CSlashPoint* slashPoint = CSlashPoint::Create(m_pGraphicDev);
+		_vec3 vMonsterPos;
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMonsterPos);
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vMonsterPos;
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.5f;
+		m_vecSlashPoint.emplace_back(slashPoint);
+		
 	}
 	//»ç¸Á
 	if (m_pStateCom->stat.hp <= 0 && isDie == false)
