@@ -18,7 +18,7 @@ public:
 	//void			Set_Transform(LPDIRECT3DDEVICE9& pGraphicDev, _matrix* pMatrix, D3DTRANSFORMSTATETYPE iFlag)const;
 	void			Set_Scale(const _float& fX, const _float& fY, const _float& fZ);
 	void			Get_Info(INFO eType, _vec3* pInfo);
-	
+	void			Set_Info(INFO eType, _vec3 pInfo);
 	void			Move_Pos(const _vec3* const pDir);
 	void			Pick_Pos(const _vec3* pPos, const _float & fSpeed, const _float& fTimeDelta);
 	void			Set_Pos(const _vec3* pPos);

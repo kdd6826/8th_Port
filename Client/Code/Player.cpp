@@ -6,6 +6,7 @@
 #include "Sword.h"
 #include "ConfusionHole.h"
 #include "ConfusionHole2.h"
+#include "Monster.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -56,6 +57,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.sp = 250.f;
 	m_pStateCom->stat.maxSp = 1250.f;
 	m_pStateCom->stat.damage = 2.f;
+	isDown = false;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -154,6 +156,10 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		if (isTired)
 		{
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_ING;
+		}
+		else if (isDown == true)
+		{
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_IDLE;
 		}
 		else if (isBattle == false)
 		{
@@ -378,8 +384,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_IDLE ||
 			m_pStateCom->playerState == Engine::CPlayerState::STATE_BATTLE_IDLE ||
-			m_pStateCom->playerState == Engine::CPlayerState::STATE_MANA_IDLE ||
-			m_pStateCom->playerState == Engine::CPlayerState::STATE_DOWN_IDLE
+			m_pStateCom->playerState == Engine::CPlayerState::STATE_MANA_IDLE 
 			)
 		{
 			isSkill = false;
@@ -415,6 +420,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				isShake = true;
 			}
 		}
+
 		
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
@@ -438,6 +444,50 @@ void CPlayer::ConufusionHoleInit()
 	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
 	Engine::CGameObject* counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2"));
 	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
+}
+
+void CPlayer::StateEventFromDelay(float _fTimeDelta)
+{
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DMG_BACK)
+	{
+		if (delay > 0.3f && delay < 1.f)
+		{
+			_vec3 vMyPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+			_vec3 vMyLook = m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vMyLook * _fTimeDelta * 30.f)));
+		}
+	}
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_STRONG_DOWN)
+	{
+		if (delay > 1.f && delay < 2.f)
+		{
+			_vec3 vMyPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+			_vec3 vMyLook = m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(-vMyLook * _fTimeDelta * 30.f)));
+		}
+		else if (delay < 0.1f)
+		{
+			isDown = true;
+			downDelay = 2.f;
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_IDLE;
+		}
+	}
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DOWN_IDLE&&downDelay<0.f)
+	{
+		m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_STANDUP;
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+		delay = temp;
+	}
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DOWN_STANDUP && delay < 0.1f)
+	{
+		isDown = false;
+		isInvincible = false;
+	}
+	if (isDown)
+	{
+		isInvincible = true;
+	}
 }
 
 void CPlayer::MovePlayer(const _float& fTimeDelta)
@@ -1101,6 +1151,10 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 		delay -= fTimeDelta;
 		reverseDelay += fTimeDelta;
 	}
+	if (downDelay > 0.f)
+	{
+		downDelay -= fTimeDelta;
+	}
 	if (m_fBattleCount < 5.f)
 	{
 		if (m_pStateCom->stat.stamina > m_pStateCom->stat.maxStamina)
@@ -1110,7 +1164,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	}
 
 	//SetUp_OnTerrain();
-	if(!isHit)
+	if(!isHit&&!isDown)
 	Key_Input(fTimeDelta);
 	if (isHit)
 	{
@@ -1146,6 +1200,8 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	{
 		isTired = false;
 	}
+	StateEventFromDelay(fTimeDelta);
+
 
 	m_pMeshCom->Set_AnimationSet(m_pStateCom->playerState);
 	//
@@ -1198,15 +1254,27 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 	}
 	if (!isInvincible)
 	{
-		_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
-		_vec3 vMyPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
-		float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(hitDir * timeDelta*4.f)));
-		m_pStateCom->stat.hp -= 1.f;
+		hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+		
+
+
+		m_pStateCom->stat.hp -= dynamic_cast<CMonster*>(target)->m_pStateCom->stat.damage;
+		m_pStateCom->stat.down += dynamic_cast<CMonster*>(target)->m_pStateCom->stat.downDamage;
 		//m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		if (isHit == false)
 		{
-			m_pStateCom->playerState = Engine::CPlayerState::STATE_DMG_BACK;
+			if (m_pStateCom->stat.down >= 1.f)
+			{
+				m_pStateCom->playerState = Engine::CPlayerState::STATE_STRONG_DOWN;
+				m_pStateCom->stat.down = 0.f;
+				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+				delay = temp;
+			}
+			else
+			{
+				m_pStateCom->playerState = Engine::CPlayerState::STATE_DMG_BACK;
+			}
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;

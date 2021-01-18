@@ -128,6 +128,14 @@ void CTransform::Get_Info(INFO eType, _vec3 * pInfo)
 	memcpy(pInfo, &m_matWorld.m[eType][0], sizeof(_vec3));
 }
 
+void CTransform::Set_Info(INFO eType, _vec3 pInfo)
+{
+	m_matWorld.m[eType][0] = pInfo.x;
+	m_matWorld.m[eType][1] = pInfo.y;
+	m_matWorld.m[eType][2] = pInfo.z;
+	/*m_matWorld.m[eType][3] = pInfo.x;*/
+}
+
 void CTransform::Move_Pos(const _vec3 * const pDir)
 {
 	m_vInfo[INFO_POS] += *pDir;
