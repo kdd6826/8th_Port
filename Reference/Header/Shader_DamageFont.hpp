@@ -40,10 +40,10 @@ VS_OUT VS_MAIN(VS_IN In)
 
 	float3 vPos = In.vPos.xyz;
 
-	vPos.x += (iCnt - (int)(iMaxCnt * 0.5f)) * 2.f;
+	/*vPos.x += (iCnt - (int)(iMaxCnt * 0.5f)) * 2.f;
 
 	if(iMaxCnt % 2 == 0)
-		vPos.x += 1.f;
+		vPos.x += 1.f;*/
 
 	Matrix		matWV, matWVP, matWVPB;
 

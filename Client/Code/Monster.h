@@ -5,6 +5,7 @@
 #include "Define.h"
 #include "SphereCollider.h"
 #include "SlashPoint.h"
+#include "DamageFont.h"
 BEGIN(Engine)
 
 class CDynamicMesh;
@@ -33,6 +34,7 @@ protected:
 private:
 protected:
 	vector<CSlashPoint*>	m_vecSlashPoint;
+	vector<CDamageFont*>	m_vecDamageFont;
 	_bool isSearch = false;
 	//플레이어까지의 거리
 	_float disPlayer = 0.f;
