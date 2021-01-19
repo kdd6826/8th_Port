@@ -61,7 +61,7 @@ HRESULT CConfusionHole::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture"/*, _uint(m_fFrame)*/);
-
+	pEffect->SetFloat("g_fAlpha", 0.f);
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
 
 	return S_OK;
