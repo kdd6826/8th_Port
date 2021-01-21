@@ -13,7 +13,8 @@ protected:
 
 public:
 	CComponent*	   Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
-
+	CGameObject* Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+	CLayer* Get_Layer(const _tchar* pLayerTag);
 public:
 	virtual HRESULT		Ready_Scene(void);
 	virtual _int		Update_Scene(const _float& fTimeDelta);
@@ -22,7 +23,7 @@ public:
 protected:
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 	map<const _tchar*, CLayer*>			m_mapLayer;
-
+	int i = 0;
 public:
 	virtual void		Free(void);
 };

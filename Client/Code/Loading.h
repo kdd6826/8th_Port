@@ -5,9 +5,9 @@
 #include "Base.h"
 
 BEGIN(Client)
-
 class CLoading : public CBase 
 {
+	
 public:
 	enum LOADINGID {LOADING_STAGE, LOADING_BOSS, LOADING_END };
 
@@ -23,11 +23,12 @@ public:
 
 public:
 	static _uint	CALLBACK Thread_Main(void* pArg);
-
+	vector<wstring*> vecStaticMesh;
 public:
 	HRESULT		Ready_Loading(LOADINGID eLoading);
 	_uint		Loading_ForStage(void);
 	void		Load_StaticObject();
+	void		Load_DynamicObject();
 
 	int staticLoadCount = 0;
 

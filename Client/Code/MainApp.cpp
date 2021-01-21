@@ -2,6 +2,8 @@
 #include "MainApp.h"
 #include "Logo.h"
 
+#include "ColliderMgr.h"
+//#include "SoundManager.h"
 CMainApp::CMainApp(void)
 {
 
@@ -15,10 +17,14 @@ CMainApp::~CMainApp(void)
 HRESULT CMainApp::Ready_MainApp(void)
 {
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Get_Renderer()->Ready_Renderer(m_pGraphicDev), E_FAIL)
+
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
 	Client::Safe_Release(m_pDeviceClass);
-
+	CColliderMgr::GetInstance();
+	//SoundManager::GetInstance();
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"¹ÙÅÁ", 15, 20, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY), E_FAIL);
 
@@ -46,7 +52,8 @@ _int CMainApp::Update_MainApp(const _float& fTimeDelta)
 		int a = 0;
 	}*/
 
-
+	CColliderMgr::GetInstance()->Update();
+	//SoundManager::GetInstance()->Update();
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -66,13 +73,13 @@ void CMainApp::Render_MainApp(void)
 		m_dwRenderCnt = 0;
 	}
 
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		
 	Engine::Render_Begin(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.f));
 	
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
-	Engine::Render_Font(L"Font_Jinji", m_szFPS, &_vec2(500.f, 10.f), D3DXCOLOR(0.f, 0.f,0.f, 1.f));
+	Engine::Render_Font(L"Font_Jinji", m_szFPS, &_vec2(500.f, 10.f), D3DXCOLOR(1.f, 1.f,0.f, 1.f));
 
 	Engine::Render_End();
 }
@@ -94,7 +101,7 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement
 {
 	Engine::CScene*		pScene = nullptr;
 
-	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Create_Management(ppManagement, pGraphicDev), E_FAIL);
 	Safe_AddRef(*ppManagement);
 
 	pScene = CLogo::Create(pGraphicDev);
@@ -123,7 +130,10 @@ void CMainApp::Free(void)
 	Client::Safe_Release(m_pGraphicDev);
 	Client::Safe_Release(m_pManagementClass);
 
+
 	Engine::Release_Utility();
+	CColliderMgr::Destroy();
+	//SoundManager::Destroy();
 	Engine::Release_Resoures();
 	Engine::Release_System();
 }

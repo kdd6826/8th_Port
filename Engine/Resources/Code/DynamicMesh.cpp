@@ -97,6 +97,85 @@ void Engine::CDynamicMesh::Render_Meshes(void)
 	}
 }
 
+void CDynamicMesh::Render_Meshes(LPD3DXEFFECT & pEffect)
+{
+	for (auto& iter : m_MeshContainerList)
+	{
+		D3DXMESHCONTAINER_DERIVED*			pMeshContainer = iter;
+
+		for (_ulong i = 0; i < pMeshContainer->dwNumBones; ++i)
+		{
+			pMeshContainer->pRenderingMatrix[i] = pMeshContainer->pFrameOffsetMatrix[i] * (*pMeshContainer->ppFrameCombinedMatrix[i]);
+		}
+
+		void*		pSrcVtx = nullptr;
+		void*		pDestVtx = nullptr;
+
+
+		pMeshContainer->pOriMesh->LockVertexBuffer(0, &pSrcVtx);
+		pMeshContainer->MeshData.pMesh->LockVertexBuffer(0, &pDestVtx);
+
+		// 소프트웨어 스키닝을 수행하는 함수(스키닝 뿐 아니라 애니메이션 변경 시, 뼈대들과 정점 정보들의 변경을 동시에 수행하기도 함)
+		pMeshContainer->pSkinInfo->UpdateSkinnedMesh(pMeshContainer->pRenderingMatrix,	// 최종 뼈의 변환상태 행렬
+			nullptr,						// 원래 상태로 되돌리기 위한 상태 행렬(원래는 위 행렬의 역행렬을 구해서 넣어줘야 하지만 안넣어줘도 상관 없음)
+			pSrcVtx,						// 변하지 않는 원본 메쉬의 정점 정보
+			pDestVtx);						// 변환된 정보를 담기 위한 메쉬의 정점 정보
+
+
+		for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
+		{
+			pEffect->SetTexture("g_BaseTexture", pMeshContainer->ppTexture[i]);
+			pEffect->CommitChanges();
+			pMeshContainer->MeshData.pMesh->DrawSubset(i);
+		}
+
+		pMeshContainer->pOriMesh->UnlockVertexBuffer();
+		pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
+	}
+}
+
+void CDynamicMesh::Render_Meshes(LPD3DXEFFECT& pEffect, const _float& fTimeDelta)
+{
+	m_pAniCtrl->Play_Animation(fTimeDelta);
+
+	_matrix		matTemp;
+	Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f + m_fRot)));
+
+	for (auto& iter : m_MeshContainerList)
+	{
+		D3DXMESHCONTAINER_DERIVED* pMeshContainer = iter;
+
+		for (_ulong i = 0; i < pMeshContainer->dwNumBones; ++i)
+		{
+			pMeshContainer->pRenderingMatrix[i] = pMeshContainer->pFrameOffsetMatrix[i] * (*pMeshContainer->ppFrameCombinedMatrix[i]);
+		}
+
+		void* pSrcVtx = nullptr;
+		void* pDestVtx = nullptr;
+
+
+		pMeshContainer->pOriMesh->LockVertexBuffer(0, &pSrcVtx);
+		pMeshContainer->MeshData.pMesh->LockVertexBuffer(0, &pDestVtx);
+
+		// 소프트웨어 스키닝을 수행하는 함수(스키닝 뿐 아니라 애니메이션 변경 시, 뼈대들과 정점 정보들의 변경을 동시에 수행하기도 함)
+		pMeshContainer->pSkinInfo->UpdateSkinnedMesh(pMeshContainer->pRenderingMatrix,	// 최종 뼈의 변환상태 행렬
+			nullptr,						// 원래 상태로 되돌리기 위한 상태 행렬(원래는 위 행렬의 역행렬을 구해서 넣어줘야 하지만 안넣어줘도 상관 없음)
+			pSrcVtx,						// 변하지 않는 원본 메쉬의 정점 정보
+			pDestVtx);						// 변환된 정보를 담기 위한 메쉬의 정점 정보
+
+
+		for (_ulong i = 0; i < pMeshContainer->NumMaterials; ++i)
+		{
+			pEffect->SetTexture("g_BaseTexture", pMeshContainer->ppTexture[i]);
+			pEffect->CommitChanges();
+			pMeshContainer->MeshData.pMesh->DrawSubset(i);
+		}
+
+		pMeshContainer->pOriMesh->UnlockVertexBuffer();
+		pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
+	}
+}
+
 const Engine::D3DXFRAME_DERIVED* Engine::CDynamicMesh::Get_FrameByName(const char* pFrameName)
 {
 	return (D3DXFRAME_DERIVED*)D3DXFrameFind(m_pRootFrame, pFrameName);
@@ -105,6 +184,11 @@ const Engine::D3DXFRAME_DERIVED* Engine::CDynamicMesh::Get_FrameByName(const cha
 _bool Engine::CDynamicMesh::Is_AnimationSetEnd(void)
 {
 	return m_pAniCtrl->Is_AnimationSetEnd();
+}
+
+_double Engine::CDynamicMesh::Get_AnimationPeriod(const _uint& iIndex)
+{
+	return m_pAniCtrl->Get_AnimationPeriod(iIndex);
 }
 
 void CDynamicMesh::Set_AnimationSet(const _uint & iIndex)
@@ -117,7 +201,7 @@ void CDynamicMesh::Play_Animation(const _float & fTimeDelta)
 	m_pAniCtrl->Play_Animation(fTimeDelta);
 
 	_matrix		matTemp;
-	Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f)));
+	Update_FrameMatrices((D3DXFRAME_DERIVED*)m_pRootFrame, D3DXMatrixRotationY(&matTemp, D3DXToRadian(180.f+m_fRot)));
 }
 
 void Engine::CDynamicMesh::Update_FrameMatrices(D3DXFRAME_DERIVED* pFrame, const _matrix* pParentMatrix)

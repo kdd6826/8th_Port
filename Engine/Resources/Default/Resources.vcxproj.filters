@@ -43,20 +43,26 @@
     <Filter Include="00. Resources\02. Mesh\01. DynamicMesh\01. AniCtrl">
       <UniqueIdentifier>{3d945204-5a24-4119-8c51-c4b16ef28b47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Resources\00. VIBuffer\04. Sphere">
-      <UniqueIdentifier>{9f0fd019-956d-47d3-b051-630019124e87}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Resources\02. Mesh\02. NaviMesh">
-      <UniqueIdentifier>{a5fc0ac9-e2d3-4ac4-91ed-a33af4f55cef}</UniqueIdentifier>
+      <UniqueIdentifier>{f3422805-625b-4faf-868f-74571100a215}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Resources\02. Mesh\02. NaviMesh\00. Cell">
-      <UniqueIdentifier>{7defb191-96b8-4d5d-9ad5-a8c87bd62ee2}</UniqueIdentifier>
+      <UniqueIdentifier>{c6aa739e-f67f-4ba7-a1ee-9e50159eacf4}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Resources\02. Mesh\02. NaviMesh\01. Line">
-      <UniqueIdentifier>{090c1be2-069d-46ed-98f8-b7b7ffeee5ae}</UniqueIdentifier>
+      <UniqueIdentifier>{07d14f51-6a99-4840-a95a-597f0504aff2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Resources\00. VIBuffer\05. TerrainTriCol">
-      <UniqueIdentifier>{ab46718b-2994-48f4-808c-0d95d230f2be}</UniqueIdentifier>
+    <Filter Include="00. Resources\00. VIBuffer\04. Sphere">
+      <UniqueIdentifier>{ceb08f3e-b3ef-4967-8917-4ec1a2a107ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\05. PtTex">
+      <UniqueIdentifier>{f07fbea7-1823-4d71-b83f-c4d258775723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\07. TrailBuffer">
+      <UniqueIdentifier>{12570779-b1aa-4870-bff9-a928347e507d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Resources\00. VIBuffer\06. TestTrail">
+      <UniqueIdentifier>{57063c8e-6851-45d3-bec6-63f23701f51c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,11 +105,8 @@
     <ClCompile Include="..\Code\HierarchyLoader.cpp">
       <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Sphere.cpp">
-      <Filter>00. Resources\00. VIBuffer\04. Sphere</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TerrainTriCol.cpp">
-      <Filter>00. Resources\00. VIBuffer\05. TerrainTriCol</Filter>
+    <ClCompile Include="..\Code\NaviMesh.cpp">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Cell.cpp">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
@@ -111,11 +114,17 @@
     <ClCompile Include="..\Code\Line.cpp">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\NaviMesh.cpp">
-      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ObjSphere.cpp">
+    <ClCompile Include="..\Code\CollSphere.cpp">
       <Filter>00. Resources\00. VIBuffer\04. Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PtTex.cpp">
+      <Filter>00. Resources\00. VIBuffer\05. PtTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TrailBuffer.cpp">
+      <Filter>00. Resources\00. VIBuffer\07. TrailBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestTrail.cpp">
+      <Filter>00. Resources\00. VIBuffer\06. TestTrail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +170,8 @@
     <ClInclude Include="..\Code\HierarchyLoader.h">
       <Filter>00. Resources\02. Mesh\01. DynamicMesh\00. HierarchyLoader</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Sphere.h">
-      <Filter>00. Resources\00. VIBuffer\04. Sphere</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\TerrainTriCol.h">
-      <Filter>00. Resources\00. VIBuffer\05. TerrainTriCol</Filter>
+    <ClInclude Include="..\Code\NaviMesh.h">
+      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Cell.h">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\00. Cell</Filter>
@@ -173,11 +179,17 @@
     <ClInclude Include="..\Code\Line.h">
       <Filter>00. Resources\02. Mesh\02. NaviMesh\01. Line</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\NaviMesh.h">
-      <Filter>00. Resources\02. Mesh\02. NaviMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\ObjSphere.h">
+    <ClInclude Include="..\Code\CollSphere.h">
       <Filter>00. Resources\00. VIBuffer\04. Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PtTex.h">
+      <Filter>00. Resources\00. VIBuffer\05. PtTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TrailBuffer.h">
+      <Filter>00. Resources\00. VIBuffer\07. TrailBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TestTrail.h">
+      <Filter>00. Resources\00. VIBuffer\06. TestTrail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

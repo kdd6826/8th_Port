@@ -18,13 +18,19 @@ public:
 	//void			Set_Transform(LPDIRECT3DDEVICE9& pGraphicDev, _matrix* pMatrix, D3DTRANSFORMSTATETYPE iFlag)const;
 	void			Set_Scale(const _float& fX, const _float& fY, const _float& fZ);
 	void			Get_Info(INFO eType, _vec3* pInfo);
-	
+	void			Set_Info(INFO eType, _vec3 pInfo);
 	void			Move_Pos(const _vec3* const pDir);
 	void			Pick_Pos(const _vec3* pPos, const _float & fSpeed, const _float& fTimeDelta);
 	void			Set_Pos(const _vec3* pPos);
+	_vec3			Get_Dir();
+	void			Set_Dir(const _vec3* pDir);
+	void			Set_Pos(const _float& fX, const _float& fY, const _float& fZ);
 	void			Move_Pos(const float& fX, const float& fY, const float& fZ);
 	void			Rotation(ROTATION eType, const _float& fAngle);
-	
+	void			Set_Rotation(ROTATION eType, const _float& fAngle);
+	void			Set_AnimRotation(ROTATION eType, const _float& fAngle);
+	_vec3			Get_Rotation();
+	void			Set_WorldMatrix(const _matrix* pMatrix);
 	void			Set_ParentMatrix(const _matrix* pParent);
 
 	void			Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
@@ -40,9 +46,11 @@ public:
 	_vec3			m_vInfo[INFO_END];
 	_vec3			m_vScale;
 	_vec3			m_vAngle;
+	_vec3			m_vDirection;
 	_matrix			m_matWorld;
 	_matrix			m_matNRotWorld;
-
+	_matrix			m_matRotation;
+	//STAT stat;
 public:
 	static		CTransform*		Create(void);
 	virtual CComponent*		Clone(void);

@@ -11,7 +11,10 @@ class CTransform;
 class CRenderer;
 class CCalculator;
 class CCollider;
-
+class CColliderSphere;
+class CShader;
+class CRcTex;
+class CTexture;
 END
 
 BEGIN(Client)
@@ -26,17 +29,24 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 
+	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 private:
 	HRESULT		Add_Component(void);
 	_bool		Collision_ToObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
 private:
-
+	//Engine::CTexture* m_pTextureCom = nullptr;
+	//Engine::CTexture* m_pTextureCom2 = nullptr;
+	Engine::CRcTex* m_pBufferCom2 = nullptr;
+	Engine::CTexture* m_pTextureCom = nullptr;
 	Engine::CStaticMesh*		m_pMeshCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
-	Engine::CCollider*			m_pColliderCom = nullptr;
+	Engine::CCollider* m_pColliderCom = nullptr;
+	//Engine::CColliderSphere*			m_pColliderCom = nullptr;
+	Engine::CShader*			m_pShaderCom = nullptr;
+
 	_bool						m_bColl = false;
 
 	const	_matrix*			m_pParentBoneMatrix = nullptr;
@@ -44,9 +54,9 @@ private:
 
 public:
 	static CSword*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual void Free(void) override;
 
 private:
-	virtual void Free(void) override;
 
 };
 

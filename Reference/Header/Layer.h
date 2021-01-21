@@ -13,13 +13,13 @@ private:
 
 public:
 	CComponent*	   Get_Component(const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
-
+	CGameObject* Get_GameObject(const _tchar* pObjTag);
 public:
 	HRESULT		Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
 	HRESULT		Ready_Layer(void);
 	_int		Update_Layer(const _float& fTimeDelta);
 
-public:
+private:
 	multimap<const _tchar*, CGameObject*>			m_mapObject;
 
 public:

@@ -26,7 +26,7 @@ HRESULT Engine::CResourcesMgr::Reserve_ContainerSize(const _ushort& wSize)
 	return S_OK;
 }
 
-HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, BUFFERID eID, _ulong dwCntX /*= 1*/, _ulong dwCntZ /*= 1*/, _ulong dwItv /*= 1*/)
+HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const _ushort& wContainerIdx, const _tchar* pBufferTag, BUFFERID eID, _ulong dwCntX /*= 1*/, _ulong dwCntZ /*= 1*/, _ulong dwItv /*= 1*/, _ulong dwVtxMax/*=1*/)
 {
 	if (nullptr == m_pmapResource)
 	{
@@ -55,13 +55,18 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_CUBETEX:
 		pResources = CCubeTex::Create(pGraphicDev);
 		break;
-	case BUFFER_SPHERE:
-		pResources = CSphere::Create(pGraphicDev);
+	case BUFFER_COLLSPHERE:
+		pResources = CCollSphere::Create(pGraphicDev);
 		break;
-	case BUFFER_OBJSPHERE:
-		pResources = CObjSphere::Create(pGraphicDev);
+	case BUFFER_PTTEX:
+		pResources = CPtTex::Create(pGraphicDev);
 		break;
-
+	//case BUFFER_TRAIL:
+	//	pResources = CTrailBuffer::Create(pGraphicDev, dwVtxMax);
+	//	break;
+	case BUFFER_TEMPTRAIL:
+		pResources = CTestTrail::Create(pGraphicDev);
+		break;
 	}
 	NULL_CHECK_RETURN(pResources, E_FAIL);
 	
@@ -119,7 +124,7 @@ HRESULT Engine::CResourcesMgr::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev,
 		break;
 
 	case TYPE_NAVI:
-		pResources = CNaviMesh::Create(pGraphicDev);
+		pResources = CNaviMesh::Create(pGraphicDev, pFilePath);
 		break;
 	}
 
@@ -183,9 +188,3 @@ Engine::CComponent* Engine::CResourcesMgr::Clone(const _ushort& wContainerIdx, c
 	return pProto->Clone();
 }
 
-Engine::CComponent* Engine::CResourcesMgr::Create_TerrainCol(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3)
-{
-
-	CResources* pProto = CTerrainTriCol::Create(pGraphicDev, vtxPos1, vtxPos2, vtxPos3);
-	return pProto;
-}

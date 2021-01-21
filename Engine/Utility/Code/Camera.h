@@ -14,12 +14,19 @@ protected:
 public:
 	virtual HRESULT			Ready_Object(void);
 	virtual _int			Update_Object(const _float& fTimeDelta);
+	void Set_Eye(_vec3 vec) { m_vEye = vec; }
+	_vec3 Get_Eye() { return m_vEye; }
+	_vec3 Get_At() { return m_vAt; }
+	_float Get_Angle() { return m_fAngle; }
+	_float Get_Radius() { return m_fRadius; }
 
-public:
+
+protected:
 	_matrix			m_matView, m_matProj;
 	_vec3			m_vEye, m_vAt, m_vUp;
 	_float			m_fFovY, m_fAspect, m_fNear, m_fFar;
-
+	_vec3			m_vOffset;
+	_float			m_fRadius, m_fAngle;
 protected:
 	virtual void Free(void);
 };

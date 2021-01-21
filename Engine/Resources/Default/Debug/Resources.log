@@ -1,7 +1,9 @@
-﻿  Resources.vcxproj -> C:\Users\GMH\Desktop\newClone\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
+﻿     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
+  Resources.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\AniCtrl.h
   .\Engine\Resources\Code\Cell.h
+  .\Engine\Resources\Code\CollSphere.h
   .\Engine\Resources\Code\CubeTex.h
   .\Engine\Resources\Code\DynamicMesh.h
   .\Engine\Resources\Code\HierarchyLoader.h
@@ -9,6 +11,7 @@
   .\Engine\Resources\Code\Mesh.h
   .\Engine\Resources\Code\NaviMesh.h
   .\Engine\Resources\Code\ObjSphere.h
+  .\Engine\Resources\Code\PtTex.h
   .\Engine\Resources\Code\RcTex.h
   .\Engine\Resources\Code\Resources.h
   .\Engine\Resources\Code\ResourcesMgr.h
@@ -16,10 +19,12 @@
   .\Engine\Resources\Code\StaticMesh.h
   .\Engine\Resources\Code\TerrainTex.h
   .\Engine\Resources\Code\TerrainTriCol.h
+  .\Engine\Resources\Code\TestTrail.h
   .\Engine\Resources\Code\Texture.h
+  .\Engine\Resources\Code\TrailBuffer.h
   .\Engine\Resources\Code\TriCol.h
   .\Engine\Resources\Code\VIBuffer.h
-         19개 파일이 복사되었습니다.
+         23개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

@@ -53,7 +53,25 @@
       <UniqueIdentifier>{fa79828a-fbd2-4cfc-ac1a-9253c94a9340}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Component\03. Optimization\01. QuadTree">
-      <UniqueIdentifier>{c748033e-09c5-4dff-97e3-2d6d7448a242}</UniqueIdentifier>
+      <UniqueIdentifier>{c983dd37-b12f-464a-af41-d0cfc62f7fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Shader">
+      <UniqueIdentifier>{9796a411-abb4-4b4c-8d0d-206ba5baad1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Shader\hpp">
+      <UniqueIdentifier>{a6d54341-9357-4e62-99d6-24beef44974a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10. RenderTarget">
+      <UniqueIdentifier>{f25c7262-520f-4a1e-86f1-dc0b4d0c61f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10. RenderTarget\Manager">
+      <UniqueIdentifier>{9c4150a9-62d8-4ded-b70c-a64fb0471430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\04. PlayerState">
+      <UniqueIdentifier>{fe6d0eb3-883c-4cfc-a666-ee4e7ec15e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\05. MonsterState">
+      <UniqueIdentifier>{9dffaba1-2598-4157-8430-644755acef6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +125,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\QuadTree.cpp">
       <Filter>04. Component\03. Optimization\01. QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shader.cpp">
+      <Filter>09. Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderTarget.cpp">
+      <Filter>10. RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderTargetMgr.cpp">
+      <Filter>10. RenderTarget\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderSphere.cpp">
+      <Filter>04. Component\02. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerState.cpp">
+      <Filter>04. Component\04. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterState.cpp">
+      <Filter>04. Component\05. MonsterState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +199,72 @@
     </ClInclude>
     <ClInclude Include="..\Code\QuadTree.h">
       <Filter>04. Component\03. Optimization\01. QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Sample.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader.h">
+      <Filter>09. Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Terrain.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Mesh.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RenderTarget.h">
+      <Filter>10. RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RenderTargetMgr.h">
+      <Filter>10. RenderTarget\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Trail.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Weapon.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Manablade.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Base.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderSphere.h">
+      <Filter>04. Component\02. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PlayerState.h">
+      <Filter>04. Component\04. PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MonsterState.h">
+      <Filter>04. Component\05. MonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_DamageFont.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Player.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_RuinBlade.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Hair.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Eye.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Face.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Terrain_Shader.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_Effect.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_SkyBox.hpp">
+      <Filter>09. Shader\hpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ Engine::_int Engine::CScene::Update_Scene(const _float& fTimeDelta)
 	for (auto& iter : m_mapLayer)
 	{
 		iExit = iter.second->Update_Layer(fTimeDelta);
-
+		
 		if (iExit & 0x80000000)
 		{
 			MSG_BOX("Layer Problem");
@@ -57,5 +57,25 @@ Engine::CComponent* Engine::CScene::Get_Component(const _tchar* pLayerTag, const
 		return nullptr;
 
 	return iter->second->Get_Component(pObjTag, pComponentTag, eID);
+}
+
+Engine::CGameObject* Engine::CScene::Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+	auto	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_Finder(pLayerTag));
+
+	if (iter == m_mapLayer.end())
+		return nullptr;
+
+	return iter->second->Get_GameObject(pObjTag);
+}
+
+CLayer* CScene::Get_Layer(const _tchar* pLayerTag)
+{
+	auto	iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_Finder(pLayerTag));
+
+	if (iter == m_mapLayer.end())
+		return nullptr;
+
+	return iter->second;
 }
 

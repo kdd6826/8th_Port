@@ -39,6 +39,30 @@ HRESULT Client::CEffect::Add_Component(void)
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
+	
+	// Shader
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+
+	return S_OK;
+}
+
+HRESULT CEffect::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+{
+	_matrix		matWorld, matView, matProj;
+
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	pEffect->SetMatrix("g_matWorld", &matWorld);
+	pEffect->SetMatrix("g_matView", &matView);
+	pEffect->SetMatrix("g_matProj", &matProj);
+
+	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrame));
+
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
 
 	return S_OK;
 }
@@ -63,7 +87,7 @@ HRESULT Client::CEffect::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Pos(&_vec3(rand() % 20 + 1.f, 0.f, rand() % 20 + 1.f));
+	m_pTransformCom->Set_Pos(rand() % 40, 0.f, rand() % 40);
 
 	return S_OK;
 }
@@ -76,20 +100,45 @@ Client::_int Client::CEffect::Update_Object(const _float& fTimeDelta)
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	CGameObject::Compute_ViewZ(&vPos);
+
+	_matrix		matWorld, matView, matBill;
+
+	D3DXMatrixIdentity(&matBill);
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+
+	D3DXMatrixInverse(&matBill, NULL, &matBill);
+
+	// 행렬의 곱셈순서를 주의할 것
+	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	return 0;
 }
 void Client::CEffect::Render_Object(void)
 {
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	NULL_CHECK(pEffect);
+	Engine::Safe_AddRef(pEffect);
 
-	m_pTextureCom->Render_Texture((_uint)m_fFrame);
+	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	pEffect->Begin(NULL, 0);
+	pEffect->BeginPass(0);
+
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pEffect->EndPass();
+	pEffect->End();
 
+	Engine::Safe_Release(pEffect);
 }

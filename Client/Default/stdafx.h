@@ -16,7 +16,7 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
-
+#include "fmod.h"
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 #include <d3d9.h>
@@ -29,7 +29,7 @@
 #include <functional>
 #include <ctime>
 
-
+#include <io.h>
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC

@@ -1,5 +1,8 @@
-﻿  Loading.cpp
-c:\users\gmh\desktop\newclone\8th_port\reference\header\engine_macro.h(38): warning C4005: 'FAILED_CHECK_RETURN': 매크로 재정의
-  c:\users\gmh\desktop\newclone\8th_port\client\header\macro.h(37): note: 'FAILED_CHECK_RETURN'의 이전 정의를 참조하십시오.
-  Client.vcxproj -> C:\Users\GMH\Desktop\newClone\8th_Port\Client\Default\../Bin\Client.exe
+﻿  Monster.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(42): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(48): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(64): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(65): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(66): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Client.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

@@ -12,6 +12,7 @@ class CRenderer;
 class CCalculator;
 class CCollider;
 class COptimization;
+class CShader;
 
 END
 
@@ -30,6 +31,7 @@ public:
 private:
 	HRESULT		Add_Component(void);
 	void		SetUp_OnTerrain(void);
+	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 
 private:
 
@@ -37,6 +39,7 @@ private:
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
+	Engine::CShader*			m_pShaderCom = nullptr;
 
 public:
 	static CTree*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

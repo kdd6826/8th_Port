@@ -11,6 +11,7 @@ class ENGINE_DLL CNaviMesh : public CMesh
 {
 private:
 	explicit CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath);
 	explicit CNaviMesh(const CNaviMesh& rhs);
 	virtual ~CNaviMesh(void);
 
@@ -19,6 +20,7 @@ public:
 
 public:
 	HRESULT		Ready_NaviMeshes(void);
+	HRESULT		Ready_NaviMeshes(const _tchar* pFilePath);
 	void		Render_NaviMeshes(void);
 
 	_vec3			Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir);
@@ -32,6 +34,7 @@ private:
 
 public:
 	static CNaviMesh*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CNaviMesh*		Create(LPDIRECT3DDEVICE9 pGraphicDev,const _tchar* pFilePath);
 	virtual CComponent*		Clone(void);
 	virtual void			Free(void);
 

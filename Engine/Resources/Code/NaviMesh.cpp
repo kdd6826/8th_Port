@@ -5,7 +5,13 @@ Engine::CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMesh(pGraphicDev)
 	, m_dwIndex(0)
 {
-	
+
+}
+
+CNaviMesh::CNaviMesh(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath)
+	: CMesh(pGraphicDev)
+	, m_dwIndex(0)
+{
 }
 
 Engine::CNaviMesh::CNaviMesh(const CNaviMesh& rhs)
@@ -24,9 +30,49 @@ Engine::CNaviMesh::~CNaviMesh(void)
 
 HRESULT Engine::CNaviMesh::Ready_NaviMeshes(void)
 {
-	TCHAR szDataPath[MAX_PATH] = L"../Bin/save.dat";
+	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveNaviCollo.dat";
 
 	HANDLE hFile = CreateFile(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+	DWORD dwByte = 0;
+	DWORD dwstrByte = 0;
+
+	bool endCheck = false;
+	while (true)
+	{
+		bool sphereOverlap = false;
+		_vec3 vecPos[3];
+		for (int i = 0; i < 3; i++)
+		{
+			ReadFile(hFile, &vecPos[i], sizeof(_vec3), &dwByte, nullptr); //세모 꼭짓점 3개 벡터 가져와주고
+
+			if (0 == dwByte)
+			{
+				endCheck = true;
+				break;
+			}
+		}
+		if (endCheck)
+			break;
+		Engine::CCell* pCell = nullptr;
+		pCell = Engine::CCell::Create(m_pGraphicDev, m_vecCell.size(), &vecPos[0], &vecPos[1], &vecPos[2]);
+		NULL_CHECK_RETURN(pCell);
+		m_vecCell.push_back(pCell);
+
+	}
+	CloseHandle(hFile);
+
+	FAILED_CHECK_RETURN(Link_Cell(), E_FAIL);
+	return S_OK;
+}
+
+HRESULT CNaviMesh::Ready_NaviMeshes(const _tchar* pFilePath)
+{
+	//TCHAR szDataPath[MAX_PATH] = L"../Bin/saveNaviCollo.dat";
+
+	HANDLE hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return E_FAIL;
@@ -68,11 +114,11 @@ void CNaviMesh::Render_NaviMeshes(void)
 		iter->Render_Cell();
 }
 
-_vec3 CNaviMesh::Move_OnNaviMesh(const _vec3 * pTargetPos, const _vec3 * pTargetDir)
+_vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir)
 {
-	_vec3		vEndPos = *pTargetPos + *pTargetDir;
+  	_vec3		vEndPos = *pTargetPos + *pTargetDir;
 
-	if (CCell::MOVE == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
+ 	if (CCell::MOVE == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
 		return vEndPos;
 
 	else if (CCell::STOP == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
@@ -85,13 +131,13 @@ HRESULT Engine::CNaviMesh::Link_Cell(void)
 	{
 		for (_ulong j = 0; j < m_vecCell.size(); ++j)
 		{
-			if(i == j)
+			if (i == j)
 				continue;
 
 			if (nullptr == m_vecCell[i]->Get_Neighbor(CCell::NEIGHBOR_AB) &&
 				true == m_vecCell[j]->Compare_Point(m_vecCell[i]->Get_Point(CCell::POINT_A),
-													m_vecCell[i]->Get_Point(CCell::POINT_B),	
-													m_vecCell[i]))
+					m_vecCell[i]->Get_Point(CCell::POINT_B),
+					m_vecCell[i]))
 			{
 				m_vecCell[i]->Set_Neighbor(CCell::NEIGHBOR_AB, m_vecCell[j]);
 				continue;
@@ -99,8 +145,8 @@ HRESULT Engine::CNaviMesh::Link_Cell(void)
 
 			if (nullptr == m_vecCell[i]->Get_Neighbor(CCell::NEIGHBOR_BC) &&
 				true == m_vecCell[j]->Compare_Point(m_vecCell[i]->Get_Point(CCell::POINT_B),
-													m_vecCell[i]->Get_Point(CCell::POINT_C),
-													m_vecCell[i]))
+					m_vecCell[i]->Get_Point(CCell::POINT_C),
+					m_vecCell[i]))
 			{
 				m_vecCell[i]->Set_Neighbor(CCell::NEIGHBOR_BC, m_vecCell[j]);
 				continue;
@@ -108,8 +154,8 @@ HRESULT Engine::CNaviMesh::Link_Cell(void)
 
 			if (nullptr == m_vecCell[i]->Get_Neighbor(CCell::NEIGHBOR_CA) &&
 				true == m_vecCell[j]->Compare_Point(m_vecCell[i]->Get_Point(CCell::POINT_C),
-													m_vecCell[i]->Get_Point(CCell::POINT_A),
-													m_vecCell[i]))
+					m_vecCell[i]->Get_Point(CCell::POINT_A),
+					m_vecCell[i]))
 			{
 				m_vecCell[i]->Set_Neighbor(CCell::NEIGHBOR_CA, m_vecCell[j]);
 				continue;
@@ -117,15 +163,25 @@ HRESULT Engine::CNaviMesh::Link_Cell(void)
 
 		}
 	}
-	
+
 	return S_OK;
 }
 
 Engine::CNaviMesh* Engine::CNaviMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CNaviMesh*		pInstance = new CNaviMesh(pGraphicDev);
+	CNaviMesh* pInstance = new CNaviMesh(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_NaviMeshes()))
+		Safe_Release(pInstance);
+
+	return pInstance;
+}
+
+CNaviMesh* CNaviMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFilePath)
+{
+	CNaviMesh* pInstance = new CNaviMesh(pGraphicDev, pFilePath);
+
+	if (FAILED(pInstance->Ready_NaviMeshes(pFilePath)))
 		Safe_Release(pInstance);
 
 	return pInstance;

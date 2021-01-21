@@ -13,6 +13,16 @@ Engine::CLightMgr::~CLightMgr(void)
 	Free();
 }
 
+const D3DLIGHT9 * CLightMgr::Get_Light(const _uint & iIndex)
+{
+	auto	iter = m_LightList.begin();
+
+	for (_uint i = 0; i < iIndex; ++i)
+		++iter;
+	
+	return (*iter)->Get_Light();
+}
+
 HRESULT Engine::CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex)
 {
 	CLight*		pLight = CLight::Create(pGraphicDev, pLightInfo, iIndex);
@@ -21,6 +31,12 @@ HRESULT Engine::CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DL
 	m_LightList.push_back(pLight);
 
 	return S_OK;
+}
+
+void Engine::CLightMgr::Render_Light(LPD3DXEFFECT & pEffect)
+{
+	for (auto& iter : m_LightList)
+		iter->Render_Light(pEffect);
 }
 
 void Engine::CLightMgr::Free(void)

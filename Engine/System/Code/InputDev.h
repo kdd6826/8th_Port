@@ -1,6 +1,8 @@
 #ifndef InputDev_h__
 #define InputDev_h__
 
+#define RANGE_OF_KEYS 256
+#define dfINPUT_LIFE_FRAME 2
 #include "Engine_Define.h"
 #include "Base.h"
 
@@ -10,6 +12,8 @@ class ENGINE_DLL CInputDev : public CBase
 {
 	DECLARE_SINGLETON(CInputDev)
 
+
+
 private:
 	explicit CInputDev(void);
 	virtual ~CInputDev(void);
@@ -18,7 +22,8 @@ public:
 	_byte	Get_DIKeyState(_ubyte byKeyID) { return m_byKeyState[byKeyID]; }
 
 	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouse) { return m_tMouseState.rgbButtons[eMouse]; }
-	
+
+
 	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState)
 	{
 		return *(((_long*)&m_tMouseState) + eMouseState);
@@ -40,6 +45,9 @@ private:
 	_byte					m_byKeyState[256];
 	DIMOUSESTATE			m_tMouseState;
 
+private:
+
+public:
 public:
 	virtual void	Free(void);
 

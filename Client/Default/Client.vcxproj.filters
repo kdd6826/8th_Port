@@ -55,9 +55,6 @@
     <Filter Include="02. GameObject\01. Stage\00. Terrain">
       <UniqueIdentifier>{ed11e66c-57c4-4ef6-a18e-1c388742b659}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\01. Player">
-      <UniqueIdentifier>{ffc15c7e-d4b7-4f70-9b86-57fc12ded1e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Public">
       <UniqueIdentifier>{c2c6d62a-edca-4e8f-8f02-21eebea93c21}</UniqueIdentifier>
     </Filter>
@@ -67,9 +64,6 @@
     <Filter Include="02. GameObject\01. Stage\01. SkyBox">
       <UniqueIdentifier>{b31838b3-b35f-44cb-9c87-1365b2987d00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\02. Monster">
-      <UniqueIdentifier>{fa6b4915-cecb-40a6-9eed-252997339b14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Stage\03. Stone">
       <UniqueIdentifier>{9ca9802c-94fd-45f3-8163-49d2396cdb9f}</UniqueIdentifier>
     </Filter>
@@ -77,13 +71,67 @@
       <UniqueIdentifier>{f1cd01c4-b0c1-4441-8e88-75857e621480}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. Stage\05. Tree">
-      <UniqueIdentifier>{2f3094b5-b57d-4610-bfbf-d92554bb16ec}</UniqueIdentifier>
+      <UniqueIdentifier>{ca7f7dbb-adc0-4cc2-a447-888acecde2b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. Stage\06. Effect">
-      <UniqueIdentifier>{1026821e-213a-454c-a6a1-edd29cc14ee9}</UniqueIdentifier>
+      <UniqueIdentifier>{c8b12635-96a8-428c-a754-144bfeb9a9ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Stage\07. StaticObject">
-      <UniqueIdentifier>{7c632b66-f3d2-4b32-9759-b3bdae5f38c3}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. Stage\07. UI">
+      <UniqueIdentifier>{05bc395a-b034-4f5e-8b39-a3469d92ae66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\99. StaticObject">
+      <UniqueIdentifier>{5617e660-383b-457a-9312-bff30573ffca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\00. HpBar">
+      <UniqueIdentifier>{afd1bf34-2a18-4a98-8517-c699b4c44fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\01. StaminaBar">
+      <UniqueIdentifier>{49e7f275-0a5c-4e6b-88f0-d09b44c7e0ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\02. SpBar">
+      <UniqueIdentifier>{01889ca6-6062-4944-83d7-762d213cef18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit">
+      <UniqueIdentifier>{86a4aed0-b479-4ec6-8ca4-b1808b61a7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\01. Player">
+      <UniqueIdentifier>{ffc15c7e-d4b7-4f70-9b86-57fc12ded1e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster">
+      <UniqueIdentifier>{3f3a261b-c4b9-4a8c-ab89-d051ac1a7e9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\00.Dog">
+      <UniqueIdentifier>{775004a5-1bc2-4c3e-8637-66b6a010c65b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\01.Titian">
+      <UniqueIdentifier>{59a175a9-baa9-47f6-b200-cc164ed071d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells">
+      <UniqueIdentifier>{4b722e47-8d0d-460d-a97c-7d04f79018f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion">
+      <UniqueIdentifier>{bcab0aa7-71d8-4ca0-8e3c-8c0d661277fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\03. SkillSlot">
+      <UniqueIdentifier>{f7d4c20f-7121-467a-a1da-0d7f462c31dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\04. BossHpBar">
+      <UniqueIdentifier>{cee1fdd1-f1be-4413-96ee-2dca3c5e0bf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\08. Particle">
+      <UniqueIdentifier>{07f39377-ce50-47e5-bee1-a41aaa0f20c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\06. Effect\Player">
+      <UniqueIdentifier>{54a48bcb-e186-4a7e-8e1b-5c24c8096de6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\06. Effect\CollisionEffect">
+      <UniqueIdentifier>{5e393a70-8b1f-4907-8d39-ab2b11b966df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\98. SphereCollider">
+      <UniqueIdentifier>{e767e0ef-cd77-4409-aa54-ace134be7814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\97. SoundManager">
+      <UniqueIdentifier>{4f1b1727-b019-49bf-89b7-96e2ff3651d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +171,6 @@
     <ClInclude Include="..\Code\TestPlayer.h">
       <Filter>02. GameObject\00. Logo\01. TestPlayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\TestMonster.h">
-      <Filter>02. GameObject\00. Logo\02. TestMonster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Stage.h">
       <Filter>01. Scene\01. Stage</Filter>
     </ClInclude>
@@ -136,16 +181,13 @@
       <Filter>02. GameObject\01. Stage\00. Terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Player.h">
-      <Filter>02. GameObject\01. Stage\01. Player</Filter>
+      <Filter>02. GameObject\01. Stage\01. Unit\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\DynamicCamera.h">
       <Filter>02. GameObject\02. Public\00. DynamicCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SkyBox.h">
       <Filter>02. GameObject\01. Stage\01. SkyBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Monster.h">
-      <Filter>02. GameObject\01. Stage\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Stone.h">
       <Filter>02. GameObject\01. Stage\03. Stone</Filter>
@@ -160,7 +202,118 @@
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\StaticObject.h">
-      <Filter>02. GameObject\01. Stage\07. StaticObject</Filter>
+      <Filter>02. GameObject\01. Stage\99. StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Dog.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\00.Dog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Titan.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\01.Titian</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\HpBarBack.h">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\HpBarValue.h">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SpBarBack.h">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SpBarValue.h">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaminaBarValue.h">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaminaBarBack.h">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SphereCollider.h">
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderMgr.h">
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TestMonster.h">
+      <Filter>02. GameObject\00. Logo\02. TestMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Unit.h">
+      <Filter>02. GameObject\01. Stage\01. Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Monster.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Zecallion.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkillSlot.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkillDkTransform2.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkillDkTransform.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill2.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill1.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill0.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Skill4.h">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Stage2.h">
+      <Filter>01. Scene\01. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossHpBarRed.h">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossHpBarOrange.h">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossHpBarHit.h">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossHpBarGreen.h">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BossHpBarBase.h">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DamageFont.h">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Ingkells.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Particle.h">
+      <Filter>02. GameObject\01. Stage\08. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SwordTrail.h">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ConfusionHole.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ConfusionHole2.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RuinBlade.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CollisionEffect.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\CollisionEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoundManager.h">
+      <Filter>02. GameObject\97. SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SlashPoint.h">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +335,6 @@
     <ClCompile Include="..\Code\TestPlayer.cpp">
       <Filter>02. GameObject\00. Logo\01. TestPlayer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TestMonster.cpp">
-      <Filter>02. GameObject\00. Logo\02. TestMonster</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Stage.cpp">
       <Filter>01. Scene\01. Stage</Filter>
     </ClCompile>
@@ -195,16 +345,13 @@
       <Filter>02. GameObject\01. Stage\00. Terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
-      <Filter>02. GameObject\01. Stage\01. Player</Filter>
+      <Filter>02. GameObject\01. Stage\01. Unit\01. Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
       <Filter>02. GameObject\02. Public\00. DynamicCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. GameObject\01. Stage\01. SkyBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. GameObject\01. Stage\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Stone.cpp">
       <Filter>02. GameObject\01. Stage\03. Stone</Filter>
@@ -219,7 +366,118 @@
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\StaticObject.cpp">
-      <Filter>02. GameObject\01. Stage\07. StaticObject</Filter>
+      <Filter>02. GameObject\01. Stage\99. StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Dog.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\00.Dog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Titan.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\01.Titian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HpBarBack.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HpBarValue.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\00. HpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBarBack.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBarValue.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\02. SpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaminaBarValue.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaminaBarBack.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\01. StaminaBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SphereCollider.cpp">
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderMgr.cpp">
+      <Filter>02. GameObject\01. Stage\98. SphereCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestMonster.cpp">
+      <Filter>02. GameObject\00. Logo\02. TestMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Unit.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Zecallion.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\03. Zecallion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillSlot.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillDkTransform2.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillDkTransform.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill2.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill1.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill0.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skill4.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\03. SkillSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage2.cpp">
+      <Filter>01. Scene\01. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossHpBarRed.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossHpBarOrange.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossHpBarHit.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossHpBarGreen.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossHpBarBase.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\04. BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DamageFont.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ingkells.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\02. Ingkells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Particle.cpp">
+      <Filter>02. GameObject\01. Stage\08. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SwordTrail.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ConfusionHole.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ConfusionHole2.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RuinBlade.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CollisionEffect.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\CollisionEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundManager.cpp">
+      <Filter>02. GameObject\97. SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SlashPoint.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

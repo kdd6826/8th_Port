@@ -8,11 +8,11 @@
 #include "RcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
-#include "Sphere.h"
-#include "ObjSphere.h"
-#include "TerrainTriCol.h"
-
+#include "CollSphere.h"
+#include "PtTex.h"
+#include "TestTrail.h"
 #include "Texture.h"
+#include "TrailBuffer.h"
 
 #include "StaticMesh.h"
 #include "DynamicMesh.h"
@@ -36,7 +36,8 @@ public:
 							BUFFERID eID, 
 							_ulong dwCntX = 1, 
 							_ulong dwCntZ = 1, 
-							_ulong dwItv = 1);
+							_ulong dwItv = 1,
+							_ulong dwVtxMax = 1);
 
 	HRESULT		Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev,
 							const _ushort& wContainerIdx,
@@ -56,8 +57,6 @@ public:
 	void		Render_Buffer(const _ushort& wContainerIdx, const _tchar* pBufferTag);
 	void		Render_Texture(const _ushort& wContainerIdx, const _tchar* pTextureTag, const _uint& iIndex);
 	CComponent*	Clone(const _ushort& wContainerIdx, const _tchar* pResourcesTag);
-
-	Engine::CComponent* Create_TerrainCol(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vtxPos1, _vec3 vtxPos2, _vec3 vtxPos3);
 
 private:
 	CResources*		Find_Resources(const _ushort& wContainerIdx, const _tchar* pResourcesTag);

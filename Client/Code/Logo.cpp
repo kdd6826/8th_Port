@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 
 #include "Stage.h"
-
+#include "Stage2.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -20,6 +20,8 @@ HRESULT CLogo::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_UI_Layer(L"UI"), E_FAIL);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
@@ -72,39 +74,35 @@ HRESULT CLogo::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer", pGameObject), E_FAIL);
 
-	pGameObject = CTestMonster::Create(m_pGraphicDev);
+	pGameObject = CTestUnit::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestMonster", pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestUnit", pGameObject), E_FAIL);*/
 
 	
 	m_mapLayer.emplace(pLayerTag, pLayer);
 	
 	return S_OK;
-
-	/*pGameObject = CBackGround::Create(m_pGraphicDev);
-	if (nullptr == pGameObject)
-		goto except;
-	
-	if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
-		goto except;
-	
-	m_mapLayer.emplace(pLayerTag, pLayer);
-
-	return S_OK;
-
-except:
-	Client::Safe_Release(pLayer);
-
-	return E_FAIL;*/
 }
 
 HRESULT CLogo::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 {
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+	m_mapLayer.emplace(pLayerTag, pLayer);
+
 	return S_OK;
 }
 
 HRESULT CLogo::Ready_UI_Layer(const _tchar * pLayerTag)
 {
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+	m_mapLayer.emplace(pLayerTag, pLayer);
+
 	return S_OK;
 }
 
@@ -114,7 +112,8 @@ HRESULT Client::CLogo::Ready_Resource(Engine::RESOURCETYPE eType)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_TriCol", Engine::BUFFER_TRICOL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_RcTex", Engine::BUFFER_RCTEX), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev, Engine::RESOURCE_STATIC, L"Buffer_Trail", Engine::BUFFER_TEMPTRAIL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/HeroesLogo.jpg"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_LOGO, L"Texture_Player", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg"), E_FAIL);
 
 	Engine::CComponent*		pComponent = nullptr;
@@ -122,6 +121,14 @@ HRESULT Client::CLogo::Ready_Resource(Engine::RESOURCETYPE eType)
 	pComponent = Engine::CTransform::Create();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Transform", pComponent);
+
+	pComponent = Engine::CPlayerState::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_PlayerState", pComponent);
+
+	pComponent = Engine::CMonsterState::Create();
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_MonsterState", pComponent);
 
 
 	return S_OK;

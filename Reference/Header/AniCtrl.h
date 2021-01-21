@@ -21,7 +21,7 @@ public:
 	HRESULT			Ready_AnimationCtrl(void);
 
 	void			Set_AnimationSet(const _uint& iIndex);
-
+	_double			Get_AnimationPeriod(const _uint& iIndex);
 	void			Play_Animation(const _float& fTimeDelta);
 
 private:

@@ -5,6 +5,7 @@ USING(Engine)
 Engine::CTransform::CTransform(void)
 	: m_vScale(1.f, 1.f, 1.f)
 	, m_vAngle(0.f, 0.f, 0.f)
+	, m_vDirection(0.f,0.f,1.f)
 {
 	ZeroMemory(m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
@@ -13,6 +14,7 @@ Engine::CTransform::CTransform(void)
 Engine::CTransform::CTransform(const CTransform& rhs)
 	: m_vScale(rhs.m_vScale)
 	, m_vAngle(rhs.m_vAngle)
+	, m_vDirection(rhs.m_vDirection)
 {
 	for (_uint i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
@@ -56,17 +58,19 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 
 
 	// 회전 적용
-	_matrix		matRot[ROT_END];
+	/*_matrix		matRot[ROT_END];
 	D3DXMatrixRotationX(&matRot[ROT_X], m_vAngle.x);
 	D3DXMatrixRotationY(&matRot[ROT_Y], m_vAngle.y);
 	D3DXMatrixRotationZ(&matRot[ROT_Z], m_vAngle.z);
+	
+
+
+	m_matRotation = matRot[ROT_X] * matRot[ROT_Y] * matRot[ROT_Z];*/
+	D3DXMatrixRotationYawPitchRoll(&m_matRotation, m_vAngle.y, m_vAngle.x, m_vAngle.z);
 
 	for (_uint i = 0; i < INFO_POS; ++i)
 	{
-		for (_uint j = 0; j < ROT_END; ++j)
-		{
-			D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRot[j]);
-		}
+		D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &m_matRotation);
 	}
 
 	/*CPipeline::MyRotationX(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT], m_vAngle.x);
@@ -124,6 +128,14 @@ void CTransform::Get_Info(INFO eType, _vec3 * pInfo)
 	memcpy(pInfo, &m_matWorld.m[eType][0], sizeof(_vec3));
 }
 
+void CTransform::Set_Info(INFO eType, _vec3 pInfo)
+{
+	m_matWorld.m[eType][0] = pInfo.x;
+	m_matWorld.m[eType][1] = pInfo.y;
+	m_matWorld.m[eType][2] = pInfo.z;
+	/*m_matWorld.m[eType][3] = pInfo.x;*/
+}
+
 void CTransform::Move_Pos(const _vec3 * const pDir)
 {
 	m_vInfo[INFO_POS] += *pDir;
@@ -149,9 +161,52 @@ void CTransform::Set_Pos(const _vec3* pPos)
 	m_vInfo[INFO_POS] = *pPos;
 }
 
+_vec3 CTransform::Get_Dir()
+{
+	return m_vDirection;
+
+}
+void CTransform::Set_Dir(const _vec3* pDir)
+{
+	D3DXVec3Normalize(&m_vDirection, pDir);
+}
+
+
+
+void CTransform::Set_Pos(const _float & fX, const _float & fY, const _float & fZ)
+{
+	m_vInfo[INFO_POS].x = fX;
+	m_vInfo[INFO_POS].y = fY;
+	m_vInfo[INFO_POS].z = fZ;
+
+}
+
 void CTransform::Rotation(ROTATION eType, const _float & fAngle)
 {
 	*(((_float*)&m_vAngle) + eType) += fAngle;
+}
+
+void CTransform::Set_Rotation(ROTATION eType, const _float& fAngle)
+{
+	*(((_float*)&m_vAngle) + eType) = fAngle;
+}
+
+void CTransform::Set_AnimRotation(ROTATION eType, const _float& fAngle)
+{
+	if(*(((_float*)&m_vAngle) + eType )> fAngle)
+	*(((_float*)&m_vAngle) + eType) -= fAngle;
+	else
+	*(((_float*)&m_vAngle) + eType) += fAngle;
+}
+
+_vec3 CTransform::Get_Rotation()
+{
+	return m_vAngle;
+}
+
+void CTransform::Set_WorldMatrix(const _matrix * pMatrix)
+{
+	m_matWorld = *pMatrix;
 }
 
 void CTransform::Set_ParentMatrix(const _matrix * pParent)

@@ -1,136 +1,151 @@
 #include "stdafx.h"
 #include "Monster.h"
 #include "Export_Function.h"
-
+#include "ColliderMgr.h"
+#include "Player.h"
+#include "DynamicCamera.h"
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
+	: CUnit(pGraphicDev)
 {
 
 }
 
 CMonster::~CMonster(void)
 {
-
+	for (auto& iterator = m_vecSlashPoint.begin(); iterator != m_vecSlashPoint.end(); ++iterator)
+	{
+		//Engine::Safe_Delete_Array(*iterator);
+		Engine::Safe_Release(*iterator);
+	}
+	for (auto& iterator = m_vecDamageFont.begin(); iterator != m_vecDamageFont.end(); ++iterator)
+	{
+		//Engine::Safe_Delete_Array(*iterator);
+		Engine::Safe_Release(*iterator);
+	}
 }
 
-Client::_vec3 Client::CMonster::PickUp_OnTerrain(void)
+_int CMonster::Update_Object(const _float& fTimeDelta)
 {
-	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
-	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3(0.f, 0.f, 0.f));
-
-	Engine::CTransform*		pTerrainTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Transform", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pTerrainTransformCom, _vec3(0.f, 0.f, 0.f));
-
-	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
-}
-
-HRESULT Client::CMonster::Add_Component(void)
-{
-	Engine::CComponent*		pComponent = nullptr;
-
-	// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
-
-	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Monster"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-
-	// Transform
-	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
-
-	// Renderer
-	pComponent = m_pRendererCom = Engine::Get_Renderer();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Safe_AddRef(pComponent);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
-
-	// Calculator
-	pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
-
+	CUnit::Update_Object(fTimeDelta);
+	for (auto& slash : m_vecSlashPoint)
+	{
+		slash->Update_Object(fTimeDelta);
+	}
+	for (auto& font : m_vecDamageFont)
+	{
+		font->Update_Object(fTimeDelta);
+	}
 	return S_OK;
 }
 
-CMonster* CMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+void CMonster::OnCollision(Engine::CGameObject* target)
 {
-	CMonster*	pInstance = new CMonster(pGraphicDev);
+	_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+	dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
+	//무적이아닐때
+	if (!isInvincible)
+	{
+		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
+		m_pStateCom->stat.hp -= dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
+		Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+		
+		pPlayerStateCom->stat.sp += 20.f;
+		if (pPlayerStateCom->stat.sp > pPlayerStateCom->stat.maxSp)
+			pPlayerStateCom->stat.sp = pPlayerStateCom->stat.maxSp;
 
-	if (FAILED(pInstance->Ready_Object()))
-		Client::Safe_Release(pInstance);
+		// 피격효과
+		CSlashPoint* slashPoint = CSlashPoint::Create(m_pGraphicDev);
+		_vec3 vMonsterPos;
+		int i = rand() % 10;
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMonsterPos);
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vMonsterPos;
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.5f;
+		//rand
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].x += -0.3f+i*0.06;
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += -0.3f + i*0.06;
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].z += -0.3f + i*0.06;
+		m_vecSlashPoint.emplace_back(slashPoint);
+		//
 
-	return pInstance;
+		// Damagefont
+		CDamageFont* damageFont = CDamageFont::Create(m_pGraphicDev);
+		
+		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos;
+		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].y += 0.5f;
+		m_vecDamageFont.emplace_back(damageFont);
+
+		CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+		_vec3 pCamAt = pCamera->Get_At();
+		_vec3 pCamEye = pCamera->Get_Eye();
+		_vec3 pCamLook = pCamAt - pCamEye;
+		_vec3 worldUp = { 0.f,1.f,0.f };
+		_vec3 vCamRight;
+		D3DXVec3Normalize(&pCamLook, &pCamLook);
+		D3DXVec3Cross(&vCamRight, &pCamLook, &worldUp);
+		
+		damageFont = CDamageFont::Create(m_pGraphicDev);
+		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos+vCamRight*0.2f;
+		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].y += 0.5f;
+		/*damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x -= 0.2f;*/
+		m_vecDamageFont.emplace_back(damageFont);
+
+		damageFont = CDamageFont::Create(m_pGraphicDev);
+		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos - vCamRight*0.2f;
+		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].y += 0.5f;
+		/*damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.2f;*/
+		m_vecDamageFont.emplace_back(damageFont);
+		//
+	}
+	//사망
+	if (m_pStateCom->stat.hp <= 0 && isDie == false)
+	{
+		
+		isDie = true;
+		
+	}
+
 }
+
+HRESULT CMonster::Add_Component(void)
+{
+	CUnit::Add_Component();
+	Engine::CComponent* pComponent = nullptr;
+
+
+	// state
+	pComponent = m_pStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Clone(L"Proto_MonsterState"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_MonsterState", pComponent);
+	return S_OK;
+}
+
+bool CMonster::PlayerSearch(_vec3 _MonsterPos)
+{
+	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+	_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
+	if (pPlayerTransCom == nullptr)
+		return false;
+	_float distX = playerPos.x - _MonsterPos.x;
+	_float distZ = playerPos.z - _MonsterPos.z;
+
+	disPlayer = sqrt(distX * distX + distZ * distZ);
+
+	if (isSearch == true)
+		return true;
+	if (disPlayer < 2.f)
+		return true;
+	
+
+
+
+	return false;
+}
+
+
+
 
 void CMonster::Free(void)
 {
-	Engine::CGameObject::Free();
+	CUnit::Free();
 }
 
-
-HRESULT Client::CMonster::Ready_Object(void)
-{
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Pos(&_vec3(rand() % 100 + 1.f, 0.f, rand() % 100 + 1.f));
-
-	return S_OK;
-}
-Client::_int Client::CMonster::Update_Object(const _float& fTimeDelta)
-{
-
-	//SetUp_OnTerrain();
-
-	Engine::CGameObject::Update_Object(fTimeDelta);
-
-	_matrix		matWorld, matBill, matView;
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
-
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, 0, &matBill);	// 카메라 회전상태의 역행렬
-
-	// 주의 사항(지금은 문제가 없는 상황)
-	m_pTransformCom->m_matWorld = matBill * matWorld;
-
-	// 문제 상황의 이유 : (회전^-1) * (크기) *  (회전) * (이동)
-
-
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
-
-	return 0;
-}
-void Client::CMonster::Render_Object(void)
-{
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pTextureCom->Render_Texture(0);
-	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
-}
-void Client::CMonster::SetUp_OnTerrain(void)
-{
-	_vec3	vPosition;
-	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPosition);
-
-	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
-	NULL_CHECK(pTerrainBufferCom);
-
-	_float fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPosition, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ, VTXITV);
-
-	m_pTransformCom->Move_Pos(vPosition.x, fHeight + 1.f, vPosition.z);
-}

@@ -1,0 +1,14 @@
+0. BlackHole
+1. DiffusionShift
+2. EnergyBall
+3. FeastOfBlade
+4. illusion
+5. Lord of Mana
+6. Ruin Blade
+7. Slow
+8. TimeLeap
+
+0둠세이어
+1마나이미지
+2루블
+4 로오마

@@ -13,6 +13,8 @@ Engine::CFontMgr::~CFontMgr(void)
 	Free();
 }
 
+
+
 HRESULT Engine::CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontTag, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
 	CFont*		pFont = nullptr;

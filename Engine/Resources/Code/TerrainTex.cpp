@@ -76,7 +76,7 @@ HRESULT Engine::CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dw
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
 
 
-	m_hFile = CreateFile(L"../Bin/Resource/Texture/Terrain/Height2.bmp", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	m_hFile = CreateFile(L"../Bin/Resource/Texture/Terrain/Height.bmp", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
 	_ulong	dwByte = 0;
 
@@ -109,8 +109,8 @@ HRESULT Engine::CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dw
 			
 			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
 			
-			pVertex[dwIndex].vTexUV = _vec2(_float(j) / (dwCntX - 1) * 20.f,  
-											_float(i) / (dwCntZ - 1) * 20.f);
+			pVertex[dwIndex].vTexUV = _vec2(_float(j) / (dwCntX - 1) ,  
+											_float(i) / (dwCntZ - 1));
 		}
 	}
 		

@@ -23,9 +23,19 @@ HRESULT Client::CTerrain::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Terrain2"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+
+	// filtertexture
+	pComponent = m_pFilterCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Filter"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Filter", pComponent);
+
+	// Auratexture
+	pComponent = m_pAuraCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Aura"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Aura", pComponent);
 
 	// Renderer
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
@@ -38,10 +48,16 @@ HRESULT Client::CTerrain::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
-	// Optimization
-	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	//// Optimization
+	//pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+
+	// Shader
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Terrain"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+
 
 	return S_OK;
 }
@@ -76,11 +92,11 @@ _int Client::CTerrain::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	m_pOptimizationCom->Is_InFrustumForTerrain(m_pBufferCom->Get_VtxPos(), 
-												m_pBufferCom->Get_VtxCntX(),
-												m_pBufferCom->Get_VtxCntZ(), 
-												m_pIndex, 
-												&m_dwTriCnt);
+	//m_pOptimizationCom->Is_InFrustumForTerrain(m_pBufferCom->Get_VtxPos(), 
+	//											m_pBufferCom->Get_VtxCntX(),
+	//											m_pBufferCom->Get_VtxCntZ(), 
+	//											m_pIndex, 
+	//											&m_dwTriCnt);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -88,38 +104,93 @@ _int Client::CTerrain::Update_Object(const _float& fTimeDelta)
 }
 void CTerrain::Render_Object(void)
 {
-	m_pTransformCom->Set_Transform(m_pGraphicDev);
+	// m_pBufferCom->Copy_Indices(m_pIndex, m_dwTriCnt);
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
+	NULL_CHECK(pEffect);
+	Engine::Safe_AddRef(pEffect);
 
-	m_pTextureCom->Render_Texture(0);
+	_uint	iMaxPass = 0;
 
-	FAILED_CHECK_RETURN(SetUp_Material(), );
-	
-	m_pBufferCom->Copy_Indices(m_pIndex, m_dwTriCnt);
+	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
+	pEffect->BeginPass(0);
+
+	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	pEffect->EndPass();
+	pEffect->End();
+
+	Engine::Safe_Release(pEffect);
 
 }
 
-HRESULT Client::CTerrain::SetUp_Material(void)
+HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
+	_matrix		matWorld, matView, matProj;
 
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	pEffect->SetMatrix("g_matWorld", &matWorld);
+	pEffect->SetMatrix("g_matView", &matView);
+	pEffect->SetMatrix("g_matProj", &matProj);
+
+	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture");
+	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture1", 1);
+	m_pFilterCom->Set_Texture(pEffect, "g_FilterTexture");
+
+	//m_pAuraCom->Set_Texture(pEffect, "g_AuraTexture");
+
+	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+
+	pEffect->SetVector("g_vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+
+	pEffect->SetVector("g_LightDiffuse", (_vec4*)&pLightInfo->Diffuse);
+	//pEffect->SetVector("g_LightSpecular", (_vec4*)&pLightInfo->Specular);
+	pEffect->SetVector("g_LightAmbient", (_vec4*)&pLightInfo->Ambient);
+		
 	D3DMATERIAL9			tMtrlInfo;
 	ZeroMemory(&tMtrlInfo, sizeof(D3DMATERIAL9));
-
-
+	
 	tMtrlInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tMtrlInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrlInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	tMtrlInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tMtrlInfo.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	tMtrlInfo.Power = 0.f;
+	tMtrlInfo.Power = 20.f;//20.f;
+	
+	pEffect->SetVector("g_MtrlDiffuse", (_vec4*)&tMtrlInfo.Diffuse);
+	//pEffect->SetVector("g_MtrlSpecular", (_vec4*)&tMtrlInfo.Specular);
+	pEffect->SetVector("g_MtrlAmbient", (_vec4*)&tMtrlInfo.Ambient);
 
-	m_pGraphicDev->SetMaterial(&tMtrlInfo);
+	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
 
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	_vec4	vCamPos;
+	memcpy(&vCamPos, &matView.m[3][0], sizeof(_vec4));
+
+	pEffect->SetVector("g_vCamPos", &vCamPos);
+
+	_float	fDetail = 20.f;
+
+	pEffect->SetFloat("g_fDetail", fDetail);
+	
+#pragma region Aura
+	
+	Engine::CTransform*	pPlayerTransform = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerTransform, E_FAIL);
+	
+	_vec3		vPlayerPos;
+	pPlayerTransform->Get_Info(Engine::INFO_POS, &vPlayerPos);
+
+	pEffect->SetVector("g_vPlayerPos", &_vec4(vPlayerPos, 1.f));
+
+	_float	fRange = 3.f;
+	pEffect->SetFloat("g_fRange", fRange);
+#pragma endregion Aura
+	
 	return S_OK;
 }
