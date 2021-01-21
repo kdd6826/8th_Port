@@ -87,7 +87,7 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		int oi = rand() % 10;
 		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
 		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = -0.1f;
+		damageFont->offsetX = -0.2f;
 		damageFont->count = oi;
 		/*m_vecDamageFont.emplace_back(damageFont);*/
 		fontParent->m_vecDamageFont.emplace_back(damageFont);
@@ -96,7 +96,7 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
 		oi = rand() % 10;
 		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = 0.f;
+		damageFont->offsetX = -0.08f;
 		damageFont->count = oi;
 		/*m_vecDamageFont.emplace_back(damageFont);*/
 		fontParent->m_vecDamageFont.emplace_back(damageFont);
@@ -104,7 +104,7 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
 		oi = rand() % 10;
 		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = 0.1f;
+		damageFont->offsetX = 0.04f;
 		damageFont->count = oi;
 		/*m_vecDamageFont.emplace_back(damageFont);*/
 		fontParent->m_vecDamageFont.emplace_back(damageFont);
@@ -113,8 +113,8 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
 
 		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = 0.2f;
-		damageFont->count = 9;
+		damageFont->offsetX = 0.16f;
+		damageFont->count = oi;
 		/*m_vecDamageFont.emplace_back(damageFont);*/
 		fontParent->m_vecDamageFont.emplace_back(damageFont);
 

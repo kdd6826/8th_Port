@@ -75,7 +75,13 @@ HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	int		iMaxCnt=1;
 	float	fTexCX=512.f;
 	float	fTexCY=256.f;
-	float	fDrawX=40.f*count-5.f;
+	float	fDrawX;
+	if (count != 9)
+	{
+		fDrawX = 40.f * count - 5.f;
+	}
+	else
+		fDrawX = 40.f * count;
 	float	fDrawY=0.f;
 	float	fDrawCX=24.f;
 	float	fDrawCY=24.f;
