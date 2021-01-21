@@ -1,21 +1,25 @@
 #include "stdafx.h"
-#include "DamageFont.h"
-#include "Export_Function.h"
 #include "FontParent.h"
-CDamageFont::CDamageFont(LPDIRECT3DDEVICE9 pGraphicDev)
+#include "Export_Function.h"
+#include "DamageFont.h"
+CFontParent::CFontParent(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 
 }
 
-CDamageFont::~CDamageFont(void)
+CFontParent::~CFontParent(void)
 {
-
+	for (auto& iterator = m_vecDamageFont.begin(); iterator != m_vecDamageFont.end(); ++iterator)
+	{
+		//Engine::Safe_Delete_Array(*iterator);
+		Engine::Safe_Release(*iterator);
+	}
 }
 
 
 
-HRESULT Client::CDamageFont::Add_Component(void)
+HRESULT Client::CFontParent::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 	fScale = 2.f;
@@ -46,9 +50,6 @@ HRESULT Client::CDamageFont::Add_Component(void)
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_DamageFont"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
-	//int i = rand() % 10;
-	//offsetX = -0.5f + 0.1 * i;
-
 	// Shader
 	/*pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -56,15 +57,14 @@ HRESULT Client::CDamageFont::Add_Component(void)
 	return S_OK;
 }
 
-HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+HRESULT CFontParent::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
-	_matrix		matWorld, matView, matProj,matParentWorld;
+	_matrix		matWorld, matView, matProj;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
-	
-
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	//
 	D3DXMatrixInverse(&matWorld, NULL, &matWorld);
@@ -115,9 +115,9 @@ HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	return S_OK;
 }
 
-CDamageFont* CDamageFont::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CFontParent* CFontParent::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CDamageFont*	pInstance = new CDamageFont(pGraphicDev);
+	CFontParent*	pInstance = new CFontParent(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -125,30 +125,23 @@ CDamageFont* CDamageFont::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CDamageFont::Free(void)
+void CFontParent::Free(void)
 {
 	Engine::CGameObject::Free();
 }
 
 
-HRESULT Client::CDamageFont::Ready_Object(void)
+HRESULT Client::CFontParent::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	//m_pTransformCom->Set_Pos(&_vec3{ 23.f,2.f,23.f });
+	m_pTransformCom->Set_Pos(&_vec3{ 23.f,2.f,23.f });
 
 	return S_OK;
 }
-Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
+Client::_int Client::CFontParent::Update_Object(const _float& fTimeDelta)
 {
-	//if (reverseLifeTime < 3.f)
-	//{
-	//	reverseLifeTime += fTimeDelta;
-	//}
-	//else
-	//{
-	//	return 1;
-	//}
+	
 	if (fScale > 0.2f)
 	{
 		fScale -= fTimeDelta*15.f;
@@ -164,7 +157,7 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 		else
 		{
 			fAlpha = 0.f;
-
+			return 1;
 		}
 
 		if (fAlpha < 0.9f)
@@ -172,37 +165,23 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 			m_pTransformCom->m_vInfo[Engine::INFO_POS].y += fTimeDelta;
 		}
 	}
-	//count = 2.f;
-	//if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
-	//{
-	//	if (fScale < 2.f)
-	//		fScale += 0.1f;
-	//	else
-	//		fScale = 0.f;
-	//}
-
-		//m_pTransformCom->Set_Scale(fScale, fScale, fScale);
 	
-	Engine::CGameObject::Update_Object(fTimeDelta);
 
+	Engine::CGameObject::Update_Object(fTimeDelta);
+	//
+	for (auto& font :m_vecDamageFont)
+	{
+		if (m_vecDamageFont.size() == 0)
+			return 0;
+		dynamic_cast<CDamageFont*>(font)->Update_Object(fTimeDelta);
+	}
+	//
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
 	//CGameObject::Compute_ViewZ(&vPos);
 
-
-
-	_matrix		matLocal,matWorld, matView, matBill, matScale, matParentWorld;
-
-	if (nullptr != m_pFontParent)
-	{
-		D3DXMatrixIdentity(&matLocal);
-
-
-		matLocal._41 = offsetX;
-		dynamic_cast<CFontParent*>(m_pFontParent)->GetTransform()->Get_WorldMatrix(&matParentWorld);
-		//matWorld = matParentWorld * matWorld;
-	}
-
+	_matrix		matWorld, matView, matBill, matScale;
+	
 	D3DXMatrixIdentity(&matBill);
 	D3DXMatrixIdentity(&matScale);
 	/*D3DXMatrixScaling*/
@@ -220,13 +199,13 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	// 행렬의 곱셈순서를 주의할 것
-	m_pTransformCom->Set_WorldMatrix(&(matLocal * matParentWorld));
+	m_pTransformCom->Set_WorldMatrix(&(matScale*matBill * matWorld));
 	_matrix a = *m_pTransformCom->Get_WorldMatrix();
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	return 0;
 }
-void Client::CDamageFont::Render_Object(void)
+void Client::CFontParent::Render_Object(void)
 {
 	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);

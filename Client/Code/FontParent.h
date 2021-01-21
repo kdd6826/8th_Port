@@ -1,8 +1,9 @@
-#ifndef DamageFont_h__
-#define DamageFont_h__
+#ifndef FontParent_h__
+#define FontParent_h__
 
 #include "GameObject.h"
 #include "Define.h"
+
 
 BEGIN(Engine)
 
@@ -15,19 +16,18 @@ class CShader;
 END
 
 BEGIN(Client)
-class CDamageFont : public Engine::CGameObject
+class CFontParent : public Engine::CGameObject
 {
+	/*class CDamageFont;*/
 private:
-	explicit CDamageFont(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CDamageFont(void);
+	explicit CFontParent(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CFontParent(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 	Engine::CTransform* GetTransform() { return m_pTransformCom; }
-	float offsetX=0;
-	int count = 0.f;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
@@ -41,15 +41,17 @@ private:
 
 	float reverseLifeTime = 0.f;;
 	_float						m_fFrame = 0.f;
+	int count = 0.f;
 	float fScale;
 	float	fAlpha=1.f;
 public:
-	static CDamageFont*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	CGameObject* m_pFontParent=nullptr;
+	static CFontParent*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+	vector<CGameObject*>	m_vecDamageFont;
 private:
 	virtual void Free(void) override;
 
 };
 
 END
-#endif // DamageFont_h__
+#endif // FontParent_h__
