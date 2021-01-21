@@ -1,8 +1,84 @@
-﻿  Monster.cpp
-c:\users\administrator\desktop\8th_port\client\code\damagefont.h(42): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\monster.cpp(48): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
-c:\users\administrator\desktop\8th_port\client\code\monster.cpp(64): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\monster.cpp(65): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\monster.cpp(66): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Client.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Client\Default\../Bin\Client.exe
-  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
+﻿  stdafx.cpp
+  Client.cpp
+  SkillSlot.cpp
+  Tree.cpp
+  Titan.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  Terrain.cpp
+  Sword.cpp
+  Stone.cpp
+  StaticObject.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(98): error C2084: 'HRESULT Client::CStaticObject::Add_Component(std::wstring)' 함수에 이미 본문이 있습니다.
+  c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(54): note: 'Add_Component'의 이전 정의를 참조하십시오.
+c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(128): error C2065: 'm_pOptimizationCom': 선언되지 않은 식별자입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(174): error C2264: 'Client::CStaticObject::Add_Component': 함수 정의 또는 선언에 오류가 있습니다. 함수가 호출되지 않습니다.
+  StaminaBarValue.cpp
+  StaminaBarBack.cpp
+  Stage.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  SphereCollider.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\spherecollider.cpp(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  SpBarValue.cpp
+  SpBarBack.cpp
+  SkyBox.cpp
+  Player.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  Unit.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  SwordTrail.cpp
+  Stage2.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  SlashPoint.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Skill4.cpp
+  Skill0.cpp
+  RuinBlade.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\ruinblade.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\gmh\desktop\client\8th_port\client\code\ruinblade.cpp(100): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\gmh\desktop\client\8th_port\client\code\ruinblade.cpp(102): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  Particle.cpp
+  Monster.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  MainApp.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\collidermgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  Logo.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  Loading.cpp
+  HpBarValue.cpp
+  HpBarBack.cpp
+  Effect.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\effect.cpp(90): warning C4244: '인수': 'int'에서 'const Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  DynamicCamera.cpp
+  Dog.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  DamageFont.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(42): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.cpp(22): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ConfusionHole2.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(102): warning C4035: 'Client::CConfusionHole2::Update_Object': 반환 값이 없습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(107): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(112): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(158): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  ConfusionHole.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(101): warning C4035: 'Client::CConfusionHole::Update_Object': 반환 값이 없습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(111): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(157): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  ColliderMgr.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\collidermgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
+  BossHpBarRed.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarred.cpp(80): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarred.cpp(81): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BossHpBarOrange.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarorange.cpp(81): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarorange.cpp(82): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BossHpBarHit.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  BossHpBarGreen.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\bosshpbargreen.cpp(80): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\bosshpbargreen.cpp(81): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BossHpBarBase.cpp
+  BackGround.cpp
+  코드를 생성하고 있습니다...
