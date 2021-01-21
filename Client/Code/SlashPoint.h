@@ -47,9 +47,8 @@ public:
 	static CSlashPoint*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	float fScale=0.f;
 	virtual void Free(void) override;
-	float reverseLifeTime = 0.f;;
+	float lifeTime = 0.f;;
 };
 
 END

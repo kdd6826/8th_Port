@@ -62,7 +62,7 @@ HRESULT CSlashPoint::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture"/*, _uint(m_fFrame)*/);
-	pEffect->SetFloat("g_fAlpha", reverseLifeTime * 2);
+	pEffect->SetFloat("g_fAlpha", lifeTime/2);
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
 
 	return S_OK;
@@ -87,10 +87,8 @@ void CSlashPoint::Free(void)
 HRESULT Client::CSlashPoint::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
+	lifeTime = 2.f;
 	int i = rand() % 45;
-	fScale = 2.f;
-	
 	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(45+i));
 	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(-100.f));
 	//m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 5.f;
@@ -100,18 +98,13 @@ HRESULT Client::CSlashPoint::Ready_Object(void)
 }
 Client::_int Client::CSlashPoint::Update_Object(const _float& fTimeDelta)
 {
-	if (reverseLifeTime < 0.5f)
+	if (lifeTime > 0.f)
 	{
-		reverseLifeTime += fTimeDelta;
+		lifeTime -= fTimeDelta;
 	}
 	else
 	{
 		return 1;
-	}
-	if (fScale > 1.f)
-	{
-		fScale -= fTimeDelta;
-		m_pTransformCom->Set_Scale(fScale, fScale, fScale);
 	}
 	Engine::CGameObject::Update_Object(fTimeDelta);
 

@@ -44,14 +44,9 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 			pPlayerStateCom->stat.sp = pPlayerStateCom->stat.maxSp;
 		CSlashPoint* slashPoint = CSlashPoint::Create(m_pGraphicDev);
 		_vec3 vMonsterPos;
-		int i = rand() % 10;
 		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMonsterPos);
 		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vMonsterPos;
 		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.5f;
-		//rand
-		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].x += -0.3f+i*0.06;
-		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += -0.3f + i*0.06;
-		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].z += -0.3f + i*0.06;
 		m_vecSlashPoint.emplace_back(slashPoint);
 		
 	}
