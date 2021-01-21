@@ -212,7 +212,6 @@
     <ClInclude Include="..\Code\SkillDkTransform2.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\Code\SlashPoint.h" />
     <ClInclude Include="..\Code\SoundManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
@@ -294,7 +293,6 @@
     <ClCompile Include="..\Code\SkillDkTransform2.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Code\SlashPoint.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
