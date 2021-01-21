@@ -33,11 +33,11 @@ private:
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 
 private:
-	Engine::CRcTex*				m_pBufferCom = nullptr;
-	Engine::CTexture*			m_pTextureCom = nullptr;
-	Engine::CRenderer*			m_pRendererCom = nullptr;
+	//Engine::CRcTex*				m_pBufferCom = nullptr;
+	//Engine::CTexture*			m_pTextureCom = nullptr;
+	//Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
-	Engine::CShader*			m_pShaderCom = nullptr;
+	/*Engine::CShader*			m_pShaderCom = nullptr;*/
 
 	float reverseLifeTime = 0.f;;
 	_float						m_fFrame = 0.f;

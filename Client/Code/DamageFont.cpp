@@ -220,7 +220,7 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	// 행렬의 곱셈순서를 주의할 것
-	m_pTransformCom->Set_WorldMatrix(&(matLocal * matParentWorld));
+	m_pTransformCom->Set_WorldMatrix(&(matScale* matLocal * matBill *matParentWorld));
 	_matrix a = *m_pTransformCom->Get_WorldMatrix();
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 

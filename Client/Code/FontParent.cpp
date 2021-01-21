@@ -26,31 +26,31 @@ HRESULT Client::CFontParent::Add_Component(void)
 	count = 1.f;
 
 	// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+	//pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
-	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_DamageFont"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+	//// texture
+	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_DamageFont"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
-	// Renderer
-	pComponent = m_pRendererCom = Engine::Get_Renderer();
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	Safe_AddRef(pComponent);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
+	//// Renderer
+	//pComponent = m_pRendererCom = Engine::Get_Renderer();
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//Safe_AddRef(pComponent);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
 
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
+	////// Shader
+	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_DamageFont"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	//// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_DamageFont"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
-	// Shader
 	/*pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);*/
@@ -97,7 +97,7 @@ HRESULT CFontParent::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	//m_pTransformCom->Set_Scale(fScale, fScale, fScale);
-	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture"/*, _uint(m_fFrame)*/);
+	//m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture"/*, _uint(m_fFrame)*/);
 	//pEffect->SetFloat("g_fAlpha", 0);
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
 	//Matrix		g_matInv;
@@ -199,27 +199,27 @@ Client::_int Client::CFontParent::Update_Object(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	// 행렬의 곱셈순서를 주의할 것
-	m_pTransformCom->Set_WorldMatrix(&(matScale*matBill * matWorld));
+	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 	_matrix a = *m_pTransformCom->Get_WorldMatrix();
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+	//m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	return 0;
 }
 void Client::CFontParent::Render_Object(void)
 {
-	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-	NULL_CHECK(pEffect);
-	Engine::Safe_AddRef(pEffect);
+	//LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//NULL_CHECK(pEffect);
+	//Engine::Safe_AddRef(pEffect);
 
-	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+	//FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
-	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(0);
+	//pEffect->Begin(NULL, 0);
+	//pEffect->BeginPass(0);
 
-	m_pBufferCom->Render_Buffer();
+	//m_pBufferCom->Render_Buffer();
 
-	pEffect->EndPass();
-	pEffect->End();
+	//pEffect->EndPass();
+	//pEffect->End();
 
-	Engine::Safe_Release(pEffect);
+	//Engine::Safe_Release(pEffect);
 }
