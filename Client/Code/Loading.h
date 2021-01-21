@@ -30,6 +30,7 @@ public:
 	void		Load_StaticObject();
 	void		Load_DynamicObject();
 
+
 	int staticLoadCount = 0;
 
 private:
