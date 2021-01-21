@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DamageFont.h"
 #include "Export_Function.h"
-
+#include "FontParent.h"
 CDamageFont::CDamageFont(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -46,6 +46,9 @@ HRESULT Client::CDamageFont::Add_Component(void)
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_DamageFont"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+	//int i = rand() % 10;
+	//offsetX = -0.5f + 0.1 * i;
+
 	// Shader
 	/*pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -55,9 +58,11 @@ HRESULT Client::CDamageFont::Add_Component(void)
 
 HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
-	_matrix		matWorld, matView, matProj;
+	_matrix		matWorld, matView, matProj,matParentWorld;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	
+
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 	pEffect->SetMatrix("g_matWorld", &matWorld);
@@ -70,7 +75,13 @@ HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	int		iMaxCnt=1;
 	float	fTexCX=512.f;
 	float	fTexCY=256.f;
-	float	fDrawX=40.f*count-5.f;
+	float	fDrawX;
+	if (count != 9)
+	{
+		fDrawX = 40.f * count - 5.f;
+	}
+	else
+		fDrawX = 40.f * count;
 	float	fDrawY=0.f;
 	float	fDrawCX=24.f;
 	float	fDrawCY=24.f;
@@ -130,7 +141,7 @@ HRESULT Client::CDamageFont::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Pos(&_vec3{ 23.f,2.f,23.f });
+	//m_pTransformCom->Set_Pos(&_vec3{ 23.f,2.f,23.f });
 
 	return S_OK;
 }
@@ -157,7 +168,10 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 			fAlpha -= fTimeDelta;
 		}
 		else
+		{
 			fAlpha = 0.f;
+
+		}
 
 		if (fAlpha < 0.9f)
 		{
@@ -181,8 +195,20 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
 	//CGameObject::Compute_ViewZ(&vPos);
 
-	_matrix		matWorld, matView, matBill, matScale;
-	
+
+
+	_matrix		matLocal,matWorld, matView, matBill, matScale, matParentWorld;
+
+	if (nullptr != m_pFontParent)
+	{
+		D3DXMatrixIdentity(&matLocal);
+
+
+		matLocal._41 = offsetX;
+		dynamic_cast<CFontParent*>(m_pFontParent)->GetTransform()->Get_WorldMatrix(&matParentWorld);
+		//matWorld = matParentWorld * matWorld;
+	}
+
 	D3DXMatrixIdentity(&matBill);
 	D3DXMatrixIdentity(&matScale);
 	/*D3DXMatrixScaling*/
@@ -200,7 +226,7 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	// 행렬의 곱셈순서를 주의할 것
-	m_pTransformCom->Set_WorldMatrix(&(matScale*matBill * matWorld));
+	m_pTransformCom->Set_WorldMatrix(&(matScale* matLocal * matBill *matParentWorld));
 	_matrix a = *m_pTransformCom->Get_WorldMatrix();
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 

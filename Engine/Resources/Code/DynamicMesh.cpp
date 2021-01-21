@@ -210,7 +210,7 @@ void Engine::CDynamicMesh::Update_FrameMatrices(D3DXFRAME_DERIVED* pFrame, const
 		return;
 
 	pFrame->CombinedTransformationMatrix = pFrame->TransformationMatrix * (*pParentMatrix);
-	
+
 	if (nullptr != pFrame->pFrameSibling)
 		Update_FrameMatrices((D3DXFRAME_DERIVED*)pFrame->pFrameSibling, pParentMatrix);
 

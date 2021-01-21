@@ -26,6 +26,8 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
 	Engine::CTransform* GetTransform() { return m_pTransformCom; }
+	float offsetX=0;
+	int count = 0.f;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
@@ -39,12 +41,11 @@ private:
 
 	float reverseLifeTime = 0.f;;
 	_float						m_fFrame = 0.f;
-	int count = 0.f;
 	float fScale;
 	float	fAlpha=1.f;
 public:
 	static CDamageFont*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
+	CGameObject* m_pFontParent=nullptr;
 private:
 	virtual void Free(void) override;
 

@@ -22,6 +22,11 @@ CMonster::~CMonster(void)
 		//Engine::Safe_Delete_Array(*iterator);
 		Engine::Safe_Release(*iterator);
 	}
+	for (auto& iterator = m_vecFontParent.begin(); iterator != m_vecFontParent.end(); ++iterator)
+	{
+		//Engine::Safe_Delete_Array(*iterator);
+		Engine::Safe_Release(*iterator);
+	}
 }
 
 _int CMonster::Update_Object(const _float& fTimeDelta)
@@ -32,6 +37,10 @@ _int CMonster::Update_Object(const _float& fTimeDelta)
 		slash->Update_Object(fTimeDelta);
 	}
 	for (auto& font : m_vecDamageFont)
+	{
+		font->Update_Object(fTimeDelta);
+	}
+	for (auto& font : m_vecFontParent)
 	{
 		font->Update_Object(fTimeDelta);
 	}
@@ -68,33 +77,47 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		//
 
 		// Damagefont
+		CFontParent* fontParent = CFontParent::Create(m_pGraphicDev);
+
+		fontParent->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos;
+		
+		m_vecFontParent.emplace_back(fontParent);
+
 		CDamageFont* damageFont = CDamageFont::Create(m_pGraphicDev);
-		
-		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos;
-		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].y += 0.5f;
-		m_vecDamageFont.emplace_back(damageFont);
-
-		CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
-		_vec3 pCamAt = pCamera->Get_At();
-		_vec3 pCamEye = pCamera->Get_Eye();
-		_vec3 pCamLook = pCamAt - pCamEye;
-		_vec3 worldUp = { 0.f,1.f,0.f };
-		_vec3 vCamRight;
-		D3DXVec3Normalize(&pCamLook, &pCamLook);
-		D3DXVec3Cross(&vCamRight, &pCamLook, &worldUp);
-		
-		damageFont = CDamageFont::Create(m_pGraphicDev);
-		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos+vCamRight*0.2f;
-		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].y += 0.5f;
-		/*damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x -= 0.2f;*/
-		m_vecDamageFont.emplace_back(damageFont);
+		int oi = rand() % 10;
+		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
+		damageFont->m_pFontParent = fontParent;
+		damageFont->offsetX = -0.2f;
+		damageFont->count = oi;
+		/*m_vecDamageFont.emplace_back(damageFont);*/
+		fontParent->m_vecDamageFont.emplace_back(damageFont);
 
 		damageFont = CDamageFont::Create(m_pGraphicDev);
-		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos - vCamRight*0.2f;
-		damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].y += 0.5f;
-		/*damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.2f;*/
-		m_vecDamageFont.emplace_back(damageFont);
-		//
+		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
+		oi = rand() % 10;
+		damageFont->m_pFontParent = fontParent;
+		damageFont->offsetX = -0.08f;
+		damageFont->count = oi;
+		/*m_vecDamageFont.emplace_back(damageFont);*/
+		fontParent->m_vecDamageFont.emplace_back(damageFont);
+		damageFont = CDamageFont::Create(m_pGraphicDev);
+		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
+		oi = rand() % 10;
+		damageFont->m_pFontParent = fontParent;
+		damageFont->offsetX = 0.04f;
+		damageFont->count = oi;
+		/*m_vecDamageFont.emplace_back(damageFont);*/
+		fontParent->m_vecDamageFont.emplace_back(damageFont);
+		oi = rand() % 10;
+		damageFont = CDamageFont::Create(m_pGraphicDev);
+		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
+
+		damageFont->m_pFontParent = fontParent;
+		damageFont->offsetX = 0.16f;
+		damageFont->count = oi;
+		/*m_vecDamageFont.emplace_back(damageFont);*/
+		fontParent->m_vecDamageFont.emplace_back(damageFont);
+
 	}
 	//»ç¸Á
 	if (m_pStateCom->stat.hp <= 0 && isDie == false)

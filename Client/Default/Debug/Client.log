@@ -1,84 +1,135 @@
-﻿  stdafx.cpp
-  Client.cpp
-  SkillSlot.cpp
-  Tree.cpp
+﻿  Client.cpp
+  Unit.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.cpp(105): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   Titan.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
-  Terrain.cpp
-  Sword.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\titan.cpp(165): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Stone.cpp
   StaticObject.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(98): error C2084: 'HRESULT Client::CStaticObject::Add_Component(std::wstring)' 함수에 이미 본문이 있습니다.
-  c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(54): note: 'Add_Component'의 이전 정의를 참조하십시오.
-c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(128): error C2065: 'm_pOptimizationCom': 선언되지 않은 식별자입니다.
-c:\users\gmh\desktop\client\8th_port\client\code\staticobject.cpp(174): error C2264: 'Client::CStaticObject::Add_Component': 함수 정의 또는 선언에 오류가 있습니다. 함수가 호출되지 않습니다.
+  Stage2.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Stage.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SphereCollider.cpp
+  Player.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(98): warning C4553: '==': 의미 없는 연산자입니다. '='을(를) 사용하려고 했습니까?
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(203): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(215): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(234): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(346): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(375): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(253): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(266): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(279): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(292): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(305): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(319): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(493): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(595): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(625): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(663): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(714): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(757): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(799): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(816): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(833): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(846): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(862): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(874): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(899): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(911): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(924): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(936): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(948): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(962): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(980): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1003): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1021): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1040): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1058): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1075): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1090): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1171): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1197): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1207): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1216): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1297): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1324): warning C4003: 'FAILED_CHECK_RETURN' 매크로의 실제 매개 변수가 부족합니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1373): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1381): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Monster.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\monster.cpp(57): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\gmh\desktop\client\8th_port\client\code\monster.cpp(73): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\monster.cpp(74): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\monster.cpp(75): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MainApp.cpp
+  Logo.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FontParent.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.cpp(26): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Dog.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\dog.cpp(141): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  DamageFont.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.cpp(22): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ColliderMgr.cpp
+  BackGround.cpp
+  코드를 생성하고 있습니다...
+c:\users\gmh\desktop\client\8th_port\client\code\stage.cpp(116): warning C4715: 'Client::CStage::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\stage2.cpp(114): warning C4715: 'Client::CStage2::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  Tree.cpp
+  Terrain.cpp
+  SwordTrail.cpp
+  Sword.cpp
   StaminaBarValue.cpp
   StaminaBarBack.cpp
-  Stage.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
-  SphereCollider.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\spherecollider.cpp(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
   SpBarValue.cpp
   SpBarBack.cpp
-  SkyBox.cpp
-  Player.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
-  Unit.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
-  SwordTrail.cpp
-  Stage2.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
   SlashPoint.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
+  SkyBox.cpp
+  SkillSlot.cpp
   Skill4.cpp
   Skill0.cpp
   RuinBlade.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\ruinblade.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
-c:\users\gmh\desktop\client\8th_port\client\code\ruinblade.cpp(100): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
-c:\users\gmh\desktop\client\8th_port\client\code\ruinblade.cpp(102): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
   Particle.cpp
-  Monster.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
-  MainApp.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\collidermgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
-  Logo.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
   Loading.cpp
   HpBarValue.cpp
   HpBarBack.cpp
   Effect.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\effect.cpp(90): warning C4244: '인수': 'int'에서 'const Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   DynamicCamera.cpp
-  Dog.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\unit.h(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
-  DamageFont.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(42): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\damagefont.cpp(22): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   ConfusionHole2.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(102): warning C4035: 'Client::CConfusionHole2::Update_Object': 반환 값이 없습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(107): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(112): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(158): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
   ConfusionHole.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(101): warning C4035: 'Client::CConfusionHole::Update_Object': 반환 값이 없습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(111): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
-c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(157): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
-  ColliderMgr.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\collidermgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'SphereCollider.h': No such file or directory
   BossHpBarRed.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarred.cpp(80): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarred.cpp(81): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   BossHpBarOrange.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarorange.cpp(81): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\bosshpbarorange.cpp(82): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   BossHpBarHit.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
   BossHpBarGreen.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\bosshpbargreen.cpp(80): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\bosshpbargreen.cpp(81): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   BossHpBarBase.cpp
-  BackGround.cpp
+  Ingkells.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\ingkells.cpp(198): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\ingkells.cpp(223): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  SkillDkTransform2.cpp
+  SkillDkTransform.cpp
+  Skill2.cpp
+  Skill1.cpp
+  LINK : ../Bin\Client.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
