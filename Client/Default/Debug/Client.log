@@ -1,4 +1,13 @@
-﻿  Player.cpp
+﻿  Unit.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\unit.cpp(105): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Titan.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\titan.cpp(165): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Stone.cpp
+  StaticObject.cpp
+  Stage2.cpp
+  Stage.cpp
+  SphereCollider.cpp
+  Player.cpp
 c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(98): warning C4553: '==': 의미 없는 연산자입니다. '='을(를) 사용하려고 했습니까?
 c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(203): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(215): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
@@ -40,5 +49,36 @@ c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1196): warning C4244
 c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1223): warning C4003: 'FAILED_CHECK_RETURN' 매크로의 실제 매개 변수가 부족합니다.
 c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1272): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\gmh\desktop\client\8th_port\client\code\player.cpp(1280): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Monster.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\monster.cpp(29): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  MainApp.cpp
+  Logo.cpp
+  Loading.cpp
+  Dog.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\dog.cpp(141): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  DamageFont.cpp
+  ConfusionHole2.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(102): warning C4035: 'Client::CConfusionHole2::Update_Object': 반환 값이 없습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(107): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(112): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(158): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  ConfusionHole.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(101): warning C4035: 'Client::CConfusionHole::Update_Object': 반환 값이 없습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(111): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+c:\users\gmh\desktop\client\8th_port\client\code\confusionhole.cpp(157): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  ColliderMgr.cpp
+  코드를 생성하고 있습니다...
+c:\users\gmh\desktop\client\8th_port\client\code\stage.cpp(116): warning C4715: 'Client::CStage::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\stage2.cpp(114): warning C4715: 'Client::CStage2::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  SkillDkTransform2.cpp
+  SkillDkTransform.cpp
+  Skill2.cpp
+  Skill1.cpp
+  Ingkells.cpp
+c:\users\gmh\desktop\client\8th_port\client\code\ingkells.cpp(198): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\client\code\ingkells.cpp(223): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
