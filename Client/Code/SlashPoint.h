@@ -1,5 +1,5 @@
-#ifndef DamageFont_h__
-#define DamageFont_h__
+#ifndef SlashPoint_h__
+#define SlashPoint_h__
 
 #include "GameObject.h"
 #include "Define.h"
@@ -11,44 +11,46 @@ class CTexture;
 class CRenderer;
 class CTransform;
 class CShader;
+class CCollider;
+class CTestTrail;
+class CTrailBuffer;
 
 END
 
 BEGIN(Client)
-class CDamageFont : public Engine::CGameObject
+class CSlashPoint : public Engine::CGameObject
 {
 private:
-	explicit CDamageFont(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CDamageFont(void);
+	explicit CSlashPoint(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CSlashPoint(void);
 
 public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-	Engine::CTransform* GetTransform() { return m_pTransformCom; }
+	Engine::CTransform*			m_pTransformCom = nullptr;
+
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 
 private:
-	Engine::CRcTex*				m_pBufferCom = nullptr;
+	Engine::CTestTrail*				m_pBufferCom = nullptr;
 	Engine::CTexture*			m_pTextureCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
-	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CShader*			m_pShaderCom = nullptr;
+	Engine::CCollider*			m_pSwordColliderCom = nullptr;
 
-	float reverseLifeTime = 0.f;;
-	_float						m_fFrame = 0.f;
-	int count = 0.f;
-	float fScale;
-	float	fAlpha=1.f;
+	const	_matrix* m_pParentBoneMatrix = nullptr;
+	const	_matrix* m_pParentWorldMatrix = nullptr;
 public:
-	static CDamageFont*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CSlashPoint*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
+	float fScale=0.f;
 	virtual void Free(void) override;
-
+	float reverseLifeTime = 0.f;;
 };
 
 END
-#endif // DamageFont_h__
+#endif // SlashPoint_h__

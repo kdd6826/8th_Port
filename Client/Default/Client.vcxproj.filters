@@ -312,6 +312,9 @@
     <ClInclude Include="..\Code\SoundManager.h">
       <Filter>02. GameObject\97. SoundManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SlashPoint.h">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -472,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SoundManager.cpp">
       <Filter>02. GameObject\97. SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SlashPoint.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
