@@ -19,6 +19,7 @@ HRESULT Client::CDamageFont::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 	fScale = 2.f;
+	count = 1.f;
 
 	// buffer
 	pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
@@ -75,12 +76,12 @@ HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	float	fTexCX=512.f;
 	float	fTexCY=256.f;
 	float	fDrawX;
-	if (count != 0)
+	if (count != 9)
 	{
-		fDrawX = -40.f + 40.f * count - 5.f;
+		fDrawX = 40.f * count - 5.f;
 	}
 	else
-		fDrawX = -40.f + 40.f * 10;
+		fDrawX = 40.f * count;
 	float	fDrawY=0.f;
 	float	fDrawCX=24.f;
 	float	fDrawCY=24.f;

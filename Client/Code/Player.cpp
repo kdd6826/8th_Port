@@ -56,7 +56,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.maxStamina = 200.f;
 	m_pStateCom->stat.sp = 250.f;
 	m_pStateCom->stat.maxSp = 1250.f;
-	m_pStateCom->stat.damage = 1000.f;
+	m_pStateCom->stat.damage = 2.f;
 	isDown = false;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
