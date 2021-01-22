@@ -49,8 +49,8 @@ HRESULT Client::CTitan::Add_Component(void)
 
 	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 
-	m_pStateCom->stat.maxHp = 1000.f;
-	m_pStateCom->stat.hp = 1000.f;
+	m_pStateCom->stat.maxHp = 100000.f;
+	m_pStateCom->stat.hp = 100000.f;
 	return S_OK;
 }
 
