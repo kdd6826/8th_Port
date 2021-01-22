@@ -61,9 +61,9 @@ HRESULT Engine::CResourcesMgr::Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const
 	case BUFFER_PTTEX:
 		pResources = CPtTex::Create(pGraphicDev);
 		break;
-	//case BUFFER_TRAIL:
-	//	pResources = CTrailBuffer::Create(pGraphicDev, dwVtxMax);
-	//	break;
+	case BUFFER_TRAIL:
+		pResources = CTrailBuffer::Create(pGraphicDev, dwCntX);
+		break;
 	case BUFFER_TEMPTRAIL:
 		pResources = CTestTrail::Create(pGraphicDev);
 		break;

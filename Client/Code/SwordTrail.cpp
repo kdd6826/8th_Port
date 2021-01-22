@@ -19,16 +19,23 @@ HRESULT Client::CSwordTrail::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 
-	// buffer
+	//// buffer
+	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+
 	pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
+	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Black"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-
+	
 	// Renderer
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -61,7 +68,7 @@ HRESULT CSwordTrail::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture"/*, _uint(m_fFrame)*/);
-
+	pEffect->SetFloat("g_fAlpha", 0.f);
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
 
 	return S_OK;
@@ -97,29 +104,46 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	if (nullptr == m_pParentBoneMatrix)
-	{
-		Engine::CDynamicMesh*  m_pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
-		NULL_CHECK_RETURN(m_pPlayerMeshCom, 0);
+	//m_pBufferCom->Add_Vertex();
+	Engine::CStaticMesh*  m_pSwordMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Get_Component(L"GameLogic", L"Sword", L"Com_Mesh", Engine::ID_STATIC));
+	NULL_CHECK_RETURN(m_pSwordMeshCom, 0);
 
-		const Engine::D3DXFRAME_DERIVED* pFrame = m_pPlayerMeshCom->Get_FrameByName("ValveBiped_Bip01_R_Finger22");
+	Engine::CTransform*   m_pSwordTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Sword", L"Com_Transform", Engine::ID_DYNAMIC));
 
-		m_pParentBoneMatrix = &pFrame->CombinedTransformationMatrix;
-		
+	_matrix SwordWorld;
+	m_pSwordTransformCom->Get_WorldMatrix(&SwordWorld);
+	SwordWorld._11 = 1.f;
+	SwordWorld._12 = 0.f;
+	SwordWorld._13 = 0.f;
+	SwordWorld._14 = 0.f;
 
-		Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
-		NULL_CHECK_RETURN(pPlayerTransCom, 0);
-		m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
-	}
+	SwordWorld._21 = 0.f;
+	SwordWorld._22 = 1.f;
+	SwordWorld._23 = 0.f;
+	SwordWorld._24 = 0.f;
+
+	SwordWorld._31 = 0.f;
+	SwordWorld._32 = 0.f;
+	SwordWorld._33 = 1.f;
+	SwordWorld._34 = 0.f;
+
+	//SwordWorld._41 = 1.f;
+	//SwordWorld._42 = 0.f;
+	//SwordWorld._43 = 0.f;
+	//SwordWorld._44 = 0.f;
+	_vec3 SwordPos = { SwordWorld._41,SwordWorld._42,SwordWorld._43 };
+
+	_matrix ao;
+	m_pTransformCom->Get_WorldMatrix(&ao);
+	m_pTransformCom->Set_WorldMatrix(&SwordPos);
 
 
-
-	m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
+	//m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
 
 
 	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
 #ifdef _DEBUG
-	/*m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);*/
+	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 #endif
 	return 0;
 }

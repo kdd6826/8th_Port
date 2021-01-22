@@ -17,8 +17,8 @@ protected:
 public:
 	//virtual HRESULT	Ready_Buffer(void);
 public:
-	//static CTrailBuffer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	Engine::CTrailBuffer* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwVtxMax);
+	static CTrailBuffer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static Engine::CTrailBuffer* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwVtxMax);
 	virtual CComponent* Clone(void);
 	virtual void Free(void);
 	void Render_Buffer();
