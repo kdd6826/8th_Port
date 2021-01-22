@@ -47,10 +47,10 @@ HRESULT Client::CTitan::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveTitan.dat",Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
+	Load_ColliderFile(L"../Bin/saveTitan.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 
-	m_pStateCom->stat.maxHp = 1000.f;
-	m_pStateCom->stat.hp = 1000.f;
+	m_pStateCom->stat.maxHp = 100000.f;
+	m_pStateCom->stat.hp = 100000.f;
 	return S_OK;
 }
 
@@ -64,7 +64,7 @@ HRESULT CTitan::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
-	pEffect->SetMatrix("g_matProj", &matProj);	
+	pEffect->SetMatrix("g_matProj", &matProj);
 
 	return S_OK;
 }
@@ -111,7 +111,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		m_state = titanState::STATE_RUN;
 		if (disPlayer < 2.f)
 		{
-			
+
 			int i = rand() % 8;
 			//int i = 1;
 			switch (i)
@@ -125,7 +125,7 @@ void CTitan::Move(const _float& fTimeDelta)
 				m_state = titanState::STATE_ATTACKHAMMER;
 				//delay = 3.2f;//3.13
 				m_fAniSpeed = 3.5f;
-				
+
 				break;
 			case 2:
 				m_state = titanState::STATE_ATTACKKICK;
@@ -172,7 +172,7 @@ void CTitan::Move(const _float& fTimeDelta)
 	//몬스터의 정면
 	else if (angle > 0)
 	{
-		
+
 		//오른쪽이다
 		if (angle2 > 0)
 		{
@@ -187,7 +187,7 @@ void CTitan::Move(const _float& fTimeDelta)
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta* spinSpeed));
 			m_state = titanState::STATE_RUN;
 		}
-		
+
 	}
 	//플레이어가 뒤에 있다.
 	else
@@ -195,7 +195,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		//오른쪽이다
 		if (angle2 > 0)
 		{
-				
+
 			m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(60.f * fTimeDelta* spinSpeed));
 
 			//isAnimating = true;
@@ -251,7 +251,7 @@ HRESULT Client::CTitan::Ready_Object(void)
 Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 {
 	CMonster::Update_Object(fTimeDelta);
-	
+
 	if (isDead)
 	{
 		return 1;
@@ -269,7 +269,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 		//m_state = titanState::STATE_IDLE;
 #pragma region AI
 
-	
+
 
 		//if (isSearch == true)
 		//{
@@ -776,7 +776,7 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 		//}
 #pragma endregion
 	}
-	else if(isDie)
+	else if (isDie)
 	{
 		m_state = titanState::STATE_DYINGFRONT;
 		if (true == m_pMeshCom->Is_AnimationSetEnd())
@@ -818,7 +818,7 @@ void Client::CTitan::Render_Object(void)
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed);
-	
+
 	pEffect->EndPass();
 	pEffect->End();
 
@@ -844,5 +844,5 @@ void Client::CTitan::SetUp_OnTerrain(void)
 void CTitan::OnCollision(Engine::CGameObject* target)
 {
 	CMonster::OnCollision(target);
-	
+
 }

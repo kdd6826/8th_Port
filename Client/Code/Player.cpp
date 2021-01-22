@@ -56,7 +56,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.maxStamina = 200.f;
 	m_pStateCom->stat.sp = 250.f;
 	m_pStateCom->stat.maxSp = 1250.f;
-	m_pStateCom->stat.damage = 2.f;
+	m_pStateCom->stat.damage = 1000.f;
 	isDown = false;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
@@ -64,7 +64,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
 
-	Load_ColliderFile(L"../Bin/savePlayer.dat",Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
+	Load_ColliderFile(L"../Bin/savePlayer.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
 	Load_ColliderFile(L"../Bin/saveWeapon1.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
 	Load_ColliderFile(L"../Bin/saveWeapon2.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
 	Load_ColliderFile(L"../Bin/saveWeapon3.dat", Engine::COLLID::PLAYER, Engine::COLLID::PLAYERATTACK);
@@ -82,7 +82,7 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
-	pEffect->SetMatrix("g_matProj", &matProj);	
+	pEffect->SetMatrix("g_matProj", &matProj);
 
 	return S_OK;
 }
@@ -90,7 +90,7 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
 	m_pStateCom->stat.sp = 1250.f;
-	
+
 	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
 	{
 		m_pMeshCom->Free();
@@ -130,7 +130,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_pStateCom->playerState == Engine::CPlayerState::STATE_FIELD_SPRINT ||
 		m_pStateCom->playerState == Engine::CPlayerState::STATE_FIELD_SPRINTSTOP ||
 		m_pStateCom->playerState == Engine::CPlayerState::STATE_TIRED_RUN ||
-		m_pStateCom->playerState == Engine::CPlayerState::STATE_DASH||
+		m_pStateCom->playerState == Engine::CPlayerState::STATE_DASH ||
 		m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION
 		)
 	{
@@ -177,7 +177,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 		}
 
-		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80&&!isTired)
+		if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80 && !isTired)
 		{
 			isRunning = true;
 		}
@@ -191,7 +191,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 			if (Engine::Get_DIKeyState(DIK_TAB) & 0x80)
 			{
-				
+
 				if (isManaBlade == true)
 				{
 					isManaBlade = false;
@@ -226,11 +226,11 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
-  				ConufusionHoleInit();
+				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
-				temp = (temp / (m_fAniSpeed * 1.5f)) -0.1f;
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.1f;
 				delay = temp;
 				isInvincible = true;
 				m_fBattleCount = delay + 5.f;
@@ -257,7 +257,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
 		{
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed*30)));
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
 		}
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT2)
@@ -323,7 +323,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 
 		D3DXVec3Normalize(&vLook, &vLook);
-		
+
 		m_pStateCom->stat.moveSpeed = 5.f;
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 		isInvincible = true;
@@ -339,7 +339,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			ConufusionHoleInit();
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
-			
+
 			//delay = 1.f;
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
@@ -367,8 +367,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 			{
 				ConufusionHoleInit();
- 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
-				
+				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
+
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
@@ -384,7 +384,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_IDLE ||
 			m_pStateCom->playerState == Engine::CPlayerState::STATE_BATTLE_IDLE ||
-			m_pStateCom->playerState == Engine::CPlayerState::STATE_MANA_IDLE 
+			m_pStateCom->playerState == Engine::CPlayerState::STATE_MANA_IDLE
 			)
 		{
 			isSkill = false;
@@ -394,7 +394,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1)
 		{
 			if (delay<3.f&& m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
-			{				
+			{
 				m_pMeshCom->Free();
 				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
 				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT;
@@ -413,7 +413,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_RUINBLADE)
 		{
-			if (delay < 2.8f&&!isShake)
+			if (delay < 2.8f && !isShake)
 			{
 				CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 				pCamera->Shake(0.3f);
@@ -421,7 +421,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 		}
 
-		
+
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
 
@@ -503,7 +503,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		{
 			_vec3 vMyPos = m_pTransformCom->m_vInfo[Engine::INFO_POS];
 			_vec3 vMyLook = m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
-			
+
 			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vMyLook * _fTimeDelta * 180.f)));
 		}
 		else if (delay < 0.1f)
@@ -512,7 +512,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 			isInvincible = false;
 		}
 	}
-	
+
 	if (isDown)
 	{
 		isInvincible = true;
@@ -525,7 +525,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	//{
 	//	m_pTransformCom->Set_Pos(102.f, 0.f, 4.5f);
 	//}
-	
+
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 	_float fCamAngle;
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
@@ -536,11 +536,11 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
 	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
-	
-	
+
+
 	vCamPos = pCamera->Get_Eye();
 	fCamAngle = pCamera->Get_Angle();
-	
+
 
 
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
@@ -561,7 +561,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_FIELD_RUN;
 			m_pStateCom->stat.moveSpeed = 3.f;
 		}
-		
+
 		//m_pTransformCom->Move_Pos(&(vDir * m_pStateCom->stat.moveSpeed * fTimeDelta));
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 100.f)));
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle);
@@ -629,8 +629,8 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			}
 		}
 
-		m_pTransformCom->Move_Pos(&(vLook * m_pStateCom->stat.moveSpeed * fTimeDelta*100));
-		
+		m_pTransformCom->Move_Pos(&(vLook * m_pStateCom->stat.moveSpeed * fTimeDelta * 100));
+
 	}
 
 	else if (Engine::Get_DIKeyState(DIK_S) & 0x80)
@@ -724,7 +724,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		D3DXVec3Normalize(&vDir, &vDir);
 
 		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
-		
+
 		m_pTransformCom->Set_Rotation(Engine::ROT_Y, fCamAngle + D3DXToRadian(-90.f));
 	}
 	else if (Engine::Get_DIKeyState(DIK_D) & 0x80)
@@ -755,7 +755,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
-				m_fBattleCount =delay + 5.f;
+				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
 			}
 		}
@@ -785,7 +785,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 		{
 
 			m_fAniSpeed = 1.3f;
-	
+
 			if (delay <= 1.2f)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
@@ -798,7 +798,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
-					m_pStateCom->stat.stamina -=8.f;
+					m_pStateCom->stat.stamina -= 8.f;
 					AttackOnRotation();
 					reverseDelay = 0.f;
 				}
@@ -918,7 +918,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT4;
 					//delay = 1.3f;
-					
+
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 					delay = temp;
@@ -939,7 +939,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					reverseDelay = 0.f;
 					AttackOnRotation();
 				}
-				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1&&delay<=0.78f)
+				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1&&delay <= 0.78f)
 				{
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT2;
 					//delay = 1.17f;
@@ -983,7 +983,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						reverseDelay = 0.f;
 					}
 				}
-				
+
 				m_fBattleCount = delay + 5.f;
 			}
 		}
@@ -1260,13 +1260,13 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	{
 		if (m_pStateCom->stat.stamina > m_pStateCom->stat.maxStamina)
 			m_pStateCom->stat.stamina = m_pStateCom->stat.maxStamina;
-		else if(m_pStateCom->stat.stamina<m_pStateCom->stat.maxStamina)
-		m_pStateCom->stat.stamina += 10.f * fTimeDelta;
+		else if (m_pStateCom->stat.stamina<m_pStateCom->stat.maxStamina)
+			m_pStateCom->stat.stamina += 10.f * fTimeDelta;
 	}
 
 	//SetUp_OnTerrain();
-	if(!isHit&&!isDown)
-	Key_Input(fTimeDelta);
+	if (!isHit && !isDown)
+		Key_Input(fTimeDelta);
 	if (isHit)
 	{
 
@@ -1291,7 +1291,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	if (m_pStateCom->stat.stamina < 0)
 	{
 		m_pStateCom->stat.stamina = 0;
-		m_pStateCom->playerState= Engine::CPlayerState::STATE_TIRED_START;
+		m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_START;
 		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 		delay = temp;
@@ -1322,10 +1322,10 @@ void Client::CPlayer::Render_Object(void)
 	pEffect->BeginPass(0);
 
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect));
-		
+
 	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);
-	
+
 	pEffect->EndPass();
 	pEffect->End();
 
@@ -1338,7 +1338,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 {
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
 	{
-		Engine::CTransform* confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole",L"Com_Transform", Engine::ID_DYNAMIC));
+		Engine::CTransform* confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole", L"Com_Transform", Engine::ID_DYNAMIC));
 		confusionHoleTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
 		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole_R", L"Com_Transform", Engine::ID_DYNAMIC));
 		confusionHoleTransformCom->Set_Scale(0.8f, 0.8f, 0.8f);
@@ -1356,7 +1356,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 	if (!isInvincible)
 	{
 		hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
-		
+
 
 
 		m_pStateCom->stat.hp -= dynamic_cast<CMonster*>(target)->m_pStateCom->stat.damage;

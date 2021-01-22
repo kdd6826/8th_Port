@@ -50,14 +50,18 @@ _int CMonster::Update_Object(const _float& fTimeDelta)
 void CMonster::OnCollision(Engine::CGameObject* target)
 {
 	_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
-	dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
+	float damage = dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
+	float damageRange = damage*0.1f;
+	int random = rand() % int(damageRange);
+	damage = damage - damageRange*0.5f + random;
+	int fontCount = 0;
 	//¹«ÀûÀÌ¾Æ´Ò¶§
 	if (!isInvincible)
 	{
 		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		m_pStateCom->stat.hp -= dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
 		Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
-		
+
 		pPlayerStateCom->stat.sp += 20.f;
 		if (pPlayerStateCom->stat.sp > pPlayerStateCom->stat.maxSp)
 			pPlayerStateCom->stat.sp = pPlayerStateCom->stat.maxSp;
@@ -70,61 +74,91 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS] = vMonsterPos;
 		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 0.5f;
 		//rand
-		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].x += -0.3f+i*0.06;
+		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].x += -0.3f + i*0.06;
 		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].y += -0.3f + i*0.06;
 		slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].z += -0.3f + i*0.06;
 		m_vecSlashPoint.emplace_back(slashPoint);
 		//
 
+		if (damage < 10.f)
+		{
+			fontCount = 1;
+		}
+		else if (damage < 100.f)
+		{
+			fontCount = 2;
+		}
+		else if (damage < 1000.f)
+		{
+			fontCount = 3;
+		}
+		else if (damage < 10000.f)
+		{
+			fontCount = 4;
+		}
+		else if (damage < 100000.f)
+		{
+			fontCount = 5;
+		}
+
 		// Damagefont
 		CFontParent* fontParent = CFontParent::Create(m_pGraphicDev);
-
 		fontParent->GetTransform()->m_vInfo[Engine::INFO_POS] = vMonsterPos;
-		
 		m_vecFontParent.emplace_back(fontParent);
+		if (fontCount >= 5)
+		{
+			CDamageFont* damageFont = CDamageFont::Create(m_pGraphicDev);
+			int oi = rand() % 10;
+			damageFont->m_pFontParent = fontParent;
+			damageFont->offsetX += (fontCount - 4 - (int)(fontCount*0.5f))*0.12f;
+			damageFont->count = (int(damage) % 100000) / 10000;
+			fontParent->m_vecDamageFont.emplace_back(damageFont);
+		}
+		if (fontCount >= 4)
+		{
+			CDamageFont*damageFont = CDamageFont::Create(m_pGraphicDev);
+			damageFont->m_pFontParent = fontParent;
+			damageFont->offsetX += (fontCount - 3 - (int)(fontCount*0.5f))*0.12f;
 
-		CDamageFont* damageFont = CDamageFont::Create(m_pGraphicDev);
-		int oi = rand() % 10;
-		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
-		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = -0.2f;
-		damageFont->count = oi;
-		/*m_vecDamageFont.emplace_back(damageFont);*/
-		fontParent->m_vecDamageFont.emplace_back(damageFont);
+			damageFont->count = (int(damage) % 10000) / 1000;
+			fontParent->m_vecDamageFont.emplace_back(damageFont);
+		}
+		if (fontCount >= 3)
+		{
+			CDamageFont*damageFont = CDamageFont::Create(m_pGraphicDev);
+			damageFont->m_pFontParent = fontParent;
+			damageFont->offsetX += (fontCount - 2 - (int)(fontCount*0.5f))*0.12f;
 
-		damageFont = CDamageFont::Create(m_pGraphicDev);
-		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
-		oi = rand() % 10;
-		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = -0.08f;
-		damageFont->count = oi;
-		/*m_vecDamageFont.emplace_back(damageFont);*/
-		fontParent->m_vecDamageFont.emplace_back(damageFont);
-		damageFont = CDamageFont::Create(m_pGraphicDev);
-		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
-		oi = rand() % 10;
-		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = 0.04f;
-		damageFont->count = oi;
-		/*m_vecDamageFont.emplace_back(damageFont);*/
-		fontParent->m_vecDamageFont.emplace_back(damageFont);
-		oi = rand() % 10;
-		damageFont = CDamageFont::Create(m_pGraphicDev);
-		//damageFont->GetTransform()->m_vInfo[Engine::INFO_POS].x += 0.5f;
+			damageFont->count = (int(damage) % 1000) / 100;
+			fontParent->m_vecDamageFont.emplace_back(damageFont);
+		}
 
-		damageFont->m_pFontParent = fontParent;
-		damageFont->offsetX = 0.16f;
-		damageFont->count = oi;
-		/*m_vecDamageFont.emplace_back(damageFont);*/
-		fontParent->m_vecDamageFont.emplace_back(damageFont);
+		if (fontCount >= 2)
+		{
+			CDamageFont*damageFont = CDamageFont::Create(m_pGraphicDev);
 
+			damageFont->m_pFontParent = fontParent;
+			damageFont->offsetX += (fontCount - 1 - (int)(fontCount*0.5f))*0.12f;
+
+			damageFont->count = (int(damage) % 100) / 10;
+			fontParent->m_vecDamageFont.emplace_back(damageFont);
+		}
+
+		if (fontCount >= 1)
+		{
+			CDamageFont*damageFont = CDamageFont::Create(m_pGraphicDev);
+			damageFont->m_pFontParent = fontParent;
+			damageFont->offsetX += (fontCount - (int)(fontCount*0.5f))*0.12f;
+			damageFont->count = int(damage) % 10;
+			fontParent->m_vecDamageFont.emplace_back(damageFont);
+		}
 	}
 	//»ç¸Á
 	if (m_pStateCom->stat.hp <= 0 && isDie == false)
 	{
-		
+
 		isDie = true;
-		
+
 	}
 
 }
@@ -157,7 +191,7 @@ bool CMonster::PlayerSearch(_vec3 _MonsterPos)
 		return true;
 	if (disPlayer < 2.f)
 		return true;
-	
+
 
 
 

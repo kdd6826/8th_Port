@@ -19,7 +19,6 @@ HRESULT Client::CDamageFont::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 	fScale = 2.f;
-	count = 1.f;
 
 	// buffer
 	pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
@@ -58,10 +57,10 @@ HRESULT Client::CDamageFont::Add_Component(void)
 
 HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
-	_matrix		matWorld, matView, matProj,matParentWorld;
+	_matrix		matWorld, matView, matProj, matParentWorld;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
-	
+
 
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
@@ -71,20 +70,20 @@ HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matInv", &matWorld);
 
 
-	int		iCnt=1;
-	int		iMaxCnt=1;
-	float	fTexCX=512.f;
-	float	fTexCY=256.f;
+	int		iCnt = 1;
+	int		iMaxCnt = 1;
+	float	fTexCX = 512.f;
+	float	fTexCY = 256.f;
 	float	fDrawX;
-	if (count != 9)
+	if (count != 0)
 	{
-		fDrawX = 40.f * count - 5.f;
+		fDrawX = -40.f + 40.f * count - 5.f;
 	}
 	else
-		fDrawX = 40.f * count;
-	float	fDrawY=0.f;
-	float	fDrawCX=24.f;
-	float	fDrawCY=24.f;
+		fDrawX = -40.f + 40.f * 10;
+	float	fDrawY = 0.f;
+	float	fDrawCX = 24.f;
+	float	fDrawCY = 24.f;
 
 
 	pEffect->SetInt("iCnt", iCnt);
@@ -187,8 +186,8 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 	//		fScale = 0.f;
 	//}
 
-		//m_pTransformCom->Set_Scale(fScale, fScale, fScale);
-	
+	//m_pTransformCom->Set_Scale(fScale, fScale, fScale);
+
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	_vec3 vPos;
@@ -197,7 +196,7 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 
 
 
-	_matrix		matLocal,matWorld, matView, matBill, matScale, matParentWorld;
+	_matrix		matLocal, matWorld, matView, matBill, matScale, matParentWorld;
 
 	if (nullptr != m_pFontParent)
 	{
