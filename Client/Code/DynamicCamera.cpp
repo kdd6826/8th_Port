@@ -153,12 +153,12 @@ void Client::CDynamicCamera::Mouse_Move(void)
 	//¿Þ
 	if (ptCenter.x - ptMouse.x > 0)
 	{
-		m_fAngle += Sensitivity * D3DXToRadian(ptCenter.x - ptMouse.x) * Engine::Get_TimeDelta(L"Timer_Immediate");
+		m_fAngle-= Sensitivity * D3DXToRadian(ptCenter.x - ptMouse.x) * Engine::Get_TimeDelta(L"Timer_Immediate");
 	}
 	//¿À
 	if (ptCenter.x - ptMouse.x < 0)
 	{
-		m_fAngle += Sensitivity * D3DXToRadian(ptCenter.x - ptMouse.x) * Engine::Get_TimeDelta(L"Timer_Immediate");
+		m_fAngle -= Sensitivity * D3DXToRadian(ptCenter.x - ptMouse.x) * Engine::Get_TimeDelta(L"Timer_Immediate");
 	}
 
 	//À§
