@@ -110,32 +110,25 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 
 	Engine::CTransform*   m_pSwordTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Sword", L"Com_Transform", Engine::ID_DYNAMIC));
 
-	_matrix SwordWorld;
+	_matrix SwordWorld,matScale;
+	D3DXMatrixIdentity(&matScale);
+	matScale._11 = 100.f;
+	matScale._22 = 100.f;
+	matScale._33 = 100.f;
+	//65~15
+	matScale._43 = -65.f;
+	//matScale._42 = -0.5f;
 	m_pSwordTransformCom->Get_WorldMatrix(&SwordWorld);
-	SwordWorld._11 = 1.f;
-	SwordWorld._12 = 0.f;
-	SwordWorld._13 = 0.f;
-	SwordWorld._14 = 0.f;
-
-	SwordWorld._21 = 0.f;
-	SwordWorld._22 = 1.f;
-	SwordWorld._23 = 0.f;
-	SwordWorld._24 = 0.f;
-
-	SwordWorld._31 = 0.f;
-	SwordWorld._32 = 0.f;
-	SwordWorld._33 = 1.f;
-	SwordWorld._34 = 0.f;
-
-	//SwordWorld._41 = 1.f;
-	//SwordWorld._42 = 0.f;
-	//SwordWorld._43 = 0.f;
-	//SwordWorld._44 = 0.f;
+	_matrix topSword = matScale* SwordWorld;
+	_vec3	topPos = { topSword._41,topSword._42,topSword._43 };
+	matScale._43 = -15.f;
+	_matrix bottomSword = matScale * SwordWorld;
+	_vec3	bottomPos = { bottomSword._41,bottomSword._42,bottomSword._43 };
 	_vec3 SwordPos = { SwordWorld._41,SwordWorld._42,SwordWorld._43 };
 
 	_matrix ao;
 	m_pTransformCom->Get_WorldMatrix(&ao);
-	m_pTransformCom->Set_WorldMatrix(&SwordPos);
+	m_pTransformCom->Set_WorldMatrix(&(matScale*SwordWorld));
 
 
 	//m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
