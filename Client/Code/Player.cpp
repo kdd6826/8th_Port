@@ -56,7 +56,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.maxStamina = 200.f;
 	m_pStateCom->stat.sp = 250.f;
 	m_pStateCom->stat.maxSp = 1250.f;
-	m_pStateCom->stat.damage = 1000.f;
+	m_pStateCom->stat.damage = PlayerOriginAtt;
 	isDown = false;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
@@ -247,113 +247,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		else if (m_pStateCom->playerState != Engine::CPlayerState::STATE_CONFUSIONHOLE && m_pStateCom->playerState != Engine::CPlayerState::STATE_DIFUSION)
 			Attack(fTimeDelta);
 	}
-	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT1)
-	{
-		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
-		_float fCamAngle;
-		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
-		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
-		{
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
-		}
-	}
-	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT2)
-	{
-		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
-		_float fCamAngle;
-		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
-		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
-		{
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 60)));
-		}
-	}
-	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT3)
-	{
-		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
-		_float fCamAngle;
-		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
-		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
-		{
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
-		}
-	}
-	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
-	{
-		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
-		_float fCamAngle;
-		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
-		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.7 / m_fAniSpeed)
-		{
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta* m_pStateCom->stat.moveSpeed * 30)));
-		}
-	}
-	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT5)
-	{
-		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
-		_float fCamAngle;
-		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
-		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
-		{
-			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
-		}
-	}
-	//대쉬상태
-	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay > 0.75f)
-	{
-		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
-		_float fCamAngle;
-		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
-		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
-		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
-		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 
-		D3DXVec3Normalize(&vLook, &vLook);
-
-		m_pStateCom->stat.moveSpeed = 5.f;
-		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * fTimeDelta * m_pStateCom->stat.moveSpeed)));
-		isInvincible = true;
-		if (delay < 0.1f)
-		{
-			isInvincible = false;
-		}
-	}
-	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay <= 0.8f)
-	{
-		//대쉬가드
-		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
-		{
-			ConufusionHoleInit();
-			m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
-
-			//delay = 1.f;
-			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
-			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
-			delay = temp;
-			m_fBattleCount = delay + 5.f;
-			isInvincible = true;
-
-			m_pStateCom->stat.stamina -= 10.f;
-		}
-		if (delay < 0.1f)
-		{
-			isInvincible = false;
-		}
-	}
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE && delay < 0.1f)
 	{
 		isInvincible = false;
@@ -424,7 +318,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
-
+			m_pStateCom->stat.damage = PlayerOriginAtt;
 			isInvincible = false;
 			isSkill = false;
 		}
@@ -512,10 +406,149 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 			isInvincible = false;
 		}
 	}
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT1)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT2)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed * 60)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT3)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.3 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.7 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT5)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+		if (reverseDelay > 0.2f / m_fAniSpeed && reverseDelay < 0.5 / m_fAniSpeed)
+		{
+			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+		}
+	}
+	//대쉬상태
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay > 0.75f)
+	{
+		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
+		_float fCamAngle;
+		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
+		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
+
+		D3DXVec3Normalize(&vLook, &vLook);
+
+		m_pStateCom->stat.moveSpeed = 5.f;
+		m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed)));
+		isInvincible = true;
+		if (delay < 0.1f)
+		{
+			isInvincible = false;
+		}
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay <= 0.8f)
+	{
+		//대쉬가드
+		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
+		{
+			ConufusionHoleInit();
+			m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
+
+			//delay = 1.f;
+			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+			delay = temp;
+			m_fBattleCount = delay + 5.f;
+			isInvincible = true;
+
+			m_pStateCom->stat.stamina -= 10.f;
+		}
+		if (delay < 0.1f)
+		{
+			isInvincible = false;
+		}
+	}
+
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1)
+	{
+	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT2)
+	{
+	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT3)
+	{
+	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT4)
+	{
+	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT5)
+	{
+	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT6)
+	{
+		m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	}
 
 	if (isDown)
 	{
 		isInvincible = true;
+	}
+
+	if (true == m_pMeshCom->Is_AnimationSetEnd())
+	{
+		m_pStateCom->stat.damage = PlayerOriginAtt;
 	}
 }
 
@@ -777,6 +810,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 {
 	if (isTired)
 		return;
+	m_pStateCom->stat.damage = PlayerOriginAtt;
 	//m_pStateCom->stat.sp = 625;
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
@@ -960,6 +994,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 						temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
 						delay = temp;
+
 						CColliderMgr::GetInstance()->hitList.clear();
 						m_pStateCom->stat.stamina -= 7.f;
 						reverseDelay = 0.f;
@@ -1261,7 +1296,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 		if (m_pStateCom->stat.stamina > m_pStateCom->stat.maxStamina)
 			m_pStateCom->stat.stamina = m_pStateCom->stat.maxStamina;
 		else if (m_pStateCom->stat.stamina<m_pStateCom->stat.maxStamina)
-			m_pStateCom->stat.stamina += 10.f * fTimeDelta;
+			m_pStateCom->stat.stamina += 30.f * fTimeDelta;
 	}
 
 	//SetUp_OnTerrain();

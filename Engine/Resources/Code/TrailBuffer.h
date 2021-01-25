@@ -30,7 +30,7 @@ public:
 	_ulong m_dwUsingVtxCnt;
 	_ulong m_dwUsingTriCnt;
 	_ulong m_dwVtxFVF;
-	list<pair<_vec3, _vec3>>* m_pTrailList;
+
 };
 END
 

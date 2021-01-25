@@ -79,6 +79,7 @@ void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 
 	pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook);
 	pPlayerTransCom->Get_Info(Engine::INFO_POS, &playerPos);
+	playerPos.y += 0.5f;
 	playerDir = pPlayerTransCom->Get_Dir();
 
 	playerScale = pPlayerTransCom->m_vScale;
@@ -99,7 +100,7 @@ void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 		local = m_vOffset;
 
 		//local.x += m_fRadius;
-		local.z += -m_fRadius;
+		local.z += -m_fRadius-secondRadius;
 		D3DXMatrixTranslation(&matTrans, local.x, local.y, local.z);
 
 		D3DXMatrixRotationY(&rotY, m_fAngle);
@@ -107,7 +108,7 @@ void Client::CDynamicCamera::Key_Input(const _float& fTimeDelta)
 		memcpy(&local, matLocal.m[3], sizeof(_vec3));
 
 		m_vEye = local + playerPos;
-		//m_vEye.y += eyeOffSet;
+		m_vEye.y += eyeOffSet - 0.5f;;
 
 		dir = playerPos - m_vEye;
 		dir.y = 0;
@@ -164,56 +165,31 @@ void Client::CDynamicCamera::Mouse_Move(void)
 	//위
 	if (ptCenter.y - ptMouse.y > 0)
 	{
-		if (eyeOffSet < 1.f)
-		{
-			eyeOffSet += Sensitivity * D3DXToRadian(ptCenter.y - ptMouse.y) * Engine::Get_TimeDelta(L"Timer_Immediate");
-			
-		}
+		//if (eyeOffSet < 0.f)
+		//{
+		//	//eyeOffSet += Sensitivity * D3DXToRadian(ptCenter.y - ptMouse.y) * Engine::Get_TimeDelta(L"Timer_Immediate");
+		//	if (secondRadius <= 0.3)
+		//		secondRadius += 6.f * Sensitivity * D3DXToRadian(ptCenter.y - ptMouse.y) * Engine::Get_TimeDelta(L"Timer_Immediate");
+		//	else
+		//		secondRadius = 0.3f;
+		//}
 	}
 	//아래
 	if (ptCenter.y - ptMouse.y < 0)
 	{
-		if (eyeOffSet > -0.5f)
-		eyeOffSet += Sensitivity * D3DXToRadian(ptCenter.y - ptMouse.y) * Engine::Get_TimeDelta(L"Timer_Immediate");
+		if (eyeOffSet > -0.2f)
+		{
+			//eyeOffSet += Sensitivity * D3DXToRadian(ptCenter.y - ptMouse.y) * Engine::Get_TimeDelta(L"Timer_Immediate");
+
+		}
 	}
-
-	//Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
-	//_vec3 playerLook, playerPos, playerScale, dst, playerDir, dir;
-
-	//pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook);
-	//pPlayerTransCom->Get_Info(Engine::INFO_POS, &playerPos);
-	//
-
-
-	//_long	dwMouseMove = 0;
-	//// 마우스를 위아래로 움직일 때
-	//if (dwMouseMove = Engine::Get_DIMouseMove(Engine::DIMS_Y))
+	//if(Engine::Get_DIMouseMove(Engine::DIMS_Z) & 0x80)
 	//{
-	//	_vec3		vRight;
-	//	memcpy(&vRight, &matCamWorld.m[0][0], sizeof(_vec3));
-
-	//	_vec3	vLook = m_vAt - m_vEye;
-	//	_matrix		matRot;
-	//	D3DXMatrixRotationAxis(&matRot, &vRight, D3DXToRadian(dwMouseMove / 10.f));
-
-	//	D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
-
-	//	m_vAt = m_vEye + vLook;
+	//	if (secondRadius >= -0.8)
+	//		secondRadius -= 6.f * Sensitivity * Engine::Get_TimeDelta(L"Timer_Immediate");
+	//	else
+	//		secondRadius = -0.8f;
 	//}
-
-	//if (dwMouseMove = Engine::Get_DIMouseMove(Engine::DIMS_X))
-	//{
-	//	_vec3		vUp = _vec3(0.f, 1.f, 0.f);
-
-	//	_vec3	vLook = m_vAt - m_vEye;
-	//	_matrix		matRot;
-	//	D3DXMatrixRotationAxis(&matRot, &vUp, D3DXToRadian(dwMouseMove / 10.f));
-
-	//	D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
-
-	//	m_vAt = m_vEye + vLook;
-	//}
-
 	
 }
 
