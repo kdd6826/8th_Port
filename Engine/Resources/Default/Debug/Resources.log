@@ -1,14 +1,10 @@
-﻿  TestTrail.cpp
-  코드를 생성하고 있습니다...
-  건너뛰고 있습니다... (관련된 변경 내용 없음)
-  PtTex.cpp
-  NaviMesh.cpp
-  Line.cpp
-  HierarchyLoader.cpp
-  DynamicMesh.cpp
-  CollSphere.cpp
-  Cell.cpp
-  AniCtrl.cpp
+﻿  TrailBuffer.cpp
+c:\users\gmh\desktop\client\8th_port\engine\resources\code\trailbuffer.cpp(96): warning C4244: '=': 'Engine::_ulong'에서 'Engine::_ushort'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\engine\resources\code\trailbuffer.cpp(97): warning C4244: '=': 'Engine::_ulong'에서 'Engine::_ushort'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\engine\resources\code\trailbuffer.cpp(98): warning C4244: '=': 'Engine::_ulong'에서 'Engine::_ushort'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\engine\resources\code\trailbuffer.cpp(101): warning C4244: '=': 'Engine::_ulong'에서 'Engine::_ushort'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\engine\resources\code\trailbuffer.cpp(102): warning C4244: '=': 'Engine::_ulong'에서 'Engine::_ushort'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\gmh\desktop\client\8th_port\engine\resources\code\trailbuffer.cpp(103): warning C4244: '=': 'Engine::_ulong'에서 'Engine::_ushort'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Resources.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\AniCtrl.h

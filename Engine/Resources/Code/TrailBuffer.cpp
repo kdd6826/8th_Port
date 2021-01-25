@@ -4,12 +4,19 @@ USING(Engine)
 
 Engine::CTrailBuffer::CTrailBuffer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
+	, m_dwUsingVtxCnt(0)
+	, m_dwUsingTriCnt(0)
+	, m_dwVtxFVF(0)
+
 {
 
 }
 
 Engine::CTrailBuffer::CTrailBuffer(const CTrailBuffer& rhs)
 	: CVIBuffer(rhs)
+	, m_dwUsingVtxCnt(rhs.m_dwUsingVtxCnt)
+	, m_dwUsingTriCnt(rhs.m_dwUsingVtxCnt)
+	, m_dwVtxFVF(rhs.m_dwFVF)
 {
 
 }
@@ -36,6 +43,7 @@ HRESULT Engine::CTrailBuffer::Ready_Buffer(const _ulong& dwVtxMax)
 
 void CTrailBuffer::Render_Buffer()
 {
+	//CVIBuffer::Render_Buffer();
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 	m_pGraphicDev->SetFVF(m_dwVtxFVF);
 	m_pGraphicDev->SetIndices(m_pIB);
@@ -45,7 +53,7 @@ void CTrailBuffer::Render_Buffer()
 
 void CTrailBuffer::Render_Buffer(const list<pair<_vec3, _vec3> >* pTrailList)
 {
-	if (pTrailList->size() < 4)
+	if (pTrailList->size() < 10)
 		return;
 
 	Add_Vertex_CatmullRom(pTrailList);
@@ -144,6 +152,7 @@ HRESULT CTrailBuffer::Add_Vertex_CatmullRom(const list<pair<_vec3, _vec3>>* pTra
 
 	if ((_ulong)ItplList.size() > m_dwVtxCnt)
 	{
+		int i = 0;
 		wstring wstrMsg = L"The number of vertex is over. There are " + to_wstring(m_dwVtxCnt) + L" reserved vertices.";
 		MessageBox(NULL, wstrMsg.c_str(), L"TrailBuffer", MB_OK);
 	}
@@ -179,6 +188,8 @@ HRESULT CTrailBuffer::Add_Vertex_CatmullRom(const list<pair<_vec3, _vec3>>* pTra
 
 	m_pIB->Unlock();
 
+
+	
 	return S_OK;
 }
 

@@ -13,8 +13,17 @@ CSwordTrail::~CSwordTrail(void)
 	//for (auto& iterator = m_pTrailList.begin(); iterator != m_pTrailList.end(); ++iterator)
 	//{
 	//	//Engine::Safe_Delete_Array(*iterator);
-	//	Engine::Safe_Release(*iterator);
+	//	m_pTrailList.pop_front();
+	//	++iterator;
 	//}
+
+	//for (auto& iterator = m_pTrailList.begin(); iterator != m_pTrailList.end();)
+	//{
+	//		/*Engine::Safe_Release(*iterator);*/
+	//		iterator = m_pTrailList.erase(iterator);
+	//		iterator++;
+	//}
+	m_pBufferCom->Clear_Vertex();
 }
 
 
@@ -24,22 +33,22 @@ HRESULT Client::CSwordTrail::Add_Component(void)
 	Engine::CComponent*		pComponent = nullptr;
 
 	//// buffer
-	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
-
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+
+	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
 	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Black"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-	
+	/*pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Black"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+	*/
 	// Renderer
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -131,14 +140,20 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 	const _vec3	bottomPos = { bottomSword._41,bottomSword._42,bottomSword._43 };
 	_vec3 SwordPos = { SwordWorld._41,SwordWorld._42,SwordWorld._43 };
 	m_pVecpair = { topPos,bottomPos };
-	m_pBufferCom->Update_Buffer(&m_pVecpair,fTimeDelta);
-	count += fTimeDelta;
+	//m_pBufferCom->Update_Buffer(&m_pVecpair,fTimeDelta);
+	
+	if (m_pTrailList.size() == 10)
+	{
+		m_pTrailList.pop_front();
+		//m_pBufferCom->Clear_Vertex();
+	}
+	if (m_pTrailList.size() < 10)
+	{
+		m_pTrailList.emplace_back(pair<_vec3, _vec3>(topPos, bottomPos));
 
-	//if (m_pTrailList.size() < 4 && count > 1.f)
-	//{
-	//	m_pTrailList.emplace_back(pair<_vec3, _vec3>(topPos, bottomPos));
-	//	count = 0.f;
-	//}
+
+	}
+
 	//else if (count2 >= 1.f)
 	//{
 	//	m_pTrailList.pop_front();
@@ -163,7 +178,7 @@ void Client::CSwordTrail::Render_Object(void)
 	pEffect->Begin(NULL, 0);
 	pEffect->BeginPass(1);
 
-	m_pBufferCom->Render_Buffer();
+	m_pBufferCom->Render_Buffer(&m_pTrailList);
 
 	pEffect->EndPass();
 	pEffect->End();

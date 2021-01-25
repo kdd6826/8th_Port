@@ -21,7 +21,7 @@ public:
 	static Engine::CTrailBuffer* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwVtxMax);
 	virtual CComponent* Clone(void);
 	virtual void Free(void);
-	void Render_Buffer();
+	virtual void Render_Buffer();
 	void Render_Buffer(const list<pair<_vec3, _vec3>>* pTrailList);
 	HRESULT Add_Vertex(const _vec3* pTopPos, const _vec3* pBottomPos);
 	HRESULT Clear_Vertex();

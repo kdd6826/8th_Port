@@ -198,29 +198,6 @@ void CTestTrail::Update_Buffer(pair<_vec3, _vec3>* pPair, _float fTimedelta)
 	vecList[0].first = pPair->first;
 	vecList[0].second = pPair->second;
 
-	//list<pair<_vec3, _vec3>> ItplList(vecListbegin(), pTrailList->end());
-	//for (_int i = 0; i < 3; ++i)
-	//{
-	//	auto iter0 = ItplList.begin();
-	//	auto iter1 = ++iter0;
-	//	auto iter2 = ++iter1;
-	//	auto iter3 = ++iter2;
-	//	auto iterEnd = ItplList.end();
-	//	for (; iter3 != iterEnd;)
-	//	{
-	//		_vec3 vItplTop, vItplBottom;
-	//		D3DXVec3CatmullRom(&vItplTop, &iter0->first, &iter1->first, &iter2->first, &iter3->first, 0.5f);
-	//		D3DXVec3CatmullRom(&vItplBottom, &iter0->second, &iter1->second, &iter2->second, &iter3->second, 0.5f);
-
-	//		ItplList.insert(iter2, make_pair(vItplTop, vItplBottom));
-
-	//		iter0 = iter1;
-	//		iter1 = iter2;
-	//		iter2 = iter3;
-	//		++iter3;
-	//	}
-	//}
-
 
 }
 
