@@ -125,9 +125,9 @@ HRESULT CTrailBuffer::Add_Vertex_CatmullRom(const list<pair<_vec3, _vec3>>* pTra
 			_vec3 vItplTop, vItplBottom;
 			D3DXVec3CatmullRom(&vItplTop, &iter0->first, &iter1->first, &iter2->first, &iter3->first, 0.5f);
 			D3DXVec3CatmullRom(&vItplBottom, &iter0->second, &iter1->second, &iter2->second, &iter3->second, 0.5f);
-
+			
 			ItplList.insert(iter2, make_pair(vItplTop, vItplBottom));
-
+			
 			iter0 = iter1;
 			iter1 = iter2;
 			iter2 = iter3;
