@@ -35,8 +35,8 @@ private:
 
 private:
 	
-	//Engine::CTrailBuffer*			m_pBufferCom = nullptr;
-	Engine::CTestTrail*			m_pBufferCom = nullptr;
+	Engine::CTrailBuffer*			m_pBufferCom = nullptr;
+	//Engine::CTestTrail*			m_pBufferCom = nullptr;
 	Engine::CTexture*			m_pTextureCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
@@ -48,7 +48,7 @@ private:
 public:
 	static CSwordTrail*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	list<pair<_vec3, _vec3>> m_pTrailList;
-	pair<_vec3, _vec3> m_pVecpair;
+	//pair<_vec3, _vec3> m_pVecpair;
 	float count=0;
 	float count2 = 0;
 private:

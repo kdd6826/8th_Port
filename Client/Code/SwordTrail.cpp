@@ -24,13 +24,13 @@ HRESULT Client::CSwordTrail::Add_Component(void)
 	Engine::CComponent*		pComponent = nullptr;
 
 	//// buffer
-	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
-
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+
+	/*pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);*/
 
 	// texture
 	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
@@ -130,15 +130,15 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 	_matrix bottomSword = matScale * SwordWorld;
 	const _vec3	bottomPos = { bottomSword._41,bottomSword._42,bottomSword._43 };
 	_vec3 SwordPos = { SwordWorld._41,SwordWorld._42,SwordWorld._43 };
-	m_pVecpair = { topPos,bottomPos };
-	m_pBufferCom->Update_Buffer(&m_pVecpair,fTimeDelta);
+	//m_pVecpair = { topPos,bottomPos };
+	//m_pBufferCom->Update_Buffer(&m_pTrailList);
+	
 	count += fTimeDelta;
-
-	//if (m_pTrailList.size() < 4 && count > 1.f)
-	//{
-	//	m_pTrailList.emplace_back(pair<_vec3, _vec3>(topPos, bottomPos));
-	//	count = 0.f;
-	//}
+	if (m_pTrailList.size() < 8 && count > 1.f)
+	{
+		m_pTrailList.emplace_back(pair<_vec3, _vec3>(topPos, bottomPos));
+		count = 0.f;
+	}
 	//else if (count2 >= 1.f)
 	//{
 	//	m_pTrailList.pop_front();
@@ -163,7 +163,7 @@ void Client::CSwordTrail::Render_Object(void)
 	pEffect->Begin(NULL, 0);
 	pEffect->BeginPass(1);
 
-	m_pBufferCom->Render_Buffer();
+	m_pBufferCom->Render_Buffer(&m_pTrailList);
 
 	pEffect->EndPass();
 	pEffect->End();

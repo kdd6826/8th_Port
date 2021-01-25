@@ -134,7 +134,7 @@ HRESULT CTrailBuffer::Add_Vertex_CatmullRom(const list<pair<_vec3, _vec3>>* pTra
 			++iter3;
 		}
 	}
-
+	
 	VTXTEX* pVertex = nullptr;
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
@@ -144,6 +144,7 @@ HRESULT CTrailBuffer::Add_Vertex_CatmullRom(const list<pair<_vec3, _vec3>>* pTra
 
 	if ((_ulong)ItplList.size() > m_dwVtxCnt)
 	{
+		int i = 0;
 		wstring wstrMsg = L"The number of vertex is over. There are " + to_wstring(m_dwVtxCnt) + L" reserved vertices.";
 		MessageBox(NULL, wstrMsg.c_str(), L"TrailBuffer", MB_OK);
 	}
