@@ -72,6 +72,10 @@ PS_OUT	PS_MAIN(PS_IN In)
 		Out.vColor.a = 0.f;
 	else
 	Out.vColor.a = 1.f- g_fAlpha;
+
+	//Out.vColor.r = 0.52f;
+	//Out.vColor.g = 0.505;
+	//Out.vColor.b = 0.67;
 	// 우선 z나누기가 끝난 투영 좌표로 변환 -> 텍스처 UV좌표로 변환
 	
 	// (-1 ~ 1) 범위의 투영 좌표 x를 (0 ~ 1) 범위의 텍스쳐 U 값으로 변환

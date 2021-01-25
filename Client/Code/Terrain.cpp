@@ -98,7 +98,7 @@ _int Client::CTerrain::Update_Object(const _float& fTimeDelta)
 	//											m_pIndex, 
 	//											&m_dwTriCnt);
 
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+	m_pRendererCom->Add_RenderGroup(Engine::RENDER_PRIORITY, this);
 
 	return 0;
 }

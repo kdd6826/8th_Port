@@ -24,19 +24,19 @@ HRESULT Client::CSwordTrail::Add_Component(void)
 	Engine::CComponent*		pComponent = nullptr;
 
 	//// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
-
-	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
+
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
 	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Black"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 	
@@ -122,7 +122,7 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 	matScale._33 = 100.f;
 	//65~15
 	matScale._43 = -65.f;
-	//matScale._42 = -0.5f;
+
 	m_pSwordTransformCom->Get_WorldMatrix(&SwordWorld);
 	_matrix topSword = matScale* SwordWorld;
 	const _vec3	topPos = { topSword._41,topSword._42,topSword._43 };
@@ -130,31 +130,23 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 	_matrix bottomSword = matScale * SwordWorld;
 	const _vec3	bottomPos = { bottomSword._41,bottomSword._42,bottomSword._43 };
 	_vec3 SwordPos = { SwordWorld._41,SwordWorld._42,SwordWorld._43 };
-	
-	
+	m_pVecpair = { topPos,bottomPos };
+	m_pBufferCom->Update_Buffer(&m_pVecpair);
+	count += fTimeDelta;
 
-	//if (m_pTrailList.size() < 4)
+	//if (m_pTrailList.size() < 4 && count > 1.f)
+	//{
 	//	m_pTrailList.emplace_back(pair<_vec3, _vec3>(topPos, bottomPos));
-	//else if (count >= 1.f)
+	//	count = 0.f;
+	//}
+	//else if (count2 >= 1.f)
 	//{
 	//	m_pTrailList.pop_front();
-	//	count = 0;
+	//	count2 = 0;
 	//}
 	//else
-	//	count += fTimeDelta;
+	//	count2 += fTimeDelta;
 		
-	//
-	/*if (m_pTrailList->size() > 4)*/
-	//m_pBufferCom->Add_Vertex(&topPos, &bottomPos);
-	_matrix ao;
-	//m_pTransformCom->Get_WorldMatrix(&ao);
-	//m_pTransformCom->Set_WorldMatrix(&(matScale*SwordWorld));
-
-
-	//m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
-
-
-	//m_bColl = Collision_ToObject(L"GameLogic", L"Player");
 #ifdef _DEBUG
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 #endif
@@ -171,7 +163,7 @@ void Client::CSwordTrail::Render_Object(void)
 	pEffect->Begin(NULL, 0);
 	pEffect->BeginPass(1);
 
-	//m_pBufferCom->Render_Buffer(&m_pTrailList);
+	m_pBufferCom->Render_Buffer();
 
 	pEffect->EndPass();
 	pEffect->End();

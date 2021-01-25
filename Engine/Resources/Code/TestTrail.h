@@ -14,13 +14,15 @@ protected:
 
 public:
 	virtual HRESULT	Ready_Buffer(void);
-	void		Update_Buffer(COLLTYPE eType, const _matrix* pColliderMatrix);
+	void		Update_Buffer(pair<_vec3,_vec3>* pPair,_float fTimedelta);
 public:
 	static CTestTrail*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent*	Clone(void);
 	virtual void Free(void);
 
-	_vec3		m_vMin, m_vMax;
+	_vec3		m_vMin, m_vMax, m_vOldMin, m_vOldMax;
+	list<pair<_vec3, _vec3>> vecList;
+	float createCount;
 };
 END
 
