@@ -162,9 +162,12 @@ void Client::CSwordTrail::Render_Object(void)
 
 	pEffect->Begin(NULL, 0);
 	pEffect->BeginPass(1);
-
-	m_pBufferCom->Render_Buffer();
-
+	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerStateCom, );
+	if (pPlayerStateCom->isAttack==true)
+	{
+		m_pBufferCom->Render_Buffer();
+	}
 	pEffect->EndPass();
 	pEffect->End();
 

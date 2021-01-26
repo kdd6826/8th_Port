@@ -187,12 +187,14 @@
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Effect.h" />
+    <ClInclude Include="..\Code\FireEffect.h" />
     <ClInclude Include="..\Code\FontParent.h" />
     <ClInclude Include="..\Code\HpBarBack.h" />
     <ClInclude Include="..\Code\HpBarValue.h" />
     <ClInclude Include="..\Code\Ingkells.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\LightRay.h" />
     <ClInclude Include="..\Code\Loading.h" />
     <ClInclude Include="..\Code\Logo.h" />
     <ClInclude Include="..\Code\MainApp.h" />
@@ -270,12 +272,14 @@
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\FireEffect.cpp" />
     <ClCompile Include="..\Code\FontParent.cpp" />
     <ClCompile Include="..\Code\HpBarBack.cpp" />
     <ClCompile Include="..\Code\HpBarValue.cpp" />
     <ClCompile Include="..\Code\Ingkells.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\LightRay.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />

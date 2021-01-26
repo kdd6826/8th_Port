@@ -133,6 +133,12 @@
     <Filter Include="02. GameObject\97. SoundManager">
       <UniqueIdentifier>{4f1b1727-b019-49bf-89b7-96e2ff3651d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\04.FireEffect">
+      <UniqueIdentifier>{4ee54bb8-ac69-4451-bf66-f0d24ed916af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\01. Unit\01. Player\Skill">
+      <UniqueIdentifier>{25a8dce0-1169-4273-ab7e-30eeb3246594}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -318,6 +324,12 @@
     <ClInclude Include="..\Code\FontParent.h">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\FireEffect.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\04.FireEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\LightRay.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -484,6 +496,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FontParent.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FireEffect.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\04.FireEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LightRay.cpp">
+      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

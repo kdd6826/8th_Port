@@ -12,12 +12,15 @@
 #include "Dog.h"
 #include "Titan.h"
 #include "Ingkells.h"
+#include "LightRay.h"
 //#include "Zecallion.h"
 
 #include "Stone.h"
 #include "Sword.h"
 #include "Tree.h"
 #include "Effect.h"
+#include "FireEffect.h"
+
 #include "DamageFont.h"
 #include "ConfusionHole.h"
 #include "ConfusionHole2.h"
