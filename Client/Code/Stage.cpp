@@ -185,9 +185,9 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 
 
-	pGameObject = CRuinBlade::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RuinBlade", pGameObject), E_FAIL);
+	//pGameObject = CRuinBlade::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RuinBlade", pGameObject), E_FAIL);
 	
 
 	/*pGameObject = CParticle::Create(m_pGraphicDev);*/

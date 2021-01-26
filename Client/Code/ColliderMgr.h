@@ -30,7 +30,7 @@ public:
 	list<CSphereCollider*>				objectList[Engine::COLLID::NONE];
 	list<Engine::CGameObject*>			hitList;
 	
-private:
+public:
 	virtual void Free(void);
 };
 END

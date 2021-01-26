@@ -48,7 +48,7 @@ HRESULT Client::CLightRay::Add_Component(void)
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
-	ColliderObject();
+	ColliderSkill();
 	return S_OK;
 }
 
@@ -91,7 +91,7 @@ HRESULT Client::CLightRay::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Pos(20, 0.f, 22);
+	m_pTransformCom->Set_Pos(20, 0.5f, 22);
 	//m_pTransformCom->Set_Scale(0.4f, 2.f, 1.f);
 
 
@@ -105,7 +105,11 @@ HRESULT Client::CLightRay::Ready_Object(void)
 Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
 {
 	CMonster::Update_Object(fTimeDelta);
-	m_pTransformCom->Set_Pos(20, 0.5f, 22);
+
+	lifeTime += fTimeDelta;
+	if (lifeTime > 3.f)
+		return 1;
+	m_pTransformCom->Move_Pos(&(m_vDir*10.f));
 	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(10.f));
 	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-10.f));
 	m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(10.f));

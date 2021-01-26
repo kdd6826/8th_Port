@@ -70,6 +70,7 @@ private:
 	bool		isShake = false;
 private:
 	vector<CUnit*>				hitMonsters;
+	vector<CUnit*>				vecSkill;
 	_vec3						m_vDir;
 	bool						isAnimating;
 	_float						delay = 0.f;

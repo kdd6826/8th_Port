@@ -72,13 +72,22 @@ Client::_int Client::CBossHpBarRed::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 		
-	Engine::CMonsterState* pMonsterStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Titan", L"Com_MonsterState", Engine::ID_DYNAMIC));
-	if (pMonsterStateCom == nullptr)
+	Engine::CMonsterState* pTitanStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Titan", L"Com_MonsterState", Engine::ID_DYNAMIC));
+	Engine::CMonsterState* pIngkellsStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Ingkells", L"Com_MonsterState", Engine::ID_DYNAMIC));
+	if (pTitanStateCom == nullptr && pTitanStateCom == nullptr)
 		return 0;
-	if (pMonsterStateCom->stat.hp <= pMonsterStateCom->stat.maxHp * 0.31)
+
+	if (pTitanStateCom !=nullptr&&pTitanStateCom->stat.hp <= pTitanStateCom->stat.maxHp * 0.31)
 	{
-		m_fX = 160 + 390 * ((pMonsterStateCom->stat.hp) / (pMonsterStateCom->stat.maxHp - pMonsterStateCom->stat.maxHp * 0.7));
-		m_fSizeX = 800 * (pMonsterStateCom->stat.hp) / (pMonsterStateCom->stat.maxHp - pMonsterStateCom->stat.maxHp * 0.7);
+		m_fX = 160 + 390 * ((pTitanStateCom->stat.hp) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 800 * (pTitanStateCom->stat.hp) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7);
+		if (m_fSizeX < 0)
+			m_fSizeX = 0;
+	}
+	else 	if (pIngkellsStateCom != nullptr && pIngkellsStateCom->stat.hp <= pIngkellsStateCom->stat.maxHp * 0.31)
+	{
+		m_fX = 160 + 390 * ((pIngkellsStateCom->stat.hp) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 800 * (pIngkellsStateCom->stat.hp) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7);
 		if (m_fSizeX < 0)
 			m_fSizeX = 0;
 	}

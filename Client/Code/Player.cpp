@@ -7,6 +7,7 @@
 #include "ConfusionHole.h"
 #include "ConfusionHole2.h"
 #include "Monster.h"
+#include "LightRay.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -16,7 +17,11 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CPlayer::~CPlayer(void)
 {
-
+	for (auto& iterator = vecSkill.begin(); iterator != vecSkill.end(); ++iterator)
+	{
+		//Engine::Safe_Delete_Array(*iterator);
+		Engine::Safe_Release(*iterator);
+	}
 }
 
 Client::_vec3 Client::CPlayer::PickUp_OnTerrain(void)
@@ -1140,6 +1145,18 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				return;
 			if (delay <= 0.f)
 			{
+				CColliderMgr::GetInstance()->hitList.clear();
+				_vec3 dir,pos;
+				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &dir);
+				CLightRay* pGameObject = CLightRay::Create(m_pGraphicDev);
+				pGameObject->SetDir(dir);
+				m_pTransformCom->Get_Info(Engine::INFO_POS, &pos);
+				pos.y += 0.5f;
+				pGameObject->m_pTransformCom->Set_Pos(&pos);
+				NULL_CHECK_RETURN(pGameObject, );
+				vecSkill.push_back(pGameObject);
+				
+
 
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_MANA_IMAGE;
 				//OK
@@ -1364,6 +1381,12 @@ HRESULT Client::CPlayer::Ready_Object(void)
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
 	CUnit::Update_Object(fTimeDelta);
+	
+		for (auto& skill : vecSkill)
+		{
+			
+			skill->Update_Object(fTimeDelta);
+		}
 	if (delay > 0)
 	{
 		delay -= fTimeDelta;

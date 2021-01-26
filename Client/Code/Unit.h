@@ -38,7 +38,7 @@ protected:
 	HRESULT		Add_Component(void);
 	_int Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType, Engine::COLLID _collType2);
 	HRESULT ColliderObject();
-
+	HRESULT ColliderSkill();
 
 	vector<CSphereCollider*>	m_VecSphereCollider;
 	_float						reverseDelay = 0.f;

@@ -50,7 +50,19 @@ _int CMonster::Update_Object(const _float& fTimeDelta)
 void CMonster::OnCollision(Engine::CGameObject* target)
 {
 	_vec3 hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
-	float damage = dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
+	/*float damage;*/
+	//if (dynamic_cast<CPlayer*>(target)->m_pStateCom != nullptr)
+	//{
+	//	damage = dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
+	//}
+	//else
+	//{
+		Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+		NULL_CHECK_RETURN(pPlayerStateCom, );
+		
+		float damage = pPlayerStateCom->stat.damage;
+	/*}*/
+
 	float damageRange = damage*0.1f;
 	int random = rand() % int(damageRange);
 	damage = damage - damageRange*0.5f + random;
@@ -59,8 +71,8 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 	if (!isInvincible)
 	{
 		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
-		m_pStateCom->stat.hp -= dynamic_cast<CPlayer*>(target)->m_pStateCom->stat.damage;
-		Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+		m_pStateCom->stat.hp -= pPlayerStateCom->stat.damage;
+		//Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 
 		pPlayerStateCom->stat.sp += 20.f;
 		if (pPlayerStateCom->stat.sp > pPlayerStateCom->stat.maxSp)

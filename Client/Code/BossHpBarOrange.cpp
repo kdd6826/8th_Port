@@ -73,13 +73,21 @@ Client::_int Client::CBossHpBarOrange::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 		
-	Engine::CMonsterState* pMonsterStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Titan", L"Com_MonsterState", Engine::ID_DYNAMIC));
-	if (pMonsterStateCom == nullptr)
+	Engine::CMonsterState* pTitanStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Titan", L"Com_MonsterState", Engine::ID_DYNAMIC));
+	Engine::CMonsterState* pIngkellsStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Ingkells", L"Com_MonsterState", Engine::ID_DYNAMIC));
+	if (pTitanStateCom == nullptr && pTitanStateCom == nullptr)
 		return 0;
-	if (pMonsterStateCom->stat.hp <= pMonsterStateCom->stat.maxHp * 0.6)
+	if (pTitanStateCom != nullptr&& pTitanStateCom->stat.hp <= pTitanStateCom->stat.maxHp * 0.6)
 	{
-		m_fX = 155 + 395 * ((pMonsterStateCom->stat.hp - pMonsterStateCom->stat.maxHp * 0.3) / (pMonsterStateCom->stat.maxHp - pMonsterStateCom->stat.maxHp * 0.7));
-		m_fSizeX = 800 * (pMonsterStateCom->stat.hp - pMonsterStateCom->stat.maxHp * 0.3) / (pMonsterStateCom->stat.maxHp - pMonsterStateCom->stat.maxHp * 0.7);
+				m_fX = 155 + 395 * ((pTitanStateCom->stat.hp - pTitanStateCom->stat.maxHp * 0.3) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 800 * (pTitanStateCom->stat.hp - pTitanStateCom->stat.maxHp * 0.3) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7);
+		if (m_fSizeX < 0)
+			m_fSizeX = 0;
+	}
+	else if (pIngkellsStateCom != nullptr && pIngkellsStateCom->stat.hp <= pIngkellsStateCom->stat.maxHp * 0.6)
+	{
+		m_fX = 155 + 395 * ((pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 800 * (pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7);
 		if (m_fSizeX < 0)
 			m_fSizeX = 0;
 	}
