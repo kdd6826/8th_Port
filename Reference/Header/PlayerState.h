@@ -79,18 +79,15 @@ public:
 	};
 	HRESULT			Ready_PlayerState(void);
 	virtual _int	Update_Component(const _float& fTimeDelta);
-
+	bool		isAttack = false;
 public:
 	STAT stat;
 	playerMesh playerMeshState=MESH_NORMAL;
 	playerState playerState = STATE_IDLE;
 	bool		perfectGuard = false;
-	bool		isAttack = false;
 public:
 	static		CPlayerState*		Create(void);
 	virtual CComponent*		Clone(void);
-
-
 private:	
 	virtual		void		Free(void);
 

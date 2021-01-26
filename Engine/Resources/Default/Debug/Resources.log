@@ -1,4 +1,5 @@
-﻿  Resources.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
+﻿     ../Bin\Resources.lib 라이브러리 및 ../Bin\Resources.exp 개체를 생성하고 있습니다.
+  Resources.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Resources\Default\../Bin\Resources.dll
   Resources.vcxproj -> ../Bin\Resources.pdb (Full PDB)
   .\Engine\Resources\Code\AniCtrl.h
   .\Engine\Resources\Code\Cell.h

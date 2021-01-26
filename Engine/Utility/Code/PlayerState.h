@@ -79,7 +79,7 @@ public:
 	};
 	HRESULT			Ready_PlayerState(void);
 	virtual _int	Update_Component(const _float& fTimeDelta);
-
+	bool		isAttack = false;
 public:
 	STAT stat;
 	playerMesh playerMeshState=MESH_NORMAL;
