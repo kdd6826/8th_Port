@@ -133,6 +133,20 @@ _int CUnit::Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType, Engin
 	return S_OK;
 }
 
+HRESULT CUnit::ColliderObject()
+{
+	CSphereCollider* sphereCol = CSphereCollider::Create(m_pGraphicDev);
+	sphereCol->m_pDynamicMesh = this;
+	sphereCol->isCreate = true;
+
+	sphereCol->m_pTransformCom->m_vInfo[Engine::INFO_POS] = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+	sphereCol->isEnvironment = true;
+	m_VecSphereCollider.emplace_back(sphereCol);
+	CColliderMgr::GetInstance()->RegisterObject(Engine::COLLID::ENEMYATTACK, sphereCol);
+
+	return S_OK;
+}
+
 
 
 void CUnit::Free(void)

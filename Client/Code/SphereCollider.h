@@ -44,6 +44,7 @@ public:
 	//list<Engine::VTXCOL*> list_pVtx;
 	bool m_Dead = false;
 	bool isCreate = false;
+	bool isEnvironment = false;
 	//자기자신
 	Engine::CGameObject* m_pDynamicMesh;
 	_bool						m_bColl = false;

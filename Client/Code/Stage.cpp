@@ -223,6 +223,11 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
 
+	pGameObject = CFireEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
+
+
 	//for (_uint i = 0; i < 100; ++i)
 	//{
 		pGameObject = CSwordTrail::Create(m_pGraphicDev);
