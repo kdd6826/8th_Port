@@ -20,6 +20,18 @@ END
 BEGIN(Client)
 class CPlayer : public CUnit
 {
+	enum State
+	{
+		_CONFUSIONHOLE,//GUARD
+		_DIFUSION,//DASH
+		_DOOMSAYER,
+		_RUINBLADE,
+		_MANAIMAGE,
+		_ROADOFMANA,
+		_DARK1,
+		_DARK2,
+		_END
+	};
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CPlayer(void);
@@ -44,12 +56,12 @@ private:
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	//playerState m_state = playerState::STATE_IDLE;
-	
+	int hitCount=0;
 	/*playerMesh	meshTransform = playerMesh::MESH_NORMAL;*/
 	bool		isManaBlade = false;
 	bool		isBattle = false;
 	bool		isDown = false;
-	bool		isAttack = false;
+	//bool		isAttack = false;
 	bool		isMove = false;
 	bool		isHit = false;
 	bool		isRunning = false;
@@ -61,6 +73,7 @@ private:
 	_vec3						m_vDir;
 	bool						isAnimating;
 	_float						delay = 0.f;
+	_float						skillDelay[_END] = { 0.f };
 	_float						downDelay = 0.f;
 	_float						m_fAniSpeed = 1.f;
 	_float						m_fBattleCount=0.f;

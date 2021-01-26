@@ -116,13 +116,13 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 		)
 	{
-		isAttack = true;
+		m_pStateCom->isAttack = true;
 		isColl = true;
 	}
 
 	else
 	{
-		isAttack = false;
+		m_pStateCom->isAttack = false;
 		isColl = false;
 	}
 
@@ -224,14 +224,17 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		//가드
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
+			if (skillDelay[_CONFUSIONHOLE] > 0.f)
+				return;
 			if (delay <= 0.f)
 			{
 				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
-				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.1f;
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_CONFUSIONHOLE] = temp + 0.3f;
 				isInvincible = true;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 10.f;
@@ -256,17 +259,20 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	if (isSkill == false)
 	{
 		//어택중 가드
-		if (delay <= 0.8f && isAttack)
+		if (delay <= 0.8f && m_pStateCom->isAttack)
 		{
+			if (skillDelay[_CONFUSIONHOLE] > 0.f)
+				return;
 			if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 			{
-				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
+				ConufusionHoleInit();
 
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_CONFUSIONHOLE] = temp + 0.3f;
 				isInvincible = true;
 				m_fBattleCount = delay + 5.f;
 
@@ -498,13 +504,16 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		//대쉬가드
 		if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 		{
-			ConufusionHoleInit();
+			if (skillDelay[_CONFUSIONHOLE] > 0.f)
+				return;
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
+			ConufusionHoleInit();
 
 			//delay = 1.f;
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;
+			skillDelay[_CONFUSIONHOLE] = temp + 0.3f;
 			m_fBattleCount = delay + 5.f;
 			isInvincible = true;
 
@@ -515,6 +524,36 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 			isInvincible = false;
 		}
 	}
+
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DOOMSAYER)
+	{
+		m_pStateCom->stat.damage = PlayerOriginAtt*3.f;
+		if (delay < 2.f&&hitCount==0)
+		{
+			CColliderMgr::GetInstance()->hitList.clear();
+			hitCount++;
+		}
+		if (delay < 1.5f&&hitCount == 1)
+		{
+			CColliderMgr::GetInstance()->hitList.clear();
+			hitCount++;
+		}
+		if (delay < 1.3f&&hitCount == 2)
+		{
+			CColliderMgr::GetInstance()->hitList.clear();
+			hitCount++;
+		}
+		if (delay < 1.f&&hitCount == 3)
+		{
+			CColliderMgr::GetInstance()->hitList.clear();
+			hitCount++;
+		}
+		if (delay <= 0.4f)
+		{
+			m_fAniSpeed = 1.f;
+		}
+	}
+	
 
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1)
 	{
@@ -618,14 +657,17 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
-				ConufusionHoleInit();
+				if (skillDelay[_DIFUSION] > 0.f)
+					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
+				ConufusionHoleInit();
 
 				//delay = 1.2f;
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
 			}
@@ -649,13 +691,16 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
-				ConufusionHoleInit();
+				if (skillDelay[_DIFUSION] > 0.f)
+					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
+				ConufusionHoleInit();
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 
 				m_pStateCom->stat.stamina -= 11.f;
@@ -687,14 +732,16 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
-				ConufusionHoleInit();
+				if (skillDelay[_DIFUSION] > 0.f)
+					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
+				ConufusionHoleInit();
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
-
+				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
 			}
@@ -738,13 +785,16 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
-				ConufusionHoleInit();
+				if (skillDelay[_DIFUSION] > 0.f)
+					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
+				ConufusionHoleInit();
 				/*delay = 1.2f;*/
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
 			}
@@ -781,13 +831,16 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 		{
 			if (delay <= 0.f)
 			{
-				ConufusionHoleInit();
+				if (skillDelay[_DIFUSION] > 0.f)
+					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
+				ConufusionHoleInit();
 				//delay = 1.2f;
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
 			}
@@ -1029,16 +1082,22 @@ void CPlayer::Attack(const _float& fTimeDelta)
 	{
 		if (Engine::Get_DIKeyState(DIK_2) & 0x80)
 		{
+			if (skillDelay[_DOOMSAYER] > 0.f)
+				return;
 			if (delay <= 0.f)
 			{
+				hitCount = 0;
+				m_fAniSpeed = 2.f;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DOOMSAYER;
 				//delay = 3.7f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_DOOMSAYER] = temp + 0.5f;
 				isInvincible = true;
 				m_pStateCom->stat.sp -= 100.f;
 				m_fBattleCount = delay + 5.f;
+				
 			}
 		}
 	}
@@ -1046,6 +1105,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 	{
 		if (Engine::Get_DIKeyState(DIK_3) & 0x80)
 		{
+			if (skillDelay[_RUINBLADE] > 0.f)
+				return;
 			if (delay <= 0.f)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_RUINBLADE;
@@ -1054,6 +1115,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_RUINBLADE] = temp + 0.5f;
 				m_pStateCom->stat.sp -= 250.f;
 				m_fBattleCount = delay + 5.f;
 				isShake = false;
@@ -1065,14 +1127,18 @@ void CPlayer::Attack(const _float& fTimeDelta)
 	{
 		if (Engine::Get_DIKeyState(DIK_4) & 0x80)
 		{
+			if (skillDelay[_MANAIMAGE] > 0.f)
+				return;
 			if (delay <= 0.f)
 			{
+
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_MANA_IMAGE;
 				//OK
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_MANAIMAGE] = temp + 0.5f;
 				m_pStateCom->stat.sp -= 150;
 				m_fBattleCount = delay + 5.f;
 			}
@@ -1082,6 +1148,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 	{
 		if (Engine::Get_DIKeyState(DIK_5) & 0x80)
 		{
+			if (skillDelay[_ROADOFMANA] > 0.f)
+				return;
 			if (delay <= 0.f)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_LORDOFMANA;
@@ -1091,6 +1159,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 				delay = temp;
+				skillDelay[_ROADOFMANA] = temp + 0.5f;
 				m_pStateCom->stat.sp -= 750;
 				m_fBattleCount = delay + 5.f;
 			}
@@ -1098,9 +1167,10 @@ void CPlayer::Attack(const _float& fTimeDelta)
 	}
 	if (Engine::Get_DIKeyState(DIK_6) & 0x80)
 	{
+		if (skillDelay[_DARK1] > 0.f)
+			return;
 		if (delay <= 0.f)
 		{
-
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1;
 			//OK
 			//delay = 8.1f;
@@ -1108,14 +1178,16 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;
+			skillDelay[_DARK1] = temp + 0.5f;
 			m_fBattleCount = delay + 5.f;
 		}
 	}
 	if (Engine::Get_DIKeyState(DIK_7) & 0x80)
 	{
+		if (skillDelay[_DARK2] > 0.f)
+			return;
 		if (delay <= 0.f)
 		{
-
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS2;
 			//OK
 			//delay = 8.1f;
@@ -1123,6 +1195,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 			delay = temp;
+			skillDelay[_DARK2] = temp + 0.5f;
 			m_fBattleCount = delay + 5.f;
 		}
 	}
@@ -1337,8 +1410,14 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 		isTired = false;
 	}
 	StateEventFromDelay(fTimeDelta);
-
-
+	for (int i = 0; i < int(State::_END); ++i)
+	{
+		if (skillDelay[i] >= 0.f)
+			skillDelay[i] -= fTimeDelta;
+		else
+			skillDelay[i] = 0.f;
+	}
+	
 	m_pMeshCom->Set_AnimationSet(m_pStateCom->playerState);
 	//
 	//m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
