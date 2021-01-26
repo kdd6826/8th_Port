@@ -169,6 +169,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_ConfusionHole2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/aming_point_big05.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SlashPoint", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/efx_sword_slashpoint.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_RuinBlade", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/fire_r_spark_01.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_LightRay", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/ring_outer_wind01.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SwordTrail0", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/heroes_longblade_trail02.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Black", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Black.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_DamageFont", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Font_Damage.tga"), E_FAIL);

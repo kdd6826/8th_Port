@@ -12,6 +12,7 @@
 #include "Dog.h"
 #include "Titan.h"
 #include "Ingkells.h"
+#include "LightRay.h"
 //#include "Zecallion.h"
 
 #include "Stone.h"

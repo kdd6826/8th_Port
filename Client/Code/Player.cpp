@@ -50,11 +50,11 @@ HRESULT Client::CPlayer::Add_Component(void)
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pTransformCom->Set_Pos(&PlayerSpawnPosition);
 	Engine::CGameObject::Update_Object(timeDelta);
-	m_pStateCom->stat.hp = 10.f;
-	m_pStateCom->stat.maxHp = 10.f;
+	m_pStateCom->stat.hp = 2000.f;
+	m_pStateCom->stat.maxHp = 2000.f;
 	m_pStateCom->stat.stamina = 200.f;
 	m_pStateCom->stat.maxStamina = 200.f;
-	m_pStateCom->stat.sp = 250.f;
+	m_pStateCom->stat.sp = 1250.f;
 	m_pStateCom->stat.maxSp = 1250.f;
 	m_pStateCom->stat.damage = PlayerOriginAtt;
 	isDown = false;
@@ -89,7 +89,7 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	m_pStateCom->stat.sp = 1250.f;
+	//m_pStateCom->stat.sp = 1250.f;
 
 	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
 	{
@@ -975,6 +975,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 		else if (isManaBlade == true)
 		{
 			m_fAniSpeed = 1.2f;
+			if (m_pStateCom->stat.sp <30.f)
+				return;
 			if (delay <= 1.4f)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT5 && delay <= 0.7f)
@@ -986,6 +988,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					m_pStateCom->stat.sp -= 30.f;
 					reverseDelay = 0.f;
 					AttackOnRotation();
 				}
@@ -998,6 +1001,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					m_pStateCom->stat.sp -= 30.f;
 					reverseDelay = 0.f;
 					AttackOnRotation();
 				}
@@ -1011,6 +1015,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					m_pStateCom->stat.sp -= 30.f;
 					reverseDelay = 0.f;
 					AttackOnRotation();
 				}
@@ -1023,6 +1028,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					m_pStateCom->stat.sp -= 30.f;
 					reverseDelay = 0.f;
 					AttackOnRotation();
 				}
@@ -1035,6 +1041,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					delay = temp;
 					CColliderMgr::GetInstance()->hitList.clear();
 					m_pStateCom->stat.stamina -= 7.f;
+					m_pStateCom->stat.sp -= 30.f;
 					reverseDelay = 0.f;
 					AttackOnRotation();
 				}
@@ -1050,6 +1057,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 
 						CColliderMgr::GetInstance()->hitList.clear();
 						m_pStateCom->stat.stamina -= 7.f;
+						m_pStateCom->stat.sp -= 30.f;
 						reverseDelay = 0.f;
 						AttackOnRotation();
 					}
@@ -1068,6 +1076,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						delay = temp;
 						CColliderMgr::GetInstance()->hitList.clear();
 						m_pStateCom->stat.stamina -= 7.f;
+						m_pStateCom->stat.sp -= 30.f;
 						reverseDelay = 0.f;
 					}
 				}
