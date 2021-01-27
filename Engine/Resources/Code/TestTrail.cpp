@@ -34,9 +34,7 @@ HRESULT Engine::CTestTrail::Ready_Buffer(void)
 	VTXTEX*		pVertex = NULL;
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, NULL);
-	
-	// 오른쪽 위
-	
+		
 	pVertex[0].vTexUV  = _vec2(0.f,0.f);
 	pVertex[1].vTexUV  = _vec2(0.1f,0.f);
 	pVertex[2].vTexUV  = _vec2(0.2f,0.f);

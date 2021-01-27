@@ -100,7 +100,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_pMeshCom->Free();
 		m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
-		m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL;
+		m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_NORMAL;
 		//m_pStateCom->playerState == Engine::CPlayerState::playerState::STATE_ATT1;
 	}
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT1 ||
@@ -300,8 +300,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (delay<3.f&& m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
 			{
-				m_pMeshCom->Free();
-				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
+				//m_pMeshCom->Free();
+				//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
 				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT;
 			}
 		}
@@ -310,8 +310,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			if (delay < 2.f && m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_DKKNIGHT)
 			{
 
-				m_pMeshCom->Free();
-				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
+				//m_pMeshCom->Free();
+				//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
 				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
 			}
 		}

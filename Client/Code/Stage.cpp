@@ -134,6 +134,10 @@ HRESULT CStage::Ready_Environment_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SwordTrail", pGameObject), E_FAIL);
 	
+	pGameObject = CDarkSwordTrail::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DarkSwordTrail", pGameObject), E_FAIL);
+
 	m_mapLayer.emplace(pLayerTag, pLayer);
 	
 	return S_OK;

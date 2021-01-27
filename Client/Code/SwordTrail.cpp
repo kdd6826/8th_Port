@@ -22,12 +22,7 @@ CSwordTrail::~CSwordTrail(void)
 HRESULT Client::CSwordTrail::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
-
-	//// buffer
-	//pComponent = m_pBufferCom = dynamic_cast<Engine::CTrailBuffer*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RealTrail"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
-
+	
 	pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
@@ -36,9 +31,6 @@ HRESULT Client::CSwordTrail::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Black"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 	
 	// Renderer
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
@@ -52,7 +44,7 @@ HRESULT Client::CSwordTrail::Add_Component(void)
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Trail"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
@@ -97,9 +89,6 @@ void CSwordTrail::Free(void)
 HRESULT Client::CSwordTrail::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(-100.f));
-	//m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 5.f;
-	//m_pTransformCom->Set_Pos(1.f, 0.f, 1.f);
 
 	return S_OK;
 }
@@ -133,20 +122,7 @@ Client::_int Client::CSwordTrail::Update_Object(const _float& fTimeDelta)
 	m_pVecpair = { topPos,bottomPos };
 	m_pBufferCom->Update_Buffer(&m_pVecpair,fTimeDelta);
 	count += fTimeDelta;
-
-	//if (m_pTrailList.size() < 4 && count > 1.f)
-	//{
-	//	m_pTrailList.emplace_back(pair<_vec3, _vec3>(topPos, bottomPos));
-	//	count = 0.f;
-	//}
-	//else if (count2 >= 1.f)
-	//{
-	//	m_pTrailList.pop_front();
-	//	count2 = 0;
-	//}
-	//else
-	//	count2 += fTimeDelta;
-		
+			
 #ifdef _DEBUG
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 #endif
@@ -161,10 +137,10 @@ void Client::CSwordTrail::Render_Object(void)
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
 	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(1);
+	pEffect->BeginPass(0);
 	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerStateCom, );
-	if (pPlayerStateCom->isAttack==true)
+	if (pPlayerStateCom->isAttack == true && pPlayerStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
 	{
 		m_pBufferCom->Render_Buffer();
 	}
@@ -174,21 +150,4 @@ void Client::CSwordTrail::Render_Object(void)
 	Engine::Safe_Release(pEffect);
 
 
-	//m_pTransformCom->Set_Transform(m_pGraphicDev);
-
-	//LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-	//NULL_CHECK(pEffect);
-	//Engine::Safe_AddRef(pEffect);
-
-	//FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
-
-	//pEffect->Begin(NULL, 0);
-	//pEffect->BeginPass(1);
-
-	//m_pBufferCom->Render_Buffer();
-
-	//pEffect->EndPass();
-	//pEffect->End();
-
-	//Engine::Safe_Release(pEffect);
 }

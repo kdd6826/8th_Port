@@ -25,7 +25,8 @@
 #include "ConfusionHole.h"
 #include "ConfusionHole2.h"
 #include "RuinBlade.h"
-#include"SwordTrail.h"
+#include "SwordTrail.h"
+#include "DarkSwordTrail.h"
 
 #include "SkillSlot.h"
 #include "HpBarBack.h"

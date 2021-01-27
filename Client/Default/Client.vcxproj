@@ -184,6 +184,7 @@
     <ClInclude Include="..\Code\ConfusionHole.h" />
     <ClInclude Include="..\Code\ConfusionHole2.h" />
     <ClInclude Include="..\Code\DamageFont.h" />
+    <ClInclude Include="..\Code\DarkSwordTrail.h" />
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Effect.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="..\Code\ConfusionHole.cpp" />
     <ClCompile Include="..\Code\ConfusionHole2.cpp" />
     <ClCompile Include="..\Code\DamageFont.cpp" />
+    <ClCompile Include="..\Code\DarkSwordTrail.cpp" />
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />

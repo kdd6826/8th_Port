@@ -139,6 +139,9 @@
     <Filter Include="02. GameObject\01. Stage\01. Unit\01. Player\Skill">
       <UniqueIdentifier>{25a8dce0-1169-4273-ab7e-30eeb3246594}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\06. Effect\SwordTrail">
+      <UniqueIdentifier>{1f1fe8aa-0736-4fa7-80fc-bb12665342cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -300,9 +303,6 @@
     <ClInclude Include="..\Code\Particle.h">
       <Filter>02. GameObject\01. Stage\08. Particle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\SwordTrail.h">
-      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\ConfusionHole.h">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClInclude>
@@ -329,6 +329,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\LightRay.h">
       <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DarkSwordTrail.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\SwordTrail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SwordTrail.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\SwordTrail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -473,9 +479,6 @@
     <ClCompile Include="..\Code\Particle.cpp">
       <Filter>02. GameObject\01. Stage\08. Particle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SwordTrail.cpp">
-      <Filter>02. GameObject\01. Stage\06. Effect</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ConfusionHole.cpp">
       <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
     </ClCompile>
@@ -502,6 +505,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\LightRay.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DarkSwordTrail.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\SwordTrail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SwordTrail.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\SwordTrail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
