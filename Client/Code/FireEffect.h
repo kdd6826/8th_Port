@@ -40,7 +40,7 @@ private:
 	Engine::CShader*			m_pShaderCom = nullptr;
 
 	_float						m_fFrame = 0.f;
-
+	_float						count = 0.f;
 public:
 	static CFireEffect*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	//vector<CSphereCollider*>	m_VecSphereCollider;

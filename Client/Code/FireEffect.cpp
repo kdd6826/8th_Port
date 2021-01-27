@@ -106,12 +106,22 @@ Client::_int Client::CFireEffect::Update_Object(const _float& fTimeDelta)
 {
 	CMonster::Update_Object(fTimeDelta);
 
+	m_pTransformCom->Set_Pos(22, 0.5f, 22);
+	if (m_fFrame < 40&& m_fFrame>25)
+		isColl = true;
+	else
+		isColl = false;
 
-	isColl = true;
+	if (count > 0)
+		count -= fTimeDelta;
 
+	if(count<=0.f)
 	m_fFrame += 50.f * fTimeDelta;
 	if (50.f < m_fFrame)
+	{
 		m_fFrame = 0.f;
+		count = 1.f;
+	}
 
 
 	_vec3 vPos;
