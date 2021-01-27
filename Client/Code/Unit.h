@@ -24,6 +24,7 @@ public:
 	CUnit(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CUnit(void);
 	virtual _int Update_Object(const _float& fTimeDelta);
+	void SetSpawnPosition(_vec3 _pos) { spawnPosition =_pos; }
 	Engine::CDynamicMesh* m_pMeshCom = nullptr;
 	Engine::CNaviMesh* m_pNaviMeshCom = nullptr;
 	Engine::CTransform* m_pTransformCom = nullptr;
@@ -45,7 +46,7 @@ protected:
 	_bool isInvincible = false;
 	_bool isAnimating = false;
 	_bool isDie=false;
-
+	_vec3 spawnPosition = {0.f,0.f,0.f};
 	virtual void Free(void) override;
 
 };

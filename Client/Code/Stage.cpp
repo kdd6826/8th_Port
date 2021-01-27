@@ -231,8 +231,10 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
 
+	//Ã¹¹ø¤ŠºÒ
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 22,0.5f,22 });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CLightRay::Create(m_pGraphicDev);

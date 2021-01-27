@@ -216,17 +216,27 @@ void CDog::Free(void)
 
 HRESULT Client::CDog::Ready_Object(void)
 {
+	/*CMonster::Ready_Object();*/
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pMeshCom->Set_AnimationSet(dogState::STATE_STAND);
 
-	m_pNaviMeshCom->Set_NaviIndex(0);
+
 
 	return S_OK;
 }
 Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 {
+	if (!initialize)
+	{
+		m_pTransformCom->Set_Pos(&spawnPosition);
+		_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
+		m_pNaviMeshCom->Set_NaviIndex(i);
+		initialize = true;
+
+	}
+
 	CMonster::Update_Object(fTimeDelta);
 
 	if (isDead)
@@ -377,6 +387,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 }
 void Client::CDog::Render_Object(void)
 {
+	CMonster::Render_Object();
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
 	Engine::Safe_AddRef(pEffect);

@@ -29,9 +29,22 @@ CMonster::~CMonster(void)
 	}
 }
 
+HRESULT CMonster::Ready_Object(void)
+{
+	
+
+	
+	return S_OK;
+}
+
 _int CMonster::Update_Object(const _float& fTimeDelta)
 {
 	CUnit::Update_Object(fTimeDelta);
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	if(m_pOptimizationCom!=nullptr)
+	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 	for (auto& slash : m_vecSlashPoint)
 	{
 		slash->Update_Object(fTimeDelta);
@@ -45,6 +58,12 @@ _int CMonster::Update_Object(const _float& fTimeDelta)
 		font->Update_Object(fTimeDelta);
 	}
 	return S_OK;
+}
+
+void CMonster::Render_Object(void)
+{
+	if (false == m_bDraw)
+		return;
 }
 
 void CMonster::OnCollision(Engine::CGameObject* target)
@@ -186,6 +205,11 @@ HRESULT CMonster::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_MonsterState", pComponent);
 	return S_OK;
+
+	// Optimization
+	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
 }
 
 bool CMonster::PlayerSearch(_vec3 _MonsterPos)

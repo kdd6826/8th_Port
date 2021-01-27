@@ -71,9 +71,9 @@ _uint CLoading::Loading_ForStage(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	Engine::Ready_Proto(L"Proto_Calculator", pComponent);
 	
-	//pComponent = Engine::COptimization::Create(m_pGraphicDev, true, VTXCNTX, VTXCNTZ);
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//Engine::Ready_Proto(L"Proto_Optimization", pComponent);
+	pComponent = Engine::COptimization::Create(m_pGraphicDev, true, VTXCNTX, VTXCNTZ);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	Engine::Ready_Proto(L"Proto_Optimization", pComponent);
 
 
 	// buffer

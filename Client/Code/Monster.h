@@ -25,10 +25,13 @@ class CMonster : public CUnit
 public:
 	CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CMonster(void);
+	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta);
+	virtual void Render_Object(void) override;
 	virtual void OnCollision(Engine::CGameObject* target)override;
 	HRESULT		Add_Component(void);
 	Engine::CMonsterState* m_pStateCom = nullptr;
+	Engine::COptimization* m_pOptimizationCom = nullptr;
 protected:
 	bool PlayerSearch(_vec3 _MonsterPos);
 	
@@ -40,9 +43,9 @@ protected:
 	_bool isSearch = false;
 	//플레이어까지의 거리
 	_float disPlayer = 0.f;
-
+	bool initialize = false;
 	virtual void Free(void) override;
-
+	bool m_bDraw = false;
 };
 
 END

@@ -91,7 +91,7 @@ HRESULT Client::CFireEffect::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Pos(22, 0.f, 22);
+	//m_pTransformCom->Set_Pos(22, 0.f, 22);
 	//m_pTransformCom->Set_Scale(0.4f, 2.f, 1.f);
 
 
@@ -106,7 +106,7 @@ Client::_int Client::CFireEffect::Update_Object(const _float& fTimeDelta)
 {
 	CMonster::Update_Object(fTimeDelta);
 
-	m_pTransformCom->Set_Pos(22, 0.5f, 22);
+	/*m_pTransformCom->Set_Pos(22, 0.5f, 22);*/
 	if (m_fFrame < 40&& m_fFrame>25)
 		isColl = true;
 	else
@@ -155,6 +155,7 @@ Client::_int Client::CFireEffect::Update_Object(const _float& fTimeDelta)
 }
 void Client::CFireEffect::Render_Object(void)
 {
+	CMonster::Render_Object();
 	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
 	Engine::Safe_AddRef(pEffect);

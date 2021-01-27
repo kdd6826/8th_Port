@@ -289,13 +289,14 @@ void CIngkells::Free(void)
 
 HRESULT Client::CIngkells::Ready_Object(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	CMonster::Ready_Object();
 
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransformCom->Set_Scale(0.02f, 0.02f, 0.02f);
 	m_pStateCom->stat.moveSpeed = 2.f;
 	m_pMeshCom->Set_AnimationSet(IngkellsState::STATE_IDLE);
 
-	m_pNaviMeshCom->Set_NaviIndex(0);
+	
 
 	return S_OK;
 }
@@ -816,6 +817,7 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 }
 void Client::CIngkells::Render_Object(void)
 {
+	CMonster::Render_Object();
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
 	Engine::Safe_AddRef(pEffect);
