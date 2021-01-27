@@ -146,7 +146,7 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi2");
+	//dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi2");
 	
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
@@ -186,7 +186,7 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	pGameObject = CDog::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi3");
+	//dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi3");
 	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 105.f,0.f,4.5f });
 	//dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 106.f,0.f,4.5f });
 	/*dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 103.f,0.f,7.f });*/
@@ -195,7 +195,7 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	pGameObject = CDog::Create(m_pGraphicDev);	if (Engine::Get_DIKeyState(DIK_Z) & 0x80)
 
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi3");
+	//dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi3");
 	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 105.f,0.f,4.5f });
 	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 105.f,0.f,5.5f });
 	//dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 103.f,0.f,7.f });
@@ -203,7 +203,7 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	pGameObject = CDog::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi3");
+	//dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi3");
 	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 102.f, 0.f, 4.5f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 
@@ -375,7 +375,7 @@ CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage2::Free(void)
 {
-	Engine::CScene::Free();
-	CColliderMgr::Destroy();
+	Engine::CScene::Free();/*
+	CColliderMgr::Destroy();*/
 }
 

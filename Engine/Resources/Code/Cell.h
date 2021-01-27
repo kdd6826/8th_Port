@@ -33,7 +33,7 @@ public:
 
 	_bool				Compare_Point(const _vec3* pFirstPoint, const _vec3* pSecondPoint, CCell* pCell);
 	MOVING			CompareCell(const _vec3* pEndPos, _ulong* pCellIndex);
-
+	_bool				IsInCell(const _vec2* pPos);
 	void				Render_Cell(void);
 
 private:

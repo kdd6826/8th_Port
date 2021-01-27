@@ -20,6 +20,7 @@ public:
 
 public:
 	HRESULT		Ready_NaviMeshes(void);
+	_ulong		GetdwIndex(const _vec2* _pos);
 	HRESULT		Ready_NaviMeshes(const _tchar* pFilePath);
 	void		Render_NaviMeshes(void);
 

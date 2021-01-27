@@ -1373,8 +1373,9 @@ HRESULT Client::CPlayer::Ready_Object(void)
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pMeshCom->Set_AnimationSet(39);
-
-	m_pNaviMeshCom->Set_NaviIndex(0);
+	_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(PlayerSpawnPositionCastle.x, PlayerSpawnPositionCastle.z));
+	
+	m_pNaviMeshCom->Set_NaviIndex(i);
 
 	return S_OK;
 }

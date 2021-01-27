@@ -6,7 +6,7 @@ IMPLEMENT_SINGLETON(CColliderMgr)
 CColliderMgr::CColliderMgr(void)
 
 {
-
+	int i = 0;
 }
 
 CColliderMgr::~CColliderMgr(void)

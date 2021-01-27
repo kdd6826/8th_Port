@@ -68,6 +68,16 @@ HRESULT Engine::CNaviMesh::Ready_NaviMeshes(void)
 	return S_OK;
 }
 
+_ulong CNaviMesh::GetdwIndex(const _vec2* _pos)
+{
+	for (size_t i = 0; i < m_vecCell.size(); ++i)
+	{
+		if (m_vecCell[i]->IsInCell(_pos))
+			return i;
+	}
+	return 0;
+}
+
 HRESULT CNaviMesh::Ready_NaviMeshes(const _tchar* pFilePath)
 {
 	//TCHAR szDataPath[MAX_PATH] = L"../Bin/saveNaviCollo.dat";

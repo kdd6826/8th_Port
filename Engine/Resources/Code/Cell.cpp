@@ -177,3 +177,13 @@ Engine::CCell::MOVING Engine::CCell::CompareCell(const _vec3 * pEndPos, _ulong *
 	return CCell::MOVE;
 }
 
+_bool CCell::IsInCell(const _vec2* pPos)
+{
+	for (_ulong i = 0; i < LINE_END; ++i)
+	{
+		if (CLine::COMPARE_LEFT == m_pLine[i]->Compare(pPos))
+			return false;
+	}
+	return true;
+}
+
