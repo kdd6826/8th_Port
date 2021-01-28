@@ -2098,6 +2098,8 @@ void MeshPage::OnBnClickedStaticSave()
 			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vInfo[Engine::INFO_POS], sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vScale, sizeof(_vec3), &dwByte, nullptr);
 			WriteFile(hFile, dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle, sizeof(_vec3), &dwByte, nullptr);
+			_vec3 a = dynamic_cast<Engine::CTransform*>(rPair->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle;
+			int i = 0;
 		}
 
 
@@ -2142,7 +2144,7 @@ void MeshPage::OnBnClickedStaticLoad()
 			ReadFile(hFile, &vecPos, sizeof(_vec3), &dwByte, nullptr);
 			ReadFile(hFile, &vecScal, sizeof(_vec3), &dwByte, nullptr);
 			ReadFile(hFile, &vecAng, sizeof(_vec3), &dwByte, nullptr);
-
+			_vec3 a = vecAng;
 			if (0 == dwByte)
 			{
 				endCheck = true;

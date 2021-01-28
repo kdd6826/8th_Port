@@ -208,9 +208,7 @@ void CMFCToolView::LoadStaticMesh(CString _mesh, _vec3 pos, _vec3 scal, _vec3 an
 	NULL_CHECK_RETURN(pGameObject, );
 	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&pos);
 	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Scale(scal.x, scal.y, scal.z);
-	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_X, angle.x);
-	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_Y, angle.y);
-	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_Z, angle.z);
+	dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle = angle;
 	vectorObjStatic.emplace_back(dynamic_cast<CMFCStaticMesh*>(pGameObject));
 	//LayerAddObject(L"Environment", _mesh, pGameObject);
 }
