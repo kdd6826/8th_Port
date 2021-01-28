@@ -18,7 +18,7 @@ public:
 	HRESULT		Ready_ColliderSphere();
 	void		Render_ColliderSphere(COLLTYPE eType, const _matrix* pColliderSphereMatrix);
 	_matrix		m_matCollMatrix;
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 	LPDIRECT3DINDEXBUFFER9		m_pIB;
@@ -36,7 +36,7 @@ public:
 	_ulong						m_dwIdxSize;
 	D3DFORMAT					m_IdxFmt;
 	//////
-#endif
+//#endif
 
 public:
 	static CColliderSphere*			Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -163,10 +163,11 @@ void Client::CFireEffect::Render_Object(void)
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
 	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(0);
-
-	m_pBufferCom->Render_Buffer();
-
+	pEffect->BeginPass(1);
+	if (count <= 0.f)
+	{
+		m_pBufferCom->Render_Buffer();
+	}
 	pEffect->EndPass();
 	pEffect->End();
 

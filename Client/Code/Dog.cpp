@@ -228,6 +228,9 @@ HRESULT Client::CDog::Ready_Object(void)
 }
 Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 {
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 	if (!initialize)
 	{
 		m_pTransformCom->Set_Pos(&spawnPosition);
@@ -387,6 +390,9 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 }
 void Client::CDog::Render_Object(void)
 {
+	if (false == m_bDraw)
+		return;
+
 	CMonster::Render_Object();
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);

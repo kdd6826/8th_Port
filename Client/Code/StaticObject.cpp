@@ -82,9 +82,9 @@ HRESULT CStaticObject::Add_Component(wstring _wstring)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Collider", pComponent);
 
 	// Optimization
-	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+	//pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
 
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
@@ -151,7 +151,7 @@ Client::_int Client::CStaticObject::Update_Object(const _float& fTimeDelta)
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
 
-	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
+	//m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
@@ -160,6 +160,8 @@ Client::_int Client::CStaticObject::Update_Object(const _float& fTimeDelta)
 }
 void Client::CStaticObject::Render_Object(void)
 {
+	//if (false == m_bDraw)
+	//	return;
 
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);

@@ -123,8 +123,8 @@ Client::_int Client::CDarkSwordTrail::Update_Object(const _float& fTimeDelta)
 	m_pBufferCom->Update_Buffer(&m_pVecpair,fTimeDelta);
 	count += fTimeDelta;
 			
-#ifdef _DEBUG
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
+#ifdef _DEBUG
 #endif
 	return 0;
 }

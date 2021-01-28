@@ -178,9 +178,6 @@
     <ClInclude Include="..\Code\BossHpBarOrange.h" />
     <ClInclude Include="..\Code\BossHpBarRed.h" />
     <ClInclude Include="..\Code\ColliderMgr.h" />
-    <ClInclude Include="..\Code\CollisionEffect.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\Code\ConfusionHole.h" />
     <ClInclude Include="..\Code\ConfusionHole2.h" />
     <ClInclude Include="..\Code\DamageFont.h" />
@@ -219,6 +216,7 @@
     <ClInclude Include="..\Code\SlashPoint.h" />
     <ClInclude Include="..\Code\SoundManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\Stage2.h" />
     <ClInclude Include="..\Code\SwordTrail.h" />
@@ -246,6 +244,7 @@
     <ClInclude Include="..\Code\SkillSlot.h" />
     <ClInclude Include="..\Code\Zecallion.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Function.h" />
@@ -264,9 +263,6 @@
     <ClCompile Include="..\Code\BossHpBarOrange.cpp" />
     <ClCompile Include="..\Code\BossHpBarRed.cpp" />
     <ClCompile Include="..\Code\ColliderMgr.cpp" />
-    <ClCompile Include="..\Code\CollisionEffect.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\Code\ConfusionHole.cpp" />
     <ClCompile Include="..\Code\ConfusionHole2.cpp" />
     <ClCompile Include="..\Code\DamageFont.cpp" />
@@ -305,6 +301,7 @@
     <ClCompile Include="..\Code\SlashPoint.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Stage2.cpp" />
     <ClCompile Include="..\Code\SwordTrail.cpp" />
@@ -332,6 +329,7 @@
     <ClCompile Include="..\Code\SkillSlot.cpp" />
     <ClCompile Include="..\Code\Zecallion.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

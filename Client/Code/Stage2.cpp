@@ -131,6 +131,10 @@ HRESULT CStage2::Ready_Environment_Layer(const _tchar * pLayerTag)
 	pGameObject = CSwordTrail::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SwordTrail", pGameObject), E_FAIL);
+
+	pGameObject = CDarkSwordTrail::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DarkSwordTrail", pGameObject), E_FAIL);
 	
 	m_mapLayer.emplace(pLayerTag, pLayer);
 	
@@ -184,20 +188,20 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_R", pGameObject), E_FAIL);
 
 
-	pGameObject = CDog::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,4.5f });
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
+	//pGameObject = CDog::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,4.5f });
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 
-	pGameObject = CDog::Create(m_pGraphicDev);	
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,5.5f });
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
+	//pGameObject = CDog::Create(m_pGraphicDev);	
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,5.5f });
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 
-	pGameObject = CDog::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 102.f, 0.f, 4.5f });
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
+	//pGameObject = CDog::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 102.f, 0.f, 4.5f });
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 	//
 	//pGameObject = CDog::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);

@@ -120,13 +120,15 @@ HRESULT CNaviMesh::Ready_NaviMeshes(const _tchar* pFilePath)
 
 void CNaviMesh::Render_NaviMeshes(void)
 {
-	for (auto& iter : m_vecCell)
-		iter->Render_Cell();
+	//for (auto& iter : m_vecCell)
+	//	iter->Render_Cell();
 }
 
 _vec3 CNaviMesh::Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir)
 {
   	_vec3		vEndPos = *pTargetPos + *pTargetDir;
+	//if (m_dwIndex > 30)
+	//	return *pTargetPos;
 
  	if (CCell::MOVE == m_vecCell[m_dwIndex]->CompareCell(&vEndPos, &m_dwIndex))
 		return vEndPos;
