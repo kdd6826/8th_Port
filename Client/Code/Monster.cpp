@@ -62,7 +62,7 @@ _int CMonster::Update_Object(const _float& fTimeDelta)
 
 void CMonster::Render_Object(void)
 {
-	if (false == m_bDraw)
+	if (false == m_bDraw&&disPlayer > 2.f)
 		return;
 }
 

@@ -160,7 +160,7 @@ Client::_int Client::CStaticObject::Update_Object(const _float& fTimeDelta)
 }
 void Client::CStaticObject::Render_Object(void)
 {
-	//if (false == m_bDraw)
+	//if (false == m_bDraw&&disPlayer > 2.f)
 	//	return;
 
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();

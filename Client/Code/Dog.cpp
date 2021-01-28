@@ -403,7 +403,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 }
 void Client::CDog::Render_Object(void)
 {
-	if (false == m_bDraw)
+	if (false == m_bDraw&&disPlayer > 2.f)
 		return;
 
 	CMonster::Render_Object();

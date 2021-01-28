@@ -254,7 +254,7 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 		initialize = true;
 
 	}
-
+	
 	CMonster::Update_Object(fTimeDelta);
 
 	if (isDead)
@@ -385,7 +385,8 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 }
 void Client::CKnight::Render_Object(void)
 {
-	if (false == m_bDraw)
+
+	if (false == m_bDraw&&disPlayer > 2.f)
 		return;
 
 	CMonster::Render_Object();
