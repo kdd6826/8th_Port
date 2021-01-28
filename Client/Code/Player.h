@@ -3,7 +3,9 @@
 
 #include "Unit.h"
 #include "Define.h"
-
+#include "Scene.h"
+#include "Stage2.h"
+#include "TriggerBox.h"
 BEGIN(Engine)
 
 class CDynamicMesh;
@@ -14,7 +16,7 @@ class CCollider;
 class CNaviMesh;
 class CShader;
 class CPlayerState;
-
+class CScene;
 END
 
 BEGIN(Client)

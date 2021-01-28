@@ -29,6 +29,7 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta);
 	virtual void Render_Object(void) override;
 	virtual void OnCollision(Engine::CGameObject* target)override;
+	_bool GetisTriggerBox() { return isTriggerBox; }
 	HRESULT		Add_Component(void);
 	Engine::CMonsterState* m_pStateCom = nullptr;
 	Engine::COptimization* m_pOptimizationCom = nullptr;
@@ -37,6 +38,7 @@ protected:
 	
 private:
 protected:
+	_bool isTriggerBox = false;
 	vector<CSlashPoint*>	m_vecSlashPoint;
 	vector<CDamageFont*>	m_vecDamageFont;
 	vector<CFontParent*>	m_vecFontParent;

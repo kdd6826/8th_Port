@@ -224,6 +224,7 @@
     <ClInclude Include="..\Code\TestMonster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Code\TriggerBox.h" />
     <ClInclude Include="..\Code\Unit.h" />
     <ClInclude Include="..\Code\Player.h" />
     <ClInclude Include="..\Code\SkyBox.h" />
@@ -310,6 +311,7 @@
     <ClCompile Include="..\Code\TestMonster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\TriggerBox.cpp" />
     <ClCompile Include="..\Code\Unit.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />

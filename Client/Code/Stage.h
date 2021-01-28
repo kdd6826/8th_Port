@@ -21,6 +21,7 @@
 #include "Tree.h"
 #include "Effect.h"
 #include "FireEffect.h"
+#include "TriggerBox.h"
 
 #include "DamageFont.h"
 #include "ConfusionHole.h"

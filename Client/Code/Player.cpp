@@ -1506,6 +1506,11 @@ void Client::CPlayer::Render_Object(void)
 }
 void CPlayer::OnCollision(Engine::CGameObject* target)
 {
+	if (dynamic_cast<CMonster*>(target)->GetisTriggerBox())
+	{
+		dynamic_cast<CTriggerBox*>(target)->SetPortal();
+		return;
+	}
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
 	{
 		Engine::CTransform* confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole", L"Com_Transform", Engine::ID_DYNAMIC));

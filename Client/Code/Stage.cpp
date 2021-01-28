@@ -40,6 +40,15 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 		return 1;
 	}
 
+	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
+	if (Portal->GetPortal())
+	{
+		CScene* pScene = nullptr;
+		pScene = CStage2::Create(m_pGraphicDev);
+
+		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
+		return 1;
+	}
 	return Engine::CScene::Update_Scene(fTimeDelta);
 
 
@@ -54,7 +63,7 @@ void CStage::Render_Scene(void)
 HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
 {
 	//TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject.dat";
-	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject3.dat";
+	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject4.dat";
 	HANDLE hFile = CreateFile(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (INVALID_HANDLE_VALUE == hFile)
@@ -214,6 +223,12 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 22, 0.f, 22 });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL)
+
+
+	pGameObject = CTriggerBox::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CTriggerBox*>(pGameObject)->SetSpawnPosition(_vec3{ 22, 0.f, 22 });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TriggerBox", pGameObject), E_FAIL)
 
 	//pGameObject = CIngkells::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
