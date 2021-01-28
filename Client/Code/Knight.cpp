@@ -52,8 +52,11 @@ HRESULT Client::CKnight::Add_Component(void)
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
+	
+	m_pStateCom->stat.maxHp = 100000.f;
+	m_pStateCom->stat.hp = 100000.f;
 
-	//Load_ColliderFile(L"../Bin/saveKnight.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
+	Load_ColliderFile(L"../Bin/saveKnight.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	return S_OK;
 }
 
@@ -124,7 +127,7 @@ void CKnight::Move(const _float& fTimeDelta)
 			{
 			case 0:
 				m_state = KnightState::STATE_Knight_Att;
-				m_fAniSpeed = 1.f;
+				m_fAniSpeed = 1.5f;
 				//delay = 4.2f;
 				break;
 			//case 1:
@@ -306,13 +309,27 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 					//6.13 
 
 					//0.83 2.06
-					if (reverseDelay > 0.3 / m_fAniSpeed && reverseDelay < 1.42 / m_fAniSpeed)
+					if (reverseDelay > 3.26 / m_fAniSpeed && reverseDelay < 3.6 / m_fAniSpeed)
 					{
 
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
+					else if (reverseDelay > 3.69 / m_fAniSpeed && reverseDelay < 4.17 / m_fAniSpeed)
+					{
 
-					if (reverseDelay > 0.6 / m_fAniSpeed && reverseDelay < 1.1 / m_fAniSpeed)
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed*1.5f)));
+					}
+					else if (reverseDelay > 5.02 / m_fAniSpeed && reverseDelay < 6.02 / m_fAniSpeed)
+					{
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed*1.5f)));
+					}
+
+					if (reverseDelay > 3.47 / m_fAniSpeed && reverseDelay < 3.83 / m_fAniSpeed)
+					{
+
+						isColl = true;
+					}
+					else  if (reverseDelay > 5.09 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
 					{
 
 						isColl = true;
@@ -370,7 +387,7 @@ void Client::CKnight::Render_Object(void)
 
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);
+	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed);
 	
 	pEffect->EndPass();
 	pEffect->End();
