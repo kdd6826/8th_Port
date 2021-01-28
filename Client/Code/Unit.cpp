@@ -20,6 +20,8 @@ CUnit::~CUnit(void)
 _int CUnit::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
+
+
 	for (auto& sphere : m_VecSphereCollider)
 	{
 		sphere->m_pDynamicMesh = this;
@@ -55,10 +57,23 @@ HRESULT CUnit::Add_Component(void)
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
 
+	//pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi2"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
 
-	pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
+	if (stageNum == 2)
+	{
+		pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi2"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
+	}
+	else
+	{
+		pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
+	}
+
 
 	// Renderer
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
@@ -70,7 +85,7 @@ HRESULT CUnit::Add_Component(void)
 	pComponent = m_pCalculatorCom = dynamic_cast<Engine::CCalculator*>(Engine::Clone(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Calculator", pComponent);
-
+	
 
 
 

@@ -150,8 +150,9 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	Engine::CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CPlayer::Create(m_pGraphicDev);
+	pGameObject = CPlayer::Create(m_pGraphicDev,CUnit::STAGE1);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CPlayer*>(pGameObject)->SetSpawnPosition(PlayerSpawnPosition);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
 	pGameObject = CSword::Create(m_pGraphicDev);
@@ -209,7 +210,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
 
 
-	pGameObject = CKnight::Create(m_pGraphicDev);
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE1);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 22, 0.f, 22 });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL)

@@ -81,6 +81,7 @@ private:
 
 public:
 	static CTitan*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTitan*	Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage);
 
 private:
 	virtual void Free(void) override;

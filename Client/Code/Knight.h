@@ -49,7 +49,9 @@ private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 	void		Move(const _float& fTimeDelta);
-	void		Attack(const _float& fTimeDelta);
+	void		Attack(const _float& fTimeDelta)
+	{
+	}
 	void		SetUp_OnTerrain(void);
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
@@ -61,6 +63,7 @@ private:
 	_float						delay = 0.f;
 public:
 	static CKnight*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CKnight*	Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage);
 
 private:
 	virtual void Free(void) override;

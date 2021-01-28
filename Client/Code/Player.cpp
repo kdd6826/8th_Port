@@ -98,9 +98,20 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_0) & 0x80)
 	{
+		Engine::CComponent*		pComponent = nullptr;
+
 		m_pMeshCom->Free();
-		m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+		pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
 		m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_NORMAL;
+		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+
+		m_pNaviMeshCom->Free();
+		pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi2"));
+		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi2", pComponent);
+
+		//pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi"));
+		//NULL_CHECK_RETURN(pComponent, E_FAIL);
+		//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
 		//m_pStateCom->playerState == Engine::CPlayerState::playerState::STATE_ATT1;
 	}
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT1 ||
@@ -610,8 +621,8 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
 
-	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
-	NULL_CHECK(pTerrainBufferCom);
+	//Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Environment", L"Terrain", L"Com_Buffer", Engine::ID_STATIC));
+	//NULL_CHECK(pTerrainBufferCom);
 	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 
 
@@ -1361,6 +1372,18 @@ CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage)
+{
+	CPlayer*	pInstance = new CPlayer(pGraphicDev);
+	pInstance->SetStageNum(_stage);
+	
+	
+	if (FAILED(pInstance->Ready_Object()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
 void CPlayer::Free(void)
 {
 	CUnit::Free();
@@ -1373,9 +1396,9 @@ HRESULT Client::CPlayer::Ready_Object(void)
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pMeshCom->Set_AnimationSet(39);
-	_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x,spawnPosition.z));
-	
-	m_pNaviMeshCom->Set_NaviIndex(i);
+	//_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x,spawnPosition.z));
+	//
+	//m_pNaviMeshCom->Set_NaviIndex(i);
 
 	return S_OK;
 }

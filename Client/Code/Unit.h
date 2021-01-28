@@ -21,10 +21,17 @@ BEGIN(Client)
 class CUnit : public Engine::CGameObject
 {
 public:
+	enum StageNum
+	{
+		STAGE0,
+		STAGE1,
+		STAGE2,
+	};
 	CUnit(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CUnit(void);
 	virtual _int Update_Object(const _float& fTimeDelta);
 	void SetSpawnPosition(_vec3 _pos) { spawnPosition =_pos; }
+	void SetStageNum(StageNum _stage) { stageNum = _stage; }
 	Engine::CDynamicMesh* m_pMeshCom = nullptr;
 	Engine::CNaviMesh* m_pNaviMeshCom = nullptr;
 	Engine::CTransform* m_pTransformCom = nullptr;
@@ -36,11 +43,13 @@ public:
 private:
 
 protected:
+	bool Updateinitialize = false;
 	HRESULT		Add_Component(void);
 	_int Load_ColliderFile(_tchar* pFilePath, Engine::COLLID _collType, Engine::COLLID _collType2);
 	HRESULT ColliderObject();
 	HRESULT ColliderSkill();
 
+	StageNum stageNum = STAGE0;
 	vector<CSphereCollider*>	m_VecSphereCollider;
 	_float						reverseDelay = 0.f;
 	_bool isInvincible = false;

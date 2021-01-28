@@ -89,7 +89,7 @@ private:
 
 public:
 	static CIngkells*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
+	static CIngkells*	Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage);
 private:
 	virtual void Free(void) override;
 

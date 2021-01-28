@@ -208,6 +208,18 @@ CDog* CDog::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+CDog * CDog::Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage)
+{
+	CDog*	pInstance = new CDog(pGraphicDev);
+	pInstance->SetStageNum(_stage);
+
+
+	if (FAILED(pInstance->Ready_Object()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
 void CDog::Free(void)
 {
 	CMonster::Free();
@@ -230,6 +242,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 {
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	if(nullptr!=m_pOptimizationCom)
 	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 	if (!initialize)
 	{

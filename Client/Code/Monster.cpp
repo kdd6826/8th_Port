@@ -204,12 +204,13 @@ HRESULT CMonster::Add_Component(void)
 	pComponent = m_pStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Clone(L"Proto_MonsterState"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_MonsterState", pComponent);
-	return S_OK;
 
 	// Optimization
 	pComponent = m_pOptimizationCom = dynamic_cast<Engine::COptimization*>(Engine::Clone(L"Proto_Optimization"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Optimization", pComponent);
+
+	return S_OK;
 }
 
 bool CMonster::PlayerSearch(_vec3 _MonsterPos)

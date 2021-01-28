@@ -43,10 +43,10 @@ HRESULT Client::CKnight::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
 	
-	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	int i = rand() % 8;
+	//float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	//int i = rand() % 8;
 	//m_pTransformCom->Set_Pos(&_vec3{23.f+i,0.f,23.f+i});
-	Engine::CGameObject::Update_Object(timeDelta);
+	//Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
@@ -197,10 +197,6 @@ void CKnight::Move(const _float& fTimeDelta)
 	}
 }
 
-void CKnight::Attack(const _float& fTimeDelta)
-{
-}
-
 CKnight* CKnight::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CKnight*	pInstance = new CKnight(pGraphicDev);
@@ -209,6 +205,18 @@ CKnight* CKnight::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		Client::Safe_Release(pInstance);
 
 	return pInstance;
+}
+
+CKnight * CKnight::Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage)
+{
+	CKnight*	pInstance = new CKnight(pGraphicDev);
+	pInstance->SetStageNum(_stage);
+
+	if (FAILED(pInstance->Ready_Object()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+
 }
 
 void CKnight::Free(void)
@@ -233,12 +241,16 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 {
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
-	//m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
+	if (nullptr != m_pOptimizationCom)
+	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 	if (!initialize)
 	{
 		m_pTransformCom->Set_Pos(&spawnPosition);
-		_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
-		m_pNaviMeshCom->Set_NaviIndex(i);
+		if (nullptr != m_pNaviMeshCom)
+		{
+			_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
+			m_pNaviMeshCom->Set_NaviIndex(i);
+		}
 		initialize = true;
 
 	}
@@ -373,7 +385,8 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 }
 void Client::CKnight::Render_Object(void)
 {
-
+	if (false == m_bDraw)
+		return;
 
 	CMonster::Render_Object();
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();

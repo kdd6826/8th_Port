@@ -67,7 +67,7 @@ private:
 	_float						delay = 0.f;
 public:
 	static CDog*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
+	static CDog*	Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage);
 private:
 	virtual void Free(void) override;
 

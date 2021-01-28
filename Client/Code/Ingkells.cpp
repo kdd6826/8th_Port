@@ -280,6 +280,18 @@ CIngkells* CIngkells::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+CIngkells * CIngkells::Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage)
+{
+	CIngkells*	pInstance = new CIngkells(pGraphicDev);
+	pInstance->SetStageNum(_stage);
+
+
+	if (FAILED(pInstance->Ready_Object()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
 void CIngkells::Free(void)
 {
 

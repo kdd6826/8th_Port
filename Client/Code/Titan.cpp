@@ -229,6 +229,18 @@ CTitan* CTitan::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+CTitan * CTitan::Create(LPDIRECT3DDEVICE9 pGraphicDev, StageNum _stage)
+{
+	CTitan*	pInstance = new CTitan(pGraphicDev);
+	pInstance->SetStageNum(_stage);
+
+
+	if (FAILED(pInstance->Ready_Object()))
+		Client::Safe_Release(pInstance);
+
+	return pInstance;
+}
+
 void CTitan::Free(void)
 {
 

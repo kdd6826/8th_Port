@@ -81,6 +81,7 @@ private:
 	_vec3						hitDir;
 public:
 	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev,StageNum _stage);
 
 private:
 	virtual void Free(void) override;
