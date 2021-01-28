@@ -585,6 +585,10 @@ void MeshPage::OnNMClickObjStaticTree(NMHDR* pNMHDR, LRESULT* pResult)
 	m_fTransformScalX = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.x;
 	m_fTransformScalY = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.y;
 	m_fTransformScalZ = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vScale.z;
+
+	m_fTransformRotX = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vAngle.x;
+	m_fTransformRotY = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vAngle.y;
+	m_fTransformRotZ = dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->m_vAngle.z;
 	//Text를 int로 바꾸기
 
 	CString cVertexX, cVertexY, cVertexZ;
@@ -605,6 +609,14 @@ void MeshPage::OnNMClickObjStaticTree(NMHDR* pNMHDR, LRESULT* pResult)
 	SetDlgItemText(IDC_EDIT7, cVertexY);
 	SetDlgItemText(IDC_EDIT8, cVertexZ);
 
+
+	cVertexX.Format(_T("%9.2f\n"), m_fTransformRotX);
+	cVertexY.Format(_T("%9.2f\n"), m_fTransformRotY);
+	cVertexZ.Format(_T("%9.2f\n"), m_fTransformRotZ);
+
+	SetDlgItemText(IDC_EDIT10, cVertexX);
+	SetDlgItemText(IDC_EDIT12, cVertexY);
+	SetDlgItemText(IDC_EDIT13, cVertexZ);
 	*pResult = 0;
 }
 void MeshPage::OnNMClickObjDynamicTree(NMHDR* pNMHDR, LRESULT* pResult)
@@ -1368,13 +1380,15 @@ void MeshPage::TransformRotXSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			{
 				m_fTransformRotX += 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
+				dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, D3DXToRadian(10));
 			}
 			else
 			{
 				m_fTransformRotX -= 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotX);
+
+				dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, D3DXToRadian(-10));
 			}
-			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_X, m_fTransformRotX);
 			SetDlgItemText(IDC_EDIT10, cVertex);
 		}
 		*pResult = 0;
@@ -1429,14 +1443,15 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			{
 				m_fTransformRotY += 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+				sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y,10);
 			}
 			else
 			{
 				m_fTransformRotY -= 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+				sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, -10);
 			}
 			*pResult = 0;
-			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
 			sphere[indexNum]->Set_InitPoint();
 			SetDlgItemText(IDC_EDIT12, cVertex);
 		}
@@ -1465,13 +1480,14 @@ void MeshPage::TransformRotYSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			{
 				m_fTransformRotY += 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+				dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, D3DXToRadian(10));
 			}
 			else
 			{
 				m_fTransformRotY -= 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotY);
+				dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, D3DXToRadian(-10));
 			}
-			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
 			SetDlgItemText(IDC_EDIT12, cVertex);
 		}
 		else if (VertexManager::GetInstance()->isStaticMesh == false)
@@ -1556,14 +1572,15 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			{
 				m_fTransformRotZ += 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+				sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, D3DXToRadian(10));
 			}
 			else
 			{
 				m_fTransformRotZ -= 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, D3DXToRadian(-10));
 			}
 			*pResult = 0;
-			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
 			sphere[indexNum]->Set_InitPoint();
 			SetDlgItemText(IDC_EDIT13, cVertex);
 		}
@@ -1592,13 +1609,14 @@ void MeshPage::TransformRotZSpin(NMHDR* pNMHDR, LRESULT* pResult)
 			{
 				m_fTransformRotZ += 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+				dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, D3DXToRadian(10));
 			}
 			else
 			{
 				m_fTransformRotZ -= 0.1f;
 				cVertex.Format(_T("%9.2f\n"), m_fTransformRotZ);
+				dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, D3DXToRadian(-10));
 			}
-			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Z, m_fTransformRotZ);
 			SetDlgItemText(IDC_EDIT13, cVertex);
 		}
 		else if (VertexManager::GetInstance()->isStaticMesh == false)
@@ -2792,70 +2810,70 @@ void MeshPage::OnEnChangeTransformRotX()
 void MeshPage::OnEnChangeTransformRotY()
 {
 
-	if (VertexManager::GetInstance()->isNaviMesh == true)
-	{
-		if (treeNavi.GetParentItem(selectItem) != 0)
-		{
-			//해당 셀에 담긴 Text
-			CString naviIndex = treeNavi.GetItemText(selectItem);
-			//Text를 int로 바꾸기
-			int indexNum;
-			indexNum = _ttoi(naviIndex);
-			CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
-			int iParentIndex = _ttoi(parentIndex);
-			CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
-			CSphereMesh* sphere[3];
-			int Temp = 0;
-			for (auto& _sphere : tri->list_SphereMesh)
-			{
-				sphere[Temp] = _sphere;
-				Temp++;
-			}
-			int triIndex;
-			triIndex = _ttoi(parentIndex);
-			////////////////////
-			CString cVertex;
-			GetDlgItemText(IDC_EDIT12, cVertex);
-			float n = _ttof(cVertex);
-			m_fTransformRotY = n;
-			sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
-			sphere[indexNum]->Set_InitPoint();
+	//if (VertexManager::GetInstance()->isNaviMesh == true)
+	//{
+	//	if (treeNavi.GetParentItem(selectItem) != 0)
+	//	{
+	//		//해당 셀에 담긴 Text
+	//		CString naviIndex = treeNavi.GetItemText(selectItem);
+	//		//Text를 int로 바꾸기
+	//		int indexNum;
+	//		indexNum = _ttoi(naviIndex);
+	//		CString parentIndex = treeNavi.GetItemText(treeNavi.GetParentItem(selectItem));
+	//		int iParentIndex = _ttoi(parentIndex);
+	//		CTerrainTri* tri = CMFCToolView::GetInstance()->Get_TriOfNumber(iParentIndex);
+	//		CSphereMesh* sphere[3];
+	//		int Temp = 0;
+	//		for (auto& _sphere : tri->list_SphereMesh)
+	//		{
+	//			sphere[Temp] = _sphere;
+	//			Temp++;
+	//		}
+	//		int triIndex;
+	//		triIndex = _ttoi(parentIndex);
+	//		////////////////////
+	//		CString cVertex;
+	//		GetDlgItemText(IDC_EDIT12, cVertex);
+	//		float n = _ttof(cVertex);
+	//		m_fTransformRotY = n;
+	//		sphere[indexNum]->m_pTransformCom->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+	//		sphere[indexNum]->Set_InitPoint();
 
-		}
-	}
-	else if (VertexManager::GetInstance()->isObjectMesh == true)
-	{
-		if (VertexManager::GetInstance()->isStaticMesh == true)
-		{
-			CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
-			CString objStaticIndexNum = a.Right(1);
-			size_t temp = 0;
-			temp = _ttoi(objStaticIndexNum);
-			CString cVertex;
-			GetDlgItemText(IDC_EDIT12, cVertex);
-			float n = _ttof(cVertex);
-			m_fTransformRotY = n;
-			if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
-				return;
-			dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
-		}
-		else if (VertexManager::GetInstance()->isStaticMesh == false)
-		{
-			CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
-			if (lastDynamicObjSelectItem == nullptr)
-				return;
-			CString objDynamicIndexNum = a.Right(1);
-			size_t temp = 0;
-			temp = _ttoi(objDynamicIndexNum);
-			CString cVertex;
-			GetDlgItemText(IDC_EDIT12, cVertex);
-			float n = _ttof(cVertex);
-			m_fTransformRotY = n;
-			if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
-				return;
-			dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
-		}
-	}
+	//	}
+	//}
+	//else if (VertexManager::GetInstance()->isObjectMesh == true)
+	//{
+	//	if (VertexManager::GetInstance()->isStaticMesh == true)
+	//	{
+	//		CString a = treeObjStatic.GetItemText(lastStaticObjSelectItem);
+	//		CString objStaticIndexNum = a.Right(1);
+	//		size_t temp = 0;
+	//		temp = _ttoi(objStaticIndexNum);
+	//		CString cVertex;
+	//		GetDlgItemText(IDC_EDIT12, cVertex);
+	//		float n = _ttof(cVertex);
+	//		m_fTransformRotY = n;
+	//		if (0 == CMFCToolView::GetInstance()->vectorObjStatic.size())
+	//			return;
+	//		dynamic_cast<CMFCStaticMesh*>(CMFCToolView::GetInstance()->vectorObjStatic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+	//	}
+	//	else if (VertexManager::GetInstance()->isStaticMesh == false)
+	//	{
+	//		CString a = treeObjDynamic.GetItemText(lastDynamicObjSelectItem);
+	//		if (lastDynamicObjSelectItem == nullptr)
+	//			return;
+	//		CString objDynamicIndexNum = a.Right(1);
+	//		size_t temp = 0;
+	//		temp = _ttoi(objDynamicIndexNum);
+	//		CString cVertex;
+	//		GetDlgItemText(IDC_EDIT12, cVertex);
+	//		float n = _ttof(cVertex);
+	//		m_fTransformRotY = n;
+	//		if (0 == CMFCToolView::GetInstance()->vectorObjDynamic.size())
+	//			return;
+	//		dynamic_cast<CMFCDynamicMesh*>(CMFCToolView::GetInstance()->vectorObjDynamic.at(temp))->GetTransform()->Rotation(Engine::ROTATION::ROT_Y, m_fTransformRotY);
+	//	}
+	//}
 }
 
 
