@@ -13,6 +13,7 @@
 #include "Titan.h"
 #include "Ingkells.h"
 #include "LightRay.h"
+#include "Knight.h"
 //#include "Zecallion.h"
 
 #include "Stone.h"
