@@ -230,7 +230,7 @@ HRESULT Client::CKnight::Ready_Object(void)
 	/*CMonster::Ready_Object();*/
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	
-	m_pTransformCom->Set_Scale(0.02f, 0.02f, 0.02f);
+	m_pTransformCom->Set_Scale(0.015f, 0.015f, 0.015f);
 	m_pMeshCom->Set_AnimationSet(KnightState::STATE_STAND);
 
 

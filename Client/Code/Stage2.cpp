@@ -52,7 +52,7 @@ void CStage2::Render_Scene(void)
 HRESULT CStage2::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
 {
 	//TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject.dat";
-	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject11.dat";
+	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject13.dat";
 	HANDLE hFile = CreateFile(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (INVALID_HANDLE_VALUE == hFile)
@@ -189,7 +189,7 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	dynamic_cast<CConfusionHole*>(pGameObject)->dir = 2;
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_R", pGameObject), E_FAIL);
 
-
+	//시작지
 	pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE2);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,4.5f });
@@ -209,7 +209,8 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 103.f, 0.f, 8.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
-	//
+	
+	//2번째스폰
 	pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE2);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 98.f, 0.f, 36.f });
@@ -235,34 +236,34 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//첫번쨰불
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 106.f,0.5f,23.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 106.3f,0.5f,23.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 107.f,0.5f,23.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 106.8f,0.5f,23.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 108.f,0.5f,23.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 107.1f,0.5f,23.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 
 	//두번째불
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 106.f,0.5f,26.3f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 105.8f,0.5f,27.1f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 107.f,0.5f,26.3f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 106.3f,0.5f,27.1f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 108.f,0.5f,26.3f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 106.8f,0.5f,27.1f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	//세번쨰불
@@ -280,17 +281,17 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//네번째 불
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.f,0.5f,46.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.f,0.5f,46.2f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.8f,0.5f,46.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.8f,0.5f,46.2f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 105.6f,0.5f,46.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 105.6f,0.5f,46.2f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 	//다섯번째 불
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
@@ -307,38 +308,86 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 105.6f,0.5f,48.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
-	//pGameObject = CTitan::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
 
+	//여섯번째 불
+	pGameObject = CFireEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.f,0.5f,51.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
-	/*for (_uint i = 0; i < 50; ++i)
-	{
-		pGameObject = CMonster::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
-	}*/
+	pGameObject = CFireEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.8f,0.5f,51.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
-	//pGameObject = CStone::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+	pGameObject = CFireEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 105.6f,0.5f,51.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
-	//pGameObject = CTree::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
+	//세번쨰 스폰
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 98.f, 0.f, 66.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
 
-	//for (_uint i = 0; i < 100; ++i)
-	//{
-	//	pGameObject = CEffect::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Effect", pGameObject), E_FAIL);
-	//}
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 96.f, 0.f, 65.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
 
-	//pGameObject = CUI::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 96.6f, 0.f, 68.1f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
 
+	pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 96.5f, 0.f, 67.2f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 
+	//4번쨰 스폰
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 85.f, 0.f, 70.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
+
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 85.f, 0.f, 68.5f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
+
+	//5번째스폰
+
+	pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 76.3f, 0.f, 65.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
+
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 76.3f, 0.f, 66.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
+
+	pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 75.f, 0.f, 66.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
+
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 66.f, 0.f, 66.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
+
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 66.f, 0.f, 68.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
+
+	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE2);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 68.f, 0.f, 63.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;
