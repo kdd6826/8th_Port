@@ -53,6 +53,7 @@ private:
 	void		DownOnRotation();
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
+	void		InvincibleTime(_float _time);
 	void		StateEventFromDelay(float _fTimeDelta);
 	void		DashEffect();
 	void		GuardEffect();
@@ -78,6 +79,7 @@ private:
 	vector<CUnit*>				vecSkill;
 	_vec3						m_vDir;
 	bool						isAnimating;
+	_float						isInvincibleTime=0.f;
 	_float						delay = 0.f;
 	_float						skillDelay[_END] = { 0.f };
 	_float						downDelay = 0.f;

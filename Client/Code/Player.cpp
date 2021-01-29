@@ -250,12 +250,10 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				GuardEffect();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 
-			
-
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
-				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
-				delay = temp;
+				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.5f;
+				delay = temp-0.3f;
 				skillDelay[_CONFUSIONHOLE] = temp + 0.3f;
 				isInvincible = true;
 				m_fBattleCount = delay + 5.f;
@@ -273,7 +271,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			Attack(fTimeDelta);
 	}
 
-	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE && delay < 0.4f)
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE && delay < 0.1f)
 	{
 		isInvincible = false;
 		m_pStateCom->perfectGuard = false;
@@ -363,6 +361,11 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 
 
+}
+
+void CPlayer::InvincibleTime(_float _time)
+{
+	isInvincibleTime = _time;
 }
 
 
@@ -1470,6 +1473,16 @@ HRESULT Client::CPlayer::Ready_Object(void)
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
 	CUnit::Update_Object(fTimeDelta);
+	if (isInvincibleTime > 0.f)
+	{
+		isInvincible = true;
+		isInvincibleTime -= fTimeDelta;
+	}
+	else if(isInvincibleTime<=0.f)
+	{
+		isInvincible = false;
+		isInvincibleTime = 0.f;
+	}
 	if (!isInitialize)
 	{
 		_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
@@ -1581,12 +1594,13 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 		dynamic_cast<CTriggerBox*>(target)->SetPortal();
 		return;
 	}
-	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE&&!m_pStateCom->perfectGuard&&delay>0.4f)
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE&&!m_pStateCom->perfectGuard&&delay>0.1f)
 	{
 		PerfectGuardEffect();
+		InvincibleTime(0.7f);
 		m_pStateCom->perfectGuard = true;
 	}
-	if (!isInvincible)
+	if (!isInvincible&&isInvincibleTime<=0.f)
 	{
 		hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
 		m_pStateCom->stat.hp -= dynamic_cast<CMonster*>(target)->m_pStateCom->stat.damage;
@@ -1594,7 +1608,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 		//m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		if (isHit == false)
 		{
-			if (m_pStateCom->stat.down >= 1.f)
+			if (m_pStateCom->stat.down >= 10.f)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_STRONG_DOWN;
 				m_pStateCom->stat.down = 0.f;

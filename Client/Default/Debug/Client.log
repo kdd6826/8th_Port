@@ -1,65 +1,69 @@
 ﻿  Player.cpp
 c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\administrator\desktop\8th_port\client\code\fontparent.h(44): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(220): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(232): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(288): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(300): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(325): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(326): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(371): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(372): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(470): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(593): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(594): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(495): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(508): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(521): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(534): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(548): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(563): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(809): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(810): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(842): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(843): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(885): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(886): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(940): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(941): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(988): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(989): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1034): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1051): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1068): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1081): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1097): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1109): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1136): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1149): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1163): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1176): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(221): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(233): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(256): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(257): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(302): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(303): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(406): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(529): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(530): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(431): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(444): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(457): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(470): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(484): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(499): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(745): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(746): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(778): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(779): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(821): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(822): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(876): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(877): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(924): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(925): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(970): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(987): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1004): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1017): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1033): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1045): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1072): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1085): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1099): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1112): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1125): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1140): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1160): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1188): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 c:\users\administrator\desktop\8th_port\client\code\player.cpp(1189): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1204): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1224): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1252): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1253): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1274): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1275): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1309): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1310): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1330): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1331): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1349): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1350): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1366): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1367): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1448): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1474): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1484): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1493): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1598): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1631): warning C4003: 'FAILED_CHECK_RETURN' 매크로의 실제 매개 변수가 부족합니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1670): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\desktop\8th_port\client\code\player.cpp(1678): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1210): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1211): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1245): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1246): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1266): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1267): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1285): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1286): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1302): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1303): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1384): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1410): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1420): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1429): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1544): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1577): warning C4003: 'FAILED_CHECK_RETURN' 매크로의 실제 매개 변수가 부족합니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1617): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1625): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  Stage2.cpp
+  Stage.cpp
+  Monster.cpp
+  Logo.cpp
   Client.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
