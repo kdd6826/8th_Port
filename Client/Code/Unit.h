@@ -26,6 +26,7 @@ public:
 		STAGE0,
 		STAGE1,
 		STAGE2,
+		STAGE3
 	};
 	CUnit(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CUnit(void);

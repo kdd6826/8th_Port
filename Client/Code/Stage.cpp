@@ -39,7 +39,11 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
 		return 1;
 	}
-
+	if (!isInitial)
+	{
+		InitialUpdate();
+		isInitial = true;
+	}
 	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
 	if (Portal->GetPortal())
 	{
@@ -60,10 +64,17 @@ void CStage::Render_Scene(void)
 
 }
 
+void CStage::InitialUpdate()
+{
+	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
+	pPlayerTransCom->Set_Pos(&PlayerSpawnPositionCollo);
+}
+
 HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
 {
-	//TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject.dat";
-	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject13.dat";
+
+	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveStage1.dat";
+
 	HANDLE hFile = CreateFile(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (INVALID_HANDLE_VALUE == hFile)
@@ -105,9 +116,6 @@ HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* 
 		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&vecPos);
 		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Scale(vecScal.x, vecScal.y, vecScal.z);
 		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->m_vAngle = vecAng;
-			/*->Rotation(Engine::ROTATION::ROT_X, vecAng.x);
-		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_Y, vecAng.y);
-		dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Rotation(Engine::ROTATION::ROT_Z, vecAng.z);*/
 		m_mapLayer.emplace(pLayerTag, _layer);
 
 		if (0 == dwByte)
@@ -124,6 +132,9 @@ HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* 
 	}
 	CloseHandle(hFile);
 }
+
+
+
 HRESULT CStage::Ready_Environment_Layer(const _tchar * pLayerTag)
 {
 	Engine::CLayer*			pLayer = Engine::CLayer::Create();
@@ -162,14 +173,15 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	pGameObject = CPlayer::Create(m_pGraphicDev,CUnit::STAGE1);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CPlayer*>(pGameObject)->SetSpawnPosition(PlayerSpawnPosition);
+	dynamic_cast<CPlayer*>(pGameObject)->SetSpawnPosition(PlayerSpawnPositionCentral);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
 	pGameObject = CSword::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
+	//Load_StaticObjectFromTool(pLayer, pLayerTag);
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
-/*
+/*loa
 	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2", pGameObject), E_FAIL);
@@ -250,9 +262,9 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
 
-	//pGameObject = CTree::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
+	pGameObject = CTree::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
 
 	//Ã¹¹ø¤ŠºÒ
 	pGameObject = CFireEffect::Create(m_pGraphicDev);

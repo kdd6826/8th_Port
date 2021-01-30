@@ -55,7 +55,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	CUnit::Add_Component();
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	m_pTransformCom->Set_Pos(&PlayerSpawnPosition);
+
 	Engine::CGameObject::Update_Object(timeDelta);
 	m_pStateCom->stat.hp = 2000.f;
 	m_pStateCom->stat.maxHp = 2000.f;

@@ -68,7 +68,7 @@ HRESULT Client::CTree::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
-	m_pTransformCom->Set_Pos(&_vec3(10.f, 0.f, 10.f));
+	m_pTransformCom->Set_Pos(&_vec3(0.f, 0.f, 00.f));
 	
 
 	return S_OK;
