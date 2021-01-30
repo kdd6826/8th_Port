@@ -330,12 +330,6 @@
     <ClInclude Include="..\Code\RuinBlade.h">
       <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\ConfusionHole.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\ConfusionHole2.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\DashGuard.h">
       <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
     </ClInclude>
@@ -515,13 +509,7 @@
     <ClCompile Include="..\Code\TriggerBox.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ConfusionHole2.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\RuinBlade.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ConfusionHole.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DashGuard.cpp">

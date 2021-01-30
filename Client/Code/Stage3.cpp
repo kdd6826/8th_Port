@@ -29,6 +29,14 @@ HRESULT CStage3::Ready_Scene(void)
 
 Engine::_int CStage3::Update_Scene(const _float& fTimeDelta)
 {
+	if (Engine::Get_DIKeyState(DIK_F11) & 0x80)
+	{
+		CScene* pScene = nullptr;
+		pScene = CStage::Create(m_pGraphicDev);
+
+		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
+		return 1;
+	}
 	if (!isInitial)
 	{
 		InitialUpdate();
@@ -422,10 +430,10 @@ HRESULT CStage3::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 
 	//½ÃÀÛÁö
-	pGameObject = CIngkells::Create(m_pGraphicDev, CUnit::STAGE3);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
-	dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 50.f,0.f,65.f });
+	//pGameObject = CIngkells::Create(m_pGraphicDev, CUnit::STAGE3);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
+	//dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 50.f,0.f,65.f });
 	//pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE3);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,4.5f });

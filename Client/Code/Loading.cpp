@@ -219,13 +219,6 @@ _uint CLoading::Loading_ForStage(void)
 		L"../Bin/saveNaviCollo.dat",
 		NULL),
 		E_FAIL);
-	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Navi",
-		Engine::TYPE_NAVI,
-		L"../Bin/saveNaviCollo.dat",
-		NULL),
-		E_FAIL);*/
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Navi2",

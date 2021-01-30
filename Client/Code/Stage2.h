@@ -23,8 +23,6 @@
 #include "FireEffect.h"
 
 #include "DamageFont.h"
-#include "ConfusionHole.h"
-#include "ConfusionHole2.h"
 #include "RuinBlade.h"
 #include "SwordTrail.h"
 #include "DarkSwordTrail.h"
