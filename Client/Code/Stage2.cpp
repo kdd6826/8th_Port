@@ -158,15 +158,16 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	Engine::CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CSword::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
-
 	pGameObject = CPlayer::Create(m_pGraphicDev, CUnit::STAGE2);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CPlayer*>(pGameObject)->SetSpawnPosition(PlayerSpawnPositionCastle);
+	//dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi2");
+	
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
+	pGameObject = CSword::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
 
 	//Ω√¿€¡ˆ

@@ -43,7 +43,7 @@ private:
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CCalculator*		m_pCalculatorCom = nullptr;
-	//Engine::CCollider* m_pColliderCom = nullptr;
+	Engine::CCollider* m_pColliderCom = nullptr;
 	//Engine::CColliderSphere*			m_pColliderCom = nullptr;
 	Engine::CShader*			m_pShaderCom = nullptr;
 
