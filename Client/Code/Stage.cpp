@@ -63,7 +63,7 @@ void CStage::Render_Scene(void)
 HRESULT CStage::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
 {
 	//TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject.dat";
-	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject9.dat";
+	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject13.dat";
 	HANDLE hFile = CreateFile(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (INVALID_HANDLE_VALUE == hFile)

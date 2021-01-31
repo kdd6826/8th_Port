@@ -122,17 +122,18 @@ Client::_int Client::CFireEffect::Update_Object(const _float& fTimeDelta)
 		m_fFrame = 0.f;
 		count = 1.f;
 	}
+	_vec3 vPos,vScale;
+	m_pTransformCom->Set_Scale( 0.4f,2.f,1.f );
+	vScale = m_pTransformCom->m_vScale;
 
-
-	_vec3 vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
 	CGameObject::Compute_ViewZ(&vPos);
 
 	_matrix		matScale, matWorld, matView, matBill;
 	D3DXMatrixIdentity(&matScale);
-	matScale._11 = 0.4f;
-	matScale._22 = 2.f;
-	matScale._33 = 1.f;
+	//matScale._11 = 0.4f;
+	//matScale._22 = 2.f;
+	//matScale._33 = 1.f;
 
 	D3DXMatrixIdentity(&matBill);
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
