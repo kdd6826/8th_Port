@@ -352,15 +352,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 		}
 
-		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_RUINBLADE)
-		{
-			if (delay < 2.8f && !isShake)
-			{
-				CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
-				pCamera->Shake(0.3f);
-				isShake = true;
-			}
-		}
+
 
 
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
@@ -405,7 +397,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		else if (delay < 0.1f)
 		{
 			isDown = true;
-			downDelay = 2.f;
+			downDelay = 1.f;
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DOWN_IDLE;
 		}
 	}
@@ -479,32 +471,70 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
 	{
+		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+
 		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 		_float fCamAngle;
 		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
 		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
 		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+
 		if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.7 / m_fAniSpeed)
 		{
 			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+			if (hitCount == 0&&reverseDelay/m_fAniSpeed>0.3f)
+			{
+				CColliderMgr::GetInstance()->hitList.clear();
+				hitCount++;
+			}
 		}
+		
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT5)
 	{
+		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+
 		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 		_float fCamAngle;
 		m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
 		m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
 		m_pTransformCom->Get_Info(Engine::INFO_UP, &vUp);
 		m_pTransformCom->Get_Info(Engine::INFO_POS, &vMyPos);
-		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+		
 		if (reverseDelay > 0.2f / m_fAniSpeed && reverseDelay < 0.5 / m_fAniSpeed)
 		{
 			m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vMyPos, &(vLook * _fTimeDelta * m_pStateCom->stat.moveSpeed * 30)));
+			if (hitCount == 0)
+			{
+				CColliderMgr::GetInstance()->hitList.clear();
+				hitCount++;
+			}
 		}
 	}
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_RUINBLADE)
+	{
+		
+		if (delay < 2.8f && !isShake)
+		{
+			_vec3 dir, pos;
+			m_pTransformCom->Get_Info(Engine::INFO_LOOK, &dir);
+
+			CLightRay* pGameObject = CLightRay::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, );
+			pGameObject->SetDir(dir);
+			m_pTransformCom->Get_Info(Engine::INFO_POS, &pos);
+			pos.y += 0.5f;
+			pGameObject->m_pTransformCom->Set_Pos(&pos);
+			vecSkill.push_back(pGameObject);
+
+			CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+			pCamera->Shake(0.3f);
+			isShake = true;
+		}
+		
+	}
+
 	//대쉬상태
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION && delay > 0.75f)
 	{
@@ -580,7 +610,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 			m_fAniSpeed = 1.f;
 		}
 	}
-	
+
 
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1)
 	{
@@ -981,7 +1011,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
-					CColliderMgr::GetInstance()->hitList.clear();
+					hitCount = 0;
 					m_pStateCom->stat.stamina -= 8.f;
 					AttackOnRotation();
 					reverseDelay = 0.f;
@@ -998,7 +1028,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 					temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
 					delay = temp;
-					CColliderMgr::GetInstance()->hitList.clear();
+					hitCount = 0;
 					m_pStateCom->stat.stamina -= 7.f;
 					AttackOnRotation();
 					reverseDelay = 0.f;
@@ -1240,6 +1270,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				CColliderMgr::GetInstance()->hitList.clear();
 				_vec3 dir,pos;
 				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &dir);
+
 				CLightRay* pGameObject = CLightRay::Create(m_pGraphicDev);
 				NULL_CHECK_RETURN(pGameObject, );
 				pGameObject->SetDir(dir);
@@ -1520,7 +1551,6 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 			m_pStateCom->stat.stamina += 30.f * fTimeDelta;
 	}
 
-	//SetUp_OnTerrain();
 	if (!isHit && !isDown)
 		Key_Input(fTimeDelta);
 	if (isHit)
@@ -1531,12 +1561,9 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 			isHit = false;
 		}
 	}
-	//Engine::CGameObject::Update_Object(fTimeDelta);	
 	_float fCamAngle;
 	Engine::CCamera* pCamera = dynamic_cast<Engine::CCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 	fCamAngle = D3DXToDegree(pCamera->Get_Angle());
-	//vCamPos = pCamera->Get_Eye();
-
 	_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vScale, vRot, vMyPos;
 
 	m_pTransformCom->Get_Info(Engine::INFO_LOOK, &vLook);
@@ -1567,8 +1594,6 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	}
 	
 	m_pMeshCom->Set_AnimationSet(m_pStateCom->playerState);
-	//
-	//m_pMeshCom->Play_Animation(fTimeDelta * m_fAniSpeed * 1.5f);
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
 	return 0;
@@ -1581,7 +1606,6 @@ void CPlayer::VecUpdate(_float fTimeDelta)
 	}
 	for (auto& skill : vecSkill)
 	{
-
 		skill->Update_Object(fTimeDelta);
 	}
 	for (auto& font : m_vecDamageFont)
@@ -1598,22 +1622,15 @@ void Client::CPlayer::Render_Object(void)
 	LPD3DXEFFECT	 pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
 	Engine::Safe_AddRef(pEffect);
-
 	_uint	iMaxPass = 0;
 	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
 	pEffect->BeginPass(0);
-
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect));
-
 	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);
-
 	pEffect->EndPass();
 	pEffect->End();
-
 	m_pNaviMeshCom->Render_NaviMeshes();
-
-
 	Engine::Safe_Release(pEffect);
 }
 void CPlayer::OnCollision(Engine::CGameObject* target)
@@ -1689,7 +1706,6 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 				CDamageFontPlayer* damageFont = CDamageFontPlayer::Create(m_pGraphicDev);
 				damageFont->m_pFontParent = fontParent;
 				damageFont->offsetX += (fontCount - 3 - (int)(fontCount * 0.5f)) * 0.12f;
-
 				damageFont->count = (int(damage) % 10000) / 1000;
 				fontParent->m_vecDamageFont.emplace_back(damageFont);
 			}
@@ -1698,22 +1714,17 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 				CDamageFontPlayer* damageFont = CDamageFontPlayer::Create(m_pGraphicDev);
 				damageFont->m_pFontParent = fontParent;
 				damageFont->offsetX += (fontCount - 2 - (int)(fontCount * 0.5f)) * 0.12f;
-
 				damageFont->count = (int(damage) % 1000) / 100;
 				fontParent->m_vecDamageFont.emplace_back(damageFont);
 			}
-
 			if (fontCount >= 2)
 			{
 				CDamageFontPlayer* damageFont = CDamageFontPlayer::Create(m_pGraphicDev);
-
 				damageFont->m_pFontParent = fontParent;
 				damageFont->offsetX += (fontCount - 1 - (int)(fontCount * 0.5f)) * 0.12f;
-
 				damageFont->count = (int(damage) % 100) / 10;
 				fontParent->m_vecDamageFont.emplace_back(damageFont);
 			}
-
 			if (fontCount >= 1)
 			{
 				CDamageFontPlayer* damageFont = CDamageFontPlayer::Create(m_pGraphicDev);
@@ -1727,10 +1738,6 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 			m_pStateCom->stat.hp -= damage;
 			m_pStateCom->stat.down += pMonsterStateCom->stat.downDamage;
 
-
-
-
-
 			// 슬래쉬포인트
 			CSlashPoint* slashPoint = CSlashPoint::Create(m_pGraphicDev);
 
@@ -1743,10 +1750,6 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 			slashPoint->m_pTransformCom->m_vInfo[Engine::INFO_POS].z += -0.3f + i * 0.06;
 			m_vecSlashPoint.emplace_back(slashPoint);
 
-			//
-
-
-			/// 
 			if (m_pStateCom->stat.down >= 10.f)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_STRONG_DOWN;

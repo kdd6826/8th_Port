@@ -13,11 +13,6 @@ CDog::CDog(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CDog::~CDog(void)
 {
-	//for (auto& iterator = m_VecSphereCollider.begin(); iterator != m_VecSphereCollider.end();++iterator)
-	//{
-	//	//Engine::Safe_Delete_Array(*iterator);
-	//		Engine::Safe_Release(*iterator);
-	//}
 }
 
 Client::_vec3 Client::CDog::PickUp_OnTerrain(void)
@@ -41,12 +36,6 @@ HRESULT Client::CDog::Add_Component(void)
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Dog"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
-
-	
-	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	int i = rand() % 8;
-	//m_pTransformCom->Set_Pos(&_vec3{23.f+i,0.f,23.f+i});
-	Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
@@ -274,6 +263,8 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 	if (!initialize)
 	{
+		m_pStateCom->stat.maxHp = 5000.f;
+		m_pStateCom->stat.hp = 5000.f;
 		m_pTransformCom->Set_Pos(&spawnPosition);
 		_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
 		m_pNaviMeshCom->Set_NaviIndex(i);

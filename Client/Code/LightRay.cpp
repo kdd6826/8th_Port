@@ -45,7 +45,7 @@ HRESULT Client::CLightRay::Add_Component(void)
 	//m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 	
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_RuinBlade"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	ColliderSkill();
@@ -63,7 +63,9 @@ HRESULT CLightRay::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
-
+	pEffect->SetFloat("g_fAlpha", 1);
+	//pEffect->SetFloat("g_ColorSelect", 0.1f);
+	pEffect->SetVector("g_color", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrame));
 
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
@@ -90,16 +92,7 @@ void CLightRay::Free(void)
 HRESULT Client::CLightRay::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	m_pTransformCom->Set_Pos(20, 0.5f, 22);
-	//m_pTransformCom->Set_Scale(0.4f, 2.f, 1.f);
-
-
-	//sphereCol->m_pTransformCom->m_vScale = sphereScale;
-	//CColliderMgr::GetInstance()->RegisterObject(Engine::COLLID::ENEMY, sphereCol);
-	//CColliderMgr::GetInstance()->RegisterObject(_collType2, sphereCol);
-
-
+	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(180.f));
 	return S_OK;
 }
 Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
@@ -110,9 +103,9 @@ Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
 	if (lifeTime > 3.f)
 		return 1;
 	m_pTransformCom->Move_Pos(&(m_vDir*10.f));
-	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(10.f));
-	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-10.f));
-	m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(10.f));
+	//m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(10.f));
+	//m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-10.f));
+	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(10.f));
 
 	isColl = true;
 
@@ -143,7 +136,7 @@ Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	// 행렬의 곱셈순서를 주의할 것
-	m_pTransformCom->Set_WorldMatrix(&(matScale*matBill * matWorld));
+	m_pTransformCom->Set_WorldMatrix(&(/*matScale**/matBill * matWorld));
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 

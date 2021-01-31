@@ -118,6 +118,11 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Shade", pShader), E_FAIL);
 
+	// Shade
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_RuinBlade.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_RuinBlade", pShader), E_FAIL);
+
 	//// Shade
 	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Player.hpp");
 	//NULL_CHECK_RETURN(pShader, E_FAIL);

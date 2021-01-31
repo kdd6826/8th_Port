@@ -64,16 +64,23 @@ void CColliderMgr::CollisionAttack(Engine::COLLID _srcType, Engine::COLLID _dstT
 				//플레이어 
 				if (srcElem->isColl == true)
 				{
+					_bool bIsBeing = false;
 					for (auto& hit : hitList)
 					{
-						//맞은 놈이다
-						if (hit == srcElem->m_pDynamicMesh)
+						if (hit == dstElem->m_pDynamicMesh)
 						{
-							return;
+							bIsBeing = true;
+							continue;
 						}
 					}
-							dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
-							hitList.emplace_back(srcElem->m_pDynamicMesh);
+
+					if (!bIsBeing)
+					{
+						dstElem->m_pDynamicMesh->OnCollision(srcElem->m_pDynamicMesh);
+						hitList.emplace_back(dstElem->m_pDynamicMesh);
+					}
+					if (hitList.size() > 1)
+						int i = 0;
 
 				}
 			}
