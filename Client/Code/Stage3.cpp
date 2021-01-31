@@ -415,18 +415,17 @@ HRESULT CStage3::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject*		pGameObject = nullptr;
+	pGameObject = CSword::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
+	LoadStage3_StaticObjectFromTool(pLayer, pLayerTag);
 
 	pGameObject = CPlayer::Create(m_pGraphicDev, CUnit::STAGE3);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CPlayer*>(pGameObject)->SetSpawnPosition(PlayerSpawnPositionCentral);
 	//dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi2");
-	
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
-	pGameObject = CSword::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
-	LoadStage3_StaticObjectFromTool(pLayer, pLayerTag);
 
 
 	//½ÃÀÛÁö
@@ -522,7 +521,7 @@ HRESULT CStage3::Ready_UI_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkillDkTransform2", pGameObject), E_FAIL);
 
 
-	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f),
+	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, 10.f),
 		&_vec3(0.f, 0.f, 10.f),
 		&_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

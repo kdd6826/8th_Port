@@ -329,6 +329,7 @@ HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 		&_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+
 	m_mapLayer.emplace(pLayerTag, pLayer);
 	return S_OK;
 }
