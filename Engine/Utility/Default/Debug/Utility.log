@@ -32,6 +32,7 @@
   .\Engine\Utility\Code\Shader_Effect2.hpp
   .\Engine\Utility\Code\Shader_Eye.hpp
   .\Engine\Utility\Code\Shader_Face.hpp
+  .\Engine\Utility\Code\Shader_Gate.hpp
   .\Engine\Utility\Code\Shader_GateEffect.hpp
   .\Engine\Utility\Code\Shader_Hair.hpp
   .\Engine\Utility\Code\Shader_HitEffect.hpp
@@ -47,7 +48,7 @@
   .\Engine\Utility\Code\Shader_Trail.hpp
   .\Engine\Utility\Code\Shader_Weapon.hpp
   .\Engine\Utility\Code\Terrain_Shader.hpp
-         23개 파일이 복사되었습니다.
+         24개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

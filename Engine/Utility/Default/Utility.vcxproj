@@ -222,6 +222,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Shader_Effect2.hpp" />
     <ClInclude Include="..\Code\Shader_Eye.hpp" />
     <ClInclude Include="..\Code\Shader_Face.hpp" />
+    <ClInclude Include="..\Code\Shader_Gate.hpp" />
     <ClInclude Include="..\Code\Shader_GateEffect.hpp" />
     <ClInclude Include="..\Code\Shader_Hair.hpp" />
     <ClInclude Include="..\Code\Shader_HitEffect.hpp" />

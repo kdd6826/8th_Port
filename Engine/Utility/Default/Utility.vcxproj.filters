@@ -287,6 +287,9 @@
     <ClInclude Include="..\Code\Shader_GateEffect.hpp">
       <Filter>09. Shader\hpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_Gate.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl">

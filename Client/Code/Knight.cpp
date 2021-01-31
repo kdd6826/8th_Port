@@ -271,9 +271,10 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 	if (!initialize)
 	{
-		m_pStateCom->stat.maxHp = 30000.f;
-		m_pStateCom->stat.hp = 30000.f;
-		m_pStateCom->stat.attack = 100.f;
+		
+		m_pStateCom->stat.maxHp = 10000.f;
+		m_pStateCom->stat.hp = 10000.f;
+		m_pStateCom->stat.damage = 100.f;
 		m_pTransformCom->Set_Pos(&spawnPosition);
 		if (nullptr != m_pNaviMeshCom)
 		{
