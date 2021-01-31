@@ -28,8 +28,9 @@
 #include <algorithm>
 #include <functional>
 #include <ctime>
-
 #include <io.h>
+#include "Define.h"
+#include "SoundManager.h"
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC

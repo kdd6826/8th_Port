@@ -3,7 +3,7 @@
 #include "Define.h"
 
 
-BEGIN(Client)
+
 enum SoundChannel { BGM, PLAYER, PLAYER_EFFECT, MONSTER, EFFECT, MAXCHANNEL };
 class SoundManager
 {
@@ -42,6 +42,6 @@ private:
 	FMOD_SYSTEM* pSystem;
 	float volume;
 };
-END
+
 #endif // CColliderMgr_h__
 
