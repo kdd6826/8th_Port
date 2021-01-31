@@ -2,6 +2,7 @@
 #include "FontParent.h"
 #include "Export_Function.h"
 #include "DamageFont.h"
+#include "DamageFontPlayer.h"
 CFontParent::CFontParent(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -25,35 +26,12 @@ HRESULT Client::CFontParent::Add_Component(void)
 	fScale = 2.f;
 	count = 1.f;
 
-	// buffer
-	//pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
-
-	//// texture
-	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_DamageFont"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
-
-	//// Renderer
-	//pComponent = m_pRendererCom = Engine::Get_Renderer();
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//Safe_AddRef(pComponent);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
 
 	// Transform
 	pComponent = m_pTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Clone(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
-	////// Shader
-	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_DamageFont"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
-	//// Shader
-	/*pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);*/
 	return S_OK;
 }
 
@@ -135,8 +113,6 @@ HRESULT Client::CFontParent::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Pos(&_vec3{ 23.f,2.f,23.f });
-
 	return S_OK;
 }
 Client::_int Client::CFontParent::Update_Object(const _float& fTimeDelta)
@@ -173,7 +149,14 @@ Client::_int Client::CFontParent::Update_Object(const _float& fTimeDelta)
 	{
 		if (m_vecDamageFont.size() == 0)
 			return 0;
-		dynamic_cast<CDamageFont*>(font)->Update_Object(fTimeDelta);
+		if (!isPlayerHit)
+		{
+			dynamic_cast<CDamageFont*>(font)->Update_Object(fTimeDelta);
+		}
+		else if (isPlayerHit)
+		{
+			dynamic_cast<CDamageFontPlayer*>(font)->Update_Object(fTimeDelta);
+		}
 	}
 	//
 	_vec3 vPos;

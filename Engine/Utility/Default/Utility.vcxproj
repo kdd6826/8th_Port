@@ -215,6 +215,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Scene.h" />
     <ClInclude Include="..\Code\Shader.h" />
     <ClInclude Include="..\Code\Shader_Base.hpp" />
+    <ClInclude Include="..\Code\Shader_Blend.hpp" />
     <ClInclude Include="..\Code\Shader_DamageFont.hpp" />
     <ClInclude Include="..\Code\Shader_Effect.hpp" />
     <ClInclude Include="..\Code\Shader_Eye.hpp" />
@@ -225,6 +226,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Shader_Player.hpp" />
     <ClInclude Include="..\Code\Shader_RuinBlade.hpp" />
     <ClInclude Include="..\Code\Shader_Sample.hpp" />
+    <ClInclude Include="..\Code\Shader_Shade.hpp" />
     <ClInclude Include="..\Code\Shader_SkyBox.hpp" />
     <ClInclude Include="..\Code\Shader_Terrain.hpp" />
     <ClInclude Include="..\Code\Shader_Trail.hpp" />

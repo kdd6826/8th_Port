@@ -181,7 +181,10 @@
     <ClInclude Include="..\Code\ConfusionHole.h" />
     <ClInclude Include="..\Code\ConfusionHole2.h" />
     <ClInclude Include="..\Code\DamageFont.h" />
+    <ClInclude Include="..\Code\DamageFontPlayer.h" />
     <ClInclude Include="..\Code\DarkSwordTrail.h" />
+    <ClInclude Include="..\Code\DashGuard.h" />
+    <ClInclude Include="..\Code\DashGuard2.h" />
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Effect.h" />
@@ -220,6 +223,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Code\Stage2.h" />
+    <ClInclude Include="..\Code\Stage3.h" />
     <ClInclude Include="..\Code\SwordTrail.h" />
     <ClInclude Include="..\Code\TestMonster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -268,7 +272,10 @@
     <ClCompile Include="..\Code\ConfusionHole.cpp" />
     <ClCompile Include="..\Code\ConfusionHole2.cpp" />
     <ClCompile Include="..\Code\DamageFont.cpp" />
+    <ClCompile Include="..\Code\DamageFontPlayer.cpp" />
     <ClCompile Include="..\Code\DarkSwordTrail.cpp" />
+    <ClCompile Include="..\Code\DashGuard.cpp" />
+    <ClCompile Include="..\Code\DashGuard2.cpp" />
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
@@ -307,6 +314,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\Stage2.cpp" />
+    <ClCompile Include="..\Code\Stage3.cpp" />
     <ClCompile Include="..\Code\SwordTrail.cpp" />
     <ClCompile Include="..\Code\TestMonster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

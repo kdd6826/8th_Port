@@ -27,6 +27,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
+	void SetPlayerHitFont() { isPlayerHit = true; }
 	Engine::CTransform* GetTransform() { return m_pTransformCom; }
 private:
 	HRESULT		Add_Component(void);
@@ -38,7 +39,7 @@ private:
 	//Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CTransform*			m_pTransformCom = nullptr;
 	/*Engine::CShader*			m_pShaderCom = nullptr;*/
-
+	_bool isPlayerHit = false;
 	float reverseLifeTime = 0.f;;
 	_float						m_fFrame = 0.f;
 	int count = 0.f;

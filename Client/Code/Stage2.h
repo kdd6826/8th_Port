@@ -3,13 +3,14 @@
 
 #include "Scene.h"
 #include "Define.h"
-
+#include "Stage3.h"
 #include "SkyBox.h"
 #include "Terrain.h"
 #include "Player.h"
 #include "DynamicCamera.h"
 #include "Unit.h"
 #include "Dog.h"
+#include "Knight.h"
 #include "Titan.h"
 #include "Ingkells.h"
 #include "LightRay.h"
@@ -22,8 +23,6 @@
 #include "FireEffect.h"
 
 #include "DamageFont.h"
-#include "ConfusionHole.h"
-#include "ConfusionHole2.h"
 #include "RuinBlade.h"
 #include "SwordTrail.h"
 #include "DarkSwordTrail.h"

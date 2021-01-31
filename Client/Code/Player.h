@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Stage2.h"
 #include "TriggerBox.h"
+#include "DamageFontPlayer.h"
 BEGIN(Engine)
 
 class CDynamicMesh;
@@ -41,6 +42,7 @@ private:
 public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
+	void VecUpdate(_float fTimeDelta);
 	virtual void Render_Object(void) override;
 	virtual void OnCollision(Engine::CGameObject* target)override;
 	Engine::CPlayerState* m_pStateCom = nullptr;
@@ -53,8 +55,11 @@ private:
 	void		DownOnRotation();
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
-	void		ConufusionHoleInit();
+	void		InvincibleTime(_float _time);
 	void		StateEventFromDelay(float _fTimeDelta);
+	void		DashEffect();
+	void		GuardEffect();
+	void		PerfectGuardEffect();
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	//playerState m_state = playerState::STATE_IDLE;
@@ -70,11 +75,16 @@ private:
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 	bool		isTired = false;
 	bool		isShake = false;
+	bool		isInitialize = false;
 private:
 	vector<CUnit*>				hitMonsters;
+	vector<CSlashPoint*>		m_vecSlashPoint;
+	vector<CDamageFontPlayer*>	m_vecDamageFont;
+	vector<CFontParent*>	m_vecFontParent;
 	vector<CUnit*>				vecSkill;
 	_vec3						m_vDir;
 	bool						isAnimating;
+	_float						isInvincibleTime=0.f;
 	_float						delay = 0.f;
 	_float						skillDelay[_END] = { 0.f };
 	_float						downDelay = 0.f;
