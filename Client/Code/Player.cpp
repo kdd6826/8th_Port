@@ -6,8 +6,6 @@
 #include "Sword.h"
 #include "ConfusionHole.h"
 #include "ConfusionHole2.h"
-#include "DashGuard.h"
-#include "DashGuard2.h"
 #include "Monster.h"
 #include "LightRay.h"
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -246,12 +244,8 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				return;
 			if (delay <= 0.f)
 			{
-				
-				GuardEffect();
+				ConufusionHoleInit();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
-
-			
-
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 				temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
@@ -273,16 +267,10 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			Attack(fTimeDelta);
 	}
 
-	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE && delay < 0.4f)
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE && delay < 0.1f)
 	{
 		isInvincible = false;
 		m_pStateCom->perfectGuard = false;
-	}
-	else if (true == m_pMeshCom->Is_AnimationSetEnd())
-	{
-		m_pStateCom->stat.damage = PlayerOriginAtt;
-		m_pStateCom->perfectGuard = false;
-		isSkill = false;
 	}
 	if (isSkill == false)
 	{
@@ -294,9 +282,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 			{
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
-				
-
-				GuardEffect();
+				ConufusionHoleInit();
 
 				//delay = 1.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -355,7 +341,6 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
 			m_pStateCom->stat.damage = PlayerOriginAtt;
-			m_pStateCom->perfectGuard = false;
 			isInvincible = false;
 			isSkill = false;
 		}
@@ -365,7 +350,28 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 }
 
+void CPlayer::ConufusionHoleInit()
+{
 
+	Engine::CGameObject* counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole"));
+	NULL_CHECK(counfusionHole);
+	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
+	counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole_R"));
+	NULL_CHECK(counfusionHole);
+	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
+	counfusionHole = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole_L"));
+	NULL_CHECK(counfusionHole);
+	dynamic_cast<CConfusionHole*>(counfusionHole)->count = 0;
+	Engine::CGameObject* counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2"));
+	NULL_CHECK(counfusionHole2);
+	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
+	counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2_R"));
+	NULL_CHECK(counfusionHole2);
+	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
+	counfusionHole2 = dynamic_cast<Engine::CGameObject*>(Engine::Get_GameObject(L"GameLogic", L"ConfusionHole2_L"));
+	NULL_CHECK(counfusionHole2);
+	dynamic_cast<CConfusionHole2*>(counfusionHole2)->count = 0;
+}
 
 void CPlayer::StateEventFromDelay(float _fTimeDelta)
 {
@@ -517,9 +523,8 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 			if (skillDelay[_CONFUSIONHOLE] > 0.f)
 				return;
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
-			
+			ConufusionHoleInit();
 
-			GuardEffect();
 			//delay = 1.f;
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
@@ -602,69 +607,6 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 	}
 }
 
-void CPlayer::DashEffect()
-{
-	CDashGuard* pGameObject = CDashGuard::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, );
-	pGameObject->SetDash();
-	vecSkill.push_back(pGameObject);
-
-	//CDashGuard2* pGameObject2 = CDashGuard2::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject2, );
-	//pGameObject2->SetDash();
-	//vecSkill.push_back(pGameObject2);
-}
-
-void CPlayer::GuardEffect()
-{
-	CDashGuard* pGameObject = CDashGuard::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, );
-	vecSkill.push_back(pGameObject);
-
-	CDashGuard2* pGameObject2 = CDashGuard2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject2, );
-	vecSkill.push_back(pGameObject2);
-}
-
-void CPlayer::PerfectGuardEffect()
-{
-	CDashGuard* pGameObject = CDashGuard::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, );
-	pGameObject->SetGuardDir(CDashGuard::DIR_FRONT);
-	pGameObject->InitialLifetime(0.7f);
-	vecSkill.push_back(pGameObject);
-
-	CDashGuard2* pGameObject2 = CDashGuard2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject2, );
-	pGameObject2->SetGuardDir(CDashGuard2::DIR_FRONT);
-	pGameObject2->InitialLifetime(0.7f);
-	vecSkill.push_back(pGameObject2);
-
-	pGameObject = CDashGuard::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, );
-	pGameObject->SetGuardDir(CDashGuard::DIR_LEFT);
-	pGameObject->InitialLifetime(0.7f);
-	vecSkill.push_back(pGameObject);
-
-	pGameObject2 = CDashGuard2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject2, );
-	pGameObject2->SetGuardDir(CDashGuard2::DIR_LEFT);
-	pGameObject2->InitialLifetime(0.7f);
-	vecSkill.push_back(pGameObject2);
-
-	pGameObject = CDashGuard::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, );
-	pGameObject->SetGuardDir(CDashGuard::DIR_RIGHT);
-	pGameObject->InitialLifetime(0.7f);
-	vecSkill.push_back(pGameObject);
-
-	pGameObject2 = CDashGuard2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject2, );
-	pGameObject2->SetGuardDir(CDashGuard2::DIR_RIGHT);
-	pGameObject2->InitialLifetime(0.7f);
-	vecSkill.push_back(pGameObject2);
-}
-
 void CPlayer::MovePlayer(const _float& fTimeDelta)
 {
 	//if (Engine::Get_DIKeyState(DIK_Z) & 0x80)
@@ -734,7 +676,8 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
-				
+				ConufusionHoleInit();
+
 				//delay = 1.2f;
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -743,7 +686,6 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
-				DashEffect();
 			}
 		}
 
@@ -768,6 +710,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
+				ConufusionHoleInit();
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -777,8 +720,6 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				m_fBattleCount = delay + 5.f;
 
 				m_pStateCom->stat.stamina -= 11.f;
-				DashEffect();
-				
 			}
 		}
 
@@ -810,7 +751,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
-				
+				ConufusionHoleInit();
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -819,8 +760,6 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
-
-				DashEffect();
 			}
 		}
 
@@ -865,7 +804,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
-				
+				ConufusionHoleInit();
 				/*delay = 1.2f;*/
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -874,8 +813,6 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
-
-				DashEffect();
 			}
 		}
 
@@ -913,7 +850,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
-				
+				ConufusionHoleInit();
 				//delay = 1.2f;
 				m_fAniSpeed = 1.2f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -922,8 +859,6 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				skillDelay[_DIFUSION] = temp + 0.3f;
 				m_fBattleCount = delay + 5.f;
 				m_pStateCom->stat.stamina -= 11.f;
-
-				DashEffect();
 			}
 		}
 		vDir = (vCamPos - vMyPos);
@@ -1225,11 +1160,11 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				_vec3 dir,pos;
 				m_pTransformCom->Get_Info(Engine::INFO_LOOK, &dir);
 				CLightRay* pGameObject = CLightRay::Create(m_pGraphicDev);
-				NULL_CHECK_RETURN(pGameObject, );
 				pGameObject->SetDir(dir);
 				m_pTransformCom->Get_Info(Engine::INFO_POS, &pos);
 				pos.y += 0.5f;
 				pGameObject->m_pTransformCom->Set_Pos(&pos);
+				NULL_CHECK_RETURN(pGameObject, );
 				vecSkill.push_back(pGameObject);
 				
 
@@ -1461,21 +1396,16 @@ HRESULT Client::CPlayer::Ready_Object(void)
 
 	m_pTransformCom->Set_Scale(0.01f, 0.01f, 0.01f);
 	m_pMeshCom->Set_AnimationSet(39);
-
+	//_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x,spawnPosition.z));
 	//
-	
+	//m_pNaviMeshCom->Set_NaviIndex(i);
 
 	return S_OK;
 }
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
 	CUnit::Update_Object(fTimeDelta);
-	if (!isInitialize)
-	{
-		_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
-		m_pNaviMeshCom->Set_NaviIndex(i);
-		isInitialize = true;
-	}
+	
 		for (auto& skill : vecSkill)
 		{
 			
@@ -1581,14 +1511,29 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 		dynamic_cast<CTriggerBox*>(target)->SetPortal();
 		return;
 	}
-	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE&&!m_pStateCom->perfectGuard&&delay>0.4f)
+	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
 	{
-		PerfectGuardEffect();
+		Engine::CTransform* confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole_R", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.8f, 0.8f, 0.8f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole_L", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.8f, 0.8f, 0.8f);
+
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole2", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole2_R", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.6f, 0.6f, 0.6f);
+		confusionHoleTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"ConfusionHole2_L", L"Com_Transform", Engine::ID_DYNAMIC));
+		confusionHoleTransformCom->Set_Scale(0.6f, 0.6f, 0.6f);
 		m_pStateCom->perfectGuard = true;
 	}
 	if (!isInvincible)
 	{
 		hitDir = dynamic_cast<CUnit*>(target)->m_pTransformCom->m_vInfo[Engine::INFO_LOOK];
+
+
+
 		m_pStateCom->stat.hp -= dynamic_cast<CMonster*>(target)->m_pStateCom->stat.damage;
 		m_pStateCom->stat.down += dynamic_cast<CMonster*>(target)->m_pStateCom->stat.downDamage;
 		//m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;

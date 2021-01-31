@@ -169,7 +169,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
-/*
+
 	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2", pGameObject), E_FAIL);
@@ -196,7 +196,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	pGameObject = CConfusionHole::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CConfusionHole*>(pGameObject)->dir = 2;
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_R", pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_R", pGameObject), E_FAIL);
 
 
 

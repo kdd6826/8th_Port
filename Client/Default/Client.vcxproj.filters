@@ -121,6 +121,9 @@
     <Filter Include="02. GameObject\01. Stage\08. Particle">
       <UniqueIdentifier>{07f39377-ce50-47e5-bee1-a41aaa0f20c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\06. Effect\Player">
+      <UniqueIdentifier>{54a48bcb-e186-4a7e-8e1b-5c24c8096de6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\01. Stage\98. SphereCollider">
       <UniqueIdentifier>{e767e0ef-cd77-4409-aa54-ace134be7814}</UniqueIdentifier>
     </Filter>
@@ -300,6 +303,15 @@
     <ClInclude Include="..\Code\Particle.h">
       <Filter>02. GameObject\01. Stage\08. Particle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\ConfusionHole.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ConfusionHole2.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RuinBlade.h">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClInclude>
     <ClInclude Include="..\Code\SoundManager.h">
       <Filter>02. GameObject\97. SoundManager</Filter>
     </ClInclude>
@@ -326,21 +338,6 @@
     </ClInclude>
     <ClInclude Include="..\Code\TriggerBox.h">
       <Filter>02. GameObject\01. Stage\01. Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\RuinBlade.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\ConfusionHole.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\ConfusionHole2.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\DashGuard.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\DashGuard2.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -485,6 +482,15 @@
     <ClCompile Include="..\Code\Particle.cpp">
       <Filter>02. GameObject\01. Stage\08. Particle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ConfusionHole.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ConfusionHole2.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RuinBlade.cpp">
+      <Filter>02. GameObject\01. Stage\06. Effect\Player</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\SoundManager.cpp">
       <Filter>02. GameObject\97. SoundManager</Filter>
     </ClCompile>
@@ -511,21 +517,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\TriggerBox.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ConfusionHole2.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\RuinBlade.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ConfusionHole.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DashGuard.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DashGuard2.cpp">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

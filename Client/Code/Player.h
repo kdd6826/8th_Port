@@ -53,10 +53,8 @@ private:
 	void		DownOnRotation();
 	void		SetUp_OnTerrain(void);
 	void		Key_Input(const _float& fTimeDelta);
+	void		ConufusionHoleInit();
 	void		StateEventFromDelay(float _fTimeDelta);
-	void		DashEffect();
-	void		GuardEffect();
-	void		PerfectGuardEffect();
 	_vec3		PickUp_OnTerrain(void);
 	_float		m_fAngle;
 	//playerState m_state = playerState::STATE_IDLE;
@@ -72,7 +70,6 @@ private:
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.
 	bool		isTired = false;
 	bool		isShake = false;
-	bool		isInitialize = false;
 private:
 	vector<CUnit*>				hitMonsters;
 	vector<CUnit*>				vecSkill;
