@@ -317,14 +317,6 @@ _uint CLoading::Loading_ForStage(void)
 
 			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 				Engine::RESOURCE_STAGE,
-				L"Mesh_FireTrap",
-				Engine::TYPE_STATIC,
-				L"../Bin/Resource/Mesh/StaticMesh/FireTrap/",
-				L"Fire_Trap.X"),
-				E_FAIL);
-
-			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-				Engine::RESOURCE_STAGE,
 				L"Mesh_Sword2",
 				Engine::TYPE_STATIC,
 				L"../Bin/Resource/Mesh/StaticMesh/Sword2/",
