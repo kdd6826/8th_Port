@@ -1,5 +1,4 @@
-﻿  LINK : ../Bin\Utility.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
-     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+﻿  Management.cpp
   Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
@@ -34,6 +33,7 @@
   .\Engine\Utility\Code\Shader_Effect2.hpp
   .\Engine\Utility\Code\Shader_Eye.hpp
   .\Engine\Utility\Code\Shader_Face.hpp
+  .\Engine\Utility\Code\Shader_GateEffect.hpp
   .\Engine\Utility\Code\Shader_Hair.hpp
   .\Engine\Utility\Code\Shader_HitEffect.hpp
   .\Engine\Utility\Code\Shader_Manablade.hpp
@@ -48,7 +48,7 @@
   .\Engine\Utility\Code\Shader_Trail.hpp
   .\Engine\Utility\Code\Shader_Weapon.hpp
   .\Engine\Utility\Code\Terrain_Shader.hpp
-         22개 파일이 복사되었습니다.
+         23개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

@@ -45,7 +45,7 @@ HRESULT Client::CTriggerBox::Add_Component(void)
 	//m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 	
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_GateEffect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	ColliderObject();
@@ -63,6 +63,10 @@ HRESULT CTriggerBox::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
+	pEffect->SetFloat("g_fAlpha", 1.f);
+	pEffect->SetVector("g_color", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
+	pEffect->SetVector("g_vGateEffectUV12", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
+	pEffect->SetVector("g_vGateEffectUV34", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture");
 
@@ -105,8 +109,14 @@ HRESULT Client::CTriggerBox::Ready_Object(void)
 Client::_int Client::CTriggerBox::Update_Object(const _float& fTimeDelta)
 {
 	CMonster::Update_Object(fTimeDelta);
-	m_pTransformCom->Set_Pos(23, 0.5f, 23);
-	isColl = true;
+	if (!initialize)
+	{
+		m_pTransformCom->Set_Pos(&spawnPosition);
+		initialize = true;
+		isColl = true;
+	}
+	
+	
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
