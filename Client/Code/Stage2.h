@@ -10,7 +10,6 @@
 #include "DynamicCamera.h"
 #include "Unit.h"
 #include "Dog.h"
-#include "Knight.h"
 #include "Titan.h"
 #include "Ingkells.h"
 #include "LightRay.h"
