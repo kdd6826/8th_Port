@@ -1,11 +1,3 @@
-﻿  Stage3.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\stage3.cpp(132): warning C4715: 'Client::CStage3::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\stage3.cpp(204): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool1': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\stage3.cpp(266): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool2': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\stage3.cpp(390): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool4': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\stage3.cpp(328): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool3': 모든 제어 경로에서 값을 반환하지는 않습니다.
+﻿  Client.cpp
   Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

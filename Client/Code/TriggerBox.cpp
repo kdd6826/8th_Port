@@ -45,7 +45,7 @@ HRESULT Client::CTriggerBox::Add_Component(void)
 	//m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 	
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_GateEffect"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	ColliderObject();
@@ -63,10 +63,10 @@ HRESULT CTriggerBox::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
-	pEffect->SetFloat("g_fAlpha", 1.f);
-	pEffect->SetVector("g_color", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
-	pEffect->SetVector("g_vGateEffectUV12", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
-	pEffect->SetVector("g_vGateEffectUV34", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
+	pEffect->SetFloat("g_fAlpha", 0.f);
+	//pEffect->SetVector("g_color", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
+	//pEffect->SetVector("g_vGateEffectUV12", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
+	//pEffect->SetVector("g_vGateEffectUV34", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture");
 
@@ -118,29 +118,29 @@ Client::_int Client::CTriggerBox::Update_Object(const _float& fTimeDelta)
 	
 	
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
+	//_vec3 vPos;
+	//m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
+	//CGameObject::Compute_ViewZ(&vPos);
 
-	_matrix		matScale, matWorld, matView, matBill;
-	D3DXMatrixIdentity(&matScale);
-	matScale._11 = 0.4f;
-	matScale._22 = 2.f;
-	matScale._33 = 1.f;
+	//_matrix		matScale, matWorld, matView, matBill;
+	//D3DXMatrixIdentity(&matScale);
+	//matScale._11 = 1.f;
+	//matScale._22 = 1.f;
+	//matScale._33 = 1.f;
 
-	D3DXMatrixIdentity(&matBill);
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//D3DXMatrixIdentity(&matBill);
+	//m_pTransformCom->Get_WorldMatrix(&matWorld);
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
+	//matBill._11 = matView._11;
+	//matBill._13 = matView._13;
+	//matBill._31 = matView._31;
+	//matBill._33 = matView._33;
 
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
+	//D3DXMatrixInverse(&matBill, NULL, &matBill);
 
-	// 행렬의 곱셈순서를 주의할 것
-	m_pTransformCom->Set_WorldMatrix(&(matScale*matBill * matWorld));
+	//// 행렬의 곱셈순서를 주의할 것
+	//m_pTransformCom->Set_WorldMatrix(&(matScale*matBill * matWorld));
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
@@ -157,11 +157,8 @@ void Client::CTriggerBox::Render_Object(void)
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
 	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(1);
-	if (count <= 0.f)
-	{
-		m_pBufferCom->Render_Buffer();
-	}
+	pEffect->BeginPass(0);
+	m_pBufferCom->Render_Buffer();
 	pEffect->EndPass();
 	pEffect->End();
 
