@@ -192,76 +192,76 @@ Client::_int Client::CConfusionHole2::Update_Object(const _float& fTimeDelta)
 }
 void Client::CConfusionHole2::Render_Object(void)
 {
-	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerStateCom, );
-	if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
-	{
-		count += fTimeDelta;
+	//float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	//Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	//NULL_CHECK_RETURN(pPlayerStateCom, );
+	//if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
+	//{
+	//	count += fTimeDelta;
 
-	}
-	else if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION)
-	{
-		count += fTimeDelta;
-
-	}
-	if (count > 0.7f || count < 0.1f)
-		return;
-
-	if (dir == 1 && pPlayerStateCom->perfectGuard == true)
-	{
-		LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-		NULL_CHECK(pEffect);
-		Engine::Safe_AddRef(pEffect);
-
-		FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
-
-		pEffect->Begin(NULL, 0);
-		pEffect->BeginPass(1);
-
-		m_pBufferCom->Render_Buffer();
-
-		pEffect->EndPass();
-		pEffect->End();
-
-		Engine::Safe_Release(pEffect);
-	}
-	else if (dir == 2 && pPlayerStateCom->perfectGuard == true)
-	{
-		LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-		NULL_CHECK(pEffect);
-		Engine::Safe_AddRef(pEffect);
-
-		FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
-
-		pEffect->Begin(NULL, 0);
-		pEffect->BeginPass(1);
-
-		m_pBufferCom->Render_Buffer();
-
-		pEffect->EndPass();
-		pEffect->End();
-
-		Engine::Safe_Release(pEffect);
-	}
 	//}
-	else if (dir == 0)
-	{
-		LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-		NULL_CHECK(pEffect);
-		Engine::Safe_AddRef(pEffect);
+	//else if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION)
+	//{
+	//	count += fTimeDelta;
 
-		FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+	//}
+	//if (count > 0.7f || count < 0.1f)
+	//	return;
 
-		pEffect->Begin(NULL, 0);
-		pEffect->BeginPass(1);
+	//if (dir == 1 && pPlayerStateCom->perfectGuard == true)
+	//{
+	//	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//	NULL_CHECK(pEffect);
+	//	Engine::Safe_AddRef(pEffect);
 
-		m_pBufferCom->Render_Buffer();
+	//	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
-		pEffect->EndPass();
-		pEffect->End();
+	//	pEffect->Begin(NULL, 0);
+	//	pEffect->BeginPass(1);
 
-		Engine::Safe_Release(pEffect);
-	}
+	//	m_pBufferCom->Render_Buffer();
+
+	//	pEffect->EndPass();
+	//	pEffect->End();
+
+	//	Engine::Safe_Release(pEffect);
+	//}
+	//else if (dir == 2 && pPlayerStateCom->perfectGuard == true)
+	//{
+	//	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//	NULL_CHECK(pEffect);
+	//	Engine::Safe_AddRef(pEffect);
+
+	//	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	//	pEffect->Begin(NULL, 0);
+	//	pEffect->BeginPass(1);
+
+	//	m_pBufferCom->Render_Buffer();
+
+	//	pEffect->EndPass();
+	//	pEffect->End();
+
+	//	Engine::Safe_Release(pEffect);
+	//}
+	////}
+	//else if (dir == 0)
+	//{
+	//	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//	NULL_CHECK(pEffect);
+	//	Engine::Safe_AddRef(pEffect);
+
+	//	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	//	pEffect->Begin(NULL, 0);
+	//	pEffect->BeginPass(1);
+
+	//	m_pBufferCom->Render_Buffer();
+
+	//	pEffect->EndPass();
+	//	pEffect->End();
+
+	//	Engine::Safe_Release(pEffect);
+	//}
 }
 

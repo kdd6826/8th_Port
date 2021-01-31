@@ -86,33 +86,29 @@ void CConfusionHole::Free(void)
 HRESULT Client::CConfusionHole::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(-100.f));
-//	m_pTransformCom->m_vInfo[Engine::INFO_POS].y += 5.f;
-	//m_pTransformCom->Set_Pos(1.f, 0.f, 1.f);
 	m_pTransformCom->Set_Scale(0.5, 0.5, 0.5);
 	return S_OK;
 }
 Client::_int Client::CConfusionHole::Update_Object(const _float& fTimeDelta)
 {
-		Engine::CGameObject::Update_Object(fTimeDelta);
+	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(-0.5f));
 	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerStateCom, );
+
 	if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
 	{
 		if (count == 0)
 		{
 			m_pTransformCom->Set_Scale(0.5, 0.5, 0.5);
 		}
-		//m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(2.f));
-
+		
 		_vec3 playerPos, playerLook, playerRight,playerRight2, playerDir, playerLook2;
 		float playerAngle;
 		_vec3 worldX = { 1.f,0.f,0.f };
 		Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 		NULL_CHECK_RETURN(pPlayerTransCom, 0);
-		//m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
 		pPlayerTransCom->Get_Info(Engine::INFO_POS, &playerPos);
 		pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook);
 		pPlayerTransCom->Get_Info(Engine::INFO_RIGHT, &playerRight);
@@ -120,7 +116,6 @@ Client::_int Client::CConfusionHole::Update_Object(const _float& fTimeDelta)
 		pPlayerTransCom->Get_Info(Engine::INFO_LOOK, &playerLook2);
 		D3DXVec3Normalize(&playerLook2, &playerLook2);
 		D3DXVec3Normalize(&playerRight2, &playerRight2);
-		/*D3DXVec3Dot(&playerLook2, &playerRight2);*/
 
 		if (dir == 0)
 		{
@@ -195,75 +190,75 @@ void Client::CConfusionHole::Render_Object(void)
 
 //	m_pTransformCom->Set_Transform(m_pGraphicDev);
 
-	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerStateCom, );
-	if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
-	{
-		count += fTimeDelta;
+	//float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
+	//Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
+	//NULL_CHECK_RETURN(pPlayerStateCom, );
+	//if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE)
+	//{
+	//	count += fTimeDelta;
 
-	}
-	else if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION)
-	{
-		count += fTimeDelta;
-
-	}
-	if (count > 0.7f||count<0.1f)
-		return;
-
-	if (dir == 1 && pPlayerStateCom->perfectGuard == true)
-	{
-		LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-		NULL_CHECK(pEffect);
-		Engine::Safe_AddRef(pEffect);
-
-		FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
-
-		pEffect->Begin(NULL, 0);
-		pEffect->BeginPass(1);
-
-		m_pBufferCom->Render_Buffer();
-
-		pEffect->EndPass();
-		pEffect->End();
-
-		Engine::Safe_Release(pEffect);
-	}
-	else if (dir == 2 && pPlayerStateCom->perfectGuard == true)
-	{
-		LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-		NULL_CHECK(pEffect);
-		Engine::Safe_AddRef(pEffect);
-
-		FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
-
-		pEffect->Begin(NULL, 0);
-		pEffect->BeginPass(1);
-
-		m_pBufferCom->Render_Buffer();
-
-		pEffect->EndPass();
-		pEffect->End();
-
-		Engine::Safe_Release(pEffect);
-	}
 	//}
-	else if (dir == 0)
-	{
-		LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-		NULL_CHECK(pEffect);
-		Engine::Safe_AddRef(pEffect);
+	//else if (pPlayerStateCom->playerState == Engine::CPlayerState::STATE_DIFUSION)
+	//{
+	//	count += fTimeDelta;
 
-		FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+	//}
+	//if (count > 0.7f||count<0.1f)
+	//	return;
 
-		pEffect->Begin(NULL, 0);
-		pEffect->BeginPass(1);
+	//if (dir == 1 && pPlayerStateCom->perfectGuard == true)
+	//{
+	//	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//	NULL_CHECK(pEffect);
+	//	Engine::Safe_AddRef(pEffect);
 
-		m_pBufferCom->Render_Buffer();
+	//	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
-		pEffect->EndPass();
-		pEffect->End();
+	//	pEffect->Begin(NULL, 0);
+	//	pEffect->BeginPass(1);
 
-		Engine::Safe_Release(pEffect);
-	}
+	//	m_pBufferCom->Render_Buffer();
+
+	//	pEffect->EndPass();
+	//	pEffect->End();
+
+	//	Engine::Safe_Release(pEffect);
+	//}
+	//else if (dir == 2 && pPlayerStateCom->perfectGuard == true)
+	//{
+	//	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//	NULL_CHECK(pEffect);
+	//	Engine::Safe_AddRef(pEffect);
+
+	//	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	//	pEffect->Begin(NULL, 0);
+	//	pEffect->BeginPass(1);
+
+	//	m_pBufferCom->Render_Buffer();
+
+	//	pEffect->EndPass();
+	//	pEffect->End();
+
+	//	Engine::Safe_Release(pEffect);
+	//}
+	////}
+	//else if (dir == 0)
+	//{
+	//	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+	//	NULL_CHECK(pEffect);
+	//	Engine::Safe_AddRef(pEffect);
+
+	//	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+
+	//	pEffect->Begin(NULL, 0);
+	//	pEffect->BeginPass(1);
+
+	//	m_pBufferCom->Render_Buffer();
+
+	//	pEffect->EndPass();
+	//	pEffect->End();
+
+	//	Engine::Safe_Release(pEffect);
+	//}
 }
