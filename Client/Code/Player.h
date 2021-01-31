@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Stage2.h"
 #include "TriggerBox.h"
+#include "DamageFontPlayer.h"
 BEGIN(Engine)
 
 class CDynamicMesh;
@@ -41,6 +42,7 @@ private:
 public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
+	void VecUpdate(_float fTimeDelta);
 	virtual void Render_Object(void) override;
 	virtual void OnCollision(Engine::CGameObject* target)override;
 	Engine::CPlayerState* m_pStateCom = nullptr;
@@ -76,6 +78,9 @@ private:
 	bool		isInitialize = false;
 private:
 	vector<CUnit*>				hitMonsters;
+	vector<CSlashPoint*>		m_vecSlashPoint;
+	vector<CDamageFontPlayer*>	m_vecDamageFont;
+	vector<CFontParent*>	m_vecFontParent;
 	vector<CUnit*>				vecSkill;
 	_vec3						m_vDir;
 	bool						isAnimating;

@@ -113,32 +113,37 @@ void CIngkells::Move(const _float& fTimeDelta)
 	//플레이어가 정면에있다
 	//몬스터의 시야각
 	float spinSpeed = 5.f;
-	if (55.f <= angle && angle < 60.f)
+	if (disPlayer < 1.f)
+	{
+		int i = rand() % 2;
+		switch (i)
+		{
+		case 0:
+			m_state = IngkellsState::STATE_TURNRIGHT_ATK;
+			//delay = 2.9f; //2.82
+			m_fAniSpeed = 2.f;
+			break;
+		case 1:
+			m_state = IngkellsState::STATE_TURNLEFT_ATK;
+			m_fAniSpeed = 2.f;
+			break;
+
+		default:
+			break;
+		}
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+		temp = (temp / (m_fAniSpeed)) - 0.1f;
+		delay = temp;
+		isAnimating = true;
+		reverseDelay = 0.f;
+		return;
+	}
+	else if (55.f <= angle && angle < 60.f)
 	{
 		m_state = IngkellsState::STATE_RUN;
 		if (disPlayer < 5.f)
 		{
-			if (disPlayer < 1.f)
-			{
-				int i = rand() % 2;
-				switch (i)
-				{
-				case 0:
-					m_state = IngkellsState::STATE_TURNRIGHT_ATK;
-					//delay = 2.9f; //2.82
-					m_fAniSpeed = 2.f;
-					break;
-				case 1:
-					m_state = IngkellsState::STATE_TURNLEFT_ATK;
-					m_fAniSpeed = 2.f;
-					break;
-
-				default:
-					break;
-				}
-			}
-
-			else if (disPlayer < 2.5f)
+			if (disPlayer < 2.5f)
 			{
 				//int i = rand() % 2;
 				int i = 1;

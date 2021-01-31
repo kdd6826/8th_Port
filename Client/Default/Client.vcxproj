@@ -179,6 +179,7 @@
     <ClInclude Include="..\Code\BossHpBarRed.h" />
     <ClInclude Include="..\Code\ColliderMgr.h" />
     <ClInclude Include="..\Code\DamageFont.h" />
+    <ClInclude Include="..\Code\DamageFontPlayer.h" />
     <ClInclude Include="..\Code\DarkSwordTrail.h" />
     <ClInclude Include="..\Code\DashGuard.h" />
     <ClInclude Include="..\Code\DashGuard2.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="..\Code\BossHpBarRed.cpp" />
     <ClCompile Include="..\Code\ColliderMgr.cpp" />
     <ClCompile Include="..\Code\DamageFont.cpp" />
+    <ClCompile Include="..\Code\DamageFontPlayer.cpp" />
     <ClCompile Include="..\Code\DarkSwordTrail.cpp" />
     <ClCompile Include="..\Code\DashGuard.cpp" />
     <ClCompile Include="..\Code\DashGuard2.cpp" />

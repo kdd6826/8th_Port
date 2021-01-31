@@ -20,7 +20,7 @@ HRESULT Client::CSlashPoint::Add_Component(void)
 	Engine::CComponent*		pComponent = nullptr;
 
 	// buffer
-	pComponent = m_pBufferCom = dynamic_cast<Engine::CTestTrail*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_Trail"));
+	pComponent = m_pBufferCom = dynamic_cast<Engine::CRcTex*>(Engine::Clone(Engine::RESOURCE_STATIC, L"Buffer_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
@@ -41,7 +41,7 @@ HRESULT Client::CSlashPoint::Add_Component(void)
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Skill"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_HitEffect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
@@ -62,7 +62,7 @@ HRESULT CSlashPoint::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture"/*, _uint(m_fFrame)*/);
-	pEffect->SetFloat("g_fAlpha", 0);
+	pEffect->SetFloat("g_fAlpha", reverseLifeTime * 2);
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
 
 	return S_OK;
@@ -120,7 +120,7 @@ Client::_int Client::CSlashPoint::Update_Object(const _float& fTimeDelta)
 	CGameObject::Compute_ViewZ(&vPos);
 
 	_matrix		matWorld, matView, matBill;
-	
+
 	D3DXMatrixIdentity(&matBill);
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
@@ -133,7 +133,6 @@ Client::_int Client::CSlashPoint::Update_Object(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	// 행렬의 곱셈순서를 주의할 것
-	//tWorld._42 += 0.5f;
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
@@ -142,7 +141,6 @@ Client::_int Client::CSlashPoint::Update_Object(const _float& fTimeDelta)
 }
 void Client::CSlashPoint::Render_Object(void)
 {
-	//m_pTransformCom->Set_Transform(m_pGraphicDev);
 	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);
 	Engine::Safe_AddRef(pEffect);
@@ -160,6 +158,7 @@ void Client::CSlashPoint::Render_Object(void)
 	Engine::Safe_Release(pEffect);
 
 
+	//m_pTransformCom->Set_Transform(m_pGraphicDev);
 
 	//LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
 	//NULL_CHECK(pEffect);

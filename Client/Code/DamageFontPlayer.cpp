@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "DamageFont.h"
+#include "DamageFontPlayer.h"
 #include "Export_Function.h"
 #include "FontParent.h"
-CDamageFont::CDamageFont(LPDIRECT3DDEVICE9 pGraphicDev)
+CDamageFontPlayer::CDamageFontPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 
 }
 
-CDamageFont::~CDamageFont(void)
+CDamageFontPlayer::~CDamageFontPlayer(void)
 {
 
 }
 
 
 
-HRESULT Client::CDamageFont::Add_Component(void)
+HRESULT Client::CDamageFontPlayer::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 	fScale = 2.f;
@@ -51,7 +51,7 @@ HRESULT Client::CDamageFont::Add_Component(void)
 	return S_OK;
 }
 
-HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
+HRESULT CDamageFontPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
 	_matrix		matWorld, matView, matProj, matParentWorld;
 
@@ -77,7 +77,7 @@ HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	}
 	else
 		fDrawX = -40.f + 40.f * 10;
-	float	fDrawY = 0.f;
+	float	fDrawY = 64.f;
 	float	fDrawCX = 24.f;
 	float	fDrawCY = 24.f;
 
@@ -116,9 +116,9 @@ HRESULT CDamageFont::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	return S_OK;
 }
 
-CDamageFont* CDamageFont::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CDamageFontPlayer* CDamageFontPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CDamageFont*	pInstance = new CDamageFont(pGraphicDev);
+	CDamageFontPlayer*	pInstance = new CDamageFontPlayer(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 		Client::Safe_Release(pInstance);
@@ -126,13 +126,13 @@ CDamageFont* CDamageFont::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CDamageFont::Free(void)
+void CDamageFontPlayer::Free(void)
 {
 	Engine::CGameObject::Free();
 }
 
 
-HRESULT Client::CDamageFont::Ready_Object(void)
+HRESULT Client::CDamageFontPlayer::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -140,7 +140,7 @@ HRESULT Client::CDamageFont::Ready_Object(void)
 
 	return S_OK;
 }
-Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
+Client::_int Client::CDamageFontPlayer::Update_Object(const _float& fTimeDelta)
 {
 	//if (reverseLifeTime < 3.f)
 	//{
@@ -227,7 +227,7 @@ Client::_int Client::CDamageFont::Update_Object(const _float& fTimeDelta)
 
 	return 0;
 }
-void Client::CDamageFont::Render_Object(void)
+void Client::CDamageFontPlayer::Render_Object(void)
 {
 	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
 	NULL_CHECK(pEffect);

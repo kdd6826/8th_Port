@@ -221,6 +221,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Shader_Eye.hpp" />
     <ClInclude Include="..\Code\Shader_Face.hpp" />
     <ClInclude Include="..\Code\Shader_Hair.hpp" />
+    <ClInclude Include="..\Code\Shader_HitEffect.hpp" />
     <ClInclude Include="..\Code\Shader_Manablade.hpp" />
     <ClInclude Include="..\Code\Shader_Mesh.hpp" />
     <ClInclude Include="..\Code\Shader_Player.hpp" />

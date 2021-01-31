@@ -112,7 +112,35 @@ void CDog::Move(const _float& fTimeDelta)
 	//플레이어가 정면에있다
 	//몬스터의 시야각
 	float spinSpeed = 5.f;
-	if (55.f <= angle && angle < 60.f)
+	if (disPlayer < 1.f&&angle>0)
+	{
+
+		/*int i = rand() % 2;*/
+		int i = 0;
+		switch (i)
+		{
+		case 0:
+			m_state = dogState::STATE_DASHATT;
+			m_fAniSpeed = 1.f;
+			//delay = 4.2f;
+			break;
+		case 1:
+			m_state = dogState::STATE_ATT;
+			//delay = 3.2f;//3.13
+			m_fAniSpeed = 1.f;
+
+			break;
+		default:
+			break;
+		}
+		_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
+		temp = (temp / (m_fAniSpeed)) - 0.2f;
+		delay = temp;
+		isAnimating = true;
+		reverseDelay = 0.f;
+		return;
+	}
+	else if (55.f <= angle && angle < 60.f)
 	{
 		m_state = dogState::STATE_RUN;
 		if (disPlayer < 1.f)

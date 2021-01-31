@@ -35,7 +35,7 @@ private:
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
 
 private:
-	Engine::CTestTrail*				m_pBufferCom = nullptr;
+	Engine::CRcTex*				m_pBufferCom = nullptr;
 	Engine::CTexture*			m_pTextureCom = nullptr;
 	Engine::CRenderer*			m_pRendererCom = nullptr;
 	Engine::CShader*			m_pShaderCom = nullptr;
