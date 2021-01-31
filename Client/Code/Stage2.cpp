@@ -29,15 +29,6 @@ HRESULT CStage2::Ready_Scene(void)
 
 Engine::_int CStage2::Update_Scene(const _float& fTimeDelta)
 {
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80)
-	{
-		CScene* pScene = nullptr;
-		pScene = CStage3::Create(m_pGraphicDev);
-
-		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
-		return 1;
-	}
-
 	if (!isInitial)
 	{
 		InitialUpdate();
@@ -61,7 +52,7 @@ void CStage2::Render_Scene(void)
 HRESULT CStage2::Load_StaticObjectFromTool(Engine::CLayer* _layer, const _tchar* pLayerTag)
 {
 	//TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject.dat";
-	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveStage2.dat";
+	TCHAR szDataPath[MAX_PATH] = L"../Bin/saveObject13.dat";
 	HANDLE hFile = CreateFile(szDataPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (INVALID_HANDLE_VALUE == hFile)

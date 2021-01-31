@@ -9,9 +9,8 @@
 
 
 
-#define PlayerSpawnPositionCollo _vec3({20.f,0.f,20.f})
+#define PlayerSpawnPosition _vec3({20.f,0.f,20.f})
 #define PlayerSpawnPositionCastle _vec3({105.f,0.f,10.f})
-#define PlayerSpawnPositionCentral _vec3({50.f,0.f,35.f})
 #define PlayerOriginAtt 1000.f
 //#define PlayerSpawnPositionCastle _vec3({105.f,0.f,4.5f})
 #define TitanSpeed 2.f

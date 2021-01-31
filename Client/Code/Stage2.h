@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 #include "Define.h"
-#include "Stage3.h"
+
 #include "SkyBox.h"
 #include "Terrain.h"
 #include "Player.h"

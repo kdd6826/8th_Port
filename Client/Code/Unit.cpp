@@ -61,15 +61,9 @@ HRESULT CUnit::Add_Component(void)
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
 	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
 
-	if (stageNum == STAGE2)
+	if (stageNum == 2)
 	{
 		pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi2"));
-		NULL_CHECK_RETURN(pComponent, E_FAIL);
-		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
-	}
-	else if (stageNum == STAGE3)
-	{
-		pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi3"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
 		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Navi", pComponent);
 	}

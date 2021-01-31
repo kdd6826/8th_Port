@@ -219,13 +219,7 @@ _uint CLoading::Loading_ForStage(void)
 		L"../Bin/saveNaviCollo.dat",
 		NULL),
 		E_FAIL);
-	/*FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Navi",
-		Engine::TYPE_NAVI,
-		L"../Bin/saveNaviCollo.dat",
-		NULL),
-		E_FAIL);*/
+
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Navi2",
@@ -237,16 +231,9 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Mesh_Navi3",
 		Engine::TYPE_NAVI,
-		L"../Bin/naviCentral.dat",
+		L"../Bin/save14.dat",
 		NULL),
 		E_FAIL);
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	Engine::RESOURCE_STAGE,
-	//	L"Mesh_Navi3",
-	//	Engine::TYPE_NAVI,
-	//	L"../Bin/save14.dat",
-	//	NULL),
-	//	E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -327,39 +314,7 @@ _uint CLoading::Loading_ForStage(void)
 				L"../Bin/Resource/Mesh/StaticMesh/Stage2/",
 				L"Stage2.X"),
 				E_FAIL);
-			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-				Engine::RESOURCE_STAGE,
-				L"Mesh_OrtelGate",
-				Engine::TYPE_STATIC,
-				L"../Bin/Resource/Mesh/StaticMesh/OrtelGate/",
-				L"OrtelGate.X"),
-				E_FAIL);
-			//
-			//
-			//
-			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-				Engine::RESOURCE_STAGE,
-				L"Mesh_CentralGarden",
-				Engine::TYPE_STATIC,
-				L"../Bin/Resource/Mesh/StaticMesh/CentralGarden/",
-				L"CentralGarden.X"),
-				E_FAIL);
-			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-				Engine::RESOURCE_STAGE,
-				L"Mesh_Fountain",
-				Engine::TYPE_STATIC,
-				L"../Bin/Resource/Mesh/StaticMesh/Fountain/",
-				L"Fountain.X"),
-				E_FAIL);
-			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-				Engine::RESOURCE_STAGE,
-				L"Mesh_Weed_07",
-				Engine::TYPE_STATIC,
-				L"../Bin/Resource/Mesh/StaticMesh/Weed_07/",
-				L"Weed_07.X"),
-				E_FAIL);
 
-			//
 			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 				Engine::RESOURCE_STAGE,
 				L"Mesh_FireTrap",
@@ -422,23 +377,8 @@ _uint CLoading::Loading_ForStage(void)
 			//										L"Mesh_Tree",
 			//										Engine::TYPE_STATIC,
 			//										L"../Bin/Resource/Mesh/StaticMesh/Tree/",
-			//										L"Tree_00.X"),
+			//										L"Tree01.X"),
 			//										E_FAIL);
-			//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-			//	Engine::RESOURCE_STAGE,
-			//	L"Mesh_Tree",
-			//	Engine::TYPE_STATIC,
-			//	L"../Bin/Resource/Mesh/StaticMesh/Weed/",
-			//	L"Weed_00.X"),
-			//	E_FAIL);
-			FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-				Engine::RESOURCE_STAGE,
-				L"Mesh_Tree",
-				Engine::TYPE_STATIC,
-				L"../Bin/Resource/Mesh/StaticMesh/OrtelGate/",
-				L"OrtelGate.X"),
-				E_FAIL);
-
 			//
 	
 	

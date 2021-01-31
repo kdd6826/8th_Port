@@ -342,9 +342,6 @@
     <ClInclude Include="..\Code\DashGuard2.h">
       <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Stage3.h">
-      <Filter>01. Scene\01. Stage</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -529,9 +526,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\DashGuard2.cpp">
       <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Stage3.cpp">
-      <Filter>01. Scene\01. Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
