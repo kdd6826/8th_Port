@@ -1,4 +1,5 @@
-﻿  ConfusionHole2.cpp
+﻿  SlashPoint.cpp
+  ConfusionHole2.cpp
 c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
 c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(102): warning C4035: 'Client::CConfusionHole2::Update_Object': 반환 값이 없습니다.
 c:\users\gmh\desktop\client\8th_port\client\code\confusionhole2.cpp(107): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
