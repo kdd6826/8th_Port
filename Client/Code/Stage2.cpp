@@ -302,17 +302,17 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//여섯번째 불
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 103.5f,0.5f,51.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.f,0.5f,51.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.3f,0.5f,51.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 104.8f,0.5f,51.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	pGameObject = CFireEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 105.1f,0.5f,51.f });
+	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 105.6f,0.5f,51.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
 	//세번쨰 스폰

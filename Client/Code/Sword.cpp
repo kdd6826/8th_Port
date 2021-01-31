@@ -97,8 +97,8 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 {
 	m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
 	_vec3 a = *m_pColliderCom->Get_Min();
-	if (nullptr == m_pParentBoneMatrix)
-	{
+	//if (nullptr == m_pParentBoneMatrix)
+	//{
 
 		Engine::CDynamicMesh*	pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
 		NULL_CHECK_RETURN(pPlayerMeshCom, 0);
@@ -111,7 +111,7 @@ Client::_int Client::CSword::Update_Object(const _float& fTimeDelta)
 		Engine::CTransform*		pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 		NULL_CHECK_RETURN(pPlayerTransCom, 0);
 		m_pParentWorldMatrix = pPlayerTransCom->Get_WorldMatrix();
-	}
+	//}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 		

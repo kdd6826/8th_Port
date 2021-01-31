@@ -44,15 +44,15 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 		InitialUpdate();
 		isInitial = true;
 	}
-	//CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
-	//if (Portal->GetPortal())
-	//{
-	//	CScene* pScene = nullptr;
-	//	pScene = CStage2::Create(m_pGraphicDev);
+	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
+	if (Portal->GetPortal())
+	{
+		CScene* pScene = nullptr;
+		pScene = CStage2::Create(m_pGraphicDev);
 
-	//	FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
-	//	return 1;
-	//}
+		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
+		return 1;
+	}
 	return Engine::CScene::Update_Scene(fTimeDelta);
 
 

@@ -48,6 +48,10 @@ HRESULT Client::CDamageFont::Add_Component(void)
 	//int i = rand() % 10;
 	//offsetX = -0.5f + 0.1 * i;
 
+	// Shader
+	/*pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);*/
 	return S_OK;
 }
 

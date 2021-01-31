@@ -29,7 +29,7 @@ HRESULT Client::CTriggerBox::Add_Component(void)
 	CMonster::Add_Component();
 
 	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SlashPoint"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_TriggerBox"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
