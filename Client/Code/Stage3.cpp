@@ -42,15 +42,6 @@ Engine::_int CStage3::Update_Scene(const _float& fTimeDelta)
 		InitialUpdate();
 		isInitial = true;
 	}
-	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
-	if (Portal->GetPortal())
-	{
-		CScene* pScene = nullptr;
-		pScene = CStage::Create(m_pGraphicDev);
-
-		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
-		return 1;
-	}
 	CColliderMgr::GetInstance()->Update();
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
@@ -435,10 +426,7 @@ HRESULT CStage3::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//dynamic_cast<CUnit*>(pGameObject)->NaviMeshChange(L"Mesh_Navi2");
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
-	pGameObject = CTriggerBox::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CTriggerBox*>(pGameObject)->SetSpawnPosition(_vec3{ 50, 0.5f, 63 });
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TriggerBox", pGameObject), E_FAIL)
+
 
 	//Ω√¿€¡ˆ
 	//pGameObject = CIngkells::Create(m_pGraphicDev, CUnit::STAGE3);
