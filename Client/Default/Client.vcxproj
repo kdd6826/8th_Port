@@ -178,6 +178,14 @@
     <ClInclude Include="..\Code\BossHpBarOrange.h" />
     <ClInclude Include="..\Code\BossHpBarRed.h" />
     <ClInclude Include="..\Code\ColliderMgr.h" />
+    <ClInclude Include="..\Code\ConfusionHole.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Code\ConfusionHole2.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Code\DamageFont.h" />
     <ClInclude Include="..\Code\DarkSwordTrail.h" />
     <ClInclude Include="..\Code\DashGuard.h" />
@@ -269,6 +277,14 @@
     <ClCompile Include="..\Code\BossHpBarOrange.cpp" />
     <ClCompile Include="..\Code\BossHpBarRed.cpp" />
     <ClCompile Include="..\Code\ColliderMgr.cpp" />
+    <ClCompile Include="..\Code\ConfusionHole.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\ConfusionHole2.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\DamageFont.cpp" />
     <ClCompile Include="..\Code\DarkSwordTrail.cpp" />
     <ClCompile Include="..\Code\DashGuard.cpp" />

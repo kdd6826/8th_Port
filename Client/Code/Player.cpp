@@ -4,6 +4,8 @@
 #include "DynamicCamera.h"
 #include "ColliderMgr.h"
 #include "Sword.h"
+#include "ConfusionHole.h"
+#include "ConfusionHole2.h"
 #include "DashGuard.h"
 #include "DashGuard2.h"
 #include "Monster.h"

@@ -1,4 +1,14 @@
-﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  Shader.cpp
+  RenderTargetMgr.cpp
+  RenderTarget.cpp
+  QuadTree.cpp
+  PlayerState.cpp
+  Optimization.cpp
+  MonsterState.cpp
+  Frustum.cpp
+  ColliderSphere.cpp
+  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -28,7 +38,6 @@
   .\Engine\Utility\Code\Shader_Blend.hpp
   .\Engine\Utility\Code\Shader_DamageFont.hpp
   .\Engine\Utility\Code\Shader_Effect.hpp
-  .\Engine\Utility\Code\Shader_Effect2.hpp
   .\Engine\Utility\Code\Shader_Eye.hpp
   .\Engine\Utility\Code\Shader_Face.hpp
   .\Engine\Utility\Code\Shader_Hair.hpp
@@ -38,13 +47,12 @@
   .\Engine\Utility\Code\Shader_RuinBlade.hpp
   .\Engine\Utility\Code\Shader_Sample.hpp
   .\Engine\Utility\Code\Shader_Shade.hpp
-  .\Engine\Utility\Code\Shader_Skill.hpp
   .\Engine\Utility\Code\Shader_SkyBox.hpp
   .\Engine\Utility\Code\Shader_Terrain.hpp
   .\Engine\Utility\Code\Shader_Trail.hpp
   .\Engine\Utility\Code\Shader_Weapon.hpp
   .\Engine\Utility\Code\Terrain_Shader.hpp
-         20개 파일이 복사되었습니다.
+         18개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

@@ -14,7 +14,6 @@
 #include "Titan.h"
 #include "Ingkells.h"
 #include "LightRay.h"
-#include "Stage.h"
 //#include "Zecallion.h"
 
 #include "Stone.h"
@@ -24,6 +23,8 @@
 #include "FireEffect.h"
 
 #include "DamageFont.h"
+#include "ConfusionHole.h"
+#include "ConfusionHole2.h"
 #include "RuinBlade.h"
 #include "SwordTrail.h"
 #include "DarkSwordTrail.h"

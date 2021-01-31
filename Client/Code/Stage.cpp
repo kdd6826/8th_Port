@@ -34,7 +34,7 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 	if (Engine::Get_DIKeyState(DIK_F11) & 0x80)
 	{
 		CScene* pScene = nullptr;
-		pScene = CStage3::Create(m_pGraphicDev);
+		pScene = CStage2::Create(m_pGraphicDev);
 
 		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
 		return 1;
@@ -181,7 +181,51 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sword", pGameObject), E_FAIL);
 	//Load_StaticObjectFromTool(pLayer, pLayerTag);
 	Load_StaticObjectFromTool(pLayer, pLayerTag);
+/*loa
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2", pGameObject), E_FAIL);
 
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_L", pGameObject), E_FAIL);
+	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 1;
+
+	pGameObject = CConfusionHole2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole2_R", pGameObject), E_FAIL);
+	dynamic_cast<CConfusionHole2*>(pGameObject)->dir = 2;
+
+	pGameObject = CConfusionHole::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole", pGameObject), E_FAIL);
+
+	pGameObject = CConfusionHole::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CConfusionHole*>(pGameObject)->dir = 1;
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_L", pGameObject), E_FAIL);
+
+	pGameObject = CConfusionHole::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CConfusionHole*>(pGameObject)->dir = 2;
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ConfusionHole_R", pGameObject), E_FAIL);*/
+
+
+
+	//pGameObject = CRuinBlade::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RuinBlade", pGameObject), E_FAIL);
+	
+
+	/*pGameObject = CParticle::Create(m_pGraphicDev);*/
+
+	//pGameObject = CDog::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component(L"Com_Transform", Engine::COMPONENTID::ID_DYNAMIC))->Set_Pos(&_vec3{ 22.f,0.f,22.f });
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
+	////pGameObject = CDog::Create(m_pGraphicDev);
+	////NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	////FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Dog", pGameObject), E_FAIL);
 
 	pGameObject = CTitan::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -337,42 +381,42 @@ HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_LightInfo(void)
 {
-	//D3DLIGHT9		tLightInfo;
-	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+	D3DLIGHT9		tLightInfo;
+	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
-	//// 0번 조명
-	//tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+	// 0번 조명
+	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 
-	//tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 
-	//tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
+	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
-	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
-	//	return E_FAIL;
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+		return E_FAIL;
 
-	//// 1번 조명
-	//tLightInfo.Type = D3DLIGHT_POINT;
-	//tLightInfo.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.f, 0.f, 1.f);
-	//tLightInfo.Position = _vec3(5.f, 5.f, 5.f);
-	//tLightInfo.Range = 10.f;
+	// 1번 조명
+	tLightInfo.Type = D3DLIGHT_POINT;
+	tLightInfo.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.f, 0.f, 1.f);
+	tLightInfo.Position = _vec3(5.f, 5.f, 5.f);
+	tLightInfo.Range = 10.f;
 
-	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1)))
-	//	return E_FAIL;
-	//	
-	//// 2번 조명
-	//tLightInfo.Type = D3DLIGHT_POINT;
-	//tLightInfo.Diffuse = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(0.f, 0.f, 0.2f, 1.f);
-	//tLightInfo.Position = _vec3(10.f, 5.f, 10.f);
-	//tLightInfo.Range = 10.f;
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1)))
+		return E_FAIL;
+		
+	// 2번 조명
+	tLightInfo.Type = D3DLIGHT_POINT;
+	tLightInfo.Diffuse = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.f, 0.f, 0.2f, 1.f);
+	tLightInfo.Position = _vec3(10.f, 5.f, 10.f);
+	tLightInfo.Range = 10.f;
 
-	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 2)))
-	//	return E_FAIL;
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 2)))
+		return E_FAIL;
 
 	return S_OK;
 }

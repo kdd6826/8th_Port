@@ -40,7 +40,7 @@ HRESULT Client::CDashGuard::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
 	
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect2"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Effect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	ColliderSkill();
@@ -50,6 +50,7 @@ HRESULT Client::CDashGuard::Add_Component(void)
 HRESULT CDashGuard::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
 	_matrix		matWorld, matView, matProj;
+
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
@@ -58,8 +59,6 @@ HRESULT CDashGuard::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
 	pEffect->SetFloat("g_fAlpha", m_fAlpha);
-	pEffect->SetFloat("g_ColorSelect", 0.1f);
-	pEffect->SetVector("g_color", &_vec4(161.f/255.f,145.f/255.f,215.f/255.f, 1.f));
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrame));
 
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
@@ -87,7 +86,6 @@ HRESULT Client::CDashGuard::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	
-	m_fAlpha = 1.f;
 	m_fScale = 0.3f;
 	lifeTime = 0.7f;
 	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
@@ -125,7 +123,7 @@ Client::_int Client::CDashGuard::Update_Object(const _float& fTimeDelta)
 				}
 				if (m_fScale >= 0.65)
 				{
-					m_fAlpha -= fTimeDelta*3.f;
+					m_fAlpha += fTimeDelta*3.f;
 				}
 
 				_vec3 playerPos, playerLook, playerRight, playerRight2, playerDir, playerLook2;
@@ -149,10 +147,10 @@ Client::_int Client::CDashGuard::Update_Object(const _float& fTimeDelta)
 		}
 		else if (pPlayerStateCom->perfectGuard == true)
 		{
-			
+			m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
 			if (lifeTime < 0.5f)
 			{
-				m_fAlpha -= fTimeDelta*2.f;
+				m_fAlpha += fTimeDelta*2.f;
 			}
 			if (m_guardDir == DIR_DEFAULT)
 			{
@@ -170,14 +168,13 @@ Client::_int Client::CDashGuard::Update_Object(const _float& fTimeDelta)
 			D3DXVec3Normalize(&playerRight2, &playerRight2);
 			if (m_guardDir == DIR_FRONT)
 			{
-				m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+
 				playerDir = playerLook * 21.f;
 				float radian = atan2f(playerLook2.x, playerLook2.z);
 				m_pTransformCom->Set_Rotation(Engine::ROT_Y, radian);
 			}
 			else if (m_guardDir == DIR_LEFT)
 			{
-				m_pTransformCom->Set_Scale(0.6f, 0.6f, 0.6f);
 				playerDir = playerRight * 42.f;
 				float radian = atan2f(playerRight2.x, playerRight2.z);
 				m_pTransformCom->Set_Rotation(Engine::ROT_Y, radian /*+ D3DX_PI * 0.5f*/);
@@ -185,7 +182,6 @@ Client::_int Client::CDashGuard::Update_Object(const _float& fTimeDelta)
 			}
 			else if (m_guardDir == DIR_RIGHT)
 			{
-				m_pTransformCom->Set_Scale(0.6f, 0.6f, 0.6f);
 				playerDir = -playerRight * 42.f;
 				float radian = atan2f(-playerRight2.x, playerRight2.z);
 				m_pTransformCom->Set_Rotation(Engine::ROT_Y, radian /*+ D3DX_PI * 0.5f*/);
@@ -198,7 +194,7 @@ Client::_int Client::CDashGuard::Update_Object(const _float& fTimeDelta)
 	{
 		if (lifeTime < 0.5f)
 		{
-			m_fAlpha -= fTimeDelta*2.f;
+			m_fAlpha += fTimeDelta*2.f;
 		}
 		_vec3 playerPos, playerLook, playerDir, playerLook2, myPos;
 		m_pTransformCom->Get_Info(Engine::INFO_POS, &myPos);
@@ -247,7 +243,7 @@ void Client::CDashGuard::Render_Object(void)
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
 	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(2);
+	pEffect->BeginPass(1);
 
 	m_pBufferCom->Render_Buffer();
 
