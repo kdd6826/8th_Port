@@ -65,7 +65,7 @@ HRESULT CLightRay::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 	pEffect->SetFloat("g_fAlpha", 1);
 	//pEffect->SetFloat("g_ColorSelect", 0.1f);
-	pEffect->SetVector("g_color", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 1.f));
+	pEffect->SetVector("g_color", &_vec4(247.f / 255.f, 163.f / 255.f, 128.f / 255.f, 1.f));
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrame));
 
 	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
@@ -112,6 +112,7 @@ Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
 	//m_fFrame += 50.f * fTimeDelta;
 	//if (50.f < m_fFrame)
 	//	m_fFrame = 0.f;
+	
 
 
 	_vec3 vPos;

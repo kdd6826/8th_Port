@@ -2,7 +2,7 @@
 #include "Stage.h"
 #include "Export_Function.h"
 #include "Loading.h"
-#include "Stage2.h"
+#include "Stage3.h"
 
 //#include "SoundManager.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)

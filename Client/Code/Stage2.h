@@ -1,55 +1,7 @@
 #ifndef Stage2_h__
 #define Stage2_h__
 
-#include "Scene.h"
-#include "Define.h"
-#include "Stage3.h"
-#include "SkyBox.h"
-#include "Terrain.h"
-#include "Player.h"
-#include "DynamicCamera.h"
-#include "Unit.h"
-#include "Dog.h"
-#include "Knight.h"
-#include "Titan.h"
-#include "Ingkells.h"
-#include "LightRay.h"
-//#include "Zecallion.h"
-
-#include "Stone.h"
-#include "Sword.h"
-#include "Tree.h"
-#include "Effect.h"
-#include "FireEffect.h"
-
-#include "DamageFont.h"
-#include "RuinBlade.h"
-#include "SwordTrail.h"
-#include "DarkSwordTrail.h"
-
-#include "SkillSlot.h"
-#include "HpBarBack.h"
-#include "HpBarValue.h"
-#include "SpBarBack.h"
-#include "SpBarValue.h"
-#include "StaminaBarBack.h"
-#include "StaminaBarValue.h"
-
-#include "BossHpBarBase.h"
-#include "BossHpBarGreen.h"
-#include "BossHpBarHit.h"
-#include "BossHpBarOrange.h"
-#include "BossHpBarRed.h"
-
-#include "Skill0.h"
-#include "Skill1.h"
-#include "Skill2.h"
-#include "Skill4.h"
-#include "SkillDkTransform.h"
-#include "SkillDkTransform2.h"
-
-#include "StaticObject.h"
-#include "Particle.h"
+#include "StageHeaders.h"
 BEGIN(Client)
 
 class CStage2 : public Engine::CScene

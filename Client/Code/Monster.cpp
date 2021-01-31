@@ -90,9 +90,12 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 	//무적이아닐때
 	if (!isInvincible)
 	{
+		if (!isSearch)
+			isSearch = true;
 		if (m_pStateCom->stat.hp <= 0)
 			return;
 		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
+		
 		m_pStateCom->stat.hp -= pPlayerStateCom->stat.damage;
 		//Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 

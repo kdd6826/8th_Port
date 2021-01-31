@@ -1,0 +1,51 @@
+#ifndef FadeInOut_h__
+#define FadeInOut_h__
+
+#include "GameObject.h"
+#include "Define.h"
+
+BEGIN(Engine)
+
+class CRcTex;
+class CTexture;
+class CRenderer;
+class CTransform;
+class CShader;
+END
+
+BEGIN(Client)
+class CFadeInOut : public Engine::CGameObject
+{
+private:
+	explicit CFadeInOut(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CFadeInOut(void);
+
+public:
+	virtual HRESULT Ready_Object(void) override;
+	virtual _int Update_Object(const _float& fTimeDelta) override;
+	virtual void Render_Object(void) override;
+
+private:
+	HRESULT		Add_Component(void);
+	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
+private:
+	Engine::CRcTex*				m_pBufferCom = nullptr;
+	Engine::CTexture*			m_pTextureCom = nullptr;
+	Engine::CRenderer*			m_pRendererCom = nullptr;
+	Engine::CTransform*			m_pTransformCom = nullptr;
+	Engine::CShader* m_pShaderCom = nullptr;
+private:
+	_matrix						m_matProj;
+	_float						m_fX, m_fY;
+	_float						m_fSizeX, m_fSizeY;
+
+public:
+	static CFadeInOut*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	virtual void Free(void) override;
+
+};
+
+END
+#endif // FadeInOut_h__

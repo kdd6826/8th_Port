@@ -3,6 +3,7 @@
 #include "Export_Function.h"
 #include "Loading.h"
 #include "Unit.h"
+#include "Stage3.h"
 CStage2::CStage2(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -389,6 +390,11 @@ HRESULT CStage2::Ready_UI_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
+
+	/*pGameObject = CFadeInOut::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOut", pGameObject), E_FAIL);*/
+
 
 	pGameObject = CSkillSlot::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

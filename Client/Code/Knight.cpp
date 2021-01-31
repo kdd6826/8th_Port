@@ -53,8 +53,6 @@ HRESULT Client::CKnight::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	
-	m_pStateCom->stat.maxHp = 100000.f;
-	m_pStateCom->stat.hp = 100000.f;
 
 	Load_ColliderFile(L"../Bin/saveKnight.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	return S_OK;
@@ -273,6 +271,9 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 	m_bDraw = m_pOptimizationCom->Is_InFrustumForObject(&vPos, 0.f);
 	if (!initialize)
 	{
+		m_pStateCom->stat.maxHp = 30000.f;
+		m_pStateCom->stat.hp = 30000.f;
+		m_pStateCom->stat.attack = 100.f;
 		m_pTransformCom->Set_Pos(&spawnPosition);
 		if (nullptr != m_pNaviMeshCom)
 		{

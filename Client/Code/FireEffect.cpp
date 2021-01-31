@@ -99,7 +99,7 @@ HRESULT Client::CFireEffect::Ready_Object(void)
 	//CColliderMgr::GetInstance()->RegisterObject(Engine::COLLID::ENEMY, sphereCol);
 	//CColliderMgr::GetInstance()->RegisterObject(_collType2, sphereCol);
 
-
+	m_pStateCom->stat.damage = 50.f;
 	return S_OK;
 }
 Client::_int Client::CFireEffect::Update_Object(const _float& fTimeDelta)

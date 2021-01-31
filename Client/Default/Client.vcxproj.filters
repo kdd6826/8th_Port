@@ -142,6 +142,9 @@
     <Filter Include="02. GameObject\01. Stage\01. Unit\02. Monster\05. Knight">
       <UniqueIdentifier>{ac96c069-c6a3-4641-9711-56634fcd7a47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\05. FadeInOut">
+      <UniqueIdentifier>{c6d6c1f3-6932-4e82-90d0-232af118fd13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -318,9 +321,6 @@
     <ClInclude Include="..\Code\FireEffect.h">
       <Filter>02. GameObject\01. Stage\01. Unit\02. Monster\04.FireEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\LightRay.h">
-      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\DarkSwordTrail.h">
       <Filter>02. GameObject\01. Stage\06. Effect\SwordTrail</Filter>
     </ClInclude>
@@ -350,6 +350,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\Stage3.h">
       <Filter>01. Scene\01. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\LightRay.h">
+      <Filter>02. GameObject\01. Stage\01. Unit\01. Player\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\FadeInOut.h">
+      <Filter>02. GameObject\01. Stage\07. UI\05. FadeInOut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StageHeaders.h">
+      <Filter>98. Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -541,6 +550,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Stage3.cpp">
       <Filter>01. Scene\01. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FadeInOut.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\05. FadeInOut</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1658,10 +1658,10 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 			float damage = pMonsterStateCom->stat.damage;
 			float damageRange = 0;
 			int random = 0;
-			if (damageRange > 1.f)
+			if (damage > 1.f)
 			{
-				random = rand() % int(damageRange);
 				float damageRange =  damage * 0.1f;
+				random = rand() % int(damageRange);
 			}
 			damage = damage - damageRange * 0.5f + random;
 			int fontCount = 0;

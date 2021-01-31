@@ -188,6 +188,7 @@
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Effect.h" />
+    <ClInclude Include="..\Code\FadeInOut.h" />
     <ClInclude Include="..\Code\FireEffect.h" />
     <ClInclude Include="..\Code\FontParent.h" />
     <ClInclude Include="..\Code\HpBarBack.h" />
@@ -255,6 +256,7 @@
     <ClInclude Include="..\Header\Define.h" />
     <ClInclude Include="..\Header\Function.h" />
     <ClInclude Include="..\Header\Macro.h" />
+    <ClInclude Include="..\Header\StageHeaders.h" />
     <ClInclude Include="..\Header\Typedef.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -279,6 +281,7 @@
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\FadeInOut.cpp" />
     <ClCompile Include="..\Code\FireEffect.cpp" />
     <ClCompile Include="..\Code\FontParent.cpp" />
     <ClCompile Include="..\Code\HpBarBack.cpp" />
