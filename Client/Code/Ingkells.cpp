@@ -40,7 +40,7 @@ HRESULT Client::CIngkells::Add_Component(void)
 	CMonster::Add_Component();
 
 	float timeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
-	m_pTransformCom->Set_Pos(&_vec3{ 17.f,0.f,17.f });
+	
 	Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
@@ -56,8 +56,7 @@ HRESULT Client::CIngkells::Add_Component(void)
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon4.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 
 
-	m_pStateCom->stat.maxHp = 1000.f;
-	m_pStateCom->stat.hp = 1000.f;
+
 	return S_OK;
 }
 
@@ -320,6 +319,18 @@ HRESULT Client::CIngkells::Ready_Object(void)
 Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 {
 	CMonster::Update_Object(fTimeDelta);
+
+	if (!initialize)
+	{
+		m_pStateCom->stat.maxHp = 100000.f;
+		m_pStateCom->stat.hp = 100000.f;
+		m_pStateCom->stat.damage = 100.f;
+		m_pTransformCom->Set_Pos(&spawnPosition);
+		_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
+		m_pNaviMeshCom->Set_NaviIndex(i);
+		initialize = true;
+
+	}
 
 	if (isDead)
 	{

@@ -441,10 +441,10 @@ HRESULT CStage3::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TriggerBox", pGameObject), E_FAIL)
 
 	//½ÃÀÛÁö
-	//pGameObject = CIngkells::Create(m_pGraphicDev, CUnit::STAGE3);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
-	//dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 50.f,0.f,65.f });
+	pGameObject = CIngkells::Create(m_pGraphicDev, CUnit::STAGE3);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 50.f,0.f,58.f });
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
 	//pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE3);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,4.5f });
