@@ -124,10 +124,14 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_RuinBlade", pShader), E_FAIL);
 
 	//// Shade
-	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Player.hpp");
-	//NULL_CHECK_RETURN(pShader, E_FAIL);
-	//FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Player", pShader), E_FAIL);
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Weapon_Shader.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Weapon", pShader), E_FAIL);
 
+	//// Shade
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Hair_Shader.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Player", pShader), E_FAIL);
 	//	// Shade
 	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
 	//NULL_CHECK_RETURN(pShader, E_FAIL);

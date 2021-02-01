@@ -48,7 +48,7 @@ HRESULT Client::CTitan::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
 	Load_ColliderFile(L"../Bin/saveTitan.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
-
+	 
 	m_pStateCom->stat.maxHp = 100000.f;
 	m_pStateCom->stat.hp = 100000.f;
 	m_pStateCom->stat.damage = 200.f;
@@ -117,17 +117,17 @@ void CTitan::Move(const _float& fTimeDelta)
 					case 0:
 						m_state = titanState::STATE_ATTACKTURNLEFT;
 						//delay = 2.3f;//2.2
-						m_fAniSpeed = 3.5f;
+						m_fAniSpeed = 3.f;
 						break;
 					case 1:
 						m_state = titanState::STATE_ATTACKTURNRIGHT;
 						//delay = 2.2f;//2.1f
-						m_fAniSpeed = 3.5f;
+						m_fAniSpeed = 3.f;
 						break;
 					case 2:
 						m_state = titanState::STATE_ATTACKTWOSTEP;
 						//delay = 1.9f;//1.8f
-						m_fAniSpeed = 2.f;
+						m_fAniSpeed = 1.5f;
 						break;
 					default:
 						break;
@@ -151,29 +151,29 @@ void CTitan::Move(const _float& fTimeDelta)
 			{
 			case 0:
 				m_state = titanState::STATE_ATTACKBALLISTA;
-				m_fAniSpeed = 3.5f;
+				m_fAniSpeed = 3.f;
 				//delay = 4.2f;
 				break;
 			case 1:
 				m_state = titanState::STATE_ATTACKHAMMER;
 				//delay = 3.2f;//3.13
-				m_fAniSpeed = 3.5f;
+				m_fAniSpeed = 3.f;
 
 				break;
 			case 2:
 				m_state = titanState::STATE_ATTACKKICK;
 				//delay = 2.9f; //2.82
-				m_fAniSpeed = 3.5f;
+				m_fAniSpeed = 3.f;
 				break;
 			case 3:
 				m_state = titanState::STATE_ATTACKRAGE;
 				//delay = 8.3f;//8.28
-				m_fAniSpeed = 2.5f;
+				m_fAniSpeed = 2.f;
 				break;
 			case 4:
 				m_state = titanState::STATE_ATTACKSTOMP;
 				//delay = 3.6f;//3.55
-				m_fAniSpeed = 2.5f;
+				m_fAniSpeed = 2.f;
 				break;
 
 			default:

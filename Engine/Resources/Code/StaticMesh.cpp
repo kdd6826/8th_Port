@@ -143,6 +143,7 @@ void CStaticMesh::Render_Meshes(LPD3DXEFFECT & pEffect)
 			iPassNum = 1;
 
 		pEffect->SetTexture("g_BaseTexture", m_ppTextures[i]);
+		
 		pEffect->CommitChanges();	// 텍스쳐 출력 이후에 쉐이더 객체가 참고 있는 텍스쳐 정보를 갱신시켜주는 함수
 		
 		pEffect->BeginPass(iPassNum);

@@ -22,7 +22,10 @@ HRESULT Client::CSword::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
-
+	// texture
+	pComponent = m_pTextureCom2 = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_Sword2Normal"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
 
 
@@ -45,6 +48,7 @@ HRESULT Client::CSword::Add_Component(void)
 
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Weapon"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	return S_OK;
@@ -143,11 +147,25 @@ HRESULT CSword::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	//const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+	//_vec3 vCamPos;
+	//CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 
+
+	//vCamPos = pCamera->Get_Eye();
+	//pEffect->SetVector("vCamPos", &_vec4(vCamPos, 0.f));
+	//pEffect->SetVector("vColor", &_vec4(161.f / 255.f, 145.f / 255.f, 215.f / 255.f, 0.f));
+	//pEffect->SetVector("vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+
+	//pEffect->SetMatrix("matWorldLast", &matWorld);
+	//pEffect->SetMatrix("matViewLast", &matView);
+	//m_pTextureCom2->Set_Texture(pEffect, "BumpMap");
+	//pEffect->SetMatrix("matWorld", &matWorld);
+	//pEffect->SetMatrix("matView", &matView);
+	//pEffect->SetMatrix("matProj", &matProj);
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
-
 	return S_OK;
 }
 

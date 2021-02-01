@@ -198,6 +198,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Collider.h" />
     <ClInclude Include="..\Code\Component.h" />
     <ClInclude Include="..\Code\Frustum.h" />
+    <ClInclude Include="..\Code\Hair_Shader.hpp" />
     <ClInclude Include="..\Code\Light.h" />
     <ClInclude Include="..\Code\LightMgr.h" />
     <ClInclude Include="..\Code\MonsterState.h" />
@@ -239,6 +240,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Shader_Weapon.hpp" />
     <ClInclude Include="..\Code\Terrain_Shader.hpp" />
     <ClInclude Include="..\Code\Transform.h" />
+    <ClInclude Include="..\Code\Weapon_Shader.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl" />

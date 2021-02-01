@@ -1,5 +1,4 @@
-﻿  Management.cpp
-  Utility.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Utility.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -25,6 +24,7 @@
   .\Engine\Utility\Code\Shader.h
   .\Engine\Utility\Code\Transform.h
          23개 파일이 복사되었습니다.
+  .\Engine\Utility\Code\Hair_Shader.hpp
   .\Engine\Utility\Code\ShaderFadeInOut.hpp
   .\Engine\Utility\Code\Shader_Base.hpp
   .\Engine\Utility\Code\Shader_Blend.hpp
@@ -49,7 +49,8 @@
   .\Engine\Utility\Code\Shader_Trail.hpp
   .\Engine\Utility\Code\Shader_Weapon.hpp
   .\Engine\Utility\Code\Terrain_Shader.hpp
-         24개 파일이 복사되었습니다.
+  .\Engine\Utility\Code\Weapon_Shader.hpp
+         26개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

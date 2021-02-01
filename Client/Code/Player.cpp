@@ -59,6 +59,11 @@ HRESULT Client::CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_PlayerState", pComponent);
 
+	// texture
+	//pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SwordTrail0"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+
 	// Mesh
 	if (stageNum == STAGE1)
 	{
@@ -100,6 +105,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	isDown = false;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Player"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
@@ -120,9 +126,26 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
+	//pEffect->SetMatrix("matWorld", &matWorld);
+	//pEffect->SetMatrix("matView", &matView);
+	//pEffect->SetMatrix("matProj", &matProj);
+	//const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+	//_vec3 vCamPos;
+	//CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+
+
+	//vCamPos = pCamera->Get_Eye();
+	//pEffect->SetVector("vCamPos", &_vec4(vCamPos, 0.f));
+	//pEffect->SetVector("vColor", &_vec4(1.f, 1.f, 1.f, 0.f));
+	//pEffect->SetVector("vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+	//pEffect->SetVector("vLightColor", &_vec4(1.f, 1.f, 1.f, 0.f));
+	/*float4 vLightColor;
+*/
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
+
+	//m_pTextureCom->Set_Texture(pEffect, "g_SpecularTexture");
 
 	return S_OK;
 }
@@ -1646,7 +1669,7 @@ void Client::CPlayer::Render_Object(void)
 	Engine::Safe_AddRef(pEffect);
 	_uint	iMaxPass = 0;
 	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(1);
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect));
 	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);

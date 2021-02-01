@@ -46,6 +46,7 @@ public:
 	virtual void Render_Object(void) override;
 	virtual void OnCollision(Engine::CGameObject* target)override;
 	Engine::CPlayerState* m_pStateCom = nullptr;
+	Engine::CTexture*			m_pTextureCom = nullptr;
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
