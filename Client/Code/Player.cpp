@@ -338,16 +338,18 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			{
 				//m_pMeshCom->Free();
 				//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
-				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT;
+				m_pMeshCom->Free();
+				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
+				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
 			}
 		}
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DARKKNIGHT_TRANS2)
 		{
-			if (delay < 2.f && m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_DKKNIGHT)
+			if (delay < 2.f && m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
 			{
 
-				//m_pMeshCom->Free();
-				//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
+				m_pMeshCom->Free();
+				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
 				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
 			}
 		}

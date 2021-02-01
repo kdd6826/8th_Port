@@ -1,4 +1,31 @@
-﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Transform.cpp
+  Shader.cpp
+  Scene.cpp
+  RenderTargetMgr.cpp
+  RenderTarget.cpp
+  Renderer.cpp
+  QuadTree.cpp
+  Management.cpp
+  Layer.cpp
+  GameObject.cpp
+  ProtoMgr.cpp
+  PlayerState.cpp
+  Pipeline.cpp
+  Optimization.cpp
+  MonsterState.cpp
+  LightMgr.cpp
+  Light.cpp
+  Frustum.cpp
+  Component.cpp
+  Collider.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  ColliderSphere.cpp
+  Camera.cpp
+  Calculator.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+  Utility.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h

@@ -1,7 +1,221 @@
-﻿  Knight.cpp
-c:\users\gmh\desktop\client\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\knight.cpp(139): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\gmh\desktop\client\8th_port\client\code\knight.cpp(170): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Client.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Client\Default\../Bin\Client.exe
+﻿  stdafx.cpp
+  Client.cpp
+  SkillSlot.cpp
+  Tree.cpp
+  Titan.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\titan.cpp(135): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\titan.cpp(182): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Terrain.cpp
+  Sword.cpp
+  Stone.cpp
+  StaticObject.cpp
+  StaminaBarValue.cpp
+  StaminaBarBack.cpp
+  Stage.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SphereCollider.cpp
+  SpBarValue.cpp
+  SpBarBack.cpp
+  SkyBox.cpp
+  Player.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(234): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(246): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(269): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(270): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(315): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(316): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(411): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(572): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(573): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(436): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(449): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(462): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(477): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(499): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(542): warning C4101: 'fCamAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(788): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(789): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(821): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(822): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(864): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(865): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(919): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(920): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(967): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(968): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1013): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1030): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1047): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1060): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1076): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1088): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1115): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1128): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1142): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1155): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1168): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1183): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1203): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1231): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1232): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1253): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1254): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1289): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1290): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1310): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1311): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1329): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1330): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1346): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1347): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1428): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1454): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1464): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1473): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1580): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1628): warning C4003: 'FAILED_CHECK_RETURN' 매크로의 실제 매개 변수가 부족합니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1748): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1749): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1750): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1759): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\player.cpp(1767): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Unit.cpp
+c:\users\administrator\desktop\8th_port\client\code\unit.cpp(127): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  TriggerBox.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SwordTrail.cpp
+  Stage3.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+c:\users\administrator\desktop\8th_port\client\code\stage3.cpp(132): warning C4715: 'Client::CStage3::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\administrator\desktop\8th_port\client\code\stage3.cpp(204): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool1': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\administrator\desktop\8th_port\client\code\stage3.cpp(266): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool2': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\administrator\desktop\8th_port\client\code\stage3.cpp(328): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool3': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\administrator\desktop\8th_port\client\code\stage3.cpp(390): warning C4715: 'Client::CStage3::LoadStage3_StaticObjectFromTool4': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\administrator\desktop\8th_port\client\code\stage.cpp(134): warning C4715: 'Client::CStage::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  컴파일하고 있습니다...
+  Stage2.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SlashPoint.cpp
+  Skill4.cpp
+  Skill0.cpp
+  RuinBlade.cpp
+c:\users\administrator\desktop\8th_port\client\code\ruinblade.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\administrator\desktop\8th_port\client\code\ruinblade.cpp(100): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\administrator\desktop\8th_port\client\code\ruinblade.cpp(102): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  Particle.cpp
+  Monster.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(97): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(114): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(115): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\monster.cpp(116): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MainApp.cpp
+  Logo.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Loading.cpp
+  LightRay.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Knight.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\knight.cpp(139): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\knight.cpp(170): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  HpBarValue.cpp
+  HpBarBack.cpp
+  FontParent.cpp
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.cpp(27): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FireEffect.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FadeInOut.cpp
+  Effect.cpp
+c:\users\administrator\desktop\8th_port\client\code\effect.cpp(90): warning C4244: '인수': 'int'에서 'const Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  DynamicCamera.cpp
+  Dog.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\dog.cpp(127): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\dog.cpp(158): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+c:\users\administrator\desktop\8th_port\client\code\stage2.cpp(134): warning C4715: 'Client::CStage2::Load_StaticObjectFromTool': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  컴파일하고 있습니다...
+  DashGuard2.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\dashguard2.cpp(205): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  DashGuard.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\dashguard.cpp(205): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  DarkSwordTrail.cpp
+  DamageFontPlayer.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefontplayer.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  DamageFont.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ConfusionHole2.cpp
+c:\users\administrator\desktop\8th_port\client\code\confusionhole2.cpp(89): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\administrator\desktop\8th_port\client\code\confusionhole2.cpp(102): warning C4035: 'Client::CConfusionHole2::Update_Object': 반환 값이 없습니다.
+c:\users\administrator\desktop\8th_port\client\code\confusionhole2.cpp(107): warning C4305: '인수': 'double'에서 'const Engine::_float'(으)로 잘립니다.
+c:\users\administrator\desktop\8th_port\client\code\confusionhole2.cpp(112): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\confusionhole2.cpp(158): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  ConfusionHole.cpp
+c:\users\administrator\desktop\8th_port\client\code\confusionhole.cpp(101): warning C4035: 'Client::CConfusionHole::Update_Object': 반환 값이 없습니다.
+c:\users\administrator\desktop\8th_port\client\code\confusionhole.cpp(111): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\desktop\8th_port\client\code\confusionhole.cpp(157): warning C4101: 'playerAngle' :참조되지 않은 지역 변수입니다.
+  ColliderMgr.cpp
+  BossHpBarRed.cpp
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarred.cpp(82): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarred.cpp(83): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarred.cpp(89): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarred.cpp(90): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BossHpBarOrange.cpp
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarorange.cpp(82): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarorange.cpp(83): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarorange.cpp(89): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbarorange.cpp(90): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BossHpBarHit.cpp
+  BossHpBarGreen.cpp
+c:\users\administrator\desktop\8th_port\client\code\bosshpbargreen.cpp(83): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbargreen.cpp(84): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbargreen.cpp(90): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\bosshpbargreen.cpp(91): warning C4244: '=': 'double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BossHpBarBase.cpp
+  BackGround.cpp
+  코드를 생성하고 있습니다...
+  SkillDkTransform2.cpp
+  SkillDkTransform.cpp
+  Skill2.cpp
+  Skill1.cpp
+  Ingkells.cpp
+c:\users\administrator\desktop\8th_port\client\code\damagefont.h(30): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\fontparent.h(45): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\ingkells.cpp(136): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\ingkells.cpp(203): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\desktop\8th_port\client\code\ingkells.cpp(228): warning C4244: '=': 'Client::_double'에서 'Client::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  Client.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
