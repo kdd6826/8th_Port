@@ -1,14 +1,23 @@
+
 #include "stdafx.h"
 #include "SoundManager.h"
-#include "Unit.h"
 #include "fmod.h"
 #include <io.h>
 #include <algorithm>
 
-IMPLEMENT_SINGLETON(SoundManager)
+
 SoundManager* pSoundManager = nullptr;
 
 
+
+SoundManager* SoundManager::GetInstance()
+{
+	if (pSoundManager == nullptr)
+	{
+		pSoundManager = new SoundManager;
+	}
+	return pSoundManager;
+}
 
 void SoundManager::Destroy()
 {

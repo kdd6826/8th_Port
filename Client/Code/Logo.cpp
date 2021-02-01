@@ -4,7 +4,7 @@
 
 #include "Stage.h"
 #include "Stage2.h"
-
+#include "SoundManager.h"
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -18,6 +18,7 @@ CLogo::~CLogo(void)
 
 HRESULT CLogo::Ready_Scene(void)
 {
+	
 	FAILED_CHECK_RETURN(Ready_Resource(Engine::RESOURCE_END), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
@@ -41,7 +42,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 		{
 			CScene*		pScene = nullptr;
-			pScene = CStage2::Create(m_pGraphicDev);
+			pScene = CStage::Create(m_pGraphicDev);
 
 			FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
 

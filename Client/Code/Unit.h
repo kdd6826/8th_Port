@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Define.h"
 #include "SphereCollider.h"
+#include "SoundManager.h"
 //#include "ColliderMgr.h"
 BEGIN(Engine)
 

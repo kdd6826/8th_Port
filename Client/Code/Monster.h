@@ -45,6 +45,8 @@ protected:
 	_bool isSearch = false;
 	//플레이어까지의 거리
 	_float disPlayer = 0.f;
+	_bool isSound = false;
+	_bool dieSound = false;
 	bool initialize = false;
 	virtual void Free(void) override;
 	bool m_bDraw = false;

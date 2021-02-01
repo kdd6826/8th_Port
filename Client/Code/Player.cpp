@@ -8,6 +8,7 @@
 #include "DashGuard2.h"
 #include "Monster.h"
 #include "LightRay.h"
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUnit(pGraphicDev)
 	, m_vDir(0.f, 0.f, 0.f)
@@ -268,6 +269,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 				if (isManaBlade == true)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_skill_manablade_disable_02.wav", SoundChannel::PLAYER, 0.2f);
 					isManaBlade = false;
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_NORMAlBLADE;
 					//delay = 1.2f;
@@ -279,6 +281,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				}
 				else if (isManaBlade == false)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_skill_manablade_enable_02.wav", SoundChannel::PLAYER, 0.2f);
 					isManaBlade = true;
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MANABLADE;
 					m_fBattleCount = 5.f;
@@ -302,7 +305,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				return;
 			if (delay <= 0.f)
 			{
-				
+				SoundManager::PlayOverlapSound(L"arisha_skill_drain_mana_02.wav", SoundChannel::PLAYER, 0.2f);
 				GuardEffect();
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 
@@ -347,6 +350,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 				return;
 			if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80)
 			{
+				SoundManager::PlayOverlapSound(L"arisha_skill_drain_mana_02.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 				
 
@@ -377,7 +381,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1)
 		{
-			if (delay<3.f&& m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
+			if (delay<2.f&& m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_NORMAL)
 			{
 				//m_pMeshCom->Free();
 				//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
@@ -607,6 +611,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		{
 			if (skillDelay[_CONFUSIONHOLE] > 0.f)
 				return;
+			SoundManager::PlayOverlapSound(L"arisha_skill_drain_mana_02.wav", SoundChannel::PLAYER, 0.2f);
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_CONFUSIONHOLE;
 			
 
@@ -824,6 +829,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
+				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				//delay = 1.2f;
@@ -858,6 +864,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
+				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
@@ -900,6 +907,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
+				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				m_fAniSpeed = 1.2f;
@@ -955,6 +963,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
+				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				/*delay = 1.2f;*/
@@ -1003,6 +1012,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 			{
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
+				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				//delay = 1.2f;
@@ -1049,6 +1059,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_attack_04.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT5;
 					//delay = 1.8f;
 					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
@@ -1066,6 +1077,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT3)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_attack_05.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT4;
 					//delay = 1.9f;
 					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
@@ -1083,6 +1095,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT2)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_attack_03.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT3;
 					//delay = 1.2f;
 					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
@@ -1096,6 +1109,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT1)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_attack_02.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT2;
 					//delay = 1.1f;
 					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
@@ -1112,6 +1126,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT5)
 					{
+						SoundManager::PlayOverlapSound(L"arisha_attack_01.wav", SoundChannel::PLAYER, 0.2f);
 						m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT1;
 						//delay = 1.2f;
 						CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
@@ -1126,6 +1141,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 					}
 					else
 					{
+						SoundManager::PlayOverlapSound(L"arisha_attack_01.wav", SoundChannel::PLAYER, 0.2f);
 						m_pStateCom->playerState = Engine::CPlayerState::STATE_ATT1;
 						//delay = 1.2f;
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1153,6 +1169,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT5 && delay <= 0.7f)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_04.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT6;
 					//delay = 1.15f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1166,6 +1183,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT4 && delay <= 0.95f)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_05.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT5;
 					//delay = 1.3f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1179,6 +1197,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT3 && delay <= 0.81f)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_04.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT4;
 					//delay = 1.3f;
 
@@ -1193,6 +1212,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT2 && delay <= 0.63f)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_03.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT3;
 					//delay = 1.3f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1206,6 +1226,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1&&delay <= 0.78f)
 				{
+					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_02.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT2;
 					//delay = 1.17f;
 					_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1221,6 +1242,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT6 && delay <= 0.7)
 					{
+						SoundManager::PlayOverlapSound(L"arisha_swing_manablade_01.wav", SoundChannel::PLAYER, 0.2f);
 						m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT1;
 						//delay = 1.3f;
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1241,6 +1263,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						m_pStateCom->playerState != Engine::CPlayerState::STATE_MB_ATT6
 						)
 					{
+						SoundManager::PlayOverlapSound(L"arisha_swing_manablade_01.wav", SoundChannel::PLAYER, 0.2f);
 						m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT1;
 						//delay = 1.3f;
 						_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1365,6 +1388,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			return;
 		if (delay <= 0.f)
 		{
+			m_fAniSpeed = 1.5f;
+			SoundManager::PlayOverlapSound(L"effect_darkknight.wav", SoundChannel::PLAYER, 0.2f);
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1;
 			//OK
 			//delay = 8.1f;
@@ -1687,6 +1712,8 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 	}
 	if (m_pStateCom->playerState == Engine::CPlayerState::STATE_CONFUSIONHOLE&&!m_pStateCom->perfectGuard&&delay>0.1f)
 	{
+		SoundManager::PlayOverlapSound(L"arisha_skill_drain_mana_perfect_01.wav", SoundChannel::PLAYER, 0.2f);
+		SoundManager::PlayOverlapSound(L"arisha_skill_drain_mana_success_01.wav", SoundChannel::PLAYER, 0.2f);
 		PerfectGuardEffect();
 		InvincibleTime(0.7f);
 		m_pStateCom->perfectGuard = true;
@@ -1695,6 +1722,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 	{
 		if (isHit == false)
 		{
+			SoundManager::PlayOverlapSound(L"arisha_hurt_weak_03.wav", SoundChannel::PLAYER, 0.2f);
 			_vec3 vPlayerPos;
 			m_pTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
 			Engine::CMonsterState*  pMonsterStateCom = dynamic_cast<CMonster*>(target)->m_pStateCom;

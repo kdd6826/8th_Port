@@ -242,13 +242,13 @@ _uint CLoading::Loading_ForStage(void)
 	//	NULL),
 	//	E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Player",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Player/",
-		L"Player.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Player",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Player/",
+	//	L"Player.X"),
+	//	E_FAIL);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 	//	Engine::RESOURCE_STAGE,
@@ -266,21 +266,21 @@ _uint CLoading::Loading_ForStage(void)
 		L"darkknight_2_idle.X"),
 		E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Dog",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Dog/",
-		L"Dog.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Dog",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Dog/",
+	//	L"Dog.X"),
+	//	E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Knight",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Knight/",
-		L"Knight_Att.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Knight",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Knight/",
+	//	L"Knight_Att.X"),
+	//	E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
@@ -291,13 +291,13 @@ _uint CLoading::Loading_ForStage(void)
 		L"Titan.X"),
 		E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		Engine::RESOURCE_STAGE,
-		L"Mesh_Ingkells",
-		Engine::TYPE_DYNAMIC,
-		L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
-		L"Ingkells.X"),
-		E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+	//	Engine::RESOURCE_STAGE,
+	//	L"Mesh_Ingkells",
+	//	Engine::TYPE_DYNAMIC,
+	//	L"../Bin/Resource/Mesh/DynamicMesh/Ingkells/",
+	//	L"Ingkells.X"),
+	//	E_FAIL);
 
 
 	/*	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

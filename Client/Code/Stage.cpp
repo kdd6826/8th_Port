@@ -4,7 +4,7 @@
 #include "Loading.h"
 #include "Stage3.h"
 
-//#include "SoundManager.h"
+#include "SoundManager.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -18,7 +18,7 @@ CStage::~CStage(void)
 
 HRESULT CStage::Ready_Scene(void)
 {
-	//SoundManager::PlayBGM(L"FireStage.wav");
+	SoundManager::PlayBGM(L"bgm_pvp_p03_Loop.wav");
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_UI_Layer(L"UI"), E_FAIL);
@@ -33,6 +33,7 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 {
 	if (Engine::Get_DIKeyState(DIK_F11) & 0x80)
 	{
+		SoundManager::StopSound(SoundChannel::BGM);
 		CScene* pScene = nullptr;
 		pScene = CStage3::Create(m_pGraphicDev);
 
@@ -47,6 +48,7 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
 	if (Portal->GetPortal())
 	{
+		SoundManager::StopSound(SoundChannel::BGM);
 		CScene* pScene = nullptr;
 		pScene = CStage2::Create(m_pGraphicDev);
 
@@ -188,19 +190,20 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
 
 
-	pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE1);
+	/*pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE1);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 22, 0.f, 22 });
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL)
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL)*/
 
 
 	pGameObject = CTriggerBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CTriggerBox*>(pGameObject)->SetSpawnPosition(_vec3{ 22, 0.5f, 22 });
+	dynamic_cast<CTriggerBox*>(pGameObject)->SetSpawnPosition(_vec3{ 0, 0.5f, 0 });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TriggerBox", pGameObject), E_FAIL)
 
 	//pGameObject = CIngkells::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 20, 0.f, 20 });
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
 
 	/*for (_uint i = 0; i < 50; ++i)
@@ -218,19 +221,19 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
 
-	pGameObject = CTree::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
+	//pGameObject = CTree::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
 
 	//첫번쨰불
-	pGameObject = CFireEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 22,0.5f,22 });
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
+	//pGameObject = CFireEffect::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CFireEffect*>(pGameObject)->m_pTransformCom->Set_Pos(&_vec3{ 22,0.5f,22 });
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireEffect", pGameObject), E_FAIL);
 
-	pGameObject = CLightRay::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LightRay", pGameObject), E_FAIL);
+	//pGameObject = CLightRay::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LightRay", pGameObject), E_FAIL);
 	//for (_uint i = 0; i < 100; ++i)
 	//{
 
@@ -338,42 +341,42 @@ HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_LightInfo(void)
 {
-	//D3DLIGHT9		tLightInfo;
-	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+	D3DLIGHT9		tLightInfo;
+	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
-	//// 0번 조명
-	//tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+	// 0번 조명
+	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 
-	//tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 
-	//tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
+	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
-	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
-	//	return E_FAIL;
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+		return E_FAIL;
 
-	//// 1번 조명
-	//tLightInfo.Type = D3DLIGHT_POINT;
-	//tLightInfo.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.f, 0.f, 1.f);
-	//tLightInfo.Position = _vec3(5.f, 5.f, 5.f);
-	//tLightInfo.Range = 10.f;
+	// 1번 조명
+	tLightInfo.Type = D3DLIGHT_POINT;
+	tLightInfo.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.f, 0.f, 1.f);
+	tLightInfo.Position = _vec3(5.f, 5.f, 5.f);
+	tLightInfo.Range = 10.f;
 
-	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1)))
-	//	return E_FAIL;
-	//	
-	//// 2번 조명
-	//tLightInfo.Type = D3DLIGHT_POINT;
-	//tLightInfo.Diffuse = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(0.f, 0.f, 0.2f, 1.f);
-	//tLightInfo.Position = _vec3(10.f, 5.f, 10.f);
-	//tLightInfo.Range = 10.f;
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1)))
+		return E_FAIL;
+		
+	// 2번 조명
+	tLightInfo.Type = D3DLIGHT_POINT;
+	tLightInfo.Diffuse = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(0.f, 0.f, 0.2f, 1.f);
+	tLightInfo.Position = _vec3(10.f, 5.f, 10.f);
+	tLightInfo.Range = 10.f;
 
-	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 2)))
-	//	return E_FAIL;
+	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 2)))
+		return E_FAIL;
 
 	return S_OK;
 }

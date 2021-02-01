@@ -353,7 +353,11 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 					//0.83 2.06
 					if (reverseDelay > 3.26 / m_fAniSpeed && reverseDelay < 3.6 / m_fAniSpeed)
 					{
-
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"mankind_shout_01.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 					else if (reverseDelay > 3.69 / m_fAniSpeed && reverseDelay < 4.17 / m_fAniSpeed)
@@ -365,19 +369,33 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed*1.5f)));
 					}
-
+					else
+					{
+						isSound = false;
+					}
 					if (reverseDelay > 3.47 / m_fAniSpeed && reverseDelay < 3.83 / m_fAniSpeed)
 					{
-
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
 						isColl = true;
 					}
 					else  if (reverseDelay > 5.09 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
 					{
-
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
 						isColl = true;
 					}
 					else
+					{
 						isColl = false;
+						isSound = false;
+					}
 				}
 			
 				//몬스터의 정면

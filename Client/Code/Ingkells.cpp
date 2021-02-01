@@ -48,7 +48,7 @@ HRESULT Client::CIngkells::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-	Load_ColliderFile(L"../Bin/saveIngkells.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
+	Load_ColliderFile(L"../Bin/saveInkellsSave.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon1.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	Load_ColliderFile(L"../Bin/saveInkellsWeapon2.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
@@ -383,7 +383,11 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 					m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
 					Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 					_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
-
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"CS_inkels_4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 					//플레이어를 향한 위치벡터
 					_vec3 toPlayerDir = playerPos - vPos;
 					float spinSpeed = 1.f;
@@ -428,17 +432,25 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 					//0.8 6.2
 					if (reverseDelay > 0.59 / m_fAniSpeed && reverseDelay < 1.75 / m_fAniSpeed)
 					{
+
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
 
 					//충돌판정 2.27 2.98
 					if (reverseDelay > 0.59 / m_fAniSpeed && reverseDelay < 1.75 / m_fAniSpeed)
 					{
-
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
 						isColl = true;
 					}
 					else
+					{
 						isColl = false;
+						isSound = false;
+					}
 				}
 				
 
@@ -487,10 +499,16 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 					}
 					if (reverseDelay > 1.3 / m_fAniSpeed && reverseDelay < 1.87 / m_fAniSpeed)
 					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
 						isColl = true;
 					}
 					else
 					{
+						isSound = false;
 						isColl = false;
 					}
 				}
@@ -527,10 +545,16 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 					{
 						/*m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta * spinSpeed));*/
 						isColl = true;
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
 					}
 					else
 					{
 						isColl = false;
+						isSound = false;
 					}
 					if (true == m_pMeshCom->Is_AnimationSetEnd())
 					{
@@ -580,10 +604,18 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 
 					if (reverseDelay > 4.02 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
 					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
 						isColl = true;
 					}
 					else
+					{
 						isColl = false;
+						isSound = false;
+					}
 					if (true == m_pMeshCom->Is_AnimationSetEnd())
 					{
 						isAnimating = false;
@@ -647,17 +679,35 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 				if (reverseDelay > 2.87 / m_fAniSpeed && reverseDelay < 3.46 / m_fAniSpeed)
 				{
 					isColl = true;
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 				}
 				else if (reverseDelay > 4.19 / m_fAniSpeed && reverseDelay < 5 / m_fAniSpeed)
 				{
 					isColl = true;
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 				}
 				else if (reverseDelay > 6.45 / m_fAniSpeed && reverseDelay < 7.12 / m_fAniSpeed)
 				{
 					isColl = true;
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 				}
 				else
+				{
 					isColl = false;
+					isSound = false;
+				}
 				if (true == m_pMeshCom->Is_AnimationSetEnd())
 				{
 					isAnimating = false;
@@ -711,13 +761,26 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 				if (reverseDelay > 3.24 / m_fAniSpeed && reverseDelay < 3.68 / m_fAniSpeed)
 				{
 					isColl = true;
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 				}
 				else if (reverseDelay > 4.72 / m_fAniSpeed && reverseDelay < 6.33 / m_fAniSpeed)
 				{
 					isColl = true;
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 				}
 				else
+				{
 					isColl = false;
+					isSound = false;
+				}
 				if (true == m_pMeshCom->Is_AnimationSetEnd())
 				{
 					isAnimating = false;
@@ -769,13 +832,26 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 				if (reverseDelay > 2.32 / m_fAniSpeed && reverseDelay < 2.56 / m_fAniSpeed)
 				{
 					isColl = true;
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 				}
 				else if (reverseDelay > 3.93 / m_fAniSpeed && reverseDelay < 4.3 / m_fAniSpeed)
 				{
 					isColl = true;
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
 				}
 				else
+				{
 					isColl = false;
+					isSound = false;
+				}
 				if (true == m_pMeshCom->Is_AnimationSetEnd())
 				{
 					isAnimating = false;
@@ -802,7 +878,7 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 							m_pStateCom->stat.moveSpeed = IngkellsSpeed;
 							delay = 0;
 							isColl = false;
-
+							isSound = false;
 	
 					}
 				}
@@ -817,6 +893,11 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 	}
 	else if (isDie)
 	{
+	if (!dieSound)
+	{
+		SoundManager::PlayOverlapSound(L"mankind_low_health_01.wav", SoundChannel::MONSTER, 0.2f);
+		dieSound = true;
+	}
 		m_state = IngkellsState::STATE_DYING_FRONT;
 		if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{

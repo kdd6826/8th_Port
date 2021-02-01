@@ -94,9 +94,18 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 			isSearch = true;
 		if (m_pStateCom->stat.hp <= 0)
 			return;
+
 		m_pTransformCom->m_vInfo[Engine::INFO_POS] += hitDir * 0.1;
 		
 		m_pStateCom->stat.hp -= pPlayerStateCom->stat.damage;
+		if (pPlayerStateCom->stat.damage > 1300)
+		{
+			SoundManager::PlayOverlapSound(L"Hit_Flesh_StrongSlash.wav", SoundChannel::EFFECT, 0.2f);
+		}
+		else
+		{
+			SoundManager::PlayOverlapSound(L"Hit_HardFlesh_Stab.wav", SoundChannel::EFFECT, 0.2f);
+		}
 		//Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 
 		pPlayerStateCom->stat.sp += 20.f;

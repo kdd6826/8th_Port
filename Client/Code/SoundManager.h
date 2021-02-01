@@ -1,15 +1,15 @@
 #ifndef SoundManager_h__
 #define SoundManager_h__
-#include "Define.h"
 
 
 
 enum SoundChannel { BGM, PLAYER, PLAYER_EFFECT, MONSTER, EFFECT, MAXCHANNEL };
 class SoundManager
 {
-	DECLARE_SINGLETON(SoundManager)
+	
 
 public:
+	static SoundManager* GetInstance();
 	static void Destroy();
 
 private:

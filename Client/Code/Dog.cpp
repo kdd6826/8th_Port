@@ -140,6 +140,7 @@ void CDog::Move(const _float& fTimeDelta)
 			switch (i)
 			{
 			case 0:
+				
 				m_state = dogState::STATE_DASHATT;
 				m_fAniSpeed = 1.f;
 				//delay = 4.2f;
@@ -153,6 +154,22 @@ void CDog::Move(const _float& fTimeDelta)
 			default:
 				break;
 			}
+			int sound = rand() % 4;
+			switch (sound)
+			{
+			case 0:
+				SoundManager::PlayOverlapSound(L"attackdog_shout_01.wav", SoundChannel::MONSTER, 0.2f);
+				break;
+			case 1:
+				SoundManager::PlayOverlapSound(L"attackdog_shout_02.wav", SoundChannel::MONSTER, 0.2f);
+				break;
+			case 2:
+				SoundManager::PlayOverlapSound(L"attackdog_shout_03.wav", SoundChannel::MONSTER, 0.2f);
+				break;
+			default:
+				break;
+			}
+			
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 			temp = (temp / (m_fAniSpeed)) - 0.2f;
 			delay = temp;
@@ -403,6 +420,13 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 	}
 	else if (isDie)
 	{
+		if (!dieSound)
+		{
+			SoundManager::PlayOverlapSound(L"attackdog_hurt_02.wav", SoundChannel::MONSTER, 0.2f);
+			dieSound = true;
+		}
+		
+
 		m_state = dogState::STATE_DOWNSTART;
 		if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
@@ -451,6 +475,7 @@ void Client::CDog::Render_Object(void)
 void CDog::OnCollision(Engine::CGameObject* target)
 {
 	CMonster::OnCollision(target);
+	
 	if (m_state != STATE_DMGUP)
 	{
 		m_state = STATE_DMGUP;

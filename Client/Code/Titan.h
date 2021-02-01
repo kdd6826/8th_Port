@@ -73,7 +73,7 @@ private:
 	_vec3 dirPos;
 	const	_matrix* m_pParentBoneMatrix = nullptr;
 	const	_matrix* m_pParentWorldMatrix = nullptr;
-
+	_float						moveCount=0.f;
 	_vec3						m_vDir;
 	_float						m_fAniSpeed=1.f;
 	_float						delay = 0.f;

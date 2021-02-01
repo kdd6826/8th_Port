@@ -3,6 +3,7 @@
 #include "Export_Function.h"
 #include "Loading.h"
 #include "Unit.h"
+#include "SoundManager.h"
 CStage3::CStage3(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -16,7 +17,7 @@ CStage3::~CStage3(void)
 
 HRESULT CStage3::Ready_Scene(void)
 {
-	
+	SoundManager::PlayBGM(L"bgm_ep8_ingkells.wav");
 	FAILED_CHECK_RETURN(Ready_Environment_Layer(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_UI_Layer(L"UI"), E_FAIL);
@@ -31,6 +32,7 @@ Engine::_int CStage3::Update_Scene(const _float& fTimeDelta)
 {
 	if (Engine::Get_DIKeyState(DIK_F11) & 0x80)
 	{
+		SoundManager::StopSound(SoundChannel::BGM);
 		CScene* pScene = nullptr;
 		pScene = CStage::Create(m_pGraphicDev);
 
@@ -45,6 +47,7 @@ Engine::_int CStage3::Update_Scene(const _float& fTimeDelta)
 	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
 	if (Portal->GetPortal())
 	{
+		SoundManager::StopSound(SoundChannel::BGM);
 		CScene* pScene = nullptr;
 		pScene = CStage::Create(m_pGraphicDev);
 

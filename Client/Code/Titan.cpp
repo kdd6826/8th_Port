@@ -81,7 +81,16 @@ void CTitan::Move(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(Engine::INFO_RIGHT, &vRight);
 	Engine::CTransform* pPlayerTransCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Transform", Engine::ID_DYNAMIC));
 	_vec3 playerPos = pPlayerTransCom->m_vInfo[Engine::INFO_POS];
-
+	moveCount += fTimeDelta;
+	if (moveCount > 0.75f)
+	{
+		/*if (!isSound)
+		{*/
+			SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+		/*	isSound = true;
+		}*/
+		moveCount = 0;
+	}
 	//플레이어를 향한 위치벡터
 	_vec3 toPlayerDir = playerPos - vPos;
 
@@ -108,6 +117,7 @@ void CTitan::Move(const _float& fTimeDelta)
 	//플레이어가 정면에있다
 	//몬스터의 시야각
 	float spinSpeed = 5.f;
+	/*if (disPlayer < 1.5f && angle>0)*/
 	if (disPlayer < 1.5f && angle>0)
 	{
 		int i = rand() % 3;
@@ -146,7 +156,7 @@ void CTitan::Move(const _float& fTimeDelta)
 		{
 
 			int i = rand() % 5;
-			//int i = 1;
+			/*int i = 3;*/
 			switch (i)
 			{
 			case 0:
@@ -359,6 +369,49 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					//6.13 
+					if (reverseDelay > 1.f / m_fAniSpeed && reverseDelay < 1.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 1.6f / m_fAniSpeed && reverseDelay < 1.7f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv2.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 4.f / m_fAniSpeed && reverseDelay < 4.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 5.5f / m_fAniSpeed && reverseDelay < 5.6f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 6.1f / m_fAniSpeed && reverseDelay < 6.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv2.wav", SoundChannel::MONSTER, 0.2f);
+							SoundManager::PlayOverlapSound(L"hit_common_impact1.wav", SoundChannel::EFFECT, 0.3f);
+							isSound = true;
+						}
+					}
+					else
+						isSound = false;
 
 					//0.83 2.06
 					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 2.06 / m_fAniSpeed)
@@ -407,6 +460,60 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					//0.8 6.2
+					if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_threat_hammer.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 2.7f / m_fAniSpeed && reverseDelay < 2.8f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv5.wav", SoundChannel::EFFECT, 0.2f);
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 4.2f / m_fAniSpeed && reverseDelay < 4.3f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv5.wav", SoundChannel::EFFECT, 0.2f);
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 4.9f / m_fAniSpeed && reverseDelay < 5.f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv5.wav", SoundChannel::EFFECT, 0.2f);
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 5.9f / m_fAniSpeed && reverseDelay < 6.f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 7.2f / m_fAniSpeed && reverseDelay < 7.3f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::EFFECT, 0.2f);
+							isSound = true;
+						}
+					}
+					else
+						isSound = false;
 					if (reverseDelay > 0.8 / m_fAniSpeed && reverseDelay < 6.2 / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
@@ -456,15 +563,57 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
 					//}
 
+
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pStateCom->stat.moveSpeed = 5.f;
+					if (reverseDelay > 0.1f / m_fAniSpeed && reverseDelay < 0.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 2.12f / m_fAniSpeed && reverseDelay < 2.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 4.5f / m_fAniSpeed && reverseDelay < 4.6f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_03.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 5.f / m_fAniSpeed && reverseDelay < 5.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv2.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else
+						isSound = false;
 
 					if (reverseDelay > 2.6 / m_fAniSpeed && reverseDelay < 4 / m_fAniSpeed)
 					{
+						if (!isSound)
+						{
+							/*SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;*/
+						}
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 					}
+					else
+						isSound = false;
 					//if (reverseDelay > 7.56 / m_fAniSpeed && reverseDelay < 9.45 / m_fAniSpeed)
 					//{
 					//	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
@@ -521,6 +670,172 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					//{
 					//	isColl = false;
 					//}
+					if (reverseDelay > 0.1f / m_fAniSpeed && reverseDelay < 0.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_threat_fist.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					if (reverseDelay > 2.f / m_fAniSpeed && reverseDelay < 2.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_02.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+
+
+					//첫 투스텝
+					else if (reverseDelay > 4.1f / m_fAniSpeed && reverseDelay < 4.3f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay >4.6f / m_fAniSpeed && reverseDelay < 4.8f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+
+					//둘 투스텝
+					else if (reverseDelay > 6.1f / m_fAniSpeed && reverseDelay < 6.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 6.6f / m_fAniSpeed && reverseDelay < 6.7f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					//셋 투스텝
+					else if (reverseDelay > 8.1f / m_fAniSpeed && reverseDelay < 8.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 8.6f / m_fAniSpeed && reverseDelay < 8.7f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					//넷 투스텝
+					else if (reverseDelay > 9.5f / m_fAniSpeed && reverseDelay < 9.6f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{	
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 10.5f / m_fAniSpeed && reverseDelay < 10.6f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					/*else if (reverseDelay > 11.5f / m_fAniSpeed && reverseDelay < 11.6f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}*/
+					//다섯 투스텝
+					else if (reverseDelay > 12.f / m_fAniSpeed && reverseDelay < 12.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 12.5f / m_fAniSpeed && reverseDelay < 12.6f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 13.5f / m_fAniSpeed && reverseDelay < 13.6f / m_fAniSpeed)
+					{
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+					}
+					else if (reverseDelay > 14.5f / m_fAniSpeed && reverseDelay < 14.6f / m_fAniSpeed)
+					{
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+					}
+					else if (reverseDelay > 15.5f / m_fAniSpeed && reverseDelay < 15.6f / m_fAniSpeed)
+					{
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+					}
+					else if (reverseDelay > 16.5f / m_fAniSpeed && reverseDelay < 16.6f / m_fAniSpeed)
+					{
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+					}
+	
+					else if (reverseDelay > 17.5f / m_fAniSpeed && reverseDelay < 17.6f / m_fAniSpeed)
+					{
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
+						SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+					}
+					//else if (reverseDelay > 17.f / m_fAniSpeed && reverseDelay < 17.1f / m_fAniSpeed)
+					//{
+					//if (!isSound)
+					//{
+					//	SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
+					//	isSound = true;
+					//}
+					//}
+					else
+					{
+						isSound = false;
+					}
 
 					if (reverseDelay > 3.5 / m_fAniSpeed && reverseDelay < 7.2 / m_fAniSpeed)
 					{
@@ -609,7 +924,26 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					m_pStateCom->stat.moveSpeed = 3.f;
 					//3.5f 스타트
 					//4.53 5.12
-
+					if (reverseDelay > 0.1f / m_fAniSpeed && reverseDelay < 0.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 4.75f / m_fAniSpeed && reverseDelay < 4.85f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv6.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else
+					{
+						isSound = false;
+					}
 					if (reverseDelay > 4.35 / m_fAniSpeed && reverseDelay < 5.6 / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
@@ -655,6 +989,42 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pStateCom->stat.moveSpeed = 3.f;
 
+					if (reverseDelay > 0.1f / m_fAniSpeed && reverseDelay < 0.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 2.35f / m_fAniSpeed && reverseDelay < 2.45f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv6.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 3.f / m_fAniSpeed && reverseDelay < 3.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.3f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 3.7f / m_fAniSpeed && reverseDelay < 3.8f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.3f);
+							isSound = true;
+						}
+					}
+					else
+					{
+						isSound = false;
+					}
 					/*if (delay > 1.3f && delay < 1.4f)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
@@ -665,12 +1035,12 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}
-					if (reverseDelay > 1.1 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
+					if (reverseDelay > 1.1 / m_fAniSpeed && reverseDelay < 2.35 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(20.f * fTimeDelta * spinSpeed));
 						//isColl = true;
 					}
-					else if (reverseDelay > 3.3 / m_fAniSpeed && reverseDelay < 4.1 / m_fAniSpeed)
+					else if (reverseDelay > 3.3 / m_fAniSpeed && reverseDelay < 3.9 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-90.f * fTimeDelta * spinSpeed));
 						isColl = true;
@@ -715,18 +1085,56 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pStateCom->stat.moveSpeed = 5.f;
+
+					if (reverseDelay > 0.1f / m_fAniSpeed && reverseDelay < 0.2f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 2.35f / m_fAniSpeed && reverseDelay < 2.45f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"swing_lv6.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 3.f / m_fAniSpeed && reverseDelay < 3.1f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.3f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 3.7f / m_fAniSpeed && reverseDelay < 3.8f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.3f);
+							isSound = true;
+						}
+					}
+					else
+					{
+						isSound = false;
+					}
+
 					//8.3f 스타트
-					if (reverseDelay > 2.5f / m_fAniSpeed && reverseDelay < 3.6f / m_fAniSpeed)
+					if (reverseDelay > 2.5f / m_fAniSpeed && reverseDelay < 3.5f / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}
-					if (reverseDelay > 1.4 / m_fAniSpeed && reverseDelay < 2.8 / m_fAniSpeed)
+					if (reverseDelay > 1.4 / m_fAniSpeed && reverseDelay < 2.35 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-20.f * fTimeDelta * spinSpeed));
 						//isColl = true;
 					}
-					else if (reverseDelay > 3.3 / m_fAniSpeed && reverseDelay < 3.6 / m_fAniSpeed)
+					else if (reverseDelay > 3.3 / m_fAniSpeed && reverseDelay < 3.9 / m_fAniSpeed)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(90.f * fTimeDelta * spinSpeed));
 						isColl = true;
@@ -764,13 +1172,38 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 					{
 						m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-60.f * fTimeDelta * spinSpeed));
 					}
-
+					if (reverseDelay > 0.2f / m_fAniSpeed && reverseDelay < 0.3f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"ogre_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 2.5f / m_fAniSpeed && reverseDelay < 2.6f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else if (reverseDelay > 3.4f / m_fAniSpeed && reverseDelay < 3.5f / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"step_lv1.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+					}
+					else
+						isSound = false;
 					//기존 몬스터의 룩벡터
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					m_pStateCom->stat.moveSpeed = 7.f;
 					//1.8f 스타트
-					if (reverseDelay > 1.6f / m_fAniSpeed && reverseDelay < 2.6f / m_fAniSpeed)
+					if (reverseDelay > 1.6f / m_fAniSpeed && reverseDelay < 2.5f / m_fAniSpeed)
 					{
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
@@ -794,7 +1227,9 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 
 				if (true == m_pMeshCom->Is_AnimationSetEnd())
 				{
-
+					
+						SoundManager::PlayOverlapSound(L"ogre_breath_01.wav", SoundChannel::MONSTER, 0.2f);
+					
 					isAnimating = false;
 					m_pStateCom->stat.moveSpeed = TitanSpeed;
 					delay = 0;
@@ -811,6 +1246,11 @@ Client::_int Client::CTitan::Update_Object(const _float& fTimeDelta)
 	}
 	else if (isDie)
 	{
+	if (!dieSound)
+	{
+		SoundManager::PlayOverlapSound(L"ogre_hurt_boss_03.wav", SoundChannel::MONSTER, 0.2f);
+		dieSound = true;
+	}
 		m_state = titanState::STATE_DYINGFRONT;
 		if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
