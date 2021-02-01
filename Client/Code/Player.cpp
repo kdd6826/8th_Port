@@ -102,7 +102,7 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.maxStamina = 200.f;
 	m_pStateCom->stat.sp = 1250.f;
 	m_pStateCom->stat.maxSp = 1250.f;
-	m_pStateCom->stat.damage = PlayerOriginAtt;
+	m_pStateCom->stat.damage = PlayerOriginAtt*cheatDamage;
 	isDown = false;
 	// Shader
 	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
@@ -337,7 +337,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 	}
 	else if (true == m_pMeshCom->Is_AnimationSetEnd())
 	{
-		m_pStateCom->stat.damage = PlayerOriginAtt;
+		m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage;
 		m_pStateCom->perfectGuard = false;
 		isSkill = false;
 	}
@@ -406,7 +406,7 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 
 		else if (true == m_pMeshCom->Is_AnimationSetEnd())
 		{
-			m_pStateCom->stat.damage = PlayerOriginAtt;
+			m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage;
 			m_pStateCom->perfectGuard = false;
 			isInvincible = false;
 			isSkill = false;
@@ -520,7 +520,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT4)
 	{
-		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+		m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 1.5f;
 
 		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 		_float fCamAngle;
@@ -542,7 +542,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_ATT5)
 	{
-		m_pStateCom->stat.damage = PlayerOriginAtt * 1.5f;
+		m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 1.5f;
 
 		_vec3 vLook, vUp, vRight, vLeft, vDir, vPos, vCamPos, vMyPos;
 		_float fCamAngle;
@@ -634,7 +634,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DOOMSAYER)
 	{
-		m_pStateCom->stat.damage = PlayerOriginAtt*3.f;
+		m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage*3.f;
 		if (delay < 2.f&&hitCount==0)
 		{
 			CColliderMgr::GetInstance()->hitList.clear();
@@ -664,27 +664,27 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1)
 	{
-	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT2)
 	{
-	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT3)
 	{
-	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT4)
 	{
-	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT5)
 	{
-	m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;
 	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT6)
 	{
-		m_pStateCom->stat.damage = PlayerOriginAtt * 2.f;
+		m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;
 	}
 
 	if (isDown)
@@ -694,7 +694,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 
 	if (true == m_pMeshCom->Is_AnimationSetEnd())
 	{
-		m_pStateCom->stat.damage = PlayerOriginAtt;
+		m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage;
 	}
 }
 
@@ -1045,7 +1045,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 {
 	if (isTired)
 		return;
-	m_pStateCom->stat.damage = PlayerOriginAtt;
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage;
 	//m_pStateCom->stat.sp = 625;
 	if (Engine::Get_DIMouseState(Engine::DIM_LB) & 0x80)
 	{
@@ -1586,6 +1586,13 @@ HRESULT Client::CPlayer::Ready_Object(void)
 }
 Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
+	if (m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_DKKNIGHT2)
+	{
+		m_pStateCom->stat.hp = m_pStateCom->stat.maxHp;
+		m_pStateCom->stat.sp = m_pStateCom->stat.maxSp;
+		m_pStateCom->stat.stamina = m_pStateCom->stat.maxStamina;
+		cheatDamage = 3.f;
+	}
 	VecUpdate(fTimeDelta);
 	CUnit::Update_Object(fTimeDelta);
 	if (isInvincibleTime > 0.f)

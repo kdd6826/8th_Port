@@ -351,7 +351,16 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 					//6.13 
 
 					//0.83 2.06
-					if (reverseDelay > 3.26 / m_fAniSpeed && reverseDelay < 3.6 / m_fAniSpeed)
+					if (reverseDelay > 0.f / m_fAniSpeed && reverseDelay < 0.1 / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							SoundManager::PlayOverlapSound(L"mankind_shout_01.wav", SoundChannel::MONSTER, 0.2f);
+							isSound = true;
+						}
+						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
+					}
+					else if (reverseDelay > 3.26 / m_fAniSpeed && reverseDelay < 3.6 / m_fAniSpeed)
 					{
 						if (!isSound)
 						{

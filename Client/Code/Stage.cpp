@@ -204,7 +204,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	//pGameObject = CIngkells::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 20, 0.f, 20 });
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ingkells", pGameObject), E_FAIL);
 
 	/*for (_uint i = 0; i < 50; ++i)
 	{
@@ -341,42 +341,42 @@ HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_LightInfo(void)
 {
-	D3DLIGHT9		tLightInfo;
-	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+	//D3DLIGHT9		tLightInfo;
+	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
-	// 0번 조명
-	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+	//// 0번 조명
+	//tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 
-	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	//tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	//tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	//tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 
-	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
+	//tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
-	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
-		return E_FAIL;
+	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+	//	return E_FAIL;
 
-	// 1번 조명
-	tLightInfo.Type = D3DLIGHT_POINT;
-	tLightInfo.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	tLightInfo.Specular = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.f, 0.f, 1.f);
-	tLightInfo.Position = _vec3(5.f, 5.f, 5.f);
-	tLightInfo.Range = 10.f;
+	//// 1번 조명
+	//tLightInfo.Type = D3DLIGHT_POINT;
+	//tLightInfo.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	//tLightInfo.Specular = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	//tLightInfo.Ambient = D3DXCOLOR(0.2f, 0.f, 0.f, 1.f);
+	//tLightInfo.Position = _vec3(5.f, 5.f, 5.f);
+	//tLightInfo.Range = 10.f;
 
-	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1)))
-		return E_FAIL;
-		
-	// 2번 조명
-	tLightInfo.Type = D3DLIGHT_POINT;
-	tLightInfo.Diffuse = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
-	tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
-	tLightInfo.Ambient = D3DXCOLOR(0.f, 0.f, 0.2f, 1.f);
-	tLightInfo.Position = _vec3(10.f, 5.f, 10.f);
-	tLightInfo.Range = 10.f;
+	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1)))
+	//	return E_FAIL;
+	//	
+	//// 2번 조명
+	//tLightInfo.Type = D3DLIGHT_POINT;
+	//tLightInfo.Diffuse = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	//tLightInfo.Specular = D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+	//tLightInfo.Ambient = D3DXCOLOR(0.f, 0.f, 0.2f, 1.f);
+	//tLightInfo.Position = _vec3(10.f, 5.f, 10.f);
+	//tLightInfo.Range = 10.f;
 
-	if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 2)))
-		return E_FAIL;
+	//if (FAILED(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 2)))
+	//	return E_FAIL;
 
 	return S_OK;
 }

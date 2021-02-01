@@ -75,7 +75,7 @@ Client::_int Client::CBossHpBarOrange::Update_Object(const _float& fTimeDelta)
 		
 	Engine::CMonsterState* pTitanStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Titan", L"Com_MonsterState", Engine::ID_DYNAMIC));
 	Engine::CMonsterState* pIngkellsStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Ingkells", L"Com_MonsterState", Engine::ID_DYNAMIC));
-	if (pTitanStateCom == nullptr && pTitanStateCom == nullptr)
+	if (pIngkellsStateCom == nullptr && pTitanStateCom == nullptr)
 		return 0;
 	if (pTitanStateCom != nullptr&& pTitanStateCom->stat.hp <= pTitanStateCom->stat.maxHp * 0.6)
 	{

@@ -92,6 +92,7 @@ private:
 	_float						m_fAniSpeed = 1.f;
 	_float						m_fBattleCount=0.f;
 	_vec3						hitDir;
+	_float						cheatDamage=1.f;
 public:
 	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CPlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev,StageNum _stage);

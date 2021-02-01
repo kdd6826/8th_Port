@@ -447,7 +447,7 @@ HRESULT CStage3::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	pGameObject = CIngkells::Create(m_pGraphicDev, CUnit::STAGE3);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 50.f,0.f,58.f });
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Inkells", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ingkells", pGameObject), E_FAIL);
 	//pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE3);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//dynamic_cast<CDog*>(pGameObject)->SetSpawnPosition(_vec3{ 105.f,0.f,4.5f });
@@ -542,6 +542,23 @@ HRESULT CStage3::Ready_UI_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkillDkTransform2", pGameObject), E_FAIL);
 
 
+
+
+	pGameObject = CBossHpBarOrange::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarOrange", pGameObject), E_FAIL);
+	pGameObject = CBossHpBarGreen::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarGreen", pGameObject), E_FAIL);
+
+	pGameObject = CBossHpBarBase::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarBase", pGameObject), E_FAIL);
+
+
+	pGameObject = CBossHpBarRed::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarRed", pGameObject), E_FAIL);
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, 10.f),
 		&_vec3(0.f, 0.f, 10.f),
 		&_vec3(0.f, 1.f, 0.f));

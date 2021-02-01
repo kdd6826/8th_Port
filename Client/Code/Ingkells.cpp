@@ -322,8 +322,8 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 
 	if (!initialize)
 	{
-		m_pStateCom->stat.maxHp = 100000.f;
-		m_pStateCom->stat.hp = 100000.f;
+		m_pStateCom->stat.maxHp = 250000.f;
+		m_pStateCom->stat.hp = 250000.f;
 		m_pStateCom->stat.damage = 100.f;
 		m_pTransformCom->Set_Pos(&spawnPosition);
 		_ulong i = m_pNaviMeshCom->GetdwIndex(&_vec2(spawnPosition.x, spawnPosition.z));
