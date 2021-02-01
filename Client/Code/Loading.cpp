@@ -258,13 +258,13 @@ _uint CLoading::Loading_ForStage(void)
 	//	L"darkknight_1_idle.X"),
 	//	E_FAIL);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-	//	Engine::RESOURCE_STAGE,
-	//	L"Mesh_Player2",
-	//	Engine::TYPE_DYNAMIC,
-	//	L"../Bin/Resource/Mesh/DynamicMesh/darkknight2/",
-	//	L"darkknight_2_idle.X"),
-	//	E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Mesh_Player2",
+		Engine::TYPE_DYNAMIC,
+		L"../Bin/Resource/Mesh/DynamicMesh/darkknight2/",
+		L"darkknight_2_idle.X"),
+		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,

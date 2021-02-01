@@ -110,6 +110,8 @@ void Client::CSword::Render_Object(void)
 
 	Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerStateCom, );
+
+
 	if (pPlayerStateCom->playerMeshState != Engine::CPlayerState::MESH_NORMAL)
 	{
 		return;

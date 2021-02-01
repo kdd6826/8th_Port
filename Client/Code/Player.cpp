@@ -54,16 +54,36 @@ HRESULT Client::CPlayer::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 
-	// Mesh
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
-
-
 	// Transform
 	pComponent = m_pStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Clone(L"Proto_PlayerState"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_PlayerState", pComponent);
+
+	// Mesh
+	if (stageNum == STAGE1)
+	{
+		pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+		m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
+	}
+	if (stageNum == STAGE2)
+	{
+		pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+		m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_NORMAL;
+	}
+	else if (stageNum == STAGE3)
+	{
+		pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
+		m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
+	}
+
+
+
 
 	CUnit::Add_Component();
 
@@ -1333,23 +1353,23 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			m_fBattleCount = delay + 5.f;
 		}
 	}
-	if (Engine::Get_DIKeyState(DIK_7) & 0x80)
-	{
-		if (skillDelay[_DARK2] > 0.f)
-			return;
-		if (delay <= 0.f)
-		{
-			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS2;
-			//OK
-			//delay = 8.1f;
-			isSkill = true;
-			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
-			temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
-			delay = temp;
-			skillDelay[_DARK2] = temp + 0.5f;
-			m_fBattleCount = delay + 5.f;
-		}
-	}
+	//if (Engine::Get_DIKeyState(DIK_7) & 0x80)
+	//{
+	//	if (skillDelay[_DARK2] > 0.f)
+	//		return;
+	//	if (delay <= 0.f)
+	//	{
+	//		m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS2;
+	//		//OK
+	//		//delay = 8.1f;
+	//		isSkill = true;
+	//		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
+	//		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
+	//		delay = temp;
+	//		skillDelay[_DARK2] = temp + 0.5f;
+	//		m_fBattleCount = delay + 5.f;
+	//	}
+	//}
 }
 
 void CPlayer::AttackOnRotation()
