@@ -874,6 +874,7 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 					) {
 					if (true == m_pMeshCom->Is_AnimationSetEnd())
 					{
+						SoundManager::PlayOverlapSound(L"mankind_shout_boss_01.wav", SoundChannel::MONSTER, 0.2f);
 							isAnimating = false;
 							m_pStateCom->stat.moveSpeed = IngkellsSpeed;
 							delay = 0;
