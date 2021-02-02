@@ -44,8 +44,9 @@ Engine::_int CStage3::Update_Scene(const _float& fTimeDelta)
 		InitialUpdate();
 		isInitial = true;
 	}
-	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
-	if (Portal->GetPortal())
+	
+	CFadeInOut* FadeInOut = dynamic_cast<CFadeInOut*>(Engine::Get_GameObject(L"UI", L"FadeInOut"));
+	if (FadeInOut->GetEvent())
 	{
 		SoundManager::StopSound(SoundChannel::BGM);
 		CScene* pScene = nullptr;
@@ -54,6 +55,16 @@ Engine::_int CStage3::Update_Scene(const _float& fTimeDelta)
 		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
 		return 1;
 	}
+	//CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
+	//if (Portal->GetPortal())
+	//{
+	//	SoundManager::StopSound(SoundChannel::BGM);
+	//	CScene* pScene = nullptr;
+	//	pScene = CStage::Create(m_pGraphicDev);
+
+	//	FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
+	//	return 1;
+	//}
 	CColliderMgr::GetInstance()->Update();
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
@@ -483,9 +494,9 @@ HRESULT CStage3::Ready_UI_Layer(const _tchar * pLayerTag)
 	Engine::CGameObject* pGameObject = nullptr;
 
 
-	/*pGameObject = CFadeInOut::Create(m_pGraphicDev);
+	pGameObject = CFadeInOut::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOut", pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOut", pGameObject), E_FAIL);
 
 
 	pGameObject = CSkillSlot::Create(m_pGraphicDev);
@@ -542,7 +553,13 @@ HRESULT CStage3::Ready_UI_Layer(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkillDkTransform2", pGameObject), E_FAIL);
 
 
+	pGameObject = CBossHpBarBase::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarBase", pGameObject), E_FAIL);
 
+	pGameObject = CBossHpBarRed::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarRed", pGameObject), E_FAIL);
 
 	pGameObject = CBossHpBarOrange::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -551,14 +568,8 @@ HRESULT CStage3::Ready_UI_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarGreen", pGameObject), E_FAIL);
 
-	pGameObject = CBossHpBarBase::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarBase", pGameObject), E_FAIL);
 
 
-	pGameObject = CBossHpBarRed::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossHpBarRed", pGameObject), E_FAIL);
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, 10.f),
 		&_vec3(0.f, 0.f, 10.f),
 		&_vec3(0.f, 1.f, 0.f));

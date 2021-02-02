@@ -275,6 +275,7 @@ Client::_int Client::CKnight::Update_Object(const _float& fTimeDelta)
 		m_pStateCom->stat.maxHp = 10000.f;
 		m_pStateCom->stat.hp = 10000.f;
 		m_pStateCom->stat.damage = 100.f;
+		m_pStateCom->stat.downDamage = 2.5f;
 		m_pTransformCom->Set_Pos(&spawnPosition);
 		if (nullptr != m_pNaviMeshCom)
 		{

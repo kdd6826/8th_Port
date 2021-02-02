@@ -1729,7 +1729,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 	{
 		if (isHit == false)
 		{
-			SoundManager::PlayOverlapSound(L"arisha_hurt_weak_03.wav", SoundChannel::PLAYER, 0.2f);
+			
 			_vec3 vPlayerPos;
 			m_pTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
 			Engine::CMonsterState*  pMonsterStateCom = dynamic_cast<CMonster*>(target)->m_pStateCom;
@@ -1832,6 +1832,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 
 			if (m_pStateCom->stat.down >= 10.f)
 			{
+				SoundManager::PlayOverlapSound(L"arisha_hurt_strong_03.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_STRONG_DOWN;
 				m_pStateCom->stat.down = 0.f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1840,6 +1841,7 @@ void CPlayer::OnCollision(Engine::CGameObject* target)
 			}
 			else
 			{
+				SoundManager::PlayOverlapSound(L"arisha_hurt_weak_03.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DMG_BACK;
 			}
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);

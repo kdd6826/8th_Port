@@ -24,7 +24,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-
+	_bool GetEvent() { return isEvent; }
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
@@ -37,8 +37,10 @@ private:
 private:
 	_matrix						m_matProj;
 	_float						m_fX, m_fY;
+	_float						m_fAlpha = 0.f;
 	_float						m_fSizeX, m_fSizeY;
-
+	_bool						isFadeIn = false;
+	_bool						isEvent = false;
 public:
 	static CFadeInOut*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

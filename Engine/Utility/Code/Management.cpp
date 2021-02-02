@@ -128,10 +128,10 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Weapon", pShader), E_FAIL);
 
-	//// Shade
-	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Hair_Shader.hpp");
-	NULL_CHECK_RETURN(pShader, E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Player", pShader), E_FAIL);
+	////// Shade
+	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Hair_Shader.hpp");
+	//NULL_CHECK_RETURN(pShader, E_FAIL);
+	//FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Player", pShader), E_FAIL);
 	//	// Shade
 	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Terrain.hpp");
 	//NULL_CHECK_RETURN(pShader, E_FAIL);
@@ -152,6 +152,11 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Effect.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_Effect", pShader), E_FAIL);
+
+	// Effect
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_FadeInOut.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_FadeInOut", pShader), E_FAIL);
 
 	// Effect
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_HitEffect.hpp");

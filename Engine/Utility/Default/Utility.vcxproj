@@ -215,7 +215,7 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\RenderTargetMgr.h" />
     <ClInclude Include="..\Code\Scene.h" />
     <ClInclude Include="..\Code\Shader.h" />
-    <ClInclude Include="..\Code\ShaderFadeInOut.hpp" />
+    <ClInclude Include="..\Code\Shader_FadeInOut.hpp" />
     <ClInclude Include="..\Code\Shader_Base.hpp" />
     <ClInclude Include="..\Code\Shader_Blend.hpp" />
     <ClInclude Include="..\Code\Shader_DamageFont.hpp" />

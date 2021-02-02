@@ -52,7 +52,7 @@ HRESULT Client::CTitan::Add_Component(void)
 	m_pStateCom->stat.maxHp = 100000.f;
 	m_pStateCom->stat.hp = 100000.f;
 	m_pStateCom->stat.damage = 200.f;
-	m_pStateCom->stat.downDamage = 3.5f;
+	m_pStateCom->stat.downDamage = 5.f;
 	return S_OK;
 }
 

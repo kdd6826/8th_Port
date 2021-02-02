@@ -98,7 +98,7 @@ HRESULT Client::CFireEffect::Ready_Object(void)
 	//sphereCol->m_pTransformCom->m_vScale = sphereScale;
 	//CColliderMgr::GetInstance()->RegisterObject(Engine::COLLID::ENEMY, sphereCol);
 	//CColliderMgr::GetInstance()->RegisterObject(_collType2, sphereCol);
-
+	m_pStateCom->stat.downDamage = 3.f;
 	m_pStateCom->stat.damage = 50.f;
 	return S_OK;
 }

@@ -281,9 +281,6 @@
     <ClInclude Include="..\Code\Shader_Skill.hpp">
       <Filter>09. Shader\hpp</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\ShaderFadeInOut.hpp">
-      <Filter>09. Shader\hpp</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Shader_GateEffect.hpp">
       <Filter>09. Shader\hpp</Filter>
     </ClInclude>
@@ -294,6 +291,9 @@
       <Filter>09. Shader\hpp</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Hair_Shader.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_FadeInOut.hpp">
       <Filter>09. Shader\hpp</Filter>
     </ClInclude>
   </ItemGroup>

@@ -46,8 +46,8 @@ Engine::_int CStage2::Update_Scene(const _float& fTimeDelta)
 		InitialUpdate();
 		isInitial = true;
 	}
-	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
-	if (Portal->GetPortal())
+	CFadeInOut* FadeInOut = dynamic_cast<CFadeInOut*>(Engine::Get_GameObject(L"UI", L"FadeInOut"));
+	if (FadeInOut->GetEvent())
 	{
 		SoundManager::StopSound(SoundChannel::BGM);
 		CScene* pScene = nullptr;
@@ -56,6 +56,16 @@ Engine::_int CStage2::Update_Scene(const _float& fTimeDelta)
 		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
 		return 1;
 	}
+	//CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
+	//if (Portal->GetPortal())
+	//{
+	//	SoundManager::StopSound(SoundChannel::BGM);
+	//	CScene* pScene = nullptr;
+	//	pScene = CStage3::Create(m_pGraphicDev);
+
+	//	FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
+	//	return 1;
+	//}
 	CColliderMgr::GetInstance()->Update();
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
@@ -408,9 +418,7 @@ HRESULT CStage2::Ready_UI_Layer(const _tchar * pLayerTag)
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-	/*pGameObject = CFadeInOut::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOut", pGameObject), E_FAIL);*/
+
 
 
 	pGameObject = CSkillSlot::Create(m_pGraphicDev);
@@ -465,7 +473,9 @@ HRESULT CStage2::Ready_UI_Layer(const _tchar * pLayerTag)
 	pGameObject = CSkillDkTransform2::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkillDkTransform2", pGameObject), E_FAIL);
-
+	pGameObject = CFadeInOut::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOut", pGameObject), E_FAIL);
 
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f),
 		&_vec3(0.f, 0.f, 10.f),
