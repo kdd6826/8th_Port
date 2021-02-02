@@ -24,7 +24,7 @@ HRESULT Client::CSkillDkTransform::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Buffer", pComponent);
 
 	// texture
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform2"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
@@ -62,9 +62,10 @@ HRESULT Client::CSkillDkTransform::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = 140 + 40 * 6;
-	m_fY = 550.f;
-
+	//m_fX = 140 + 40 * 6;
+	//m_fY = 550.f;
+	m_fX = WINCX * 0.475;
+	m_fY = WINCY - WINCY*0.1f;
 	m_fSizeX = 30;
 	m_fSizeY = 30;
 
@@ -73,7 +74,7 @@ HRESULT Client::CSkillDkTransform::Ready_Object(void)
 Client::_int Client::CSkillDkTransform::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
-		
+	m_fX = 782;
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);

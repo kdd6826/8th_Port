@@ -56,7 +56,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 void CLogo::Render_Scene(void)
 {
 	// DEBUG ¿ë
-	Engine::Render_Font(L"Font_Jinji", m_pLoading->Get_LoadString(), &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+	Engine::Render_Font(L"Font_Jinji", m_pLoading->Get_LoadString(), &_vec2(950, 10.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 }
 

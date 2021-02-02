@@ -62,9 +62,9 @@ HRESULT Client::CBossHpBarOrange::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fSizeX = 800.f;
-	m_fSizeY = 64.f;
-	m_fX = 550.f;
+	m_fSizeX = 1100.f;
+	m_fSizeY = 128.f;
+	m_fX = 1050.f;
 	m_fY = 120.f;
 
 	return S_OK;
@@ -79,19 +79,21 @@ Client::_int Client::CBossHpBarOrange::Update_Object(const _float& fTimeDelta)
 		return 0;
 	if (pTitanStateCom != nullptr&& pTitanStateCom->stat.hp <= pTitanStateCom->stat.maxHp * 0.6)
 	{
-				m_fX = 155 + 395 * ((pTitanStateCom->stat.hp - pTitanStateCom->stat.maxHp * 0.3) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
-		m_fSizeX = 800 * (pTitanStateCom->stat.hp - pTitanStateCom->stat.maxHp * 0.3) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7);
+				//m_fX = 155 + 395 * ((pTitanStateCom->stat.hp - pTitanStateCom->stat.maxHp * 0.3) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
+		m_fX = 500 + 550 * ((pTitanStateCom->stat.hp - pTitanStateCom->stat.maxHp * 0.3) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 1100 * (pTitanStateCom->stat.hp - pTitanStateCom->stat.maxHp * 0.3) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7);
 		if (m_fSizeX < 0)
 			m_fSizeX = 0;
 	}
 	else if (pIngkellsStateCom != nullptr && pIngkellsStateCom->stat.hp <= pIngkellsStateCom->stat.maxHp * 0.6)
 	{
-		m_fX = 155 + 395 * ((pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
-		m_fSizeX = 800 * (pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7);
+		//m_fX = 155 + 395 * ((pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
+		m_fX = 500 + 550 * ((pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 1100 * (pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7);
 		if (m_fSizeX < 0)
 			m_fSizeX = 0;
 	}
-
+	//m_fX = 200 + 790 * ((pIngkellsStateCom->stat.hp - pIngkellsStateCom->stat.maxHp * 0.3) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);

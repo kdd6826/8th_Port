@@ -63,11 +63,11 @@ HRESULT Client::CHpBarBack::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fX = 400.f;
-	m_fY = 15.f;
+	m_fY = 40.f;
 
 	
 	m_fSizeX = 800.f;
-	m_fSizeY = 25.f;
+	m_fSizeY = 50.f;
 
 	return S_OK;
 }

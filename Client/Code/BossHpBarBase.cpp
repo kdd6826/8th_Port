@@ -62,9 +62,9 @@ HRESULT Client::CBossHpBarBase::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fSizeX = 800.f;
-	m_fSizeY = 64.f;
-	m_fX = 550.f;
+	m_fSizeX = 1100.f;
+	m_fSizeY = 128.f;
+	m_fX = 1050;
 	m_fY = 120.f;
 
 
@@ -74,7 +74,6 @@ HRESULT Client::CBossHpBarBase::Ready_Object(void)
 Client::_int Client::CBossHpBarBase::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
-
 	Engine::CMonsterState* pTitanStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Titan", L"Com_MonsterState", Engine::ID_DYNAMIC));
 	Engine::CMonsterState* pIngkellsStateCom = dynamic_cast<Engine::CMonsterState*>(Engine::Get_Component(L"GameLogic", L"Ingkells", L"Com_MonsterState", Engine::ID_DYNAMIC));
 	if (pIngkellsStateCom == nullptr&& pTitanStateCom == nullptr)

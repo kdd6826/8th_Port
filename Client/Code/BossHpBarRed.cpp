@@ -62,9 +62,9 @@ HRESULT Client::CBossHpBarRed::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fSizeX = 800.f;
-	m_fSizeY = 64.f;
-	m_fX = 550.f;
+	m_fSizeX = 1100.f;
+	m_fSizeY = 128.f;
+	m_fX = 1050;
 	m_fY = 120.f;
 	return S_OK;
 }
@@ -79,15 +79,17 @@ Client::_int Client::CBossHpBarRed::Update_Object(const _float& fTimeDelta)
 
 	if (pTitanStateCom !=nullptr&&pTitanStateCom->stat.hp <= pTitanStateCom->stat.maxHp * 0.31)
 	{
-		m_fX = 160 + 390 * ((pTitanStateCom->stat.hp) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
-		m_fSizeX = 800 * (pTitanStateCom->stat.hp) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7);
+		//m_fX = 160 + 390 * ((pTitanStateCom->stat.hp) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
+		m_fX = 500 + 550 * ((pTitanStateCom->stat.hp) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 1100 * (pTitanStateCom->stat.hp) / (pTitanStateCom->stat.maxHp - pTitanStateCom->stat.maxHp * 0.7);
 		if (m_fSizeX < 0)
 			m_fSizeX = 0;
 	}
 	else 	if (pIngkellsStateCom != nullptr && pIngkellsStateCom->stat.hp <= pIngkellsStateCom->stat.maxHp * 0.31)
 	{
-		m_fX = 160 + 390 * ((pIngkellsStateCom->stat.hp) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
-		m_fSizeX = 800 * (pIngkellsStateCom->stat.hp) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7);
+		//m_fX = 160 + 390 * ((pIngkellsStateCom->stat.hp) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
+		m_fX = 500 + 550 * ((pIngkellsStateCom->stat.hp) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7));
+		m_fSizeX = 1100 * (pIngkellsStateCom->stat.hp) / (pIngkellsStateCom->stat.maxHp - pIngkellsStateCom->stat.maxHp * 0.7);
 		if (m_fSizeX < 0)
 			m_fSizeX = 0;
 	}

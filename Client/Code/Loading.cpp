@@ -60,7 +60,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eLoading)
 
 _uint CLoading::Loading_ForStage(void)
 {
-	lstrcpy(m_szLoading, L"Buffer Loading.............................");
+	lstrcpy(m_szLoading, L"영웅을 모집하는 중...");
 	
 	int i = 0;
 
@@ -102,7 +102,7 @@ _uint CLoading::Loading_ForStage(void)
 	//										E_FAIL);
 
 
-	lstrcpy(m_szLoading, L"Texture Loading.............................");
+	lstrcpy(m_szLoading, L"영웅이 모여드는 중...");
 	// 텍스쳐
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Logo", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Logo/Logo.jpg"), E_FAIL);
@@ -195,15 +195,16 @@ _uint CLoading::Loading_ForStage(void)
 	//둠세이어
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill0", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill0.tga"), E_FAIL);
 	//마나이미지
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill1.tga"), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill1.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Buff/Buff11.tga"), E_FAIL);
 	//루블
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill2.tga"), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill2.tga"), E_FAIL);
 	//로오마
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill4", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill4.tga"), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_01_able.tga"), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill4", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill4.tga"), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_01_able.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_02_able.tga"), E_FAIL);
 
-	lstrcpy(m_szLoading, L"Mesh Loading.............................");
+	lstrcpy(m_szLoading, L"영웅이 출발 준비 중...");
 	// Stone
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -436,7 +437,7 @@ _uint CLoading::Loading_ForStage(void)
 			//
 	
 	
-	lstrcpy(m_szLoading, L"Loading Complete!!!");
+	lstrcpy(m_szLoading, L"출정 준비 완료!!");
 
 	m_bFinish = true;
 

@@ -61,10 +61,11 @@ void CSkillSlot::Free(void)
 HRESULT Client::CSkillSlot::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	m_fX = 400.f;
-	m_fY = 550.f;
-
+	
+	m_fX = WINCX/2;
+	m_fY = WINCY - WINCY*0.1f;
+	/*m_fX = 400.f;
+	m_fY = 550.f;*/
 	m_fSizeX = 560.f;
 	m_fSizeY = 80.f;
 

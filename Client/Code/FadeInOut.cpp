@@ -93,12 +93,12 @@ HRESULT Client::CFadeInOut::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = 400.f;
+	m_fX = WINCX/2;
 	
-	m_fY = 300.f;
-	m_fSizeY = 600.f;
+	m_fY = WINCY/2;
+	m_fSizeY = WINCY;
 	
-	m_fSizeX = 800.f;
+	m_fSizeX = WINCX;
 	
 
 	return S_OK;

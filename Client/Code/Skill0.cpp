@@ -61,10 +61,11 @@ void CSkill0::Free(void)
 HRESULT Client::CSkill0::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	m_fX = 144 + 38 * 2 ;
-	m_fY = 550.f;
-
+	288;
+	m_fX = WINCX * 0.275;
+	/*144 + 38 * 2;*/
+	//m_fY = 550.f;
+	m_fY = WINCY - WINCY*0.1f;
 	m_fSizeX = 30;
 	m_fSizeY = 30;
 
@@ -74,6 +75,7 @@ Client::_int Client::CSkill0::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 		
+	m_fX = 620.f;
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
