@@ -139,7 +139,7 @@ HRESULT CTerrain::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture");
-	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture1", 1);
+	//m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture1", 1);
 	m_pFilterCom->Set_Texture(pEffect, "g_FilterTexture");
 
 	//m_pAuraCom->Set_Texture(pEffect, "g_AuraTexture");

@@ -38,7 +38,8 @@ HRESULT Client::CDog::Add_Component(void)
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_MonsterMesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
@@ -48,7 +49,7 @@ HRESULT Client::CDog::Add_Component(void)
 
 HRESULT CDog::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
-	_matrix		matWorld, matView, matProj;
+	/*_matrix		matWorld, matView, matProj;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
@@ -56,8 +57,36 @@ HRESULT CDog::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
-	pEffect->SetMatrix("g_matProj", &matProj);	
+	pEffect->SetMatrix("g_matProj", &matProj);	*/
+	_matrix		matWorld, matView, matProj;
 
+	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	const D3DLIGHT9* pLightInfo = Engine::Get_Light(0);
+	_vec3 vCamPos, vCamAt, vCamDir;
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+
+	float limLightPower = 0.1f;
+	vCamPos = pCamera->Get_Eye();
+	vCamAt = pCamera->Get_At();
+	vCamDir = vCamPos - vCamAt;
+	D3DXVec3Normalize(&vCamDir, &vCamDir);
+	pEffect->SetFloat("g_fPower", limLightPower);
+	pEffect->SetVector("vCamDir", &_vec4(vCamDir, 0.f));
+	pEffect->SetVector("vLightDir", &_vec4(pLightInfo->Direction, 0.f));
+	pEffect->SetMatrix("g_matWorld", &matWorld);
+	pEffect->SetMatrix("g_matView", &matView);
+	pEffect->SetMatrix("g_matProj", &matProj);
+
+	D3DXMatrixInverse(&matView, NULL, &matView);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	pEffect->SetMatrix("g_matProjInv", &matProj);
+	pEffect->SetMatrix("g_matViewInv", &matView);
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
+
+	pEffect->SetVector("vCamPos", (_vec4*)&matView._41);
 	return S_OK;
 }
 
@@ -122,9 +151,11 @@ void CDog::Move(const _float& fTimeDelta)
 		default:
 			break;
 		}
+		
 		_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 		temp = (temp / (m_fAniSpeed)) - 0.2f;
 		delay = temp;
+		
 		isAnimating = true;
 		reverseDelay = 0.f;
 		return;
@@ -132,6 +163,7 @@ void CDog::Move(const _float& fTimeDelta)
 	else if (55.f <= angle && angle < 60.f)
 	{
 		m_state = dogState::STATE_RUN;
+		isSound = false;
 		if (disPlayer < 1.f)
 		{
 
@@ -154,21 +186,21 @@ void CDog::Move(const _float& fTimeDelta)
 			default:
 				break;
 			}
-			int sound = rand() % 4;
-			switch (sound)
-			{
-			case 0:
-				SoundManager::PlayOverlapSound(L"attackdog_shout_01.wav", SoundChannel::MONSTER, 0.2f);
-				break;
-			case 1:
-				SoundManager::PlayOverlapSound(L"attackdog_shout_02.wav", SoundChannel::MONSTER, 0.2f);
-				break;
-			case 2:
-				SoundManager::PlayOverlapSound(L"attackdog_shout_03.wav", SoundChannel::MONSTER, 0.2f);
-				break;
-			default:
-				break;
-			}
+			//int sound = rand() % 3;
+			//switch (sound)
+			//{
+			////case 0:
+			////	SoundManager::PlayOverlapSound(L"attackdog_shout_01.wav", SoundChannel::MONSTER, 0.2f);
+			////	break;
+			////case 1:
+			////	SoundManager::PlayOverlapSound(L"attackdog_shout_02.wav", SoundChannel::MONSTER, 0.2f);
+			////	break;
+			////case 2:
+			////	SoundManager::PlayOverlapSound(L"attackdog_shout_03.wav", SoundChannel::MONSTER, 0.2f);
+			////	break;
+			//default:
+			//	break;
+			//}
 			
 			_double temp = m_pMeshCom->Get_AnimationPeriod(m_state);
 			temp = (temp / (m_fAniSpeed)) - 0.2f;
@@ -222,10 +254,10 @@ void CDog::Move(const _float& fTimeDelta)
 	}
 	m_fAniSpeed = 1.5f;
 	m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
-	if (Engine::Get_DIKeyState(DIK_Z) & 0x80)
-	{
-		m_pTransformCom->Set_Pos(102.f, 0.f, 6.5f);
-	}
+	//if (Engine::Get_DIKeyState(DIK_Z) & 0x80)
+	//{
+	//	m_pTransformCom->Set_Pos(102.f, 0.f, 6.5f);
+	//}
 }
 
 void CDog::Attack(const _float& fTimeDelta)
@@ -274,6 +306,7 @@ HRESULT Client::CDog::Ready_Object(void)
 }
 Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 {
+	CMonster::Update_Object(fTimeDelta);
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
 	if(nullptr!=m_pOptimizationCom)
@@ -291,7 +324,6 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 
 	}
 
-	CMonster::Update_Object(fTimeDelta);
 
 	if (isDead)
 		return 1;
@@ -308,7 +340,7 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 		{
 
 
-			if (!isAnimating)
+			if (!isAnimating&&delay<=0.f)
 				Move(fTimeDelta);
 
 
@@ -355,7 +387,32 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 					D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 					D3DXVec3Normalize(&vDir, &vDir);
 					//6.13 
-
+					if (reverseDelay > 0.5 / m_fAniSpeed && reverseDelay < 0.6 / m_fAniSpeed)
+					{
+						if (!isSound)
+						{
+							int sound = rand() % 3;
+							switch (sound)
+							{
+							case 0:
+								SoundManager::PlayOverlapSound(L"attackdog_shout_01.wav", SoundChannel::MONSTER, 0.2f);
+								break;
+							case 1:
+								SoundManager::PlayOverlapSound(L"attackdog_shout_02.wav", SoundChannel::MONSTER, 0.2f);
+								break;
+							case 2:
+								SoundManager::PlayOverlapSound(L"attackdog_shout_03.wav", SoundChannel::MONSTER, 0.2f);
+								break;
+							default:
+								break;
+							}
+							isSound = true;
+						}
+					}
+					else
+					{
+						isSound = false;
+					}
 					//0.83 2.06
 					if (reverseDelay > 0.3 / m_fAniSpeed && reverseDelay < 1.42 / m_fAniSpeed)
 					{
@@ -417,6 +474,14 @@ Client::_int Client::CDog::Update_Object(const _float& fTimeDelta)
 
 				}
 			}
+			//if (true == m_pMeshCom->Is_AnimationSetEnd()&&m_state!= dogState::STATE_RUN)
+			//{
+			//	m_state = dogState::STATE_RUN;
+			//	isAnimating = false;
+			//	m_pStateCom->stat.moveSpeed = TitanSpeed;
+			//	delay = 0;
+			//	isColl = false;
+			//}
 		}
 	}
 	else if (isDie)

@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 #include "Loading.h"
 #include "Stage3.h"
-
+#include "Ending.h"
 #include "SoundManager.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -31,11 +31,11 @@ HRESULT CStage::Ready_Scene(void)
 
 Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 {
-	if (Engine::Get_DIKeyState(DIK_F11) & 0x80)
+	if (Engine::Get_DIKeyState(DIK_F9) & 0x80)
 	{
 		SoundManager::StopSound(SoundChannel::BGM);
-		CScene* pScene = nullptr;
-		pScene = CStage3::Create(m_pGraphicDev);
+		CEnding* pScene = nullptr;
+		pScene = CEnding::Create(m_pGraphicDev);
 
 		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
 		return 1;
@@ -50,7 +50,7 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 	{
 		SoundManager::StopSound(SoundChannel::BGM);
 		CScene* pScene = nullptr;
-		pScene = CStage2::Create(m_pGraphicDev);
+		pScene = CEnding::Create(m_pGraphicDev);
 
 		FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);
 		return 1;
@@ -187,8 +187,8 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	pGameObject = CTitan::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CMonster*>(pGameObject)->SetKeyMonster();
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Titan", pGameObject), E_FAIL);
-
 
 	/*pGameObject = CKnight::Create(m_pGraphicDev, CUnit::STAGE1);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -254,6 +254,10 @@ HRESULT CStage::Ready_UI_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CFadeInOut::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOut", pGameObject), E_FAIL);
 
 	pGameObject = CSkillSlot::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

@@ -76,6 +76,7 @@ private:
 	_float		m_fAngle;
 	IngkellsState m_state = IngkellsState::STATE_IDLE;
 
+
 	_vec3 oldPos;
 	_vec3 newPos;
 	_vec3 dirPos;

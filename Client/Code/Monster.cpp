@@ -202,7 +202,12 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 	//»ç¸Á
 	if (m_pStateCom->stat.hp <= 0 && isDie == false)
 	{
-
+		if (GetKeyMonster())
+		{
+			CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
+			Portal->SetIsVisible();
+			
+		}
 		isDie = true;
 
 	}

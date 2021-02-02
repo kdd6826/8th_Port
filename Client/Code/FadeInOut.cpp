@@ -118,9 +118,12 @@ Client::_int Client::CFadeInOut::Update_Object(const _float& fTimeDelta)
 			isEvent = true;
 	}
 	CTriggerBox* Portal = dynamic_cast<CTriggerBox*>(Engine::Get_GameObject(L"GameLogic", L"TriggerBox"));
-	if (Portal->GetPortal())
+	if (Portal != nullptr)
 	{
-		isFadeIn = true;
+		if (Portal->GetPortal())
+		{
+			isFadeIn = true;
+		}
 	}
 	Engine::CGameObject::Update_Object(fTimeDelta);
 

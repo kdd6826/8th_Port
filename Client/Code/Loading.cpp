@@ -120,8 +120,15 @@ _uint CLoading::Loading_ForStage(void)
 		Engine::RESOURCE_STAGE,
 		L"Texture_Terrain2",
 		Engine::TEX_NORMAL,
-		L"../Bin/Resource/Texture/Terrain/ground_%d.tga", 4),
-
+		L"../Bin/Resource/Texture/Terrain/ground_0.tga"),
+		//L"../Bin/Resource/Texture/Terrain/ground_%d.tga", 4),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		Engine::RESOURCE_STAGE,
+		L"Texture_TerrainNormal2",
+		Engine::TEX_NORMAL,
+		L"../Bin/Resource/Texture/Terrain/ground_0_N.tga"),
+		//L"../Bin/Resource/Texture/Terrain/ground_%d.tga", 4),
 		E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		Engine::RESOURCE_STAGE,
@@ -165,6 +172,7 @@ _uint CLoading::Loading_ForStage(void)
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Effect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_FireEffect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Environment/FlameA/FlameA%d.tga", 50), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_FireEffect", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Environment/Fire/Fire%d.tga", 30), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_TriggerBox", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/effect_ghostwall_ring.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_ConfusionHole1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/aming_point_big04.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_ConfusionHole2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Effect/aming_point_big05.tga"), E_FAIL);
@@ -179,6 +187,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_DamageFont", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Font_Damage.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillSlot", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/skill_slot.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_FadeInOut", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/FadeInOut.png"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_EndingScene", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/Ending.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Back.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_HpBarValue", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerHpBar_Value.png"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SpBarBack", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PlayerSpBar_Back.png"), E_FAIL);

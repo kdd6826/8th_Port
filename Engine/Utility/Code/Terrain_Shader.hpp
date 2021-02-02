@@ -96,7 +96,7 @@ float4 TerrainShader_Pass_0_ps_main( PS_INPUT Input ) : COLOR
 
 	float3 diffuse = saturate(dot(-vLightDir.xyz, bumpNormal)) + 0.1f;
 	albedo.rgb *= diffuse/2.f+0.5f;
-	albedo *= vColor;
+	//albedo *= vColor;
 
 	albedo.rgb *= 1.f - Input.mDepth.r*fFog;
 	albedo.rgb += Input.mDepth.r*fFog;
@@ -119,7 +119,7 @@ PS_OUTPUT TerrainShader_Pass_1_ps_main( PS_INPUT Input )
 	Output.mAlbedo = tex2D(DiffuseSampler, Input.mTexCoord * fGrid);
 
 	Output.mAlbedo.rgb = rtAlbedo.a * rtAlbedo.rgb + (1.f - rtAlbedo.a) * Output.mAlbedo.rgb;
-	Output.mAlbedo *= vColor;
+	//Output.mAlbedo *= vColor;
 
     float4 bumpMap = tex2D(BumpSampler, Input.mTexCoord * fGrid);
     bumpMap.xyz = normalize(bumpMap.xyz*2.f - 1.f);

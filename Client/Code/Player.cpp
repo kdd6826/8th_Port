@@ -105,8 +105,8 @@ HRESULT Client::CPlayer::Add_Component(void)
 	m_pStateCom->stat.damage = PlayerOriginAtt*cheatDamage;
 	isDown = false;
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
-	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Player"));
+	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_PlayerMesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
@@ -127,26 +127,29 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
-	//pEffect->SetMatrix("matWorld", &matWorld);
-	//pEffect->SetMatrix("matView", &matView);
-	//pEffect->SetMatrix("matProj", &matProj);
-	//const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
-	//_vec3 vCamPos;
-	//CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+	const D3DLIGHT9*		pLightInfo = Engine::Get_Light(0);
+	_vec3 vCamPos,vCamAt,vCamDir;
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 
-
-	//vCamPos = pCamera->Get_Eye();
-	//pEffect->SetVector("vCamPos", &_vec4(vCamPos, 0.f));
-	//pEffect->SetVector("vColor", &_vec4(1.f, 1.f, 1.f, 0.f));
-	//pEffect->SetVector("vLightDir", &_vec4(pLightInfo->Direction, 0.f));
-	//pEffect->SetVector("vLightColor", &_vec4(1.f, 1.f, 1.f, 0.f));
-	/*float4 vLightColor;
-*/
+	limLightPower = 0.8f;
+	vCamPos = pCamera->Get_Eye();
+	vCamAt = pCamera->Get_At();
+	vCamDir = vCamPos - vCamAt;
+	D3DXVec3Normalize(&vCamDir, &vCamDir);
+	pEffect->SetFloat("g_fPower", limLightPower);
+	pEffect->SetVector("vCamDir", &_vec4(vCamDir, 0.f));
+	pEffect->SetVector("vLightDir", &_vec4(pLightInfo->Direction, 0.f));
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
 
-	//m_pTextureCom->Set_Texture(pEffect, "g_SpecularTexture");
+	D3DXMatrixInverse(&matView, NULL, &matView);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	pEffect->SetMatrix("g_matProjInv", &matProj);
+	pEffect->SetMatrix("g_matViewInv", &matView);
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
+
+	pEffect->SetVector("vCamPos", (_vec4*)&matView._41);
 
 	return S_OK;
 }
@@ -385,10 +388,17 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			{
 				//m_pMeshCom->Free();
 				//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
+				
 				m_pMeshCom->Free();
 				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
 				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
 			}
+			if (delay < 0.1f)
+			{
+				isInvincible = false;
+			}
+			else
+				isInvincible = true;
 		}
 		if (m_pStateCom->playerState == Engine::CPlayerState::STATE_DARKKNIGHT_TRANS2)
 		{
@@ -830,6 +840,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
+				SoundManager::PlayOverlapSound(L"arisha_attack_02.wav", SoundChannel::PLAYER_EFFECT, 0.3f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				//delay = 1.2f;
@@ -865,6 +876,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
+				SoundManager::PlayOverlapSound(L"arisha_attack_02.wav", SoundChannel::PLAYER_EFFECT, 0.3f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				m_fAniSpeed = 1.2f;
 				//delay = 1.2f;
@@ -908,6 +920,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
+				SoundManager::PlayOverlapSound(L"arisha_attack_02.wav", SoundChannel::PLAYER_EFFECT, 0.3f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				m_fAniSpeed = 1.2f;
@@ -964,6 +977,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
+				SoundManager::PlayOverlapSound(L"arisha_attack_02.wav", SoundChannel::PLAYER_EFFECT, 0.3f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				/*delay = 1.2f;*/
@@ -1013,6 +1027,7 @@ void CPlayer::MovePlayer(const _float& fTimeDelta)
 				if (skillDelay[_DIFUSION] > 0.f)
 					return;
 				SoundManager::PlayOverlapSound(L"arisha_skill_speedy_move.wav", SoundChannel::PLAYER, 0.2f);
+				SoundManager::PlayOverlapSound(L"arisha_attack_02.wav", SoundChannel::PLAYER_EFFECT, 0.3f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DIFUSION;
 				
 				//delay = 1.2f;
@@ -1388,6 +1403,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			return;
 		if (delay <= 0.f)
 		{
+			
 			m_fAniSpeed = 1.5f;
 			SoundManager::PlayOverlapSound(L"effect_darkknight.wav", SoundChannel::PLAYER, 0.2f);
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1;
@@ -1399,6 +1415,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			delay = temp;
 			skillDelay[_DARK1] = temp + 0.5f;
 			m_fBattleCount = delay + 5.f;
+			
 		}
 	}
 	//if (Engine::Get_DIKeyState(DIK_7) & 0x80)
@@ -1651,6 +1668,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	if (m_pStateCom->stat.stamina < 0)
 	{
 		m_pStateCom->stat.stamina = 0;
+		SoundManager::PlayOverlapSound(L"arisha_lack_stamina_01.wav", SoundChannel::PLAYER, 0.2f);
 		m_pStateCom->playerState = Engine::CPlayerState::STATE_TIRED_START;
 		_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
 		temp = (temp / (m_fAniSpeed * 1.5f)) - 0.2f;
@@ -1701,7 +1719,7 @@ void Client::CPlayer::Render_Object(void)
 	Engine::Safe_AddRef(pEffect);
 	_uint	iMaxPass = 0;
 	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
-	pEffect->BeginPass(1);
+	pEffect->BeginPass(0);
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect));
 	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);

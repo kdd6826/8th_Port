@@ -27,7 +27,7 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void Render_Object(void) override;
-
+	void SetIsVisible() { isVisible = true; }
 	_bool GetPortal() { return portal; }
 	void SetPortal() { portal = true; }
 
@@ -42,6 +42,7 @@ private:
 	Engine::CShader*			m_pShaderCom = nullptr;
 
 	_bool						portal = false;
+	_bool						isVisible = false;
 	_float						m_fFrame = 0.f;
 	_float						count = 0.f;
 public:

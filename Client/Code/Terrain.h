@@ -35,6 +35,7 @@ private:
 	Engine::CTerrainTex*		m_pBufferCom = nullptr;
 
 	Engine::CTexture*			m_pTextureCom = nullptr;
+	Engine::CTexture*			m_pTextureCom2 = nullptr;
 	Engine::CTexture*			m_pFilterCom = nullptr;
 	Engine::CTexture*			m_pAuraCom = nullptr;
 

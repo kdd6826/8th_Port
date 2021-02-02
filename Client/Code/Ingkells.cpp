@@ -2,7 +2,7 @@
 #include "Ingkells.h"
 #include "ColliderMgr.h"
 #include "Export_Function.h"
-
+#include "DynamicCamera.h"
 
 CIngkells::CIngkells(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
@@ -44,7 +44,8 @@ HRESULT Client::CIngkells::Add_Component(void)
 	Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	/*pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));*/
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_MonsterMesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
@@ -62,15 +63,46 @@ HRESULT Client::CIngkells::Add_Component(void)
 
 HRESULT CIngkells::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 {
+	//_matrix		matWorld, matView, matProj;
+
+	//m_pTransformCom->Get_WorldMatrix(&matWorld);
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	//pEffect->SetMatrix("g_matWorld", &matWorld);
+	//pEffect->SetMatrix("g_matView", &matView);
+	//pEffect->SetMatrix("g_matProj", &matProj);
+
+	//return S_OK;
 	_matrix		matWorld, matView, matProj;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
+	const D3DLIGHT9* pLightInfo = Engine::Get_Light(0);
+	_vec3 vCamPos, vCamAt, vCamDir;
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+
+	float limLightPower = 1.f;
+	vCamPos = pCamera->Get_Eye();
+	vCamAt = pCamera->Get_At();
+	vCamDir = vCamPos - vCamAt;
+	D3DXVec3Normalize(&vCamDir, &vCamDir);
+	pEffect->SetFloat("g_fPower", limLightPower);
+	pEffect->SetVector("vCamDir", &_vec4(vCamDir, 0.f));
+	pEffect->SetVector("vLightDir", &_vec4(pLightInfo->Direction, 0.f));
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
+
+	D3DXMatrixInverse(&matView, NULL, &matView);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	pEffect->SetMatrix("g_matProjInv", &matProj);
+	pEffect->SetMatrix("g_matViewInv", &matView);
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
+
+	pEffect->SetVector("vCamPos", (_vec4*)&matView._41);
 
 	return S_OK;
 }
@@ -120,11 +152,11 @@ void CIngkells::Move(const _float& fTimeDelta)
 		case 0:
 			m_state = IngkellsState::STATE_TURNRIGHT_ATK;
 			//delay = 2.9f; //2.82
-			m_fAniSpeed = 2.f;
+			m_fAniSpeed = 1.5f;
 			break;
 		case 1:
 			m_state = IngkellsState::STATE_TURNLEFT_ATK;
-			m_fAniSpeed = 2.f;
+			m_fAniSpeed = 1.5f;
 			break;
 
 		default:
@@ -152,12 +184,12 @@ void CIngkells::Move(const _float& fTimeDelta)
 
 				case 0:
 					m_state = IngkellsState::STATE_SWING_TRIPLE;
-					m_fAniSpeed = 2.f;
+					m_fAniSpeed = 1.5f;
 					break;
 
 				case 1:
 					m_state = IngkellsState::STATE_DOUBLESMASH;
-					m_fAniSpeed = 2.f;
+					m_fAniSpeed = 1.5f;
 					break;
 
 				default:
@@ -172,7 +204,7 @@ void CIngkells::Move(const _float& fTimeDelta)
 				{
 				case 0:
 					m_state = IngkellsState::STATE_SWORDWAVE;
-					m_fAniSpeed = 2.5f;
+					m_fAniSpeed = 2.f;
 					break;
 
 				default:
@@ -186,11 +218,11 @@ void CIngkells::Move(const _float& fTimeDelta)
 				{
 				case 0:
 					m_state = IngkellsState::STATE_THRUST_TO_WHIRLWIND;
-					m_fAniSpeed = 2.f;
+					m_fAniSpeed = 1.5f;
 					break;
 				case 1:
 					m_state = IngkellsState::STATE_TAUNT;
-					m_fAniSpeed = 1.5f;
+					m_fAniSpeed = 2.f;
 					//delay = 4.2f;
 					break;
 				default:
@@ -212,11 +244,11 @@ void CIngkells::Move(const _float& fTimeDelta)
 		{
 		case 0:
 			m_state = IngkellsState::STATE_SWORDWAVE;
-			m_fAniSpeed = 2.5f;
+			m_fAniSpeed = 2.f;
 			break;
 		case 1:
 			m_state = IngkellsState::STATE_DOUBLESMASH;
-			m_fAniSpeed = 2.f;
+			m_fAniSpeed = 1.5f;
 			break;
 
 		default:
@@ -601,20 +633,27 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 						m_pTransformCom->Set_Pos(&m_pNaviMeshCom->Move_OnNaviMesh(&vPos, &(vDir * fTimeDelta * m_pStateCom->stat.moveSpeed)));
 
 					}
-
-					if (reverseDelay > 4.02 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
+					if (reverseDelay > 4.52 / m_fAniSpeed && reverseDelay < 4.6 / m_fAniSpeed)
 					{
 						if (!isSound)
 						{
 							SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
 							isSound = true;
 						}
+					}
+					else
+					{
+						isSound = false;
+					}
+
+					if (reverseDelay > 4.02 / m_fAniSpeed && reverseDelay < 5.5 / m_fAniSpeed)
+					{
 						isColl = true;
 					}
 					else
 					{
 						isColl = false;
-						isSound = false;
+		
 					}
 					if (true == m_pMeshCom->Is_AnimationSetEnd())
 					{
@@ -745,6 +784,44 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 				D3DXVec3Normalize(&toPlayerDir, &toPlayerDir);
 				D3DXVec3Normalize(&vDir, &vDir);
 				m_pStateCom->stat.moveSpeed = 5.f;
+				if (reverseDelay > 3.24 / m_fAniSpeed && reverseDelay < 3.34 / m_fAniSpeed)
+				{
+
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+				}
+				else if (reverseDelay > 4.72 / m_fAniSpeed && reverseDelay < 4.82 / m_fAniSpeed)
+				{
+					
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+				}
+				else if (reverseDelay > 5.22 / m_fAniSpeed && reverseDelay < 5.32 / m_fAniSpeed)
+				{
+
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+				}
+				else if (reverseDelay > 5.72 / m_fAniSpeed && reverseDelay < 5.82 / m_fAniSpeed)
+				{
+
+					if (!isSound)
+					{
+						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
+						isSound = true;
+					}
+				}
+				else
+					isSound = false;
 				//1.8f ½ºÅ¸Æ®
 				if (reverseDelay > 1.95 / m_fAniSpeed && reverseDelay < 3.54 / m_fAniSpeed)
 				{
@@ -761,20 +838,11 @@ Client::_int Client::CIngkells::Update_Object(const _float& fTimeDelta)
 				if (reverseDelay > 3.24 / m_fAniSpeed && reverseDelay < 3.68 / m_fAniSpeed)
 				{
 					isColl = true;
-					if (!isSound)
-					{
-						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
-						isSound = true;
-					}
+	
 				}
 				else if (reverseDelay > 4.72 / m_fAniSpeed && reverseDelay < 6.33 / m_fAniSpeed)
 				{
 					isColl = true;
-					if (!isSound)
-					{
-						SoundManager::PlayOverlapSound(L"swing_lv4.wav", SoundChannel::MONSTER, 0.2f);
-						isSound = true;
-					}
 				}
 				else
 				{

@@ -85,6 +85,7 @@ private:
 	vector<CUnit*>				vecSkill;
 	_vec3						m_vDir;
 	bool						isAnimating;
+	_float						limLightPower=0.f;
 	_float						isInvincibleTime=0.f;
 	_float						delay = 0.f;
 	_float						skillDelay[_END] = { 0.f };

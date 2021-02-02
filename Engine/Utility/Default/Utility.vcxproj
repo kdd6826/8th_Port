@@ -229,7 +229,9 @@ Call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Shader_HitEffect.hpp" />
     <ClInclude Include="..\Code\Shader_Manablade.hpp" />
     <ClInclude Include="..\Code\Shader_Mesh.hpp" />
+    <ClInclude Include="..\Code\Shader_MonsterMesh.hpp" />
     <ClInclude Include="..\Code\Shader_Player.hpp" />
+    <ClInclude Include="..\Code\Shader_PlayerMesh.hpp" />
     <ClInclude Include="..\Code\Shader_RuinBlade.hpp" />
     <ClInclude Include="..\Code\Shader_Sample.hpp" />
     <ClInclude Include="..\Code\Shader_Shade.hpp" />

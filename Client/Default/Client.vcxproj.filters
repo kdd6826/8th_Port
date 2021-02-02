@@ -145,6 +145,12 @@
     <Filter Include="02. GameObject\01. Stage\07. UI\05. FadeInOut">
       <UniqueIdentifier>{c6d6c1f3-6932-4e82-90d0-232af118fd13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Ending">
+      <UniqueIdentifier>{8bea3837-be94-4c73-8082-06c1433a6d9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Stage\07. UI\06. EndingScene">
+      <UniqueIdentifier>{8c8c7353-ee98-4df9-8094-2e9006423063}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -360,6 +366,12 @@
     <ClInclude Include="..\Header\StageHeaders.h">
       <Filter>98. Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Ending.h">
+      <Filter>01. Scene\03. Ending</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\EndingScene.h">
+      <Filter>02. GameObject\01. Stage\07. UI\06. EndingScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -553,6 +565,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FadeInOut.cpp">
       <Filter>02. GameObject\01. Stage\07. UI\05. FadeInOut</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ending.cpp">
+      <Filter>01. Scene\03. Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EndingScene.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\06. EndingScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

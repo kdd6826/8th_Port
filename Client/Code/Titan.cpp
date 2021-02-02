@@ -2,7 +2,7 @@
 #include "Titan.h"
 #include "ColliderMgr.h"
 #include "Export_Function.h"
-
+#include "DynamicCamera.h"
 
 CTitan::CTitan(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
@@ -43,14 +43,15 @@ HRESULT Client::CTitan::Add_Component(void)
 	Engine::CGameObject::Update_Object(timeDelta);
 
 	// Shader
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	//pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_Mesh"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone(L"Proto_Shader_MonsterMesh"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
 	Load_ColliderFile(L"../Bin/saveTitan.dat", Engine::COLLID::ENEMY, Engine::COLLID::ENEMYATTACK);
 	 
-	m_pStateCom->stat.maxHp = 100000.f;
-	m_pStateCom->stat.hp = 100000.f;
+	m_pStateCom->stat.maxHp = 500000.f;
+	m_pStateCom->stat.hp = 500000.f;
 	m_pStateCom->stat.damage = 200.f;
 	m_pStateCom->stat.downDamage = 5.f;
 	return S_OK;
@@ -58,16 +59,45 @@ HRESULT Client::CTitan::Add_Component(void)
 
 HRESULT CTitan::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 {
+	//_matrix		matWorld, matView, matProj;
+
+	//m_pTransformCom->Get_WorldMatrix(&matWorld);
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	//pEffect->SetMatrix("g_matWorld", &matWorld);
+	//pEffect->SetMatrix("g_matView", &matView);
+	//pEffect->SetMatrix("g_matProj", &matProj);
+
 	_matrix		matWorld, matView, matProj;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
+	const D3DLIGHT9* pLightInfo = Engine::Get_Light(0);
+	_vec3 vCamPos, vCamAt, vCamDir;
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+
+	float limLightPower = 0.1f;
+	vCamPos = pCamera->Get_Eye();
+	vCamAt = pCamera->Get_At();
+	vCamDir = vCamPos - vCamAt;
+	D3DXVec3Normalize(&vCamDir, &vCamDir);
+	pEffect->SetFloat("g_fPower", limLightPower);
+	pEffect->SetVector("vCamDir", &_vec4(vCamDir, 0.f));
+	pEffect->SetVector("vLightDir", &_vec4(pLightInfo->Direction, 0.f));
 	pEffect->SetMatrix("g_matWorld", &matWorld);
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
 
+	D3DXMatrixInverse(&matView, NULL, &matView);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	pEffect->SetMatrix("g_matProjInv", &matProj);
+	pEffect->SetMatrix("g_matViewInv", &matView);
+	Engine::Throw_RenderTargetTexture(pEffect, L"Target_Depth", "g_DepthTexture");
+
+	pEffect->SetVector("vCamPos", (_vec4*)&matView._41);
 	return S_OK;
 }
 

@@ -458,6 +458,7 @@ HRESULT CStage3::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	pGameObject = CIngkells::Create(m_pGraphicDev, CUnit::STAGE3);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CIngkells*>(pGameObject)->SetSpawnPosition(_vec3{ 50.f,0.f,58.f });
+	dynamic_cast<CMonster*>(pGameObject)->SetKeyMonster();
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ingkells", pGameObject), E_FAIL);
 	//pGameObject = CDog::Create(m_pGraphicDev, CUnit::STAGE3);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);

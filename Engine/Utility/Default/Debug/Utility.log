@@ -1,5 +1,4 @@
-﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\Administrator\Documents\GitHub\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -40,7 +39,9 @@
   .\Engine\Utility\Code\Shader_HitEffect.hpp
   .\Engine\Utility\Code\Shader_Manablade.hpp
   .\Engine\Utility\Code\Shader_Mesh.hpp
+  .\Engine\Utility\Code\Shader_MonsterMesh.hpp
   .\Engine\Utility\Code\Shader_Player.hpp
+  .\Engine\Utility\Code\Shader_PlayerMesh.hpp
   .\Engine\Utility\Code\Shader_RuinBlade.hpp
   .\Engine\Utility\Code\Shader_Sample.hpp
   .\Engine\Utility\Code\Shader_Shade.hpp
@@ -51,7 +52,7 @@
   .\Engine\Utility\Code\Shader_Weapon.hpp
   .\Engine\Utility\Code\Terrain_Shader.hpp
   .\Engine\Utility\Code\Weapon_Shader.hpp
-         26개 파일이 복사되었습니다.
+         28개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h

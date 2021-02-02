@@ -188,6 +188,8 @@
     <ClInclude Include="..\Code\Dog.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\Effect.h" />
+    <ClInclude Include="..\Code\Ending.h" />
+    <ClInclude Include="..\Code\EndingScene.h" />
     <ClInclude Include="..\Code\FadeInOut.h" />
     <ClInclude Include="..\Code\FireEffect.h" />
     <ClInclude Include="..\Code\FontParent.h" />
@@ -281,6 +283,8 @@
     <ClCompile Include="..\Code\Dog.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\Ending.cpp" />
+    <ClCompile Include="..\Code\EndingScene.cpp" />
     <ClCompile Include="..\Code\FadeInOut.cpp" />
     <ClCompile Include="..\Code\FireEffect.cpp" />
     <ClCompile Include="..\Code\FontParent.cpp" />

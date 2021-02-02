@@ -405,6 +405,7 @@ HRESULT CStage2::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CKnight*>(pGameObject)->SetSpawnPosition(_vec3{ 68.f, 0.f, 63.f });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Knight", pGameObject), E_FAIL);
+	dynamic_cast<CMonster*>(pGameObject)->SetKeyMonster();
 	m_mapLayer.emplace(pLayerTag, pLayer);
 
 	return S_OK;

@@ -114,11 +114,14 @@ Client::_int Client::CTriggerBox::Update_Object(const _float& fTimeDelta)
 		m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, D3DXToRadian(180.f));
 		m_pTransformCom->Set_Pos(&spawnPosition);
 		initialize = true;
-		isColl = true;
+		isColl = false;
 	}
 	spawnPosition.y = 1.f;
 	m_pTransformCom->Set_Pos(&spawnPosition);
-	
+	if (isVisible)
+	{
+		isColl = true;
+	}
 
 	//_vec3 vPos;
 	//m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -151,18 +154,21 @@ Client::_int Client::CTriggerBox::Update_Object(const _float& fTimeDelta)
 }
 void Client::CTriggerBox::Render_Object(void)
 {
-	CMonster::Render_Object();
-	LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
-	NULL_CHECK(pEffect);
-	Engine::Safe_AddRef(pEffect);
+	if (isVisible)
+	{
+		CMonster::Render_Object();
+		LPD3DXEFFECT	pEffect = m_pShaderCom->Get_EffectHandle();
+		NULL_CHECK(pEffect);
+		Engine::Safe_AddRef(pEffect);
 
-	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
+		FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect), );
 
-	pEffect->Begin(NULL, 0);
-	pEffect->BeginPass(1);
-	m_pBufferCom->Render_Buffer();
-	pEffect->EndPass();
-	pEffect->End();
+		pEffect->Begin(NULL, 0);
+		pEffect->BeginPass(1);
+		m_pBufferCom->Render_Buffer();
+		pEffect->EndPass();
+		pEffect->End();
 
-	Engine::Safe_Release(pEffect);
+		Engine::Safe_Release(pEffect);
+	}
 }
