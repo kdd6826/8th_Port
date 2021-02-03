@@ -14,6 +14,7 @@
 #include "Ingkells.h"
 #include "LightRay.h"
 #include "Stage.h"
+#include "FadeInOutTransform.h"
 //#include "Zecallion.h"
 
 #include "Stone.h"

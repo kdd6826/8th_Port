@@ -478,6 +478,10 @@ HRESULT CStage2::Ready_UI_Layer(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOut", pGameObject), E_FAIL);
 
+	pGameObject = CFadeInOutTransform::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FadeInOutTransform", pGameObject), E_FAIL);
+
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f),
 		&_vec3(0.f, 0.f, 10.f),
 		&_vec3(0.f, 1.f, 0.f));

@@ -670,21 +670,27 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage*3.f;
 		if (delay < 2.f&&hitCount==0)
 		{
+			SoundManager::PlayOverlapSound(L"swing_lv1.wav", SoundChannel::PLAYER, 0.2f);
+			
 			CColliderMgr::GetInstance()->hitList.clear();
 			hitCount++;
 		}
 		if (delay < 1.5f&&hitCount == 1)
 		{
+			SoundManager::PlayOverlapSound(L"swing_lv1.wav", SoundChannel::PLAYER, 0.2f);
 			CColliderMgr::GetInstance()->hitList.clear();
 			hitCount++;
 		}
 		if (delay < 1.3f&&hitCount == 2)
 		{
+			SoundManager::PlayOverlapSound(L"arisha_attack_05.wav", SoundChannel::PLAYER, 0.2f);
+			SoundManager::PlayOverlapSound(L"swing_lv1.wav", SoundChannel::PLAYER, 0.2f);
 			CColliderMgr::GetInstance()->hitList.clear();
 			hitCount++;
 		}
 		if (delay < 1.f&&hitCount == 3)
 		{
+			SoundManager::PlayOverlapSound(L"swing_lv1.wav", SoundChannel::PLAYER, 0.2f);
 			CColliderMgr::GetInstance()->hitList.clear();
 			hitCount++;
 		}
@@ -1344,6 +1350,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				hitCount = 0;
 				m_fAniSpeed = 2.f;
+				SoundManager::PlayOverlapSound(L"arisha_attack_01.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_DOOMSAYER;
 				//delay = 3.7f;
 				_double temp = m_pMeshCom->Get_AnimationPeriod(m_pStateCom->playerState);
@@ -1441,6 +1448,10 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			return;
 		if (delay <= 0.f)
 		{
+			usePath = 1;
+			CFadeInOutTransform* FadeInOut = dynamic_cast<CFadeInOutTransform*>(Engine::Get_GameObject(L"UI", L"FadeInOutTransform"));
+			FadeInOut->FadeTime(5.f);
+			
 			CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
 			pCamera->ZoomIn(5.f, 0.3f);
 			m_fAniSpeed = 1.5f;
@@ -1644,6 +1655,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 {
 	if (m_pStateCom->playerMeshState == Engine::CPlayerState::MESH_DKKNIGHT2)
 	{
+
 		m_pStateCom->stat.hp = m_pStateCom->stat.maxHp;
 		m_pStateCom->stat.sp = m_pStateCom->stat.maxSp;
 		m_pStateCom->stat.stamina = m_pStateCom->stat.maxStamina;
@@ -1659,6 +1671,7 @@ Client::_int Client::CPlayer::Update_Object(const _float& fTimeDelta)
 	else if(isInvincibleTime<=0.f)
 	{
 		isInvincible = false;
+		usePath = 0;
 		isInvincibleTime = 0.f;
 	}
 	if (!isInitialize)
@@ -1758,7 +1771,7 @@ void Client::CPlayer::Render_Object(void)
 	Engine::Safe_AddRef(pEffect);
 	_uint	iMaxPass = 0;
 	pEffect->Begin(&iMaxPass, 0);	// 현재 쉐이더 파일이 갖고 있는 최대 패스의 개수를 리턴, 사용하는 방식
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(usePath);
 	FAILED_CHECK_RETURN(SetUp_ConstantTable(pEffect));
 	float fTimeDelta = Engine::Get_TimeDelta(L"Timer_Immediate");
 	m_pMeshCom->Render_Meshes(pEffect, fTimeDelta * m_fAniSpeed * 1.5f);

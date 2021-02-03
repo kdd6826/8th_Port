@@ -1,5 +1,4 @@
-﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\GMH\Desktop\Client\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
+﻿  Utility.vcxproj -> C:\Users\Administrator\Desktop\8th_Port\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
   .\Engine\Utility\Code\Calculator.h
   .\Engine\Utility\Code\Camera.h
@@ -7,10 +6,8 @@
   .\Engine\Utility\Code\ColliderSphere.h
   .\Engine\Utility\Code\Component.h
   .\Engine\Utility\Code\Frustum.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Utility\Code\GameObject.h
   .\Engine\Utility\Code\Layer.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Utility\Code\Light.h
   .\Engine\Utility\Code\LightMgr.h
   .\Engine\Utility\Code\Management.h
@@ -26,7 +23,7 @@
   .\Engine\Utility\Code\Scene.h
   .\Engine\Utility\Code\Shader.h
   .\Engine\Utility\Code\Transform.h
-         21개 파일이 복사되었습니다.
+         23개 파일이 복사되었습니다.
   .\Engine\Utility\Code\Hair_Shader.hpp
   .\Engine\Utility\Code\Shader_Base.hpp
   .\Engine\Utility\Code\Shader_Blend.hpp
@@ -36,6 +33,7 @@
   .\Engine\Utility\Code\Shader_Eye.hpp
   .\Engine\Utility\Code\Shader_Face.hpp
   .\Engine\Utility\Code\Shader_FadeInOut.hpp
+  .\Engine\Utility\Code\Shader_FadeInOutTransform.hpp
   .\Engine\Utility\Code\Shader_Gate.hpp
   .\Engine\Utility\Code\Shader_GateEffect.hpp
   .\Engine\Utility\Code\Shader_Hair.hpp
@@ -55,11 +53,10 @@
   .\Engine\Utility\Code\Shader_Weapon.hpp
   .\Engine\Utility\Code\Terrain_Shader.hpp
   .\Engine\Utility\Code\Weapon_Shader.hpp
-         28개 파일이 복사되었습니다.
+         29개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h
-  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Header\Engine_Enum.h
   .\Engine\Header\Engine_Function.h
   .\Engine\Header\Engine_Macro.h
@@ -69,7 +66,7 @@
   .\Engine\Header\Export_Resouces.h
   .\Engine\Header\Export_System.h
   .\Engine\Header\Export_Utility.h
-          9개 파일이 복사되었습니다.
+         10개 파일이 복사되었습니다.
   .\Engine\Header\Export_Resouces.inl
   .\Engine\Header\Export_System.inl
   .\Engine\Header\Export_Utility.inl

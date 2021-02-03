@@ -169,6 +169,11 @@ HRESULT CManagement::Ready_Shader(LPDIRECT3DDEVICE9 & pGraphicDev)
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_FadeInOut", pShader), E_FAIL);
 
 	// Effect
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_FadeInOutTransform.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_FadeInOutTransform", pShader), E_FAIL);
+
+	// Effect
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_HitEffect.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(L"Proto_Shader_HitEffect", pShader), E_FAIL);

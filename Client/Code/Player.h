@@ -65,6 +65,7 @@ private:
 	_float		m_fAngle;
 	//playerState m_state = playerState::STATE_IDLE;
 	int hitCount=0;
+	int usePath = 0;
 	/*playerMesh	meshTransform = playerMesh::MESH_NORMAL;*/
 	bool		isManaBlade = false;
 	bool		isBattle = false;

@@ -302,6 +302,9 @@
     <ClInclude Include="..\Code\Shader_MonsterMesh.hpp">
       <Filter>09. Shader\hpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_FadeInOutTransform.hpp">
+      <Filter>09. Shader\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl">

@@ -372,6 +372,9 @@
     <ClInclude Include="..\Code\EndingScene.h">
       <Filter>02. GameObject\01. Stage\07. UI\06. EndingScene</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\FadeInOutTransform.h">
+      <Filter>02. GameObject\01. Stage\07. UI\05. FadeInOut</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -571,6 +574,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EndingScene.cpp">
       <Filter>02. GameObject\01. Stage\07. UI\06. EndingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FadeInOutTransform.cpp">
+      <Filter>02. GameObject\01. Stage\07. UI\05. FadeInOut</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

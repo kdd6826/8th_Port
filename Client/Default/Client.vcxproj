@@ -191,6 +191,7 @@
     <ClInclude Include="..\Code\Ending.h" />
     <ClInclude Include="..\Code\EndingScene.h" />
     <ClInclude Include="..\Code\FadeInOut.h" />
+    <ClInclude Include="..\Code\FadeInOutTransform.h" />
     <ClInclude Include="..\Code\FireEffect.h" />
     <ClInclude Include="..\Code\FontParent.h" />
     <ClInclude Include="..\Code\HpBarBack.h" />
@@ -286,6 +287,7 @@
     <ClCompile Include="..\Code\Ending.cpp" />
     <ClCompile Include="..\Code\EndingScene.cpp" />
     <ClCompile Include="..\Code\FadeInOut.cpp" />
+    <ClCompile Include="..\Code\FadeInOutTransform.cpp" />
     <ClCompile Include="..\Code\FireEffect.cpp" />
     <ClCompile Include="..\Code\FontParent.cpp" />
     <ClCompile Include="..\Code\HpBarBack.cpp" />
