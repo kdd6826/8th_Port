@@ -71,6 +71,7 @@ private:
 	bool		isDown = false;
 	//bool		isAttack = false;
 	bool		isMove = false;
+	bool		isSound = false;
 	bool		isHit = false;
 	bool		isRunning = false;
 	bool		isSkill = false;//trueÀÏ¶© ´Ù¸¥Å° ¸ø¾¸.

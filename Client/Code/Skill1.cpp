@@ -74,7 +74,7 @@ Client::_int Client::CSkill1::Update_Object(const _float& fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	m_fX = 580;
-	m_fY = WINCY - WINCY*0.1f;
+	//m_fY = WINCY - WINCY*0.1f;
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);

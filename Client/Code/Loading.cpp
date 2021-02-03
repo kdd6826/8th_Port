@@ -207,7 +207,7 @@ _uint CLoading::Loading_ForStage(void)
 	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill1.tga"), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill1", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Buff/Buff11.tga"), E_FAIL);
 	//루블
-	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill2.tga"), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill2", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill2.tga"), E_FAIL);
 	//로오마
 	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_Skill4", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/Skill4.tga"), E_FAIL);
 	//FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev, Engine::RESOURCE_STAGE, L"Texture_SkillDkTransform", Engine::TEX_NORMAL, L"../Bin/Resource/Texture/UI/SkillIcon/dk_transform_01_able.tga"), E_FAIL);

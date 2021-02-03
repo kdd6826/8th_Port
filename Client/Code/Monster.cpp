@@ -108,7 +108,7 @@ void CMonster::OnCollision(Engine::CGameObject* target)
 		}
 		//Engine::CPlayerState* pPlayerStateCom = dynamic_cast<Engine::CPlayerState*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_PlayerState", Engine::ID_DYNAMIC));
 
-		pPlayerStateCom->stat.sp += 20.f;
+		pPlayerStateCom->stat.sp += 8.f;
 		if (pPlayerStateCom->stat.sp > pPlayerStateCom->stat.maxSp)
 			pPlayerStateCom->stat.sp = pPlayerStateCom->stat.maxSp;
 

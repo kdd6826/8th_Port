@@ -388,7 +388,9 @@ void Client::CPlayer::Key_Input(const _float& fTimeDelta)
 			{
 				//m_pMeshCom->Free();
 				//m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player1"));
-				
+				CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+				pCamera->Shake();
+				isShake = true;
 				m_pMeshCom->Free();
 				m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Player2"));
 				m_pStateCom->playerMeshState = Engine::CPlayerState::MESH_DKKNIGHT2;
@@ -574,11 +576,30 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_RUINBLADE)
 	{
 		
+	if (delay > 2.7f && delay < 2.8)
+	{
+		if (!isSound)
+		{
+			SoundManager::PlayOverlapSound(L"arisha_skill_ruin_blade_wave.wav", SoundChannel::PLAYER, 0.2f);
+			isSound = true;
+		}
+	}
+	else if (delay > 1.6f&& delay < 1.7f)
+	{
+		if (!isSound)
+		{
+			SoundManager::PlayOverlapSound(L"arisha_skill_ruin_blade_slash.wav", SoundChannel::EFFECT, 0.2f);
+			isSound = true;
+		}
+	}
+	else
+		isSound = false;
+
 		if (delay < 2.8f && !isShake)
 		{
 			_vec3 dir, pos;
 			m_pTransformCom->Get_Info(Engine::INFO_LOOK, &dir);
-
+			
 			CLightRay* pGameObject = CLightRay::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pGameObject, );
 			pGameObject->SetDir(dir);
@@ -671,7 +692,10 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		}
 	}
 
-
+	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_RUINBLADE)
+	{
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 5.f;
+	}
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1)
 	{
 	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;
@@ -1184,6 +1208,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			{
 				if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT5 && delay <= 0.7f)
 				{
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(1.f, 0.3f);
 					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_04.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT6;
 					//delay = 1.15f;
@@ -1198,6 +1224,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT4 && delay <= 0.95f)
 				{
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(1.f, 0.3f);
 					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_05.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT5;
 					//delay = 1.3f;
@@ -1212,6 +1240,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT3 && delay <= 0.81f)
 				{
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(1.f, 0.3f);
 					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_04.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT4;
 					//delay = 1.3f;
@@ -1227,6 +1257,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT2 && delay <= 0.63f)
 				{
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(1.f, 0.3f);
 					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_03.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT3;
 					//delay = 1.3f;
@@ -1241,6 +1273,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				}
 				else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1&&delay <= 0.78f)
 				{
+					CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+					pCamera->ZoomIn(1.f, 0.3f);
 					SoundManager::PlayOverlapSound(L"arisha_swing_manablade_02.wav", SoundChannel::PLAYER, 0.2f);
 					m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT2;
 					//delay = 1.17f;
@@ -1257,6 +1291,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				{
 					if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT6 && delay <= 0.7)
 					{
+						CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+						pCamera->ZoomIn(1.f, 0.3f);
 						SoundManager::PlayOverlapSound(L"arisha_swing_manablade_01.wav", SoundChannel::PLAYER, 0.2f);
 						m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT1;
 						//delay = 1.3f;
@@ -1278,6 +1314,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 						m_pStateCom->playerState != Engine::CPlayerState::STATE_MB_ATT6
 						)
 					{
+						CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+						pCamera->ZoomIn(1.f, 0.3f);
 						SoundManager::PlayOverlapSound(L"arisha_swing_manablade_01.wav", SoundChannel::PLAYER, 0.2f);
 						m_pStateCom->playerState = Engine::CPlayerState::STATE_MB_ATT1;
 						//delay = 1.3f;
@@ -1328,6 +1366,7 @@ void CPlayer::Attack(const _float& fTimeDelta)
 				return;
 			if (delay <= 0.f)
 			{
+				SoundManager::PlayOverlapSound(L"arisha_skill_ruin_blade_encahnt.wav", SoundChannel::PLAYER, 0.2f);
 				m_pStateCom->playerState = Engine::CPlayerState::STATE_RUINBLADE;
 				//delay = 5.4f;//4.f
 				m_fAniSpeed = 1.5f;
@@ -1403,7 +1442,8 @@ void CPlayer::Attack(const _float& fTimeDelta)
 			return;
 		if (delay <= 0.f)
 		{
-			
+			CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(Engine::Get_GameObject(L"UI", L"DynamicCamera"));
+			pCamera->ZoomIn(5.f, 0.3f);
 			m_fAniSpeed = 1.5f;
 			SoundManager::PlayOverlapSound(L"effect_darkknight.wav", SoundChannel::PLAYER, 0.2f);
 			m_pStateCom->playerState = Engine::CPlayerState::STATE_DARKKNIGHT_TRANS1;

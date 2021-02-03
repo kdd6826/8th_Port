@@ -91,6 +91,7 @@ void CLightRay::Free(void)
 
 HRESULT Client::CLightRay::Ready_Object(void)
 {
+	m_fScale = 1.f;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(180.f));
 	return S_OK;
@@ -100,9 +101,11 @@ Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
 	CMonster::Update_Object(fTimeDelta);
 
 	lifeTime += fTimeDelta;
-	if (lifeTime > 3.f)
+	if (lifeTime > 1.5f)
 		return 1;
-	m_pTransformCom->Move_Pos(&(m_vDir*10.f));
+	m_pTransformCom->Move_Pos(&(m_vDir*20.f));
+	m_pTransformCom->m_vInfo[Engine::INFO_POS].y = m_fScale / 2.f;
+	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 	//m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(10.f));
 	//m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(-10.f));
 	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(10.f));
@@ -113,7 +116,8 @@ Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
 	//if (50.f < m_fFrame)
 	//	m_fFrame = 0.f;
 	
-
+	if (m_fScale < 3.f)
+		m_fScale += fTimeDelta;
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(Engine::INFO_POS, &vPos);
@@ -121,9 +125,9 @@ Client::_int Client::CLightRay::Update_Object(const _float& fTimeDelta)
 
 	_matrix		matScale, matWorld, matView, matBill;
 	D3DXMatrixIdentity(&matScale);
-	matScale._11 = 0.5f;
-	matScale._22 = 0.5f;
-	matScale._33 = 0.5f;
+	matScale._11 = m_fScale;
+	matScale._22 = m_fScale;
+	matScale._33 = m_fScale;
 
 	D3DXMatrixIdentity(&matBill);
 	m_pTransformCom->Get_WorldMatrix(&matWorld);

@@ -40,6 +40,7 @@ private:
 	Engine::CShader*			m_pShaderCom = nullptr;
 	_float						lifeTime = 0.f;
 	_float						m_fFrame = 0.f;
+	_float						m_fScale=0.f;
 	_vec3						m_vDir = { 0.f,0.f,0.f };
 public:
 	static CLightRay*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

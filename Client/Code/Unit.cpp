@@ -56,6 +56,9 @@ HRESULT CUnit::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
+	int iRand = rand() % 360;
+
+	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(iRand));
 
 	//pComponent = m_pNaviMeshCom = dynamic_cast<Engine::CNaviMesh*>(Engine::Clone(Engine::RESOURCE_STAGE, L"Mesh_Navi2"));
 	//NULL_CHECK_RETURN(pComponent, E_FAIL);
