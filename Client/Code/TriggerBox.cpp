@@ -111,6 +111,7 @@ Client::_int Client::CTriggerBox::Update_Object(const _float& fTimeDelta)
 	CMonster::Update_Object(fTimeDelta);
 	if (!initialize)
 	{
+		m_pTransformCom->Set_Rotation(Engine::ROT_Y, D3DXToRadian(0));
 		m_pTransformCom->Rotation(Engine::ROTATION::ROT_Z, D3DXToRadian(180.f));
 		m_pTransformCom->Set_Pos(&spawnPosition);
 		initialize = true;

@@ -198,7 +198,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	pGameObject = CTriggerBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CTriggerBox*>(pGameObject)->SetSpawnPosition(_vec3{ 17, 0.5f, 17 });
+	dynamic_cast<CTriggerBox*>(pGameObject)->SetSpawnPosition(_vec3{ 17, 0.5f, 12 });
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TriggerBox", pGameObject), E_FAIL)
 
 	//pGameObject = CIngkells::Create(m_pGraphicDev);
