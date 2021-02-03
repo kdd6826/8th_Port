@@ -594,7 +594,9 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 	}
 	else
 		isSound = false;
-
+	
+	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 5.f;
+	
 		if (delay < 2.8f && !isShake)
 		{
 			_vec3 dir, pos;
@@ -692,10 +694,7 @@ void CPlayer::StateEventFromDelay(float _fTimeDelta)
 		}
 	}
 
-	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_RUINBLADE)
-	{
-	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 5.f;
-	}
+
 	else if (m_pStateCom->playerState == Engine::CPlayerState::STATE_MB_ATT1)
 	{
 	m_pStateCom->stat.damage = PlayerOriginAtt * cheatDamage * 2.f;

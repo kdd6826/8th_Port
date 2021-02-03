@@ -7,8 +7,10 @@
   .\Engine\Utility\Code\ColliderSphere.h
   .\Engine\Utility\Code\Component.h
   .\Engine\Utility\Code\Frustum.h
+  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Utility\Code\GameObject.h
   .\Engine\Utility\Code\Layer.h
+  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Utility\Code\Light.h
   .\Engine\Utility\Code\LightMgr.h
   .\Engine\Utility\Code\Management.h
@@ -24,7 +26,7 @@
   .\Engine\Utility\Code\Scene.h
   .\Engine\Utility\Code\Shader.h
   .\Engine\Utility\Code\Transform.h
-         23개 파일이 복사되었습니다.
+         21개 파일이 복사되었습니다.
   .\Engine\Utility\Code\Hair_Shader.hpp
   .\Engine\Utility\Code\Shader_Base.hpp
   .\Engine\Utility\Code\Shader_Blend.hpp
@@ -57,6 +59,7 @@
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Engine_Define.h
+  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
   .\Engine\Header\Engine_Enum.h
   .\Engine\Header\Engine_Function.h
   .\Engine\Header\Engine_Macro.h
@@ -66,7 +69,7 @@
   .\Engine\Header\Export_Resouces.h
   .\Engine\Header\Export_System.h
   .\Engine\Header\Export_Utility.h
-         10개 파일이 복사되었습니다.
+          9개 파일이 복사되었습니다.
   .\Engine\Header\Export_Resouces.inl
   .\Engine\Header\Export_System.inl
   .\Engine\Header\Export_Utility.inl
